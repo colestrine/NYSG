@@ -1,3 +1,6 @@
+from django.contrib import admin
+from django.urls import include, path
+
 """greenhouse URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,4 +21,7 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('settings/', include('settings.urls')),
+    path('dashboard/', include('dashboard.urls')),
+    path('', include('landing.urls')),
 ]
