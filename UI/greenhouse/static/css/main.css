@@ -1,0 +1,29 @@
+.header {
+	text-align: left;
+    padding: 0px 10px;
+	border-bottom: solid 1px lightgray;
+	margin-bottom: 10px;
+}
+
+.header-button-inactive {
+		height: 35px;
+	    width: 100px;
+	    background: transparent;
+	    border: solid 1px lightgray;
+	    border-radius: 4px;
+	    border-bottom: none;
+}
+
+.header-button-active {
+		height: 35px;
+	    width: 100px;
+	    background: lightgray;
+	    border: solid 1px lightgray;
+	    border-radius: 4px;
+	    border-bottom: none;
+}
+
+.header-link {
+	color: slategray;
+    text-decoration: none;
+}
