@@ -5,5 +5,29 @@ Settings
 {% endblock %}
 
 {% block content %}
-Welcome to the Settings page!
+
+Temperature:
+{{ temperature }}
+Humidity:
+{{ humidity }}
+Soil Moisture:
+{{ soil_moisture }}
+Sunlight:
+{{ sunlight }}
+Plant Profile:
+{{ plant_profile }}
+
+<h1>Plant Profile</h1>
+<form action="/settings/" method="post">
+    {% csrf_token %}
+    {{ plant_profile_form }}
+    <input type="submit" value="Submit">
+</form>
+
+<h1>Healthy Levels</h1>
+<form action="/settings/" method="post">
+    {% csrf_token %}
+    {{ healthy_levels_form }}
+    <input type="submit" value="Submit">
+</form>
 {% endblock %}

@@ -1,5 +1,8 @@
 # NYSG
 
+## System Requirements
+- Python 3.6+
+
 ## Required Modules
 - Django (pip install Django)
 
