@@ -1,0 +1,7 @@
+https://gpiozero.readthedocs.io/en/stable/api_pins.html
+lots of documentation above
+
+https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c
+
+https://www.dummies.com/programming/python/what-is-i2c-python-programming-basics-for-the-raspberry-pi/
+
