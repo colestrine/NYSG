@@ -8,12 +8,12 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
     </head>
 
-    <body>
+    <body class="body">
     	<div id="header" name="header" class="header">
             {% url 'dashboard' as dashboard_url %}
             {% url 'settings' as settings_url %}
     		<button {% if request.path == dashboard_url %} class="header-button-active" {% else %} class="header-button-inactive" {% endif %}>
-                <a class="header-link" href="{{ dashboard_url }}">Dashboard</a>
+                <a class="header-link blue" href="{{ dashboard_url }}">Dashboard</a>
             </button>
 			<button {% if request.path == settings_url %} class="header-button-active" {% else %} class="header-button-inactive" {% endif %}>
                 <a class="header-link" href="{{ settings_url }}">Settings</a>

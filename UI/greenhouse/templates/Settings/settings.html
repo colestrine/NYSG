@@ -6,17 +6,21 @@ Settings
 
 {% block content %}
 
-<h1>Plant Profile</h1>
-<form action="/settings/" method="post">
-    {% csrf_token %}
-    {{ plant_profile_form }}
-    <input type="submit" value="Submit">
-</form>
+<h1 class="form-header">Plant Profile</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post">
+	    {% csrf_token %}
+	    {{ plant_profile_form.as_p }}
+	    <input type="submit" value="Submit" class="submit">
+	</form>
+</div>
 
-<h1>Healthy Levels</h1>
-<form action="/settings/" method="post">
-    {% csrf_token %}
-    {{ healthy_levels_form }}
-    <input type="submit" value="Submit">
-</form>
+<h1 class="form-header">Healthy Levels</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post">
+	    {% csrf_token %}
+	    {{ healthy_levels_form.as_p }}
+	    <input type="submit" value="Submit" class="submit">
+	</form>
+</div>
 {% endblock %}
