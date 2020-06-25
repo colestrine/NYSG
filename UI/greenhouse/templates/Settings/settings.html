@@ -6,17 +6,6 @@ Settings
 
 {% block content %}
 
-Temperature:
-{{ temperature }}
-Humidity:
-{{ humidity }}
-Soil Moisture:
-{{ soil_moisture }}
-Sunlight:
-{{ sunlight }}
-Plant Profile:
-{{ plant_profile }}
-
 <h1>Plant Profile</h1>
 <form action="/settings/" method="post">
     {% csrf_token %}

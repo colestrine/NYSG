@@ -17,9 +17,6 @@ def index(request):
 			humidity = healthy_levels_form.cleaned_data['humidity']
 			soil_moisture = healthy_levels_form.cleaned_data['soil_moisture']
 			sunlight = healthy_levels_form.cleaned_data['sunlight']
-
-			data_handler.write_healthy_levels(temperature, humidity, soil_moisture, sunlight)
-
 		else:
 			temperature = ''
 			humidity = ''
@@ -31,15 +28,15 @@ def index(request):
 		else:
 			plant_profile = ''
 
-	# If not POST, then no form submitted - instantiate blank forms
-	else:
-		temperature = ''
-		humidity = ''
-		soil_moisture = ''
-		sunlight = ''
-		plant_profile = ''
+		# If data was submitted, write that data to the interface file
+		if (temperature):
+			data_handler.write_healthy_levels(temperature, humidity, soil_moisture, sunlight)
+		if (plant_profile):
+			data_handler.write_plant_profile(plant_profile)
 
-		plant_profile_form = PlantProfileForm()
-		healthy_levels_form = HealthyLevelsForm()
+	healthy_levels = data_handler.read_healthy_levels()
+	plant_profile = data_handler.read_plant_profile()
+	plant_profile_form = PlantProfileForm(initial=plant_profile)
+	healthy_levels_form = HealthyLevelsForm(initial=healthy_levels)
 
-	return render(request, 'Settings/settings.html', {'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'temperature': temperature, 'humidity': humidity, 'soil_moisture': soil_moisture, 'sunlight': sunlight, 'plant_profile': plant_profile})
+	return render(request, 'Settings/settings.html', {'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile})
