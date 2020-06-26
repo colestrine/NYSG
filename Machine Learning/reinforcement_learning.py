@@ -1,5 +1,4 @@
 from numpy import random, mean
-from copy import copy
 
 class State:
 	def __init__(self, temperature, humidity, soil_moisture, sunlight):
@@ -118,7 +117,7 @@ class Agent:
 				for initial_water_action in action_choices:
 					for initial_ventilation_action in action_choices:
 						episode_rewards = []
-						for episode in range(0, 100):
+						for episode in range(0, 150):
 							timestep = 0
 
 							discount = .7
@@ -164,11 +163,11 @@ class Agent:
 								next_reward = Environment.reward(current_state, next_state, goal_state)
 
 								# Take transition
-								current_state = copy(next_state)
+								current_state = next_state
 								current_reward = next_reward
 
 								# Record discounted reward
-								total_reward = (discount**timestep) * current_reward
+								total_reward += (discount**timestep) * current_reward
 
 								timestep += 1
 
@@ -185,7 +184,7 @@ class Agent:
 current_state = State(12, 12, 10, 12)
 goal_state = State(10, 10, 10, 10)
 
-print(f"current state: {current_state}, goal state: {goal_state}")
+print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
 print('------------')
 
 results = Agent.run(current_state, goal_state)
@@ -194,7 +193,7 @@ light_action = results['light_action']
 water_action = results['water_action']
 ventilation_action = results['ventilation_action']
 
-print(f'light action: {light_action}, water action: {water_action}, ventilation action: {ventilation_action}')
+print(f'CHOICE: light action: {light_action}, water action: {water_action}, ventilation action: {ventilation_action}')
 print('------------')
 
 for reward in results['avg_episode_rewards']:
