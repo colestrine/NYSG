@@ -3,10 +3,20 @@
 SDA = 3
 SCL = 5
 
-TEMP_ADDR =         0x40
-MOISTURE_ADDR =     0x36
-CO2_ADDR =          0x58
-LIGHT_ADDR =        0x10
+TEMP_ADDR = 0x40
+MOISTURE_ADDR = 0x36
+LIGHT_ADDR = 0x10
+CO2_ADDR = 0x58
+
+# ---- MODIFY SENSOR ADDRS FOR WHICH SENSORS ARE USED ----
+SENSOR_ADDRS = [
+    TEMP_ADDR,
+    MOISTURE_ADDR,
+    LIGHT_ADDR,
+    CO2_ADDR,
+]
+
+I2C_PORT_NUM = 1
 
 # ----- Peripheral Constants --------
 

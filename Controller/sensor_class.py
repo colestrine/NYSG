@@ -1,5 +1,6 @@
 import gpiozero
 import smbus2
+import pin_constants
 
 
 class Sensor:
@@ -29,6 +30,11 @@ class TemperatureSensor(Sensor):
 
 class MoistureSensor(Sensor):
     pass
+
+
+def read_from_sensors(bus):
+    for sensor_addr in pin_constants.SENSOR_ADDRS:
+        bus.read_i2c_block_data(sensor_addr, 0x00, 100)
 
 
 if __name__ == "__main__":
