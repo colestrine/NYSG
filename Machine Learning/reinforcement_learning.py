@@ -1,4 +1,5 @@
 from numpy import random, mean
+from matplotlib import pyplot
 
 class State:
 	def __init__(self, temperature, humidity, soil_moisture, sunlight):
@@ -34,12 +35,16 @@ class Environment:
 		else:
 			reward = 0
 
-		if next_difference < 2:
+		if next_difference < 1:
+			reward += 2000
+		elif next_difference < 2:
 			reward += 1000
-		elif next_difference < 4:
+		elif next_difference < 3:
 			reward += 500
 		else:
 			reward += -100
+
+		reward -= next_difference * 10
 
 		return reward
 
@@ -47,60 +52,78 @@ class Environment:
 		next_state = State(current_state.temperature, current_state.humidity, current_state.soil_moisture, current_state.sunlight)
 
 		if light_action == 'increase':
-			factor = round(random.randint(50, 100)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
 			next_state.sunlight += factor
 
-			factor = round(random.randint(0, 50)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
 			next_state.temperature += factor
 		elif light_action == 'decrease':
-			factor = round(random.randint(50, 100)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
 			if next_state.sunlight > factor:
 				next_state.sunlight -= factor
 			else:
 				next_state.sunlight = 0
 
-			factor = round(random.randint(0, 50)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
 			if next_state.temperature > factor:
 				next_state.temperature -= factor
 			else:
 				next_state.temperature = 0
+		else:
+			factor = round(random.randint(-2, 3)/10, 1)
+			next_state.temperature += factor
+
+			factor = round(random.randint(-2, 3)/10, 1)
+			next_state.sunlight += factor
 
 		if water_action == 'increase':
-			factor = round(random.randint(50, 100)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
 			next_state.soil_moisture += factor
 
-			factor = round(random.randint(0, 50)/100, 1)
+			factor = round(random.randint(0, 20)/100, 1)
 			next_state.humidity += factor
 		elif water_action == 'decrease':
-			factor = round(random.randint(50, 100)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
 			if next_state.soil_moisture > factor:
 				next_state.soil_moisture -= factor
 			else:
 				next_state.soil_moisture = 0
 
-			factor = round(random.randint(0, 50)/100, 1)
+			factor = round(random.randint(0, 20)/100, 1)
 			if next_state.humidity > factor:
 				next_state.humidity -= factor
 			else:
 				next_state.humidity = 0
+		else:
+			factor = round(random.randint(-2, 3)/10, 1)
+			next_state.soil_moisture += factor
+
+			factor = round(random.randint(-2, 3)/10, 1)
+			next_state.humidity += factor
 
 		if ventilation_action == 'increase':
-			factor = round(random.randint(50, 100)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
 			if next_state.temperature > factor:
 				next_state.temperature -= factor
 			else:
 				next_state.temperature = 0
 
-			factor = round(random.randint(50, 100)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
 			if next_state.humidity > factor:
 				next_state.humidity -= factor
 			else:
 				next_state.humidity = 0
 		elif ventilation_action == 'decrease':
-			factor = round(random.randint(50, 100)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
 			next_state.temperature += factor
 
-			factor = round(random.randint(50, 100)/100, 1)
+			factor = round(random.randint(80, 100)/100, 1)
+			next_state.humidity += factor
+		else:
+			factor = round(random.randint(-2, 3)/10, 1)
+			next_state.temperature += factor
+
+			factor = round(random.randint(-2, 3)/10, 1)
 			next_state.humidity += factor
 
 		return next_state
@@ -117,7 +140,7 @@ class Agent:
 				for initial_water_action in action_choices:
 					for initial_ventilation_action in action_choices:
 						episode_rewards = []
-						for episode in range(0, 150):
+						for episode in range(0, 50):
 							timestep = 0
 
 							discount = .7
@@ -125,10 +148,6 @@ class Agent:
 							# Look one step ahead, observe next state and reward
 							next_state = Environment.transition(initial_state, initial_light_action, initial_water_action, initial_ventilation_action)
 							next_reward = Environment.reward(initial_state, next_state, goal_state)
-
-							# print(f'state 0: {initial_state}')
-							# print(f'light action: {initial_light_action} water action: {initial_water_action} ventilation action: {initial_ventilation_action}')
-							# print(f'state 1: {next_state} reward: {next_reward}')
 
 							# Take transition
 							current_state = next_state
@@ -181,20 +200,110 @@ class Agent:
 
 		return {'light_action': choice['light_action'], 'water_action':  choice['water_action'], 'ventilation_action':  choice['ventilation_action'], 'avg_episode_rewards': avg_episode_rewards}
 
-current_state = State(12, 12, 10, 12)
+class Test:
+	def run(current_state, goal_state, timesteps):
+		# Start at timestep 0
+		timestep = 0
+
+		# Record current state, goal state
+		current_states = [current_state]
+		goal_states = [goal_state]
+
+		# Display timestep
+		print(f'timestep {timestep}')
+
+		for timestep in range(1, timesteps):
+			print('------------')
+
+			# Display timestep
+			print(f'timestep {timestep}')
+
+			# Run algorithm to get new decision from current state
+			results = Agent.run(current_state, goal_state)
+
+			# Extract actions from decision
+			light_action = results['light_action']
+			water_action = results['water_action']
+			ventilation_action = results['ventilation_action']
+
+			print('------------')
+			print(f'state: {current_state}')
+			print(f'light: {light_action} water: {water_action} ventilation: {ventilation_action}')
+
+			# Take actions and observe new state
+			current_state = Environment.transition(current_state, light_action, water_action, ventilation_action)
+
+			# Record current state, goal state
+			current_states.append(current_state)
+			goal_states.append(goal_state)
+
+
+		return {'current_states': current_states, 'goal_states': goal_states}
+
+	def plot(current_states, goal_states):
+		if len(current_states) == len(goal_states):
+			length = len(current_states)
+		else:
+			print(f'plot: len(current_states) ({len(current_states)}) != len(goal_states) ({len(goal_states)})')
+			return -1
+
+		current_temperatures = []
+		current_humidities = []
+		current_soil_moistures = []
+		current_sunlights = []
+
+		goal_temperatures = []
+		goal_humidities = []
+		goal_soil_moistures = []
+		goal_sunlights = []
+
+		for current_state in current_states:
+			current_temperatures.append(current_state.temperature)
+			current_humidities.append(current_state.humidity)
+			current_soil_moistures.append(current_state.soil_moisture)
+			current_sunlights.append(current_state.sunlight)
+
+		for goal_state in goal_states:
+			goal_temperatures.append(goal_state.temperature)
+			goal_humidities.append(goal_state.humidity)
+			goal_soil_moistures.append(goal_state.soil_moisture)
+			goal_sunlights.append(goal_state.sunlight)
+
+		pyplot.plot(range(length), current_temperatures, 'r-', label="Temperature")
+		pyplot.plot(range(length), current_humidities, 'g-', label="Humiditiy")
+		pyplot.plot(range(length), current_soil_moistures, 'b-', label="Soil Moisture")
+		pyplot.plot(range(length), current_sunlights, 'y-', label="Sunlight")
+
+		pyplot.plot(range(length), goal_temperatures, 'r--')
+		pyplot.plot(range(length), goal_humidities, 'g--')
+		pyplot.plot(range(length), goal_soil_moistures, 'b--')
+		pyplot.plot(range(length), goal_sunlights, 'y--')
+
+		pyplot.xlabel('Timestep')
+		pyplot.ylabel('Value')
+
+		bottom, top = pyplot.ylim()
+		pyplot.ylim(0, top*1.5)
+
+		pyplot.title(f'Simulation Over {length} Timesteps')
+
+		pyplot.legend()
+
+		pyplot.show()
+
+current_state = State(25, 20, 28, 20)
 goal_state = State(10, 10, 10, 10)
 
 print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
 print('------------')
 
-results = Agent.run(current_state, goal_state)
+results = Test.run(current_state, goal_state, 50)
 
-light_action = results['light_action']
-water_action = results['water_action']
-ventilation_action = results['ventilation_action']
+current_states = results['current_states']
+goal_states = results['goal_states']
 
-print(f'CHOICE: light action: {light_action}, water action: {water_action}, ventilation action: {ventilation_action}')
 print('------------')
+for (index, state) in enumerate(current_states):
+	print(f'timestep: {index} state: {state}')
 
-for reward in results['avg_episode_rewards']:
-	print(f"average reward: {reward['avg_episode_reward']}, light action: {reward['light_action']}, water action: {reward['water_action']}, ventilation action: {reward['ventilation_action']}")
+Test.plot(current_states, goal_states)
