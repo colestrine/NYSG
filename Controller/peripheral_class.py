@@ -1,4 +1,13 @@
-import smbus2
+import gpiozero
+
+"""
+peripheral_class copntains classes to manipulate the peripherals in thw greenhouse.
+The main package used in this class will be GPIOZero or another package that allows
+direct interaction for poins
+
+abstractions for each type of peripheral are presented
+in class format 
+"""
 
 
 class Peripheral:
