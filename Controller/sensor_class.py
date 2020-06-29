@@ -17,10 +17,33 @@ I2C protocols)
 - time (used for time and delays)
 - json (used to log read in data from sensors)
 - pin_constants [custom]: holds pin data for I2C communication protocols
+
+- sudo pip3 install adafruit-circuitpython-seesaw 
+ You will need to run the above command for the adafruit moisture sensor
+ to work
+
+- sudo pip3 install adafruit-circuitpython-sgp30
+You will need to run the above command to access and work with the adafruit
+co2 sensor
+
+NOTE: None of the Adafruit products contain a register so they cannot be accessed
+easily, without using their cusotm packages
+
 """
 
+# ----- ADA FRUIT MOISTURE SENSOR IMPORTS -----------------
+import busio
+from board import SCL, SDA
+from adafruit_seesaw.seesaw import Seesaw
+
+# ---- ADA FRUIT IMPORTS CO2 GAS SENSOR IMPORTS----------
+import adafruit_sgp30
+
+# ----- NON ADA FRUIT IMPORTS ------
 
 import smbus2
+
+# ------- OTHER IMPORTS -------
 import time
 import json
 import pin_constants
@@ -141,15 +164,52 @@ class TempHumiditySensor(Sensor):
 class MoistureSensor(Sensor):
     """
     MoistureSensor represents an AdaFruit Moisture Sensor
+
+    [sensor] is the sensor object for Adafruit
+
+    SOURCE ATTRIBUTION:
+    https://www.mouser.com/pdfdocs/adafruit-stemma-soil-sensor-i2c-capacitive-moisture-sensor.pdf
     """
 
     def __init__(self):
+        """
+        Creates a Moisture sensor represent an adaFruit Moisture Sensor
+        """
         super().__init__()
+        i2c_bus = busio.I2C(SCL, SDA)
+        ss = Seesaw(i2c_bus, addr=pin_constants.MOISTURE_ADDR)
+        self.sensor = ss
+
+    def read(self):
+        """
+        read(self) returns the moisture and the soil_temp for the given
+        Moisture sensor
+        """
+        ss = self.sensor
+        # read moisture level through capacitive touch pad
+        moisture = ss.moisture_read()
+        # read temperature from the temperature sensor
+        soil_temp = ss.get_temp()
+        return (moisture, soil_temp)
 
 
-def read_from_sensors(bus):
-    for sensor_addr in pin_constants.SENSOR_ADDRS:
-        bus.read_i2c_block_data(sensor_addr, 0x00, 100)
+class Co2Sensor(Sensor):
+    """
+    Co2Sensor represents a physical Ada Fruit Co2 Sensor
+
+    SUPERCLASS: Sensor
+    """
+
+    def __init__(self):
+        i2c = busio.I2C(SCL, SDA, frequency=100000)
+        # Create library object on our I2C port
+        sgp30 = adafruit_sgp30.Adafruit_SGP30(i2c)
+        sgp30.iaq_init()
+        sgp30.set_iaq_baseline(0x8973, 0x8aae)
+        self.sensor = sgp30
+
+    def read(self):
+        return self.sensor.get_iaq_baseline()
 
 
 def create_channel(bus_num=1):
@@ -162,6 +222,46 @@ def create_channel(bus_num=1):
     WRAPPER FUNCTION for students
     """
     return smbus2.SMBus(bus_num)
+
+
+# -------- SUMMARY FUNCTIONS --------
+
+
+def sensor_to_name(sensor):
+    if type(sensor) == Co2Sensor:
+        return "CO2"
+    elif type(sensor) == TempHumiditySensor:
+        return "Temp_Humidity"
+    elif type(sensor) == MoistureSensor:
+        return "Moisture"
+    elif type(sensor) == LightSensor:
+        return "Light"
+    else:
+        raise AssertionError
+
+
+def collect_all(sensor_list, bus, log_dict):
+    """
+    collect_all() collects all the data from all sensors and logs it
+    uses the sensors in [sensor_list] which are on the bus object [bus]
+
+    log_dict is the place to log data
+    """
+    for sensor in sensor_list:
+        if hasattr(sensor, "sensor"):
+            s = sensor.sensor
+            val = s.read()
+        else:
+            val = sensor.read()
+
+        t = time.localtime()
+        current_time = time.strftime("%H:%M:%S", t)
+
+        name = sensor_to_name(sensor)
+
+        log_dict[name][current_time] == val
+
+    dump_data(log_dict, pin_constants.TEMPERATURE_LOG_PATH)
 
 # --------- LOGGING -------------
 
