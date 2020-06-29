@@ -61,20 +61,44 @@ class Environment:
 	def transition(current_state, light_action, water_action, ventilation_action):
 		next_state = State(current_state.temperature, current_state.humidity, current_state.soil_moisture, current_state.sunlight)
 
-		if light_action == 'increase':
-			factor = round(random.randint(80, 100)/100, 1)
+		big_random_low = 85
+		big_random_high = 100
+
+		small_random_low = 0
+		small_random_high = 30
+
+		if light_action == 'big_increase':
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
 			next_state.sunlight += factor
 
-			factor = round(random.randint(80, 100)/100, 1)
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
 			next_state.temperature += factor
-		elif light_action == 'decrease':
-			factor = round(random.randint(80, 100)/100, 1)
+		elif light_action == 'small_increase':
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
+			next_state.sunlight += factor
+
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
+			next_state.temperature += factor
+		elif light_action == 'big_decrease':
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
 			if next_state.sunlight > factor:
 				next_state.sunlight -= factor
 			else:
 				next_state.sunlight = 0
 
-			factor = round(random.randint(80, 100)/100, 1)
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
+			if next_state.temperature > factor:
+				next_state.temperature -= factor
+			else:
+				next_state.temperature = 0
+		elif light_action == 'small_decrease':
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
+			if next_state.sunlight > factor:
+				next_state.sunlight -= factor
+			else:
+				next_state.sunlight = 0
+
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
 			if next_state.temperature > factor:
 				next_state.temperature -= factor
 			else:
@@ -86,20 +110,38 @@ class Environment:
 			factor = round(random.randint(-2, 3)/10, 1)
 			next_state.sunlight += factor
 
-		if water_action == 'increase':
-			factor = round(random.randint(80, 100)/100, 1)
+		if water_action == 'big_increase':
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
 			next_state.soil_moisture += factor
 
-			factor = round(random.randint(0, 20)/100, 1)
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
 			next_state.humidity += factor
-		elif water_action == 'decrease':
-			factor = round(random.randint(80, 100)/100, 1)
+		elif water_action == 'small_increase':
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
+			next_state.soil_moisture += factor
+
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
+			next_state.humidity += factor
+		elif water_action == 'big_decrease':
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
 			if next_state.soil_moisture > factor:
 				next_state.soil_moisture -= factor
 			else:
 				next_state.soil_moisture = 0
 
-			factor = round(random.randint(0, 20)/100, 1)
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
+			if next_state.humidity > factor:
+				next_state.humidity -= factor
+			else:
+				next_state.humidity = 0
+		elif water_action == 'small_decrease':
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
+			if next_state.soil_moisture > factor:
+				next_state.soil_moisture -= factor
+			else:
+				next_state.soil_moisture = 0
+
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
 			if next_state.humidity > factor:
 				next_state.humidity -= factor
 			else:
@@ -111,23 +153,41 @@ class Environment:
 			factor = round(random.randint(-2, 3)/10, 1)
 			next_state.humidity += factor
 
-		if ventilation_action == 'increase':
-			factor = round(random.randint(80, 100)/100, 1)
+		if ventilation_action == 'big_increase':
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
 			if next_state.temperature > factor:
 				next_state.temperature -= factor
 			else:
 				next_state.temperature = 0
 
-			factor = round(random.randint(80, 100)/100, 1)
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
 			if next_state.humidity > factor:
 				next_state.humidity -= factor
 			else:
 				next_state.humidity = 0
-		elif ventilation_action == 'decrease':
-			factor = round(random.randint(80, 100)/100, 1)
+		elif ventilation_action == 'small_increase':
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
+			if next_state.temperature > factor:
+				next_state.temperature -= factor
+			else:
+				next_state.temperature = 0
+
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
+			if next_state.humidity > factor:
+				next_state.humidity -= factor
+			else:
+				next_state.humidity = 0
+		elif ventilation_action == 'big_decrease':
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
 			next_state.temperature += factor
 
-			factor = round(random.randint(80, 100)/100, 1)
+			factor = round(random.randint(big_random_low, big_random_high)/100, 1)
+			next_state.humidity += factor
+		elif ventilation_action == 'small_decrease':
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
+			next_state.temperature += factor
+
+			factor = round(random.randint(small_random_low, small_random_high)/100, 1)
 			next_state.humidity += factor
 		else:
 			factor = round(random.randint(-2, 3)/10, 1)
@@ -144,7 +204,7 @@ class Agent:
 		if initial_state == goal_state:
 			return ({'light_action': light_action, 'water_action': water_action, 'ventilation_action': ventilation_action}, None)
 
-		action_choices = ['increase', 'decrease', 'none']
+		action_choices = ['big_increase', 'big_decrease', 'small_increase', 'small_decrease', 'none']
 
 		# Iterate through all possible action vectors
 		avg_episode_rewards = []
@@ -152,7 +212,7 @@ class Agent:
 				for initial_water_action in action_choices:
 					for initial_ventilation_action in action_choices:
 						episode_rewards = []
-						for episode in range(0, 50):
+						for episode in range(0, 10):
 							timestep = 0
 
 							discount = .7
@@ -303,13 +363,13 @@ class Test:
 
 		pyplot.show()
 
-current_state = State(25, 20, 28, 20)
-goal_state = State(10, 10, 10, 10)
+current_state = State(5, 6, 3, 6)
+goal_state = State(10, 8, 7, 11)
 
 print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
 print('------------')
 
-results = Test.run(current_state, goal_state, 50)
+results = Test.run(current_state, goal_state, 20)
 
 current_states = results['current_states']
 goal_states = results['goal_states']
