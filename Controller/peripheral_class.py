@@ -1,13 +1,30 @@
-import gpiozero
-
 """
 peripheral_class copntains classes to manipulate the peripherals in thw greenhouse.
 The main package used in this class will be GPIOZero or another package that allows
 direct interaction for poins
 
 abstractions for each type of peripheral are presented
-in class format 
+in class format
+
+REQUIRES:
+- RPi.GPIO in order to use all the GPIO port ufnctionality on the raspberry pi
 """
+
+
+# -------- DEPENDENT IMPORTS ---------
+import gpiozero
+import RPi.GPIO as GPIO
+
+
+# -------- OTHER PACKAGES ----------
+import time
+
+
+# ------- CUSTOM PACKAGES --------
+import pin_constants
+
+
+# ------- CUSTOM CLASSES ------------
 
 
 class Peripheral:
@@ -17,16 +34,30 @@ class Peripheral:
     active is true if the peripheral is on, else false
     """
 
-    def __init__(self, active=False):
+    def __init__(self, channel, active=False):
         """
-        __init__(self, active=False) constructs a Peripheral with active = active
+        __init__(self, channel, active) constructs a Peripheral in channel channel
+        and activity active
         """
+        self.channel = channel
         self.active = active
+
+    def set_up(self, resistor_level):
+        """
+        set_up(self) sets up the pull up or pull down resistor state
+        for each Periperhal
+        [resistor_level] is whether the resitor is pulled up or down,
+        use [GPIO.PUD_UP] to pull up
+        """
+        GPIO.setup(self.channel, GPIO.IN, GPIO.PUD_UP)
 
     def change_active(self, activity):
         """
         change_active(self, activity) changes the activity of self
         tp activity
+
+        active is a truthy type, or bool, 1 or true to activate, 0 or false
+        to deactivate
         """
         self.active = activity
 
@@ -38,9 +69,32 @@ class Peripheral:
 
     def set_inactive(self):
         """
-        set_inactive(self) sets self to be inactive
+        set_inactive(self) sets peripheral to be inactive
         """
         self.change_active(False)
+
+    def respond(self):
+        """
+        respond(self) sends the activity state to the physical peripheral
+        """
+        GPIO.output(self.channel, self.active)
+
+    def read(self):
+        """
+        Returns the activity state of the peripheral (high/low)
+        USE: for debugginf
+        """
+        return GPIO.input(self.channel)
+
+    def deactivate(self):
+        """
+        deactivate(self) deactivates the peripheral by closing the channel
+        sets active to False
+
+        WARNING: After deactivate is claled, peripheral CANNOT be USED!
+        """
+        GPIO.cleanup(self.channel)
+        self.active = False
 
     # ----- DEBUGGING TOOLS -----
 
@@ -64,8 +118,11 @@ class SolenoidValve(Peripheral):
     SolenoidValve(Peripheral) is a SolenoidValve sensor object
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, channel):
+        """
+        Creates a Solenoid valve  object with channel chnnale
+        """
+        super().__init__(channel)
 
 
 class HeatPad(Peripheral):
@@ -73,8 +130,11 @@ class HeatPad(Peripheral):
     HeatPad(Peripheral) is a Heat Pad sensor object
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, channel):
+        """
+        Creates a HeatPad  object with channel chnnale
+        """
+        super().__init__(channel)
 
 
 class PlantLight(Peripheral):
@@ -82,16 +142,81 @@ class PlantLight(Peripheral):
     PlantLight(Peripheral) is a Plant Light sensor object
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, channel):
+        """
+        Creates a plant light object with channel chnnale
+        """
+        super().__init__(channel)
 
 
 class Fan(Peripheral):
     """
-    Fan(Peripheral) is a Fan object 
-    Freq is hte frequency of the fan; it is a integer
+    Fan(Peripheral) is a Fan object
+    Freq is hte frequency of the fan; it is a integer, in HZ
+    PWM is the pwm object to monitor and change frequency
+    dc is the duty_cycle of the pwm
+
+    SUPEF CLaSS: PEripheral
     """
 
-    def __init__(self, freq=0):
-        super().__init__()
+    def __init__(self, channel, freq=0, dc=0):
+        """
+        Createsa Fan peripheral object with frequency freq
+        duty cycles dc, and PWM pwm
+        """
+        super().__init__(channel)
         self.freq = freq
+        self.dc = dc
+        self.pwm = GPIO.PWM(self.channel, self.freq)
+        self.pwm.start(self.dc)
+        self.set_active()
+
+    def set_freq(self, freq):
+        """
+        set_freq(self, hz) sets the freuqnecy of the fan in freq [hz]
+        """
+        self.freq = freq
+
+    def get_freq(self):
+        """
+        get_freq(self) gets the frequency of the Fan in HZ
+        """
+        return self.freq
+
+    def set_duty_cycle(self, dc):
+        """
+        set_duty_cycle(self, dc) sets the duty cylce of the fan in [dc] amount
+        """
+        self.dc = dc
+
+    def get_duty_cycle(self):
+        """
+        get_duty_cycle(self) gets the duty cycles of the Fan 
+        """
+        return self.dc
+
+    def deactivate(self):
+        """
+        @ Override:
+        Clloses channel, sets actiity to false and runs stop on the pWM
+        """
+        self.pwm.stop()
+        super().deactivate()
+
+    # ----- DEBUGGING TOOLS -----
+
+    def __str__(self):
+        """
+        @ Override
+        __str__(self) is the stringified version of self
+        and is the active state of self
+        """
+        return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq)
+
+    def __repr__(self):
+        """
+        @ Override
+        __str__(self) is the printed version of self
+        and is the active state of self, and the duty cyucles and frequency
+        """
+        return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq)

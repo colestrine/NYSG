@@ -28,7 +28,7 @@ co2 sensor
 
 NOTE: None of the Adafruit products contain a register so they cannot be accessed
 easily, without using their cusotm packages
-
+TODO: CHECK AND TEST ALL CLASSES
 """
 
 # ----- ADA FRUIT MOISTURE SENSOR IMPORTS -----------------
@@ -209,7 +209,7 @@ class Co2Sensor(Sensor):
         self.sensor = sgp30
 
     def read(self):
-        return self.sensor.get_iaq_baseline()
+        return self.sensor.iaq_measure()
 
 
 def create_channel(bus_num=1):
@@ -267,6 +267,12 @@ def collect_all(sensor_list, bus, log_dict):
 
 
 def load_data(path):
+    """
+    load_data(path) loads data from path in a json format with read only, 
+    NOT READ BYTES
+
+    returns obj
+    """
     fp = open(path, "r")
     obj = json.load(fp)
     fp.close()
@@ -274,6 +280,10 @@ def load_data(path):
 
 
 def dump_data(obj, path):
+    """
+    dump_data loads obj into path in JSON format
+    uses WRITe, not WRITE BYTES
+    """
     fp = open(path, "w")
     json.dump(obj, fp)
     fp.close()
