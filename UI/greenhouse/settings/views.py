@@ -31,8 +31,19 @@ def index(request):
 		# If data was submitted, write that data to the interface file
 		if (temperature):
 			data_handler.write_healthy_levels(temperature, humidity, soil_moisture, sunlight)
+			data_handler.write_plant_profile("custom")
 		if (plant_profile):
 			data_handler.write_plant_profile(plant_profile)
+
+			if (plant_profile != "custom"):
+				healthy_levels = data_handler.get_healthy_levels_by_profile(plant_profile)
+
+				temperature = healthy_levels['temperature']
+				humidity = healthy_levels['humidity']
+				soil_moisture = healthy_levels['soil_moisture']
+				sunlight = healthy_levels['sunlight']
+
+				data_handler.write_healthy_levels(temperature, humidity, soil_moisture, sunlight)
 
 	healthy_levels = data_handler.read_healthy_levels()
 	plant_profile = data_handler.read_plant_profile()

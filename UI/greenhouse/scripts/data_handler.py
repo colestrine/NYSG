@@ -32,3 +32,11 @@ class data_handler:
 		profile_dict = json.loads(profile_json)
 
 		return profile_dict
+
+	def get_healthy_levels_by_profile(profile):
+		healthy_levels_by_profile_file = open('../../Interface Files/healthy_levels_by_profile.json', 'r')
+		healthy_levels_by_profile_json = healthy_levels_by_profile_file.read()
+		healthy_levels_by_profile_file.close()
+		healthy_levels_by_profile_dict = json.loads(healthy_levels_by_profile_json)
+
+		return healthy_levels_by_profile_dict[profile]

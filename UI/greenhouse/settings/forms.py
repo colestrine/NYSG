@@ -4,7 +4,7 @@ from scripts.data_handler import data_handler
 class PlantProfileForm(forms.Form):
 	plant_profile_choices = [("custom", "Custom"), ("profile_1", "Profile 1"), ("profile_2", "Profile 2"), ("profile_3", "Profile 3")]
 
-	plant_profile = forms.ChoiceField(required=False, choices=plant_profile_choices)
+	plant_profile = forms.ChoiceField(required=False, choices=plant_profile_choices, widget=forms.Select(attrs={'onchange': 'plant_profile_form.submit();'}))
 
 class HealthyLevelsForm(forms.Form):
 	temperature_choices = [("65_67", "65-67"), ("68_70", "68-70"), ("71_73", "71-73"), ("74_76", "74-76")]
@@ -14,7 +14,7 @@ class HealthyLevelsForm(forms.Form):
 
 	healthy_levels = data_handler.read_healthy_levels()
 
-	temperature = forms.ChoiceField(required=False, choices=temperature_choices)
-	humidity = forms.ChoiceField(required=False, choices=humidity_choices)
-	soil_moisture = forms.ChoiceField(required=False, label="Soil Moisture", choices=soil_moisture_choices)
-	sunlight = forms.ChoiceField(required=False, choices=sunlight_choices)
+	temperature = forms.ChoiceField(required=False, choices=temperature_choices, widget=forms.Select(attrs={'onchange': 'healthy_levels_form.submit();'}))
+	humidity = forms.ChoiceField(required=False, choices=humidity_choices, widget=forms.Select(attrs={'onchange': 'healthy_levels_form.submit();'}))
+	soil_moisture = forms.ChoiceField(required=False, label="Soil Moisture", choices=soil_moisture_choices, widget=forms.Select(attrs={'onchange': 'healthy_levels_form.submit();'}))
+	sunlight = forms.ChoiceField(required=False, choices=sunlight_choices, widget=forms.Select(attrs={'onchange': 'healthy_levels_form.submit();'}))
