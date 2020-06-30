@@ -1,0 +1,23 @@
+{
+	"profile_1":
+		{
+			"temperature": "65_67",
+			"humidity": "40_42",
+			"soil_moisture": "25_27",
+			"sunlight": "80_85"
+		},
+	"profile_2":
+		{
+			"temperature": "68_70",
+			"humidity": "43_45",
+			"soil_moisture": "28_30",
+			"sunlight": "86_91"
+		},
+	"profile_3":
+		{
+			"temperature": "71_73",
+			"humidity": "46_48",
+			"soil_moisture": "31_33",
+			"sunlight": "92_97"
+		}
+}
