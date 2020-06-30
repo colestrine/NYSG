@@ -40,3 +40,39 @@ class data_handler:
 		healthy_levels_by_profile_dict = json.loads(healthy_levels_by_profile_json)
 
 		return healthy_levels_by_profile_dict[profile]
+
+	def get_available_profiles():
+		available_profiles_file = open('../../Interface Files/healthy_levels_by_profile.json', 'r')
+		available_profiles_json = available_profiles_file.read()
+		available_profiles_file.close()
+		available_profiles_dict = json.loads(available_profiles_json)
+
+		profiles = []
+		for profile in available_profiles_dict:
+			profiles.append((profile, profile))
+
+		return profiles
+
+	def get_available_temperatures():
+		available_profiles_file = open('../../Interface Files/healthy_levels_by_profile.json', 'r')
+		available_profiles_json = available_profiles_file.read()
+		available_profiles_file.close()
+		available_profiles_dict = json.loads(available_profiles_json)
+
+		temperatures = []
+		for profile in available_profiles_dict:
+			temperatures.append((available_profiles_dict[profile]['temperature'], available_profiles_dict[profile]['temperature'].replace('_', '-')+'%'))
+
+		return temperatures
+
+	def get_available_humidities():
+		available_profiles_file = open('../../Interface Files/healthy_levels_by_profile.json', 'r')
+		available_profiles_json = available_profiles_file.read()
+		available_profiles_file.close()
+		available_profiles_dict = json.loads(available_profiles_json)
+
+		humidities = []
+		for profile in available_profiles_dict:
+			humidities.append((available_profiles_dict[profile]['humidity'], available_profiles_dict[profile]['humidity'].replace('_', '-')+'%'))
+
+		return humidities

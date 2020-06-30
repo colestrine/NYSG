@@ -2,15 +2,18 @@ from django import forms
 from scripts.data_handler import data_handler
 
 class PlantProfileForm(forms.Form):
-	plant_profile_choices = [("custom", "Custom"), ("profile_1", "Profile 1"), ("profile_2", "Profile 2"), ("profile_3", "Profile 3")]
+	plant_profile_choices = [("Custom", "Custom")]
+	profiles = data_handler.get_available_profiles()
+	for profile in profiles:
+		plant_profile_choices.append(profile)
 
 	plant_profile = forms.ChoiceField(required=False, choices=plant_profile_choices, widget=forms.Select(attrs={'onchange': 'plant_profile_form.submit();'}))
 
 class HealthyLevelsForm(forms.Form):
-	temperature_choices = [("65_67", "65-67"), ("68_70", "68-70"), ("71_73", "71-73"), ("74_76", "74-76")]
-	humidity_choices = [("40_42", "40-42%"), ("43_45", "43-45%"), ("46_48", "46-48%"), ("49_51", "49-51%")]
-	soil_moisture_choices = [("25_27", "25-27%"), ("28_30", "28-30%"), ("31_33", "31-33%"), ("34-36", "34-37%")]
-	sunlight_choices = [("80_85", "80-85%"), ("86_91", "86-91%"), ("92_97", "92-97%"), ("98_100", "98-100%")]
+	temperature_choices = data_handler.get_available_temperatures()
+	humidity_choices = data_handler.get_available_humidities()
+	soil_moisture_choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+	sunlight_choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
 
 	healthy_levels = data_handler.read_healthy_levels()
 
