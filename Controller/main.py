@@ -101,7 +101,7 @@ def one_cycle(sensors_dict):
 
 
 def event_loop(init_dict):
-    """
+    """ 
     event_loop() the main event loop
 
     [init_dict] is the dictionary of arguments form initialization
