@@ -5,6 +5,7 @@
 
 ## Required Modules
 - Django (pip install Django)
+- Scipy (pip install scipy)
 
 ## Starting The UI
 ### Accessing The UI From Your Laptop

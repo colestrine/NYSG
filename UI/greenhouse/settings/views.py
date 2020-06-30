@@ -29,10 +29,24 @@ def index(request):
 			plant_profile = ''
 
 		# If data was submitted, write that data to the interface file
+		# If healthy levels data was submitted, update healthy levels interface file, and save plant profile as "custom" in profile interface file
 		if (temperature):
 			data_handler.write_healthy_levels(temperature, humidity, soil_moisture, sunlight)
+			data_handler.write_plant_profile("custom")
+		# If profile data was submitted, save profile in profile interface file
 		if (plant_profile):
 			data_handler.write_plant_profile(plant_profile)
+
+			# If profile was not "custom", update healthy levels interface file with levels from that profile
+			if (plant_profile != "custom"):
+				healthy_levels = data_handler.get_healthy_levels_by_profile(plant_profile)
+
+				temperature = healthy_levels['temperature']
+				humidity = healthy_levels['humidity']
+				soil_moisture = healthy_levels['soil_moisture']
+				sunlight = healthy_levels['sunlight']
+
+				data_handler.write_healthy_levels(temperature, humidity, soil_moisture, sunlight)
 
 	healthy_levels = data_handler.read_healthy_levels()
 	plant_profile = data_handler.read_plant_profile()
