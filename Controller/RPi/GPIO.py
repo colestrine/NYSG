@@ -10,6 +10,9 @@ PUD_DOWN = False
 IN = True
 OUT = False
 
+BOARD = "board"
+BCM = "bcm"
+
 
 class GPIO:
     def __init__(self):
@@ -31,6 +34,10 @@ class PWM:
 
     def stop(self):
         pass
+
+
+def setmode(board):
+    pass
 
 
 def input(channel):

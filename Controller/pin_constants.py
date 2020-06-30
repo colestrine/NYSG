@@ -1,3 +1,8 @@
+# ------- IMPORTS --------
+
+import json
+
+
 # -----I2C constants --------
 
 SDA = 3
@@ -29,4 +34,33 @@ VALVE = 32
 HEAT = 37
 
 # ------- lOG LOCATIONS -------------
+
+
 TEMPERATURE_LOG_PATH = "temperature_log.json"
+ALL_DATA_LOG_PATH = "all_data_log.json"
+
+
+# --------- LOGGING -------------
+
+
+def load_data(path):
+    """
+    load_data(path) loads data from path in a json format with read only, 
+    NOT READ BYTES
+
+    returns obj
+    """
+    fp = open(path, "r")
+    obj = json.load(fp)
+    fp.close()
+    return obj
+
+
+def dump_data(obj, path):
+    """
+    dump_data loads obj into path in JSON format
+    uses WRITe, not WRITE BYTES
+    """
+    fp = open(path, "w")
+    json.dump(obj, fp)
+    fp.close()

@@ -45,7 +45,6 @@ import smbus2
 
 # ------- OTHER IMPORTS -------
 import time
-import json
 import pin_constants
 
 # --------- SENSORS ----------------
@@ -86,13 +85,14 @@ class LightSensor(Sensor):
 
     [addr] is the I2C address of the sensor in the bus
     [register] is the sensor data location
+    [channel] is the channel for the sensor
 
     RELATED:
     # we can use https://gpiozero.readthedocs.io/en/stable/api_input.html
     # 13 .1.4 light sensor
     """
 
-    def __init__(self, addr, register):
+    def __init__(self, addr, register, channel):
         """
          __init__(self, addr, register) is the LightSensor object representing
         a physical light sensor
@@ -100,12 +100,13 @@ class LightSensor(Sensor):
         super().__init__()
         self.addr = addr
         self.register = register
+        self.channel = channel
 
-    def read(self, bus):
+    def read(self):
         """
-        reads the light value from the Light sensor on [bus]
+        reads the light value from the Light sensor on self.channel
         """
-        return bus.read_i2c_block_data(self.addr, self.register, 1)
+        return self.channel.read_i2c_block_data(self.addr, self.register, 1)
 
 
 class TempHumiditySensor(Sensor):
@@ -117,9 +118,10 @@ class TempHumiditySensor(Sensor):
     [addr] is the I2C address for the physical TemperatureHUmidity Sensor
     [register] is the address for the register with the data in the physical sensor
     [block_size] is the size of the data retrieved from a read, requieres 2
+    [channel] is the I2C channel
     """
 
-    def __init__(self,  addr, register, block_size=2):
+    def __init__(self,  addr, register, channel, block_size=2):
         """
         __init__(self, bus, addr, register, block_size) creates a Temperature Sensor
         object on bus object [bus], I2C address for the physical temperature sensor [addr],
@@ -130,14 +132,15 @@ class TempHumiditySensor(Sensor):
         super().__init__()
         self.addr = addr
         self.register = register
+        self.channel = channel
         self.block_size = block_size
 
-    def read(self, bus):
+    def read(self):
         """
         read(self, bus) reads the temperature from the physical temperature sensor and returns
         the temperature in Celsius
 
-        [bus] is a bus object representing the I2C bus to which the temperature
+        self.channel is a bus object representing the I2C bus to which the temperature
         and humidity sensor is connected to
 
         Returns: Float (Celsius Temperature)
@@ -157,7 +160,7 @@ class TempHumiditySensor(Sensor):
             return temp_cel
 
         return convert_temp(
-            bus.read_i2c_block_data(
+            self.channel.read_i2c_block_data(
                 self.addr, self.register, self.block_size))
 
 
@@ -211,6 +214,8 @@ class Co2Sensor(Sensor):
     def read(self):
         return self.sensor.iaq_measure()
 
+# -------- UTILITIES ------------
+
 
 def create_channel(bus_num=1):
     """
@@ -240,53 +245,41 @@ def sensor_to_name(sensor):
         raise AssertionError
 
 
-def collect_all(sensor_list, bus, log_dict):
+def collect_all_sensors(sensor_list, log_path=None, log=False):
     """
     collect_all() collects all the data from all sensors and logs it
-    uses the sensors in [sensor_list] which are on the bus object [bus]
+    uses the sensors in [sensor_list] which are on the bus object sensor.channel
 
+    logs data if log = True
     log_dict is the place to log data
+
+    Returns the logged data
     """
+    ret_dict = {}
+
+    log_dict = pin_constants.load_data(log_path)
+
     for sensor in sensor_list:
         if hasattr(sensor, "sensor"):
             s = sensor.sensor
             val = s.read()
         else:
-            val = sensor.read()
+            val = sensor.read(sensor.channel)
 
         t = time.localtime()
         current_time = time.strftime("%H:%M:%S", t)
 
         name = sensor_to_name(sensor)
 
-        log_dict[name][current_time] == val
+        ret_dict[name] = val
 
-    dump_data(log_dict, pin_constants.TEMPERATURE_LOG_PATH)
+        if log:
+            log_dict[name][current_time] == val
 
-# --------- LOGGING -------------
+    if log:
+        pin_constants.dump_data(log_dict, log_path)
 
-
-def load_data(path):
-    """
-    load_data(path) loads data from path in a json format with read only, 
-    NOT READ BYTES
-
-    returns obj
-    """
-    fp = open(path, "r")
-    obj = json.load(fp)
-    fp.close()
-    return obj
-
-
-def dump_data(obj, path):
-    """
-    dump_data loads obj into path in JSON format
-    uses WRITe, not WRITE BYTES
-    """
-    fp = open(path, "w")
-    json.dump(obj, fp)
-    fp.close()
+    return ret_dict
 
 
 # -------- DEBUGGING ------------
@@ -320,7 +313,3 @@ def run_debug():
 
         i += 1
     dump_data(temp_log_dict, pin_constants.TEMPERATURE_LOG_PATH)
-
-
-if __name__ == "__main__":
-    pass

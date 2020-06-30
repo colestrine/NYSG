@@ -220,3 +220,30 @@ class Fan(Peripheral):
         and is the active state of self, and the duty cyucles and frequency
         """
         return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq)
+
+
+# ---------- SUMMARY FUNCTIONS ------------
+
+def react_all(ml_results, peripheral_dict):
+    """
+    react_all(peripheral_dict) changes all the peripherals in the 
+    [peripheral_dict] based on [ml_results]
+    Returns: NONE
+    """
+    for p in peripheral_dict:
+        if p == "valve":
+            valve = peripheral_dict[p]
+            valve_res = ml_results["valve"]
+            valve.set_active(valve_res)
+        elif p == "heat":
+            heat = peripheral_dict[p]
+            heat_res = ml_results["heat"]
+            heat.set_active(heat_res)
+        elif p == "light":
+            light = peripheral_dict[p]
+            light_res = ml_results["light"]
+            light.set_active(light_res)
+        elif p == "fan":
+            fan = peripheral_dict[p]
+            fan_res = ml_results["fan"]
+            fan.set_freq(fan_res)
