@@ -11,4 +11,29 @@ def index(request):
 	healthy_soil_moisture = healthy_levels['soil_moisture']
 	healthy_sunlight = healthy_levels['sunlight']
 
-	return render(request, 'Dashboard/dashboard.html', {'healthy_temperature': healthy_temperature, 'healthy_humidity': healthy_humidity, 'healthy_soil_moisture': healthy_soil_moisture, 'healthy_sunlight': healthy_sunlight})
+	available_temperatures = data_handler.get_available_temperatures()
+	available_humidities = data_handler.get_available_humidities()
+	available_soil_moistures = data_handler.get_available_soil_moistures()
+	available_sunlights = data_handler.get_available_sunlights()
+
+	for available_temperature in available_temperatures:
+		if healthy_temperature == available_temperature[0]:
+			healthy_temperature_label = available_temperature[1]
+			break
+
+	for available_humidity in available_humidities:
+		if healthy_humidity == available_humidity[0]:
+			healthy_humidity_label = available_humidity[1]
+			break
+
+	for available_soil_moisture in available_soil_moistures:
+		if healthy_soil_moisture == available_soil_moisture[0]:
+			healthy_soil_moisture_label = available_soil_moisture[1]
+			break
+
+	for available_sunlight in available_sunlights:
+		if healthy_sunlight == available_sunlight[0]:
+			healthy_sunlight_label = available_sunlight[1]
+			break
+
+	return render(request, 'Dashboard/dashboard.html', {'healthy_temperature': healthy_temperature, 'healthy_temperature_label': healthy_temperature_label, 'healthy_humidity': healthy_humidity, 'healthy_humidity_label': healthy_humidity_label, 'healthy_soil_moisture': healthy_soil_moisture, 'healthy_soil_moisture_label': healthy_soil_moisture_label, 'healthy_sunlight': healthy_sunlight, 'healthy_sunlight_label': healthy_sunlight_label})

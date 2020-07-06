@@ -96,6 +96,7 @@ form p label {
 	background-color: lightgreen;
 	width: 100px;
 	margin-left: 0px;
+	position: relative;
 }
 
 .current-level-bar {
@@ -119,4 +120,19 @@ form p label {
 
 .dashboard-header {
 	text-align: center;
+}
+
+.tooltip-text {
+	font-size: xx-small;
+    position: absolute;
+    top: -13px;
+    text-align: center;
+    width: 100px;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+	visibility: visible;
+	opacity: 1;
 }

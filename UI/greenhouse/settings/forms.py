@@ -7,13 +7,13 @@ class PlantProfileForm(forms.Form):
 	for profile in profiles:
 		plant_profile_choices.append(profile)
 
-	plant_profile = forms.ChoiceField(required=False, choices=plant_profile_choices, widget=forms.Select(attrs={'onchange': 'plant_profile_form.submit();'}))
+	plant_profile = forms.ChoiceField(required=False, choices=plant_profile_choices, label="Plant Profile", widget=forms.Select(attrs={'onchange': 'plant_profile_form.submit();'}))
 
 class HealthyLevelsForm(forms.Form):
 	temperature_choices = data_handler.get_available_temperatures()
 	humidity_choices = data_handler.get_available_humidities()
-	soil_moisture_choices = data_handler.get_available_soil_moistures() #[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
-	sunlight_choices = data_handler.get_available_sunlights() #[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+	soil_moisture_choices = data_handler.get_available_soil_moistures()
+	sunlight_choices = data_handler.get_available_sunlights()
 
 	healthy_levels = data_handler.read_healthy_levels()
 
