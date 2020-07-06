@@ -5,5 +5,88 @@ Dashboard
 {% endblock %}
 
 {% block content %}
-Welcome to the Dashboard page!
+<h1 class="dashboard-header">Current System Status</h1>
+<div class="current-status-wrapper">
+	<div class="status-bar-container">
+		<label for="temperature-status-bar">
+			Temperature:
+		</label>
+		<div id="temperature-status-bar-outer" class="status-bar-outer">
+			<div id="temperature-status-bar-inner" class="status-bar-inner">
+			</div>
+			<div id="temperature-current-level-bar" class="current-level-bar">
+			</div>
+		</div>
+	</div>
+
+	<div class="status-bar-container">
+		<label for="humidity-status-bar">
+			Humidity:
+		</label>
+		<div id="humidity-status-bar-outer" class="status-bar-outer">
+			<div id="humidity-status-bar-inner" class="status-bar-inner">
+			</div>
+			<div id="humidity-current-level-bar" class="current-level-bar">
+			</div>
+		</div>
+	</div>
+
+	<div class="status-bar-container">
+		<label for="soil-moisture-status-bar">
+			Soil Moisture:
+		</label>
+		<div id="soil-moisture-status-bar-outer" class="status-bar-outer">
+			<div id="soil-moisture-status-bar-inner" class="status-bar-inner">
+			</div>
+			<div id="soil-moisture-current-level-bar" class="current-level-bar">
+			</div>
+		</div>
+	</div>
+
+	<div class="status-bar-container">
+		<label for="sunlight-status-bar">
+			Sunlight:
+		</label>
+		<div id="sunlight-status-bar-outer" class="status-bar-outer">
+			<div id="sunlight-status-bar-inner" class="status-bar-inner">
+			</div>
+			<div id="sunlight-current-level-bar" class="current-level-bar">
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	var healthyTemperature = Number("{{healthy_temperature}}");
+	var healthyTemperatureMargin = ((healthyTemperature - 1) * 100).toString();
+	document.getElementById("temperature-status-bar-inner").style.marginLeft = healthyTemperatureMargin.concat("px");
+
+	var currentTemperature = 0; // This number should be the temperature, scaled to range [0, 500]
+	var currentTemperatureMargin = (currentTemperature - 100 - healthyTemperatureMargin).toString();
+	document.getElementById("temperature-current-level-bar").style.marginLeft = currentTemperatureMargin.concat("px");
+
+	var healthyHumidity = Number("{{healthy_humidity}}");
+	var healthyHumidityMargin = ((healthyHumidity - 1) * 100).toString();
+	document.getElementById("humidity-status-bar-inner").style.marginLeft = healthyHumidityMargin.concat("px");
+
+	var currentHumidity = 0; // This number should be the temperature, scaled to range [0, 500]
+	var currentHumidityMargin = (currentHumidity - 100 - healthyHumidityMargin).toString();
+	document.getElementById("humidity-current-level-bar").style.marginLeft = currentHumidityMargin.concat("px");
+
+	var healthySoilMoisture = Number("{{healthy_soil_moisture}}");
+	var healthySoilMoistureMargin = ((healthySoilMoisture - 1) * 100).toString();
+	document.getElementById("soil-moisture-status-bar-inner").style.marginLeft = healthySoilMoistureMargin.concat("px");
+
+	var currentSoilMoisture = 0; // This number should be the temperature, scaled to range [0, 500]
+	var currentSoilMoistureMargin = (currentSoilMoisture - 100 - healthySoilMoistureMargin).toString();
+	document.getElementById("soil-moisture-current-level-bar").style.marginLeft = currentSoilMoistureMargin.concat("px");
+
+	var healthySunlight = Number("{{healthy_sunlight}}");
+	var healthySunlightMargin = ((healthySunlight - 1) * 100).toString();
+	document.getElementById("sunlight-status-bar-inner").style.marginLeft = healthySunlightMargin.concat("px");
+
+	var currentSunlight = 0; // This number should be the temperature, scaled to range [0, 500]
+	var currentSunlightMargin = (currentSunlight - 100 - healthySunlightMargin).toString();
+	document.getElementById("sunlight-current-level-bar").style.marginLeft = currentSunlightMargin.concat("px");
+</script>
 {% endblock %}
