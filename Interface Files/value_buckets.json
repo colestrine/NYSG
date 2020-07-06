@@ -1,0 +1,110 @@
+{
+	"temperature": {
+		"1": {
+			"label": "Cold",
+			"low": "40",
+			"high": "52"
+		},
+		"2": {
+			"label": "Cool",
+			"low": "53",
+			"high": "65"
+		},
+		"3": {
+			"label": "Medium",
+			"low": "66",
+			"high": "78"
+		},
+		"4": {
+			"label": "Warm",
+			"low": "79",
+			"high": "91"
+		},
+		"5": {
+			"label": "Hot",
+			"low": "92",
+			"high": "104"
+		}
+	},
+	"humidity": {
+		"1": {
+			"label": "Very Dry",
+			"low": "40",
+			"high": "52"
+		},
+		"2": {
+			"label": "Dry",
+			"low": "53",
+			"high": "65"
+		},
+		"3": {
+			"label": "Medium",
+			"low": "66",
+			"high": "78"
+		},
+		"4": {
+			"label": "Humid",
+			"low": "79",
+			"high": "91"
+		},
+		"5": {
+			"label": "Very Humid",
+			"low": "92",
+			"high": "104"
+		}
+	},
+	"soil_moisture": {
+		"1": {
+			"label": "Very Dry",
+			"low": "40",
+			"high": "52"
+		},
+		"2": {
+			"label": "Dry",
+			"low": "53",
+			"high": "65"
+		},
+		"3": {
+			"label": "Medium",
+			"low": "66",
+			"high": "78"
+		},
+		"4": {
+			"label": "Wet",
+			"low": "79",
+			"high": "91"
+		},
+		"5": {
+			"label": "Very Wet",
+			"low": "92",
+			"high": "104"
+		}
+	},
+	"sunlight": {
+		"1": {
+			"label": "Very Shady",
+			"low": "40",
+			"high": "52"
+		},
+		"2": {
+			"label": "Shady",
+			"low": "53",
+			"high": "65"
+		},
+		"3": {
+			"label": "Medium",
+			"low": "66",
+			"high": "78"
+		},
+		"4": {
+			"label": "Sunny",
+			"low": "79",
+			"high": "91"
+		},
+		"5": {
+			"label": "Very Sunny",
+			"low": "92",
+			"high": "104"
+		}
+	}
+}

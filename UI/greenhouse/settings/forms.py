@@ -12,8 +12,8 @@ class PlantProfileForm(forms.Form):
 class HealthyLevelsForm(forms.Form):
 	temperature_choices = data_handler.get_available_temperatures()
 	humidity_choices = data_handler.get_available_humidities()
-	soil_moisture_choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
-	sunlight_choices = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+	soil_moisture_choices = data_handler.get_available_soil_moistures() #[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+	sunlight_choices = data_handler.get_available_sunlights() #[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
 
 	healthy_levels = data_handler.read_healthy_levels()
 

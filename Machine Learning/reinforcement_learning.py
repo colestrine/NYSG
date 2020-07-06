@@ -32,7 +32,6 @@ class State:
     def distance(self, other):
         return abs(self.temperature - other.temperature) + abs(self.humidity - other.humidity) + abs(self.soil_moisture - other.soil_moisture) + abs(self.sunlight - other.sunlight)
 
-
 class Environment:
     # Return reward for agent's actions - incorporate considerations for:
     # movement towards goal state, close proximity to goal state, overall
@@ -51,14 +50,14 @@ class Environment:
             reward = 0
 
         # Encourage maintaining close proximity to goal state
-        if next_difference < 1:
+        if next_difference < .5:
+            reward += 5000
+        elif next_difference < 1:
             reward += 2000
         elif next_difference < 2:
             reward += 1000
-        elif next_difference < 3:
-            reward += 500
         else:
-            reward += -100
+            reward += -1000
 
         # Scaled portion of reward based on distance from goal state
         reward -= next_difference * 10
@@ -71,11 +70,11 @@ class Environment:
         next_state = State(current_state.temperature, current_state.humidity,
                            current_state.soil_moisture, current_state.sunlight)
 
-        big_random_low = 85
-        big_random_high = 100
+        big_random_low = 50
+        big_random_high = 60
 
-        small_random_low = 0
-        small_random_high = 30
+        small_random_low = 1
+        small_random_high = 10
 
         if light_action == 'big_increase':
             factor = round(random.randint(
@@ -267,7 +266,7 @@ class Agent:
                         # Record discounted reward
                         total_reward = (discount**timestep) * current_reward
 
-                        while((State.distance(current_state, goal_state) > 1) and (timestep < 4)):
+                        while((State.distance(current_state, goal_state) > 1) and (timestep < 10)):
                             # Pick actions according to greedy policy
                             max_next_reward = {
                                 'reward': -200, 'light_action': None, 'water_action': None, 'ventilation_action': None}
@@ -300,8 +299,7 @@ class Agent:
                             current_reward = next_reward
 
                             # Record discounted reward
-                            total_reward += (discount**timestep) * \
-                                current_reward
+                            total_reward += (discount**timestep) * current_reward
 
                             timestep += 1
 
@@ -318,7 +316,7 @@ class Agent:
                                      'avg_episode_reward'], reverse=True)
         choice = avg_episode_rewards[0]
 
-        return {'light_action': choice['light_action'], 'water_action':  choice['water_action'], 'ventilation_action':  choice['ventilation_action'], 'avg_episode_rewards': avg_episode_rewards}
+        return {'light_action': choice['light_action'], 'water_action':  choice['water_action'], 'ventilation_action':  choice['ventilation_action'], 'expected_reward': choice['avg_episode_reward']}
 
 
 class Test:
@@ -331,6 +329,8 @@ class Test:
         # Record current state, goal state
         current_states = [current_state]
         goal_states = [goal_state]
+
+        expected_rewards = [0]
 
         # Display timestep
         print(f'timestep {timestep}')
@@ -349,22 +349,29 @@ class Test:
             water_action = results['water_action']
             ventilation_action = results['ventilation_action']
 
+            # Extract expected reward
+            expected_reward = results['expected_reward']
+
             print('------------')
             print(f'state: {current_state}')
-            print(f'light: {light_action} water: {water_action} ventilation: {ventilation_action}')
+            print(f'light: {light_action} water: {water_action} ventilation: {ventilation_action} expected reward: {expected_reward}')
+
+            # Save last state
+            last_state = current_state
 
             # Take actions and observe new state
             current_state = Environment.transition(
                 current_state, light_action, water_action, ventilation_action)
 
-            # Record current state, goal state
+            # Record current state, goal state, expected reward, actual reward
             current_states.append(current_state)
             goal_states.append(goal_state)
+            expected_rewards.append(expected_reward)
 
-        return {'current_states': current_states, 'goal_states': goal_states}
+        return {'current_states': current_states, 'goal_states': goal_states, 'expected_rewards': expected_rewards}
 
     # Plot simulation data
-    def plot(current_states, goal_states):
+    def plot(current_states, goal_states, expected_rewards, distances):
         if len(current_states) == len(goal_states):
             length = len(current_states)
         else:
@@ -393,6 +400,8 @@ class Test:
             goal_soil_moistures.append(goal_state.soil_moisture)
             goal_sunlights.append(goal_state.sunlight)
 
+        pyplot.figure(1)
+
         pyplot.plot(range(length), current_temperatures,
                     'r-', label="Temperature")
         pyplot.plot(range(length), current_humidities, 'g-', label="Humiditiy")
@@ -415,21 +424,45 @@ class Test:
 
         pyplot.legend()
 
+        pyplot.figure(2)
+
+        pyplot.plot(range(length), expected_rewards)
+
+        pyplot.xlabel('Timestep')
+        pyplot.ylabel('Value')
+
+        pyplot.title(f'Expected Rewards Over {length} Timesteps')
+
+        pyplot.figure(3)
+
+        pyplot.plot(range(length), distances)
+
+        pyplot.xlabel('Timestep')
+        pyplot.ylabel('Value')
+
+        pyplot.title(f'Distance From Goal State Over {length} Timesteps')
+
         pyplot.show()
 
-current_state = State(5, 6, 3, 6)
-goal_state = State(10, 8, 7, 11)
+if __name__ == '__main__':
+    current_state = State(3, 5, 5, 3)
+    goal_state = State(5, 2, 2, 5)
 
-print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
-print('------------')
+    print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
+    print('------------')
 
-results = Test.run(current_state, goal_state, 50)
+    results = Test.run(current_state, goal_state, 20)
 
-current_states = results['current_states']
-goal_states = results['goal_states']
+    current_states = results['current_states']
+    goal_states = results['goal_states']
+    expected_rewards = results['expected_rewards']
 
-print('------------')
-for (index, state) in enumerate(current_states):
-    print(f'timestep: {index} state: {state}')
+    distances = []
+    print('------------')
+    for (index, state) in enumerate(current_states):
+        print(f'timestep: {index} state: {state}')
+        distance = State.distance(state, goal_state)
+        distances.append(distance)
+        print(f'distance from goal state: {distance}')
 
-Test.plot(current_states, goal_states)
+    Test.plot(current_states, goal_states, expected_rewards, distances)

@@ -54,25 +54,57 @@ class data_handler:
 		return profiles
 
 	def get_available_temperatures():
-		available_profiles_file = open('../../Interface Files/healthy_levels_by_profile.json', 'r')
-		available_profiles_json = available_profiles_file.read()
-		available_profiles_file.close()
-		available_profiles_dict = json.loads(available_profiles_json)
+		available_buckets_file = open('../../Interface Files/value_buckets.json', 'r')
+		available_buckets_json = available_buckets_file.read()
+		available_buckets_file.close()
+		available_buckets_dict = json.loads(available_buckets_json)
 
 		temperatures = []
-		for profile in available_profiles_dict:
-			temperatures.append((available_profiles_dict[profile]['temperature'], available_profiles_dict[profile]['temperature'].replace('_', '-')+'%'))
+		for bucket in available_buckets_dict['temperature']:
+			label = available_buckets_dict['temperature'][bucket]['label']
+
+			temperatures.append((bucket, label))
 
 		return temperatures
 
 	def get_available_humidities():
-		available_profiles_file = open('../../Interface Files/healthy_levels_by_profile.json', 'r')
-		available_profiles_json = available_profiles_file.read()
-		available_profiles_file.close()
-		available_profiles_dict = json.loads(available_profiles_json)
+		available_buckets_file = open('../../Interface Files/value_buckets.json', 'r')
+		available_buckets_json = available_buckets_file.read()
+		available_buckets_file.close()
+		available_buckets_dict = json.loads(available_buckets_json)
 
 		humidities = []
-		for profile in available_profiles_dict:
-			humidities.append((available_profiles_dict[profile]['humidity'], available_profiles_dict[profile]['humidity'].replace('_', '-')+'%'))
+		for bucket in available_buckets_dict['humidity']:
+			label = available_buckets_dict['humidity'][bucket]['label']
+
+			humidities.append((bucket, label))
 
 		return humidities
+
+	def get_available_soil_moistures():
+		available_buckets_file = open('../../Interface Files/value_buckets.json', 'r')
+		available_buckets_json = available_buckets_file.read()
+		available_buckets_file.close()
+		available_buckets_dict = json.loads(available_buckets_json)
+
+		soil_moistures = []
+		for bucket in available_buckets_dict['soil_moisture']:
+			label = available_buckets_dict['soil_moisture'][bucket]['label']
+
+			soil_moistures.append((bucket, label))
+
+		return soil_moistures
+
+	def get_available_sunlights():
+		available_buckets_file = open('../../Interface Files/value_buckets.json', 'r')
+		available_buckets_json = available_buckets_file.read()
+		available_buckets_file.close()
+		available_buckets_dict = json.loads(available_buckets_json)
+
+		sunlights = []
+		for bucket in available_buckets_dict['sunlight']:
+			label = available_buckets_dict['sunlight'][bucket]['label']
+
+			sunlights.append((bucket, label))
+
+		return sunlights
