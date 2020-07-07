@@ -1,10 +1,12 @@
 # NYSG 2020
 
 ## Controller
+
 - Raspberry Pi 4
 - 40 GPIO pins
 
 ### Software Dependency Requirements
+
 - smbus2
 - RPi.GPIO
 
@@ -17,22 +19,29 @@ and
 ```{bash}
     pip install RPi.GPIO
 ```
+
 ## Sensor Classes
+
 ### Description
+
 The sensor class represents a sensor abstraction, that can turn on and off a sensor
 and read from the sensor. The Sensor object is meant to be compatiable with I2C
 
 ### Dependencies
+
 - smbus2, for I2C communication
 
 ### Attributes
+
 1. addr - this represents the I2C address for the sensor
 2. register - this represents the register holding data relevant to the sensor
 
 ### Methods
+
 - read: This reads the requested value(s) from the sensor and returns the value
 
 ### Sublasses
+
 There are four subclasses. They are all subclasses of Sensor, and have the same
 attributes. 
 1. Light Sensor

@@ -222,7 +222,22 @@ class Fan(Peripheral):
         return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq)
 
 
+class Heater(Peripheral):
+    """
+    Heater represents a Heater object
+    Could be different from HEatPad
+    TODO: Added as a stub incase we nedd to change for extensionality
+    """
+
+    def __init__(self, channel):
+        """
+        __init__(self, channel) creates a new heater object
+        on  GPIO pinnchannel [channel]
+        """
+        super().__init__(channel)
+
 # ---------- SUMMARY FUNCTIONS ------------
+
 
 def react_all(ml_results, peripheral_dict):
     """
