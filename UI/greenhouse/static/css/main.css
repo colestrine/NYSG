@@ -131,7 +131,7 @@ form p label {
     text-align: center;
     width: 100px;
 	opacity: 0;
-	transition: opacity 0.3s;
+	transition: opacity 0.75s;
 }
 
 .tooltip-wrapper:hover .tooltip-text {
