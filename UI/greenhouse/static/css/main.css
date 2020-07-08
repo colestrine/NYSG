@@ -105,6 +105,7 @@ form p label {
 	width: 3px;
 	border-radius: 3px;
 	margin-left: 0px;
+	z-index: 2;
 }
 
 .status-bar-container label {
@@ -135,4 +136,9 @@ form p label {
 .tooltip-wrapper:hover .tooltip-text {
 	visibility: visible;
 	opacity: 1;
+}
+
+.historical-status-container {
+	width: 50%;
+	margin:auto;
 }
