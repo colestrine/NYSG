@@ -97,6 +97,7 @@ form p label {
 	width: 100px;
 	margin-left: 0px;
 	position: relative;
+	transition: 2s;
 }
 
 .current-level-bar {
