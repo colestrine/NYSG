@@ -1,78 +1,62 @@
 {
-	"datetimes": [
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "00",
-			"minute": "00"
-		},
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "00",
-			"minute": "30"
-		},
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "01",
-			"minute": "00"
-		},
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "01",
-			"minute": "30"
-		},
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "02",
-			"minute": "00"
-		},
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "02",
-			"minute": "30"
-		},
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "03",
-			"minute": "00"
-		},
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "03",
-			"minute": "30"
-		},
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "04",
-			"minute": "00"
-		},
-		{
-			"year": "2020",
-			"month": "07",
-			"day": "07",
-			"hour": "04",
-			"minute": "30"
-		}
-	],
-	"temperatures": [2.0, 2.8, 3.3, 3.5, 3.8, 3.9, 4.0, 4.01, 4.0, 4.01],
-	"humidities": [1.1, 1.5, 1.8, 1.7, 1.9, 2.1, 2.0, 2.0, 2.01, 1.99],
-	"soil_moistures": [1.9, 2.3, 2.4, 2.6, 2.9, 3.0, 3.1, 2.9, 3.01, 3.0],
-	"sunlights": [2.2, 2.6, 3.1, 3.8, 3.9, 4.3, 4.7, 4.9, 5.1, 5.0]
+	"2020-07-09 00:00": {
+		"temperature": 2.00,
+		"humidity": 1.10,
+		"soil_moisture": 1.90,
+		"sunlight": 2.20
+	},
+	"2020-07-09 00:30": {
+		"temperature": 2.80,
+		"humidity": 1.50,
+		"soil_moisture": 2.30,
+		"sunlight": 2.60
+	},
+	"2020-07-09 01:00": {
+		"temperature": 3.30,
+		"humidity": 1.80,
+		"soil_moisture": 2.40,
+		"sunlight": 3.10
+	},
+	"2020-07-09 01:30": {
+		"temperature": 3.50,
+		"humidity": 1.70,
+		"soil_moisture": 2.60,
+		"sunlight": 3.80
+	},
+	"2020-07-09 02:00": {
+		"temperature": 3.80,
+		"humidity": 1.90,
+		"soil_moisture": 2.90,
+		"sunlight": 3.90
+	},
+	"2020-07-09 02:30": {
+		"temperature": 3.90,
+		"humidity": 2.10,
+		"soil_moisture": 3.00,
+		"sunlight": 4.30
+	},
+	"2020-07-09 03:00": {
+		"temperature": 4.00,
+		"humidity": 2.00,
+		"soil_moisture": 3.10,
+		"sunlight": 4.70
+	},
+	"2020-07-09 03:30": {
+		"temperature": 4.01,
+		"humidity": 2.00,
+		"soil_moisture": 2.90,
+		"sunlight": 4.90
+	},
+	"2020-07-09 04:00": {
+		"temperature": 4.00,
+		"humidity": 2.01,
+		"soil_moisture": 3.01,
+		"sunlight": 5.10
+	},
+	"2020-07-09 04:30": {
+		"temperature": 4.01,
+		"humidity": 1.99,
+		"soil_moisture": 3.00,
+		"sunlight": 5.00
+	}
 }

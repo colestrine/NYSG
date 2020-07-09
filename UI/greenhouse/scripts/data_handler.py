@@ -108,3 +108,11 @@ class data_handler:
 			sunlights.append((bucket, label))
 
 		return sunlights
+
+	def get_log_data():
+		log_file = open('../../Interface Files/log.json', 'r')
+		log_json = log_file.read()
+		log_file.close()
+		log_dict = json.loads(log_json)
+
+		return log_dict

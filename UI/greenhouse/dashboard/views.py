@@ -36,4 +36,20 @@ def index(request):
 			healthy_sunlight_label = available_sunlight[1]
 			break
 
-	return render(request, 'Dashboard/dashboard.html', {'healthy_temperature': healthy_temperature, 'healthy_temperature_label': healthy_temperature_label, 'healthy_humidity': healthy_humidity, 'healthy_humidity_label': healthy_humidity_label, 'healthy_soil_moisture': healthy_soil_moisture, 'healthy_soil_moisture_label': healthy_soil_moisture_label, 'healthy_sunlight': healthy_sunlight, 'healthy_sunlight_label': healthy_sunlight_label})
+
+	log_data = data_handler.get_log_data()
+	labels = ''
+	temperatures = ''
+	humidities = ''
+	soil_moistures = ''
+	sunlights = ''
+	for record in log_data:
+		labels += str(record) + ','
+		temperatures += str(log_data[record]['temperature']) + ','
+		humidities += str(log_data[record]['humidity']) + ','
+		soil_moistures += str(log_data[record]['soil_moisture']) + ','
+		sunlights += str(log_data[record]['sunlight']) + ','
+
+	print(temperatures)
+
+	return render(request, 'Dashboard/dashboard.html', {'healthy_temperature': healthy_temperature, 'healthy_temperature_label': healthy_temperature_label, 'healthy_humidity': healthy_humidity, 'healthy_humidity_label': healthy_humidity_label, 'healthy_soil_moisture': healthy_soil_moisture, 'healthy_soil_moisture_label': healthy_soil_moisture_label, 'healthy_sunlight': healthy_sunlight, 'healthy_sunlight_label': healthy_sunlight_label, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights})
