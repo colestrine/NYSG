@@ -176,6 +176,7 @@ class Fan(Peripheral):
         set_freq(self, hz) sets the freuqnecy of the fan in freq [hz]
         """
         self.freq = freq
+        self.pwm = GPIO.PWM(self.channel, self.freq)
 
     def get_freq(self):
         """

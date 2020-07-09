@@ -18,7 +18,7 @@ I2C protocols)
 - json (used to log read in data from sensors)
 - pin_constants [custom]: holds pin data for I2C communication protocols
 
-- sudo pip3 install adafruit-circuitpython-seesaw 
+- sudo pip3 install adafruit-circuitpython-seesaw
  You will need to run the above command for the adafruit moisture sensor
  to work
 
@@ -45,6 +45,7 @@ import smbus2
 
 # ------- OTHER IMPORTS -------
 import time
+from datetime import datetime
 import pin_constants
 
 # --------- SENSORS ----------------
@@ -109,7 +110,62 @@ class LightSensor(Sensor):
         return self.channel.read_i2c_block_data(self.addr, self.register, 1)
 
 
-class TempHumiditySensor(Sensor):
+class HumiditySensor(Sensor):
+    """
+    TemperatureSensor represents a Temperature Sensor and a Humidity Sensor
+
+    SUPERCLASS: Sensor
+
+    [addr] is the I2C address for the physical TemperatureHUmidity Sensor
+    [register] is the address for the register with the data in the physical sensor
+    [block_size] is the size of the data retrieved from a read, requieres 2
+    [channel] is the I2C channel
+    """
+
+    def __init__(self,  addr, register, channel, block_size=2):
+        """
+        __init__(self, bus, addr, register, block_size) creates a Temperature Sensor
+        object on bus object [bus], I2C address for the physical temperature sensor [addr],
+        [register] number register on the physical temperature sensor and
+        [block_size] number of bytes of data retrieved every time data is read
+        from the physical temperature sensor
+        """
+        super().__init__()
+        self.addr = addr
+        self.register = register
+        self.channel = channel
+        self.block_size = block_size
+
+    def read(self):
+        """
+        read(self, bus) reads the temperature from the physical temperature sensor and returns
+        the temperature in Celsius
+
+        self.channel is a bus object representing the I2C bus to which the temperature
+        and humidity sensor is connected to
+
+        Returns: Float (Celsius Temperature)
+
+        SOURCE ATTRIBUTION for twos_comp and convert_temp
+        # https://learn.sparkfun.com/tutorials/python-programming-tutorial-getting-started-with-the-raspberry-pi/experiment-4-i2c-temperature-sensor
+        """
+        def twos_comp(val, bits):
+            if (val & (1 << (bits - 1))) != 0:
+                val = val - (1 << bits)
+            return val
+
+        def convert_temp(raw_temp):
+            temp_cel = (raw_temp[0] << 4) | (raw_temp[1] >> 4)
+            temp_cel = twos_comp(temp_cel, 12)
+            temp_cel = temp_cel * 0.0625
+            return temp_cel
+
+        return convert_temp(
+            self.channel.read_i2c_block_data(
+                self.addr, self.register, self.block_size))
+
+
+class TemperatureSensor(Sensor):
     """
     TemperatureSensor represents a Temperature Sensor and a Humidity Sensor
 
@@ -235,29 +291,26 @@ def create_channel(bus_num=1):
 def sensor_to_name(sensor):
     if type(sensor) == Co2Sensor:
         return "CO2"
-    elif type(sensor) == TempHumiditySensor:
-        return "Temp_Humidity"
+    elif type(sensor) == TemperatureSensor:
+        return "temperature"
+    elif type(sensor) == HumiditySensor:
+        return "humidity"
     elif type(sensor) == MoistureSensor:
-        return "Moisture"
+        return "soil_moisture"
     elif type(sensor) == LightSensor:
-        return "Light"
+        return "sunlight"
     else:
         raise AssertionError
 
 
-def collect_all_sensors(sensor_list, log_path=None, log=False):
+def collect_all_sensors(sensor_list):
     """
     collect_all() collects all the data from all sensors and logs it
     uses the sensors in [sensor_list] which are on the bus object sensor.channel
 
-    logs data if log = True
-    log_dict is the place to log data
-
     Returns the logged data
     """
     ret_dict = {}
-
-    log_dict = pin_constants.load_data(log_path)
 
     for sensor in sensor_list:
         if hasattr(sensor, "sensor"):
@@ -266,20 +319,15 @@ def collect_all_sensors(sensor_list, log_path=None, log=False):
         else:
             val = sensor.read(sensor.channel)
 
-        t = time.localtime()
-        current_time = time.strftime("%H:%M:%S", t)
-
         name = sensor_to_name(sensor)
 
         ret_dict[name] = val
 
-        if log:
-            log_dict[name][current_time] == val
+    time = datetime.strftime()
 
-    if log:
-        pin_constants.dump_data(log_dict, log_path)
-
-    return ret_dict
+    outer_dict = {}
+    outer_dict[time] = ret_dict
+    return outer_dict
 
 
 # -------- DEBUGGING ------------
@@ -301,15 +349,15 @@ def run_debug():
     address = pin_constants.TEMP_ADDR
     register = pin_constants.TEMP_REGISTER
 
-    temp_log_dict = load_data(pin_constants.TEMPERATURE_LOG_PATH)
+    temp_log_dict = pin_constants.load_data(pin_constants.TEMPERATURE_LOG_PATH)
     i = 0
     while i < 1000:
         val = bus.read_i2c_block_data(address, register, 2)
 
-        t = time.localtime()
-        current_time = time.strftime("%H:%M:%S", t)
+        now = datetime.datetime.now()
+        current_time = now.strftime("%d-%m-%Y %H:%M")
 
         temp_log_dict[current_time] == val
 
-        i += 1
-    dump_data(temp_log_dict, pin_constants.TEMPERATURE_LOG_PATH)
+    i += 1
+    pin_constants.dump_data(temp_log_dict, pin_constants.TEMPERATURE_LOG_PATH)
