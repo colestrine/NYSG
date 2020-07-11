@@ -285,7 +285,7 @@ class Agent:
                                 #                 max_next_reward = {'reward': next_reward, 'light_action': light_action,
                                 #                                    'water_action': water_action, 'ventilation_action': ventilation_action}
 
-                                # Extract actions from return of greedy policy
+                                # Pick next actions
                                 light_action = action_choices[random.randint(0, 5)] #max_next_reward['light_action']
                                 water_action = action_choices[random.randint(0, 5)] #max_next_reward['water_action']
                                 ventilation_action = action_choices[random.randint(0, 5)] #max_next_reward['ventilation_action']

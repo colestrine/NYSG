@@ -11,9 +11,9 @@ select {
 	border: solid 1px lightgray;
     border-radius: 4px;
     margin: 0px 10px;
-    padding: 0px 3px;
+    padding: 3px 3px;
     color: slategray;
-    width: 80px;
+    width: 100px;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
@@ -73,4 +73,73 @@ form p label {
 .header-link {
 	color: slategray;
     text-decoration: none;
+}
+
+.status-bar-container {
+	display: flex;
+	align-items: center;
+	padding: 5px 0px;
+}
+
+.status-bar-outer {
+	background-color: mistyrose;
+	width: 500px;
+	height: 15px;
+	margin: 0px 15px;
+	border-radius: 8px;
+	display: flex;
+}
+
+.status-bar-inner {
+	height: 15px;
+	border-radius: 8px;
+	background-color: lightgreen;
+	width: 100px;
+	margin-left: 0px;
+	position: relative;
+	transition: 2s;
+}
+
+.current-level-bar {
+	height: 15px;
+	background-color: seagreen;
+	width: 3px;
+	border-radius: 3px;
+	margin-left: 0px;
+	z-index: 2;
+}
+
+.status-bar-container label {
+	width: 100px;
+}
+
+.current-status-wrapper {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.dashboard-header {
+	text-align: center;
+}
+
+.tooltip-text {
+	font-size: xx-small;
+    position: absolute;
+    top: -13px;
+    text-align: center;
+    width: 100px;
+	opacity: 0;
+	transition: opacity 0.75s;
+}
+
+.tooltip-wrapper:hover .tooltip-text {
+	visibility: visible;
+	opacity: 1;
+}
+
+.historical-status-container {
+	width: 50%;
+	margin:auto;
 }
