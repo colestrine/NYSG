@@ -337,6 +337,9 @@ def create_channel(bus_num=1):
 
 
 def sensor_to_name(sensor):
+    """
+    sensor_to_name(sensor) converts the type of the sensor to a name
+    """
     if type(sensor) == Co2Sensor:
         return "CO2"
     elif type(sensor) == TemperatureSensor:
