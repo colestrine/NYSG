@@ -78,9 +78,9 @@ def init():
     light_sensor = LightSensor(
         pin_constants.LIGHT_ADDR, pin_constants.LIGHT_REGISTER, sensor_channel)
     temp_sensor = TemperatureSensor(
-        pin_constants.TEMP_ADDR, pin_constants.TEMP_REGISTER, sensor_channel)
+        pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, sensor_channel)
     humidity_sensor = HumiditySensor(
-        pin_constants.TEMP_ADDR, pin_constants.TEMP_REGISTER, sensor_channel)
+        pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, sensor_channel)
     moisture_sensor = MoistureSensor()
     co2_sensor = Co2Sensor()
 

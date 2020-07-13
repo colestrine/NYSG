@@ -87,13 +87,14 @@ class LightSensor(Sensor):
     [addr] is the I2C address of the sensor in the bus
     [register] is the sensor data location
     [channel] is the channel for the sensor
+    [block_size] is the block siz eofk the data from the I2C compatible sensor
 
     RELATED:
     # we can use https://gpiozero.readthedocs.io/en/stable/api_input.html
     # 13 .1.4 light sensor
     """
 
-    def __init__(self, addr, register, channel):
+    def __init__(self, addr, register, channel, block_size=1):
         """
          __init__(self, addr, register) is the LightSensor object representing
         a physical light sensor
@@ -102,6 +103,7 @@ class LightSensor(Sensor):
         self.addr = addr
         self.register = register
         self.channel = channel
+        self.block_size = block_size
 
     def read(self):
         """
@@ -149,20 +151,24 @@ class HumiditySensor(Sensor):
         SOURCE ATTRIBUTION for twos_comp and convert_temp
         # https://learn.sparkfun.com/tutorials/python-programming-tutorial-getting-started-with-the-raspberry-pi/experiment-4-i2c-temperature-sensor
         """
-        def twos_comp(val, bits):
-            if (val & (1 << (bits - 1))) != 0:
-                val = val - (1 << bits)
-            return val
+        def convert_humidity(sensor_humidity_code):
+            return 125 * sensor_humidity_code / 65536 - 6
 
-        def convert_temp(raw_temp):
-            temp_cel = (raw_temp[0] << 4) | (raw_temp[1] >> 4)
-            temp_cel = twos_comp(temp_cel, 12)
-            temp_cel = temp_cel * 0.0625
-            return temp_cel
+        def truncate_humidity(rh):
+            if rh > 100:
+                return 100
+            if rh < 0:
+                return 0
+            return rh
 
-        return convert_temp(
-            self.channel.read_i2c_block_data(
-                self.addr, self.register, self.block_size))
+        # do the write to the device to do a no hold temp measure
+        self.channel.write_byte(
+            self.addr, pin_constants.MEASURE_RH_REGISTER_NO_HOLD)
+        humidity_code = self.channel.read_i2c_block_data(
+            self.addr, self.register, self.block_size)
+        rh = truncate_humidity(convert_humidity(humidity_code))
+
+        return rh
 
 
 class TemperatureSensor(Sensor):
@@ -204,20 +210,21 @@ class TemperatureSensor(Sensor):
         SOURCE ATTRIBUTION for twos_comp and convert_temp
         # https://learn.sparkfun.com/tutorials/python-programming-tutorial-getting-started-with-the-raspberry-pi/experiment-4-i2c-temperature-sensor
         """
-        def twos_comp(val, bits):
-            if (val & (1 << (bits - 1))) != 0:
-                val = val - (1 << bits)
-            return val
 
-        def convert_temp(raw_temp):
-            temp_cel = (raw_temp[0] << 4) | (raw_temp[1] >> 4)
-            temp_cel = twos_comp(temp_cel, 12)
-            temp_cel = temp_cel * 0.0625
-            return temp_cel
+        def convert_temp(temp_code):
+            return 175.72 * temp_code / 65536 - 46.85
 
-        return convert_temp(
-            self.channel.read_i2c_block_data(
-                self.addr, self.register, self.block_size))
+        def c_to_f(c):
+            return 9/5 * c + 32
+
+        # do the write to the device to do a no hold temp measure
+        self.channel.write_byte(
+            self.addr, pin_constants.MEASURE_TEMP_REGISTER_NO_HOLD)
+        temp_code = self.channel.read_i2c_block_data(
+            self.addr, self.register, self.block_size)
+        temp = c_to_f(convert_temp(temp_code))
+
+        return temp
 
 
 class MoistureSensor(Sensor):
@@ -225,6 +232,15 @@ class MoistureSensor(Sensor):
     MoistureSensor represents an AdaFruit Moisture Sensor
 
     [sensor] is the sensor object for Adafruit
+
+    WARNING!  - if you have a non-express board, you must install the following
+    packages from dadafruit
+    adafruit_seesaw.mpy
+    adafruit_bus_device
+    Adafruit_Blinka
+
+    Before continuing make sure your board's lib folder or root filesystem has
+    the adafruit_seesaw.mpy, and adafruit_bus_device files and folders copied over
 
     SOURCE ATTRIBUTION:
     https://www.mouser.com/pdfdocs/adafruit-stemma-soil-sensor-i2c-capacitive-moisture-sensor.pdf
@@ -249,7 +265,8 @@ class MoistureSensor(Sensor):
         moisture = ss.moisture_read()
         # read temperature from the temperature sensor
         soil_temp = ss.get_temp()
-        return (moisture, soil_temp)
+        _ = soil_temp  # ignore
+        return moisture
 
 
 class Co2Sensor(Sensor):
@@ -257,6 +274,7 @@ class Co2Sensor(Sensor):
     Co2Sensor represents a physical Ada Fruit Co2 Sensor
 
     SUPERCLASS: Sensor
+    [OPTIONAL] for use
     """
 
     def __init__(self):
@@ -333,9 +351,9 @@ def collect_all_sensors(sensor_list):
 # -------- DEBUGGING ------------
 
 
-def run_debug():
+def run_debug_temp():
     """
-    run_debug() is used to create a sample bus channel and read from the channel
+    run_debug_temp() is used to create a sample bus channel and read from the channel
 
     logs data in pin_constants.TEMPERATURE_LOG_PATH as a json dictionary
     mapping the current time as a string to the temperature recorded
