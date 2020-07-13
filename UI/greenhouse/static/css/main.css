@@ -107,6 +107,7 @@ form p label {
 	border-radius: 3px;
 	margin-left: 0px;
 	z-index: 2;
+	position: relative;
 }
 
 .status-bar-container label {
