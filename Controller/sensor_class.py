@@ -77,6 +77,9 @@ class Sensor:
     def read(self):
         pass
 
+    def shut_down(self):
+        pass
+
 
 class LightSensor(Sensor):
     """
@@ -105,6 +108,8 @@ class LightSensor(Sensor):
         self.channel = channel
         self.block_size = block_size
 
+        self.channel.open(pin_constants.I2C_PORT_NUM)
+
     def read(self):
         """
         reads the light value from the Light sensor on self.channel
@@ -116,6 +121,9 @@ class LightSensor(Sensor):
 
         light = self.channel.read_i2c_block_data(self.addr, self.register, 2)
         return convert_light(light)
+
+    def shut_down(self):
+        self.channel.close()
 
 
 class HumiditySensor(Sensor):
@@ -143,6 +151,8 @@ class HumiditySensor(Sensor):
         self.register = register
         self.channel = channel
         self.block_size = block_size
+
+        self.channel.open(pin_constants.I2C_PORT_NUM)
 
     def read(self):
         """
@@ -176,6 +186,9 @@ class HumiditySensor(Sensor):
 
         return rh
 
+    def shut_down(self):
+        self.channel.close()
+
 
 class TemperatureSensor(Sensor):
     """
@@ -202,6 +215,8 @@ class TemperatureSensor(Sensor):
         self.register = register
         self.channel = channel
         self.block_size = block_size
+
+        self.channel.open(pin_constants.I2C_PORT_NUM)
 
     def read(self):
         """
@@ -231,6 +246,9 @@ class TemperatureSensor(Sensor):
         temp = c_to_f(convert_temp(temp_code))
 
         return temp
+
+    def shut_down(self):
+        self.channel.close()
 
 
 class MoistureSensor(Sensor):
@@ -274,6 +292,9 @@ class MoistureSensor(Sensor):
         _ = soil_temp  # ignore
         return moisture
 
+    def shut_down(self):
+        pass
+
 
 class Co2Sensor(Sensor):
     """
@@ -293,6 +314,9 @@ class Co2Sensor(Sensor):
 
     def read(self):
         return self.sensor.iaq_measure()
+
+    def shut_down(self):
+        pass
 
 # -------- UTILITIES ------------
 
@@ -357,31 +381,68 @@ def collect_all_sensors(sensor_list):
 # -------- DEBUGGING ------------
 
 
-def run_debug_temp():
+def run_debug(log_path, addr, register, cycles):
     """
-    run_debug_temp() is used to create a sample bus channel and read from the channel
+    run_debug() is used to create a sample bus channel and read from the channel
 
     logs data in pin_constants.TEMPERATURE_LOG_PATH as a json dictionary
     mapping the current time as a string to the temperature recorded
 
     REQUIRES: pin_constants.TEMPERATURE_LOG_PATH contains a dictionary of the
     the data, could be empty
+    RECORDS for [cyclkes]number of iteractions
     """
     channel = pin_constants.I2C_PORT_NUM
     bus = smbus2.SMBus(channel)
 
-    address = pin_constants.TEMP_ADDR
-    register = pin_constants.TEMP_REGISTER
-
-    temp_log_dict = pin_constants.load_data(pin_constants.TEMPERATURE_LOG_PATH)
+    log_dict = pin_constants.load_data(log_path)
     i = 0
-    while i < 1000:
-        val = bus.read_i2c_block_data(address, register, 2)
-
+    while i < cycles:
+        val = bus.read_i2c_block_data(addr, register, 2)
         now = datetime.datetime.now()
         current_time = now.strftime("%d-%m-%Y %H:%M")
+        log_dict[current_time] == val
+        i += 1
 
+    pin_constants.dump_data(log_dict, log_path)
+
+
+def run_adafruit_debug(log_path, addr, register, cycles):
+    """
+    run_adafruit_debug() is used to create a sample bus channel and read from the channel
+    for the adafruit moisture sensor
+
+    logs data in pin_constants.TEMPERATURE_LOG_PATH as a json dictionary
+    mapping the current time as a string to the temperature recorded
+
+    REQUIRES: pin_constants.TEMPERATURE_LOG_PATH contains a dictionary of the
+    the data, could be empty
+    RECORDS for [cyclkes]number of iteractions
+    """
+    i2c_bus = busio.I2C(SCL, SDA)
+    ss = Seesaw(i2c_bus, addr=addr)
+
+    temp_log_dict = pin_constants.load_data(log_path)
+    i = 0
+    while i < cycles:
+        val = ss.moisture_read()
+        now = datetime.datetime.now()
+        current_time = now.strftime("%d-%m-%Y %H:%M")
         temp_log_dict[current_time] == val
+        i += 1
 
-    i += 1
     pin_constants.dump_data(temp_log_dict, pin_constants.TEMPERATURE_LOG_PATH)
+
+
+def read_debug_data(log_path, first_few=None):
+    """
+    read_debug_data(log_path, first_few) reads in debugged daga at the log_path
+    for the first_few characgers, 
+    if first_few is None, greads all and prints all to terminal
+    """
+    data_dict = pin_constants.load_data(log_path)
+    dict_list = [(key, data_dict[key]) for key in data_dict]
+    if first_few == None:
+        first_few = len(dict_list)
+    for i in range(min(len(dict_list), first_few)):
+        print(dict_list[i][1])
