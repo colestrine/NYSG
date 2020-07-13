@@ -34,7 +34,11 @@ TODO: CHECK AND TEST ALL CLASSES
 # ----- ADA FRUIT MOISTURE SENSOR IMPORTS -----------------
 import busio
 from board import SCL, SDA
+import board
 from adafruit_seesaw.seesaw import Seesaw
+import Adafruit_PureIO
+
+# Adafruit_I2C import Adafruit_I2C
 
 # ---- ADA FRUIT IMPORTS CO2 GAS SENSOR IMPORTS----------
 import adafruit_sgp30
@@ -278,6 +282,9 @@ class MoistureSensor(Sensor):
         i2c_bus = busio.I2C(SCL, SDA)
         ss = Seesaw(i2c_bus, addr=pin_constants.MOISTURE_ADDR)
         self.sensor = ss
+
+        # need to add try and except to locka nd unlcok judiviously
+        channel = Adafruit_PureIO.smbus.SMBus(bus=pin_constants.I2C_PORT_NUM)
 
     def read(self):
         """
