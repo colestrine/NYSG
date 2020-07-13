@@ -109,7 +109,13 @@ class LightSensor(Sensor):
         """
         reads the light value from the Light sensor on self.channel
         """
-        return self.channel.read_i2c_block_data(self.addr, self.register, 1)
+
+        def convert_light(light):
+            # take LSB 8 buts
+            return light & (2 ** 8)
+
+        light = self.channel.read_i2c_block_data(self.addr, self.register, 2)
+        return convert_light(light)
 
 
 class HumiditySensor(Sensor):
