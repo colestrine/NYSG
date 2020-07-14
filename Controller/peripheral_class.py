@@ -263,3 +263,6 @@ def react_all(ml_results, peripheral_dict):
             fan = peripheral_dict[p]
             fan_res = ml_results["fan"]
             fan.set_freq(fan_res)
+
+
+# ----------- DEBUGGING --------------
