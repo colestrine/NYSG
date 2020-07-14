@@ -8,13 +8,90 @@ to the decision by changing the peripherals.
 ## Setup
 
 In order to use the controller and run any associated code, you must setup the 
-environment and dependencies. Below, we list two options for setup. 
+environment and dependencies. 
 
-### Option 1: on normal environment
+### Software Runtime Requirements
 
-### Option 2: with venv (not recommended)
+Please activate the I2C capabilities on the Raspberry Pi 4 Controller. To do so
+follow these instructions:
+
+(these instructions are from: https://www.raspberrypi-spy.co.uk/2014/11/enabling-the-i2c-interface-on-the-raspberry-pi/#:~:text=Method%201%20%E2%80%93%20Using%20%E2%80%9CRaspi%2Dconfig%E2%80%9D%20on%20Command%20Line&text=Highlight%20the%20%E2%80%9CI2C%E2%80%9D%20option%20and,activate%20%E2%80%9C%E2%80%9D.&text=The%20Raspberry%20Pi%20will%20reboot%20and%20the%20interface%20will%20be%20enabled.)
+
+#### Method 1: Command Line
+
+1. Open a new terminal tab
+2. Run 
+```{bash}
+    sudo raspi-config
+```
+3. Select "Interfacing Options"
+4. Scroll to the I2C option and activate by selecting <YES>
+5. Click "<ok>" to activate ARM I2C interface 
+6. Click "<Yes>" to reboot
+
+#### Method 2: User Interface
+1. On Desktop go to 
+   Menu > Preferences > Raspberry Pi Configuration
+2. Select "Interfaces" and set "I2C" to "Enabled"
+3. Click "OK"
+4. Click "Yes" to reboot
 
 
+Next, you will need to install smbus and I2C tools. 
+To do so, run the following commands on a terminal tab
+1. Open a terminal tab
+2. Run
+```{bash}
+    sudo apt-get update
+    sudo apt-get install -y python-smbus i2c-tools
+```
+To install I2C hardware, start by shutting down the Raspberry Pi.
+Run:
+```{bash}
+    sudo halt
+```
+Wait 10 seconds, disconnect PI power, and connect hardware. 
+
+
+To check if I2C enabled, power up the PI.
+Run:
+```{bash}
+    lsmod | grep i2c_
+```
+If “i2c_bcm2708” is listed, i2c is working. 
+
+To check hardware is working:
+run this command:
+```{bash}
+    i2cdetect -y 1
+```
+
+You should get a grid of numbers, with the numbers filled in being the i2c addresses.
+Note that you need a newer Raspberry Pi model for the last command.
+
+### Software Dependency Requirements
+
+Two packages are crucial for Raspberry Pi software for the controller.
+- smbus2
+- RPi.GPIO
+
+To install these dependencies, first install pip on your Raspberry Pi.
+If pip is installed, run
+```{bash}
+     pip --version 
+```
+
+Also run:
+```{bash}
+     python3 --version
+```
+You'll a version of python3 greater or equal to Python 3.7.6
+
+Next run this command:
+```{bash}
+    pip install -r requirements.txt
+```
+This will install all requisite requirements that the controller requires.
 
 ## Controller
 
@@ -24,31 +101,6 @@ environment and dependencies. Below, we list two options for setup.
 - 40 GPIO pins
 - Power for Raspberry Pi
 - WIFI connection on Raspberry Pi 4
-
-### Software Runtime Requirements
-
-Please activate the I2C capabilities on the Raspberry Pi 4 Controller
-
-### Software Dependency Requirements
-
-- smbus2
-- RPi.GPIO
-
-To install these dependencies, first install pip on your Raspberry Pi.
-Next, run these commands:
-```{bash}
-    pip install smbus2
-```
-and 
-```{bash}
-    pip install RPi.GPIO
-```
-
-After installing these packages, next run this command:
-```{bash}
-    pip install -r requirements.txt
-```
-This will install all requisite requirements that the controller requires.
 
 ## Sensor Classes
 
@@ -68,7 +120,6 @@ There are 4 sensor abstractions (4 classes):
 2. Temperature Sensor
 3. Humidity Sensor
 4. Soil Moisture Sensor
-
 
 ### Dependencies
 
