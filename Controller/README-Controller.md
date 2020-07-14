@@ -1,9 +1,33 @@
 # NYSG 2020
 
+This is the main controller for the greenhouse. It is responsible for initializing
+the software required, and running a main loop by reading sensor data, using the ML
+algorithm to decide on a decision, logging the data and decision and then responding
+to the decision by changing the peripherals.
+
+## Setup
+
+In order to use the controller and run any associated code, you must setup the 
+environment and dependencies. Below, we list two options for setup. 
+
+### Option 1: on normal environment
+
+### Option 2: with venv (not recommended)
+
+
+
 ## Controller
+
+### Physical Specifications
 
 - Raspberry Pi 4
 - 40 GPIO pins
+- Power for Raspberry Pi
+- WIFI connection on Raspberry Pi 4
+
+### Software Runtime Requirements
+
+Please activate the I2C capabilities on the Raspberry Pi 4 Controller
 
 ### Software Dependency Requirements
 
@@ -32,6 +56,19 @@ This will install all requisite requirements that the controller requires.
 
 The sensor class represents a sensor abstraction, that can turn on and off a sensor
 and read from the sensor. The Sensor object is meant to be compatiable with I2C
+
+### Sensors
+There are 3 physical sensors:
+1. Light Sensor
+2. Temperature & Humidity Sensor
+3. Soil Moisture Sensor
+
+There are 4 sensor abstractions (4 classes):
+1. Light Sensor
+2. Temperature Sensor
+3. Humidity Sensor
+4. Soil Moisture Sensor
+
 
 ### Dependencies
 
@@ -87,7 +124,3 @@ attributes.
 3. Water valve
 4. Fan
    1. Includes PWM capability, and thus requires a duty cycles and frequency attribute
-
-
-
-
