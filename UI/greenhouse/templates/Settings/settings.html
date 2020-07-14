@@ -21,5 +21,37 @@ Settings
 	    {% csrf_token %}
 	    {{ healthy_levels_form.as_p }}
 	</form>
+
+	{% if can_save %}
+		<button class="save-profile-button" onclick="showSaveProfileModal()">Save As New Profile</button>
+	{% endif %}
 </div>
+
+<div id="save-profile-modal" class="save-profile-modal">
+	<div class="form-wrapper save-profile-form-wrapper">
+		<form action="/settings/" method="post" id="save_profile_form" name="save_profile_form">
+		    {% csrf_token %}
+		    {{ save_profile_form.as_p }}
+		    <!-- <input class="save-profile-submit" type="submit" value="Save"> -->
+		    <button class="save-profile-submit" onclick="submitSaveProfileForm()">Save</button>
+		</form>
+	</div>
+</div>
+
+<script>
+	document.getElementById("id_plant_profile").options[0].disabled = true;
+
+	function showSaveProfileModal() {
+		document.getElementById("save-profile-modal").style.display = "flex";
+	}
+
+	function submitSaveProfileForm() {
+		document.getElementById("id_custom_temperature").value = document.getElementById("id_temperature").value
+		document.getElementById("id_custom_humidity").value = document.getElementById("id_humidity").value
+		document.getElementById("id_custom_soil_moisture").value = document.getElementById("id_soil_moisture").value
+		document.getElementById("id_custom_sunlight").value = document.getElementById("id_sunlight").value
+
+		document.getElementById("save_profile_form").submit()
+	}
+</script>
 {% endblock %}

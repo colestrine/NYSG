@@ -116,3 +116,17 @@ class data_handler:
 		log_dict = json.loads(log_json)
 
 		return log_dict
+
+	def save_profile(profile_name, temperature, humidity, soil_moisture, sunlight):
+		healthy_levels_by_profile_file_r = open('../../Interface Files/healthy_levels_by_profile.json', 'r')
+		healthy_levels_by_profile_json = healthy_levels_by_profile_file_r.read()
+		healthy_levels_by_profile_file_r.close()
+		healthy_levels_by_profile_dict = json.loads(healthy_levels_by_profile_json)
+
+		new_profile = {'temperature': temperature, 'humidity': humidity, 'soil_moisture': soil_moisture, 'sunlight': sunlight}
+
+		healthy_levels_by_profile_dict[profile_name] = new_profile
+
+		healthy_levels_by_profile_file_w = open('../../Interface Files/healthy_levels_by_profile.json', 'w')
+		healthy_levels_by_profile_file_w.write(json.dumps(healthy_levels_by_profile_dict))
+		healthy_levels_by_profile_file_w.close()
