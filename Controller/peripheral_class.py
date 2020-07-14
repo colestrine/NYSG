@@ -192,7 +192,7 @@ class Fan(Peripheral):
 
     def get_duty_cycle(self):
         """
-        get_duty_cycle(self) gets the duty cycles of the Fan 
+        get_duty_cycle(self) gets the duty cycles of the Fan
         """
         return self.dc
 
@@ -242,7 +242,7 @@ class Heater(Peripheral):
 
 def react_all(ml_results, peripheral_dict):
     """
-    react_all(peripheral_dict) changes all the peripherals in the 
+    react_all(peripheral_dict) changes all the peripherals in the
     [peripheral_dict] based on [ml_results]
     Returns: NONE
     """
@@ -266,3 +266,64 @@ def react_all(ml_results, peripheral_dict):
 
 
 # ----------- DEBUGGING --------------
+
+def debug_peripheral(log_path, pin_addr, n_iter):
+    """
+    debug_peripheral(log_path, pin_addr) debugs any peripheral at [pin_addr]
+    on GPIO pin and stores results in log_path
+    Peripheral cannot be a fan
+    """
+    GPIO.setup(pin_addr, GPIO.IN, GPIO.PUD_UP)
+
+    log_dict = pin_constants.load_data(log_path)
+
+    for _ in range(n_iter):
+        GPIO.output(pin_addr, True)
+        time.sleep(5)
+        GPIO.output(pin_addr, False)
+        time.sleep(5)
+
+        curr_time = time.strftime()
+        log_dict[str(curr_time)] = 1
+
+    pin_constants.dump_data(log_dict, log_path)
+
+    GPIO.cleanup(pin_addr)
+
+
+def debug_fan(log_path, pin_addr, n_iter, freq):
+    """
+    debug_peripheral(log_path, pin_addr) debugs a fan peripheral at [pin_addr]
+    on GPIO pin and stores results in log_path
+    """
+    GPIO.setup(pin_addr, GPIO.IN, GPIO.PUD_UP)
+
+    log_dict = pin_constants.load_data(log_path)
+
+    pwm = GPIO.PWM(pin_addr, freq)
+    for _ in range(n_iter):
+        for dc in range(100):
+            pwm.start(dc)
+            GPIO.output(pin_addr, True)
+            time.sleep(5)
+
+        curr_time = time.strftime()
+        log_dict[str(curr_time)] = 1
+
+    pin_constants.dump_data(log_dict, log_path)
+
+    GPIO.cleanup(pin_addr)
+
+
+def read_debug_data(log_path, first_few=None):
+    """
+    read_debug_data(log_path, first_few) reads in debugged daga at the log_path
+    for the first_few characgers, 
+    if first_few is None, greads all and prints all to terminal
+    """
+    data_dict = pin_constants.load_data(log_path)
+    dict_list = [(key, data_dict[key]) for key in data_dict]
+    if first_few == None:
+        first_few = len(dict_list)
+    for i in range(min(len(dict_list), first_few)):
+        print(dict_list[i][1])

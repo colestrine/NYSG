@@ -46,6 +46,9 @@ import adafruit_sgp30
 # ----- NON ADA FRUIT IMPORTS ------
 
 import smbus2
+# https://buildmedia.readthedocs.org/media/pdf/smbus2/latest/smbus2.pdf
+# https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code/blob/legacy/Adafruit_I2C/Adafruit_I2C.py
+# https://github.com/adafruit/Adafruit_Python_PureIO/blob/master/Adafruit_PureIO/smbus.py
 
 # ------- OTHER IMPORTS -------
 import time
