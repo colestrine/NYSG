@@ -65,10 +65,12 @@ def index(request):
 				sunlight = healthy_levels['sunlight']
 
 				data_handler.write_healthy_levels(temperature, humidity, soil_moisture, sunlight)
+		# If a profile name was submitted, save data as a new profile, and set that profile to be the current profile
 		if (profile_name):
 			data_handler.save_profile(profile_name, temperature, humidity, soil_moisture, sunlight)
 			data_handler.write_healthy_levels(temperature, humidity, soil_moisture, sunlight)
 			data_handler.write_plant_profile(profile_name)
+			can_save = False
 
 	healthy_levels = data_handler.read_healthy_levels()
 	plant_profile = data_handler.read_plant_profile()

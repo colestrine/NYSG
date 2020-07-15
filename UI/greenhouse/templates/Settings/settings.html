@@ -38,6 +38,61 @@ Settings
 	</div>
 </div>
 
+<div id="sidebar" class="sidebar">
+	<div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">
+		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()"><</button>
+	</div>
+	<!-- <div class="sidebar-collapse-button-wrapper" id="sidebar-collapse-button-wrapper">
+		<button class="sidebar-collapse-button" onclick="toggleSidebar()">></button>
+	</div> -->
+	<div class="sidebar-content-wrapper" id="sidebar-content-wrapper">
+		<div class="sidebar-section-wrapper">
+			<div class="sidebar-section-header">
+				Current Values
+			</div>
+			<div class="sidebar-section-content">
+				<div class="sidebar-value-label">
+					Temperature
+				</div>
+				<div>
+					70
+				</div>
+				<div class="sidebar-value-label">
+					Humidity
+				</div>
+				<div>
+					82%
+				</div>
+				<div class="sidebar-value-label">
+					Soil Moisture
+				</div>
+				<div>
+					37%
+				</div>
+				<div class="sidebar-value-label">
+					Light
+				</div>
+				<div>
+					105 lm
+				</div>
+			</div>
+		</div>
+		<div class="sidebar-section-wrapper">
+			<div class="sidebar-section-header">
+				Legend
+			</div>
+			<div class="sidebar-section-content">
+				<div class="lenged-row-wrapper">
+					<div class="legend-row-label">
+						Temperature
+					</div>
+					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	document.getElementById("id_plant_profile").options[0].disabled = true;
 
@@ -52,6 +107,43 @@ Settings
 		document.getElementById("id_custom_sunlight").value = document.getElementById("id_sunlight").value
 
 		document.getElementById("save_profile_form").submit()
+	}
+
+	var sidebar_hidden = true;
+
+	function toggleSidebar() {
+		if (sidebar_hidden) {
+			document.getElementById("sidebar").style.width = "350px";
+			document.getElementById("sidebar-toggle-button-wrapper").style.justifyContent = "flex-end";
+			document.getElementById("sidebar-toggle-button-wrapper").style.transform = "rotate(180deg)";
+			document.getElementById("sidebar-content-wrapper").style.display="grid";
+		}
+		else {
+			document.getElementById("sidebar").style.width = "30px";
+			document.getElementById("sidebar-toggle-button-wrapper").style.transform = "none";
+			document.getElementById("sidebar-toggle-button-wrapper").style.justifyContent = "center";
+			document.getElementById("sidebar-content-wrapper").style.display="none";
+		}
+
+		sidebar_hidden = !sidebar_hidden
+	}
+
+	var temperature_expanded = false;
+	var humidity_expanded = false;
+	var soil_moisture_expanded = false;
+	var sunlight_expanded = false;
+
+	function expandLegend(type) {
+		if (type == "temperature"){
+			if (temperature_expanded) {
+				document.getElementById("expand-legend-button-temperature").style.transform = "rotate(90deg)";
+			}
+			else {
+				document.getElementById("expand-legend-button-temperature").style.transform = "rotate(-90deg)";
+			}
+
+			temperature_expanded = !temperature_expanded
+		}
 	}
 </script>
 {% endblock %}

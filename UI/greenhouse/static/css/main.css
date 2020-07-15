@@ -233,3 +233,92 @@ form p label {
 #save_profile_form p:last-of-type {
 	display: block !important;
 }
+
+.sidebar {
+	height: 100%;
+    width: 30px;
+    position: absolute;
+    right: 0px;
+    background-color: white;
+    top: 0px;
+    z-index: 200;
+    border-left: solid 1px lightgray;
+    transition: width 1s ease 0s;
+}
+
+.sidebar-toggle-button-wrapper {
+	display: flex;
+    align-content: center;
+    justify-content: center;
+    margin: 5px 5px;
+}
+
+.sidebar-toggle-button {
+	background: transparent;
+    border: none;
+    border-radius: 2px;
+    font-family: monospace;
+    color: slategray;
+    font-weight: bold;
+}
+
+.sidebar-toggle-button:focus {
+	outline: none;
+}
+
+.sidebar-toggle-button:hover {
+	background-color: lightgray;
+}
+
+.sidebar-content-wrapper {
+	display: none;
+	padding: 10px;
+}
+
+.sidebar-section-wrapper {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.sidebar-section-header {
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color: slategray;
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.sidebar-value-label {
+	width: 175px;
+	float: left
+}
+
+.sidebar-section-content div {
+	margin-bottom: 5px;
+}
+
+.legend-row-label {
+	width: 175px;
+    float: left;
+}
+
+.legend-row-button {
+	background: transparent;
+    border: none;
+    border-radius: 2px;
+    font-family: monospace;
+    color: slategray;
+    font-weight: bold;
+    transform: rotate(90deg);
+    transition: transform 0.5s ease 0s;
+}
+
+.legend-row-button:hover {
+	background-color: none;
+}
+
+.legend-row-button:focus {
+	outline: none;
+}
