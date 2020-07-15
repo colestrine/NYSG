@@ -7,6 +7,8 @@ TODO: get raspberry pi and replace with actual package RPi.GPIO
 PUD_UP = True
 PUD_DOWN = False
 
+RISING = True
+
 IN = True
 OUT = False
 
@@ -53,4 +55,12 @@ def cleanup(channel):
 
 
 def setup(channel, gpio_in, pull_up_or_down):
+    pass
+
+
+def add_event_detect(channel, resistor_Status, callback):
+    pass
+
+
+def remove_event_detect(channel):
     pass

@@ -1,0 +1,58 @@
+{
+  "Tomatoes": {
+    "temperature": "75_90",
+    "humidity": "80_90",
+    "soil_moisture": "3",
+    "germ_time": "6_12",
+    "sunlight": "5"
+  },
+  "Peppers": {
+    "temperature": "70_95",
+    "humidity": "50_70",
+    "soil_moisture": "3",
+    "germ_time": "7_10",
+    "sunlight": "5"
+  },
+  "Onions": {
+    "temperature": "45_95",
+    "humidity": "65_75",
+    "soil_moisture": "3",
+    "germ_time": "4_5",
+    "sunlight": "5"
+  },
+  "Cucumbers": {
+    "temperature": "65_90",
+    "humidity": "60_70",
+    "soil_moisture": "3",
+    "germ_time": "3_10",
+    "sunlight": "5"
+  },
+  "Kale": {
+    "temperature": "45_85",
+    "humidity": "50_70",
+    "soil_moisture": "3",
+    "germ_time": "4_7",
+    "sunlight": "5"
+  },
+  "Lettuce": {
+    "temperature": "40_65",
+    "humidity": "50_70",
+    "soil_moisture": "3",
+    "germ_time": "7_14",
+    "sunlight": "5"
+  },
+  "Potatoes": {
+    "temperature": "40_55",
+    "humidity": "40_60",
+    "soil_moisture": "3",
+    "germ_time": "14_28",
+    "sunlight": "5"
+  },
+  "Spinach": {
+    "temperature": "40_75",
+    "humidity": "50_70",
+    "soil_moisture": "3",
+    "germ_time": "6_10",
+    "sunlight": "5"
+  }
+}

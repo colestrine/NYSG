@@ -41,9 +41,10 @@ I2C_PORT_NUM = 1
 # ----- Peripheral Constants --------
 
 VENT = 33
+TACH = 35
 LED = 37
 VALVE = 32
-HEAT = 37
+HEAT = 36
 
 # ------- lOG LOCATIONS -------------
 
