@@ -55,7 +55,7 @@ def ml_adapter(args_dict):
                              "heat": True, "light": True, "fan": 20}
     return final_dict
 
-# -------- OUTSIDE WRAPPERS --------
+# -------- INTIALIZATION WRAPPERS --------
 
 
 def init():
@@ -180,3 +180,10 @@ if __name__ == "__main__":
     init_dict = init()
     event_loop(init_dict, SENSOR_LOG, ML_ACTION_LOG,
                ALERT_LOG, MAX_SIZE, WAIT_INTERVAL_SECONDS, None)
+
+
+# ------- DEBUGGING -------------------
+
+# in the future, would like to have asynchrnous program report back
+# what is being read from the sensor and what the peripherals are being responded
+# to

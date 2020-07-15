@@ -232,3 +232,38 @@ attributes.
 1. debug_peripheral runs a peripheral and logs the data for that peripheral
 2. debug_fan runs debugging for a fan, changes duty cycles and logs the recorded tachometer speed
 3. read_debug_data prints out debug data to screen. Must be run only after a debug function was run first to collect data 
+
+## Main (main.py)
+Main houses all driver program functions. This is where the function is executed from. 
+Running main will start up the initialization and the event loop to continuosly monitor sensor data and also change peripeherals. The machine learning algorithm ties into the system in main.
+
+### Dependencies:
+pin_constants - these are the constants used
+sensor_class - sensors imported
+peripheral class - peripherals imported
+
+### ML Wrapper
+1. ml_adapter: the ml function is called from here, and argument dictionaries are used to feed in and pipe out data to this adapter
+
+### INTIALIZATION
+1. init: sets up controller with sensors and peripherasl and the associated channels and reigsters and pins
+
+### EVENT LOOP DRIVER
+
+1. one_cycle_sensors: polls data from all sensors once
+2. one_cycle_peripherals sends voltages to all peripherals once
+3. event_loop: measures data from sensor, makes deicsion, logs data and sends out decision to change peripherals, waits a time amount and restarts cycle
+
+
+### Debugging
+
+TODO in future
+
+## Log (log.py)
+Log contains all the logging utilities and functions to help log data in json files
+
+## Alert (alert.py)
+Alert contains all the alert utilities to monitor, raise and log alerts for the user
+
+## Pin Constans (pin_constants.py)
+Pin constants contains pin information like w[GPIO pins, register number, channel numbers and I2C commands.
