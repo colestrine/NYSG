@@ -1,4 +1,4 @@
-.vscode/
+*.vscode/
 *.DS_Store
 Jupyter\ Notebooks/venv/
 Jupyter\ Notebooks/.ipynb_checkpoints/
