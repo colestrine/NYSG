@@ -101,13 +101,16 @@ This will install all requisite requirements that the controller requires.
 - 40 GPIO pins
 - Power for Raspberry Pi
 - WIFI connection on Raspberry Pi 4
+- I2C C
 
-## Sensor Classes
+## Sensor Classes (sensor_class.py)
 
 ### Description
 
 The sensor class represents a sensor abstraction, that can turn on and off a sensor
-and read from the sensor. The Sensor object is meant to be compatiable with I2C
+and read from the sensor. The Sensor object is meant to be compatiable with I2C.
+
+There are also utility functions, summary functions and debugging functions in sensor_class.py
 
 ### Sensors
 There are 3 physical sensors:
@@ -133,38 +136,71 @@ There are 4 sensor abstractions (4 classes):
 ### Methods
 
 - read: This reads the requested value(s) from the sensor and returns the value
-
+- shut_down : Shuts down the sensor
+  
 ### Sublasses
 
 There are four subclasses. They are all subclasses of Sensor, and have the same
 attributes. 
 1. Light Sensor
-2. Humidity and Temperature Sensor
-3. Soil Moisture Sensor
+   1. Extra Attributes
+      1. Channel - this is the smbus channel object for the I2C channel
+      2. Block Size - this is the block size of data in bytes to retrieve from the register
+
+2. Humidity Sensor
+   1. Extra Attributes
+      1. Channel - this is the smbus channel object for the I2C channel
+      2. Block Size - this is the block size of data in bytes to retrieve from the reg
+3. Temperature Sensor
+   1. Extra Attributes
+      1. Channel - this is the smbus channel object for the I2C channel
+      2. Block Size - this is the block size of data in bytes to retrieve from the reg
+4. Soil Moisture Sensor
    1. Includes sensor attribute, holding an adafruit sensor object
-4. C02 Sensor [Optiona]
+5. C02 Sensor [Optiona]
    1. Includes sensor attribute, holding an adafruit sensor object
 
-## Peripheral Classes
+### Utility Functions
+1. Create Channel - this creates a SMBUS i2C channel . The chnnale must be 1.
+
+### SUMMaRY FUNCTIONS
+1. collect_all_sensors() : this returns all the sensor data from the sensors as a fictionary
+   in the format {"temperature" : t, "humidity" : h, "soil_moisture" : m, "sunlight" : s}
+
+### DEBUGGING FUNCTIONS
+1. Run_debug runs a sensor and logs the data for that sensor
+2. run_adafruit_debug runs debugging for a adafruit senxor and logs data for that sensor
+3. read_debug_data prints out debug data to screen. Must be run only after a debug function was run first to collect data
+
+## Peripheral Classes (peripheral_class.py)
 
 ### Description
 
 The peripheral class represents a peripheral abstraction, that can turn on and off a sensor
 and changed at the peripheral. The peripheral object is meant to be compatiable with GPIO pins.
 
+There are also utility functions and debugging functions in peripheral_class.py
+
+
 ### Dependencies
 
-- RPi.GPIO, for GPIO pins communication
-- Other backup packes
+- RPi.GPIO, for GPIO pins communication [Requires a Raspberry Pi for this package]
+- Other backup packages
+  - gpiozero provides more complex abstractions that may prove fruitful should we need them
 
 ### Attributes
 
 1. channel - this represents the GPIO pin channel
-2. register - this represents the register holding data relevant to the sensor
+2. activity - this represents whether the pin channel is active
 
 ### Methods
 
-- read: This reads the requested value(s) from the sensor and returns the value
+- setup: Setsup pin channel
+- set_active: makes channel active
+- set_inactive: makes channe; inactive
+- respond: outputs to GPIO channel; device
+- read: reads from GPIO channe;
+- deactivate: deactives and closes GPIO channel, cleaning up any remnants of chnnael and activity
 
 ### Sublasses
 
@@ -174,4 +210,25 @@ attributes.
 2. Plant Light
 3. Water valve
 4. Fan
-   1. Includes PWM capability, and thus requires a duty cycles and frequency attribute
+   1. Extra Attributes
+      1. PWM attributes
+         1. Frequency -current frequency of fan
+         2. Duty cycles 0 current duty cycles of fan
+         3. PWM  - PWM abstraction for Fan
+         4. tach - the tachometer port number
+   2. Extra methods
+       1. set_freq sets frequnecy
+       2. get_freq gets curret frequnccy
+       3. Set_dc sets duty cycles
+       4. get_dc gets current duty cycles
+       5. read_tach - this reads from tachometer, cleans up response and returns estimated RPM
+
+
+
+### Summary Functions
+1. react_all - this reacts to all the peripherals, changing them the way requested
+
+### DEBUGGING FUNCTIONS
+1. debug_peripheral runs a peripheral and logs the data for that peripheral
+2. debug_fan runs debugging for a fan, changes duty cycles and logs the recorded tachometer speed
+3. read_debug_data prints out debug data to screen. Must be run only after a debug function was run first to collect data 

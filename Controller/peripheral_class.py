@@ -17,7 +17,7 @@ import RPi.GPIO as GPIO
 
 
 # -------- OTHER PACKAGES ----------
-import time
+import time  # used for callback monitoring
 
 
 # ------- CUSTOM PACKAGES --------
@@ -159,7 +159,7 @@ class Fan(Peripheral):
     SUPEF CLaSS: PEripheral
     """
 
-    def __init__(self, channel, freq=0, dc=0):
+    def __init__(self, channel, freq=0, dc=0, tach=pin_constants.TACH):
         """
         Createsa Fan peripheral object with frequency freq
         duty cycles dc, and PWM pwm
@@ -170,6 +170,7 @@ class Fan(Peripheral):
         self.pwm = GPIO.PWM(self.channel, self.freq)
         self.pwm.start(self.dc)
         self.set_active()
+        self.tach = tach
 
     def set_freq(self, freq):
         """
@@ -203,6 +204,25 @@ class Fan(Peripheral):
         """
         self.pwm.stop()
         super().deactivate()
+
+    def read_tach(self):
+        """
+        read_tach(self) reads the tachomer value and returns the RPM of the fan
+        """
+        global_counter = 0
+
+        def tach_callback(channel):
+            global global_counter
+            global_counter += 1
+        GPIO.add_event_detect(self.tach, GPIO.RISING, tach_callback)
+        time.sleep(1)
+        GPIO.remove_event_detect(self.tach)
+
+        def calculate_rpm(counter):
+            # one rotation is 2 pulses https://electronics.stackexchange.com/questions/8295/how-to-interpret-the-output-of-a-3-pin-computer-fan-speed-sensor/52877
+            return counter / 2 * 60
+
+        return calculate_rpm(global_counter)
 
     # ----- DEBUGGING TOOLS -----
 
@@ -307,8 +327,20 @@ def debug_fan(log_path, pin_addr, n_iter, freq):
             GPIO.output(pin_addr, True)
             time.sleep(5)
 
+        global_counter = 0
+
+        def tach_callback(channel):
+            global global_counter
+            global_counter += 1
+        GPIO.add_event_detect(self.tach, GPIO.RISING, tach_callback)
+        time.sleep(1)
+        GPIO.remove_event_detect(self.tach)
+
+        def calculate_rpm(counter):
+            return counter / 2 * 60
+
         curr_time = time.strftime()
-        log_dict[str(curr_time)] = 1
+        log_dict[str(curr_time)] = calculate_rpm(global_counter)
 
     pin_constants.dump_data(log_dict, log_path)
 
