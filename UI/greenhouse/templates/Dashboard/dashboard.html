@@ -71,7 +71,7 @@ Dashboard
 	var healthyTemperatureMargin = ((healthyTemperature - 1) * 100).toString();
 	document.getElementById("temperature-status-bar-inner").style.marginLeft = healthyTemperatureMargin.concat("px");
 
-	var currentTemperature = "{{temperatures}}".split(',')[9] * 100; // This number should be the temperature, scaled to range [0, 500]
+	var currentTemperature = "{{temperatures}}".split(',').slice(-1) * 100; // This number should be the temperature, scaled to range [0, 500]
 	var currentTemperatureMargin = (currentTemperature - 100 - healthyTemperatureMargin).toString();
 	document.getElementById("temperature-current-level-bar").style.marginLeft = currentTemperatureMargin.concat("px");
 
@@ -79,7 +79,7 @@ Dashboard
 	var healthyHumidityMargin = ((healthyHumidity - 1) * 100).toString();
 	document.getElementById("humidity-status-bar-inner").style.marginLeft = healthyHumidityMargin.concat("px");
 
-	var currentHumidity = "{{humidities}}".split(',')[9] * 100; // This number should be the humidity, scaled to range [0, 500]
+	var currentHumidity = "{{humidities}}".split(',').slice(-1) * 100; // This number should be the humidity, scaled to range [0, 500]
 	var currentHumidityMargin = (currentHumidity - 100 - healthyHumidityMargin).toString();
 	document.getElementById("humidity-current-level-bar").style.marginLeft = currentHumidityMargin.concat("px");
 
@@ -87,7 +87,7 @@ Dashboard
 	var healthySoilMoistureMargin = ((healthySoilMoisture - 1) * 100).toString();
 	document.getElementById("soil-moisture-status-bar-inner").style.marginLeft = healthySoilMoistureMargin.concat("px");
 
-	var currentSoilMoisture = "{{soil_moistures}}".split(',')[9] * 100; // This number should be the soil moisture, scaled to range [0, 500]
+	var currentSoilMoisture = "{{soil_moistures}}".split(',').slice(-1) * 100; // This number should be the soil moisture, scaled to range [0, 500]
 	var currentSoilMoistureMargin = (currentSoilMoisture - 100 - healthySoilMoistureMargin).toString();
 	document.getElementById("soil-moisture-current-level-bar").style.marginLeft = currentSoilMoistureMargin.concat("px");
 
@@ -95,7 +95,7 @@ Dashboard
 	var healthySunlightMargin = ((healthySunlight - 1) * 100).toString();
 	document.getElementById("sunlight-status-bar-inner").style.marginLeft = healthySunlightMargin.concat("px");
 
-	var currentSunlight = "{{sunlights}}".split(',')[9] * 100; // This number should be the sunlight, scaled to range [0, 500]
+	var currentSunlight = "{{sunlights}}".split(',').slice(-1) * 100; // This number should be the sunlight, scaled to range [0, 500]
 	var currentSunlightMargin = (currentSunlight - 100 - healthySunlightMargin).toString();
 	document.getElementById("sunlight-current-level-bar").style.marginLeft = currentSunlightMargin.concat("px");
 
@@ -104,35 +104,35 @@ Dashboard
 		data: {
 			datasets: [
 				{
-					data: "{{temperatures}}".split(',', 10),
+					data: "{{temperatures}}".split(',').slice(-10),
 					backgroundColor: 'lightgreen',
 					borderColor: 'lightgreen',
 					label: 'Temperature',
 					fill: 'false'
 				},
 				{
-					data: "{{humidities}}".split(',', 10),
+					data: "{{humidities}}".split(',').slice(-10),
 					backgroundColor: 'green',
 					borderColor: 'green',
 					label: 'Humidity',
 					fill: 'false'
 				},
 				{
-					data: "{{soil_moistures}}".split(',', 10),
+					data: "{{soil_moistures}}".split(',').slice(-10),
 					backgroundColor: 'lightseagreen',
 					borderColor: 'lightseagreen',
 					label: 'Soil Moisture',
 					fill: 'false'
 				},
 				{
-					data: "{{sunlights}}".split(',', 10),
+					data: "{{sunlights}}".split(',').slice(-10),
 					backgroundColor: 'darkseagreen',
 					borderColor: 'darkseagreen',
 					label: 'Sunlight',
 					fill: 'false'
 				}
 			],
-			labels: "{{labels}}".split(',', 10)
+			labels: "{{labels}}".split(',').slice(-10)
 		},
 		options: {
 			responsive: true,

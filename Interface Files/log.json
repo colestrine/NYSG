@@ -58,5 +58,11 @@
 		"humidity": 1.49,
 		"soil_moisture": 2.50,
 		"sunlight": 4.51
+	},
+	"2020-07-09 05:00": {
+		"temperature": 3.50,
+		"humidity": 1.50,
+		"soil_moisture": 2.50,
+		"sunlight": 4.51
 	}
 }

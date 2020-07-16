@@ -32,7 +32,6 @@ Settings
 		<form action="/settings/" method="post" id="save_profile_form" name="save_profile_form">
 		    {% csrf_token %}
 		    {{ save_profile_form.as_p }}
-		    <!-- <input class="save-profile-submit" type="submit" value="Save"> -->
 		    <button class="save-profile-submit" onclick="submitSaveProfileForm()">Save</button>
 		</form>
 	</div>
@@ -52,25 +51,25 @@ Settings
 					Temperature
 				</div>
 				<div>
-					70
+					{{last_temperature}}
 				</div>
 				<div class="sidebar-value-label">
 					Humidity
 				</div>
 				<div>
-					82%
+					{{last_humidity}}%
 				</div>
 				<div class="sidebar-value-label">
 					Soil Moisture
 				</div>
 				<div>
-					37%
+					{{last_soil_moisture}}%
 				</div>
 				<div class="sidebar-value-label">
 					Light
 				</div>
 				<div>
-					105 lm
+					{{last_sunlight}} lm
 				</div>
 			</div>
 		</div>

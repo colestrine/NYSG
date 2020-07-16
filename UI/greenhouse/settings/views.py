@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm
 from scripts.data_handler import data_handler
+from collections import OrderedDict
+import json
 
 # Create your views here.
 def index(request):
@@ -78,4 +80,10 @@ def index(request):
 	healthy_levels_form = HealthyLevelsForm(initial=healthy_levels)
 	save_profile_form = SaveProfileForm()
 
-	return render(request, 'Settings/settings.html', {'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile})
+	log_data = data_handler.get_log_data()
+	log_data = OrderedDict(log_data)
+	log_data = list(log_data.items())
+	last_reading = {}
+	last_reading_datetime, last_reading_values = log_data[-1]
+
+	return render(request, 'Settings/settings.html', {'last_temperature': last_reading_values['temperature'], 'last_humidity': last_reading_values['humidity'], 'last_soil_moisture': last_reading_values['soil_moisture'], 'last_sunlight': last_reading_values['sunlight'], 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile})
