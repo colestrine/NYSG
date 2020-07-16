@@ -1,6 +1,7 @@
 # ------- IMPORTS --------
 
 import json
+import pickle
 
 
 # -----I2C constants --------
@@ -76,4 +77,27 @@ def dump_data(obj, path):
     """
     fp = open(path, "w")
     json.dump(obj, fp)
+    fp.close()
+
+
+def load_pickled_data(path):
+    """
+    load_data(path) loads data from path in a pickle format with read only, 
+    USES READ BYTES
+
+    returns obj
+    """
+    fp = open(path, "rb")
+    obj = pickle.load(fp)
+    fp.close()
+    return obj
+
+
+def dump_pickled_data(obj, path):
+    """
+    dump_data loads obj into path in pickle format
+    uses WRITE BYTES
+    """
+    fp = open(path, "wb")
+    pickle.dump(obj, fp)
     fp.close()
