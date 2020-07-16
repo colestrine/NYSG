@@ -21,7 +21,7 @@ from datetime import datetime
 from sensor_class import *
 from peripheral_class import *
 from log import log, MAX_SIZE
-from alert import alert
+from alert import alert, ALERT_LOG_PATH
 import pin_constants
 
 
@@ -146,9 +146,7 @@ def one_cycle(init_dict, sensor_log_path, ml_action_log, alert_log, max_log_size
     log(ml_args, sensor_log_path, max_log_size)
     ml_results = ml_adapter(ml_args)
     peripheral_actions = one_cycle_peripherals(init_dict, ml_results)
-    alert_message = alert(100)
-    if alert_message != None:
-        log(alert_message, alert_message, max_log_size)
+    alert(100, ALERT_LOG_PATH)
     log(peripheral_actions, ml_action_log, max_log_size)
     time.sleep(interval)
 

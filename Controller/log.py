@@ -78,6 +78,22 @@ def get_file_size(file_path):
     return os.path.getsize(file_path)
 
 
+def init_log(file_path):
+    """
+    init_log(file_path) initializes the log at file_path with an empty dictiknary
+    """
+    empty_dict = {}
+    pin_constants.dump_data(empty_dict, file_path)
+
+
+def clear_log(file_path):
+    """
+    clear_log(file_path) clears the log at the file_patha nd replaces ti with an empty dict
+    WARNING: ALL DATA ERASES
+    """
+    init_log(file_path)
+
+
 def log(file_path, new_dict, max_size):
     """
     log(file_path, new_dict) overwrites the data at old_dict
