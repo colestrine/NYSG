@@ -249,7 +249,7 @@ form p label {
 .sidebar-toggle-button-wrapper {
 	display: flex;
     align-content: center;
-    justify-content: center;
+    justify-content: left;
     margin: 5px 5px;
 }
 
@@ -260,6 +260,7 @@ form p label {
     font-family: monospace;
     color: slategray;
     font-weight: bold;
+    transition: transform 1s;
 }
 
 .sidebar-toggle-button:focus {
@@ -321,4 +322,18 @@ form p label {
 
 .legend-row-button:focus {
 	outline: none;
+}
+
+.legend-data-wrapper {
+	margin: 0px 25px;
+	display: none;
+}
+
+.legend-bucket-label {
+	float: left;
+	width: 152px;
+}
+
+.legend-bucket-data {
+	margin: 5px 0px;
 }

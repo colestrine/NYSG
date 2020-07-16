@@ -42,9 +42,6 @@ Settings
 	<div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">
 		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()"><</button>
 	</div>
-	<!-- <div class="sidebar-collapse-button-wrapper" id="sidebar-collapse-button-wrapper">
-		<button class="sidebar-collapse-button" onclick="toggleSidebar()">></button>
-	</div> -->
 	<div class="sidebar-content-wrapper" id="sidebar-content-wrapper">
 		<div class="sidebar-section-wrapper">
 			<div class="sidebar-section-header">
@@ -88,6 +85,158 @@ Settings
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
 				</div>
+				<div class="legend-data-wrapper" id="legend-temperature-data">
+					<div class="legend-bucket-label">
+						Cold
+					</div>
+					<div class="legend-bucket-data">
+						40-52
+					</div>
+					<div class="legend-bucket-label">
+						Cool
+					</div>
+					<div class="legend-bucket-data">
+						53-65
+					</div>
+					<div class="legend-bucket-label">
+						Medium
+					</div>
+					<div class="legend-bucket-data">
+						66-78
+					</div>
+					<div class="legend-bucket-label">
+						Warm
+					</div>
+					<div class="legend-bucket-data">
+						79-91
+					</div>
+					<div class="legend-bucket-label">
+						Hot
+					</div>
+					<div class="legend-bucket-data">
+						92-104
+					</div>
+				</div>
+			</div>
+			<div class="sidebar-section-content">
+				<div class="lenged-row-wrapper">
+					<div class="legend-row-label">
+						Humidity
+					</div>
+					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
+				</div>
+				<div class="legend-data-wrapper" id="legend-humidity-data">
+					<div class="legend-bucket-label">
+						Cold
+					</div>
+					<div class="legend-bucket-data">
+						40-52
+					</div>
+					<div class="legend-bucket-label">
+						Cool
+					</div>
+					<div class="legend-bucket-data">
+						53-65
+					</div>
+					<div class="legend-bucket-label">
+						Medium
+					</div>
+					<div class="legend-bucket-data">
+						66-78
+					</div>
+					<div class="legend-bucket-label">
+						Warm
+					</div>
+					<div class="legend-bucket-data">
+						79-91
+					</div>
+					<div class="legend-bucket-label">
+						Hot
+					</div>
+					<div class="legend-bucket-data">
+						92-104
+					</div>
+				</div>
+			</div>
+			<div class="sidebar-section-content">
+				<div class="lenged-row-wrapper">
+					<div class="legend-row-label">
+						Soil Moisture
+					</div>
+					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
+				</div>
+				<div class="legend-data-wrapper" id="legend-soil-moisture-data">
+					<div class="legend-bucket-label">
+						Cold
+					</div>
+					<div class="legend-bucket-data">
+						40-52
+					</div>
+					<div class="legend-bucket-label">
+						Cool
+					</div>
+					<div class="legend-bucket-data">
+						53-65
+					</div>
+					<div class="legend-bucket-label">
+						Medium
+					</div>
+					<div class="legend-bucket-data">
+						66-78
+					</div>
+					<div class="legend-bucket-label">
+						Warm
+					</div>
+					<div class="legend-bucket-data">
+						79-91
+					</div>
+					<div class="legend-bucket-label">
+						Hot
+					</div>
+					<div class="legend-bucket-data">
+						92-104
+					</div>
+				</div>
+			</div>
+			<div class="sidebar-section-content">
+				<div class="lenged-row-wrapper">
+					<div class="legend-row-label">
+						Sunlight
+					</div>
+					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
+				</div>
+				<div class="legend-data-wrapper" id="legend-sunlight-data">
+					<div class="legend-bucket-label">
+						Cold
+					</div>
+					<div class="legend-bucket-data">
+						40-52
+					</div>
+					<div class="legend-bucket-label">
+						Cool
+					</div>
+					<div class="legend-bucket-data">
+						53-65
+					</div>
+					<div class="legend-bucket-label">
+						Medium
+					</div>
+					<div class="legend-bucket-data">
+						66-78
+					</div>
+					<div class="legend-bucket-label">
+						Warm
+					</div>
+					<div class="legend-bucket-data">
+						79-91
+					</div>
+					<div class="legend-bucket-label">
+						Hot
+					</div>
+					<div class="legend-bucket-data">
+						92-104
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -114,14 +263,12 @@ Settings
 	function toggleSidebar() {
 		if (sidebar_hidden) {
 			document.getElementById("sidebar").style.width = "350px";
-			document.getElementById("sidebar-toggle-button-wrapper").style.justifyContent = "flex-end";
-			document.getElementById("sidebar-toggle-button-wrapper").style.transform = "rotate(180deg)";
+			document.getElementById("sidebar-toggle-button").style.transform = "rotate(180deg)";
 			document.getElementById("sidebar-content-wrapper").style.display="grid";
 		}
 		else {
 			document.getElementById("sidebar").style.width = "30px";
-			document.getElementById("sidebar-toggle-button-wrapper").style.transform = "none";
-			document.getElementById("sidebar-toggle-button-wrapper").style.justifyContent = "center";
+			document.getElementById("sidebar-toggle-button").style.transform = "none";
 			document.getElementById("sidebar-content-wrapper").style.display="none";
 		}
 
@@ -137,12 +284,50 @@ Settings
 		if (type == "temperature"){
 			if (temperature_expanded) {
 				document.getElementById("expand-legend-button-temperature").style.transform = "rotate(90deg)";
+				document.getElementById("legend-temperature-data").style.display = "none";
 			}
 			else {
 				document.getElementById("expand-legend-button-temperature").style.transform = "rotate(-90deg)";
+				document.getElementById("legend-temperature-data").style.display = "block";
 			}
 
 			temperature_expanded = !temperature_expanded
+		}
+		if (type == "humidity"){
+			if (humidity_expanded) {
+				document.getElementById("expand-legend-button-humidity").style.transform = "rotate(90deg)";
+				document.getElementById("legend-humidity-data").style.display = "none";
+			}
+			else {
+				document.getElementById("expand-legend-button-humidity").style.transform = "rotate(-90deg)";
+				document.getElementById("legend-humidity-data").style.display = "block";
+			}
+
+			humidity_expanded = !humidity_expanded
+		}
+		if (type == "soil_moisture"){
+			if (soil_moisture_expanded) {
+				document.getElementById("expand-legend-button-soil-moisture").style.transform = "rotate(90deg)";
+				document.getElementById("legend-soil-moisture-data").style.display = "none";
+			}
+			else {
+				document.getElementById("expand-legend-button-soil-moisture").style.transform = "rotate(-90deg)";
+				document.getElementById("legend-soil-moisture-data").style.display = "block";
+			}
+
+			soil_moisture_expanded = !soil_moisture_expanded
+		}
+		if (type == "sunlight"){
+			if (sunlight_expanded) {
+				document.getElementById("expand-legend-button-sunlight").style.transform = "rotate(90deg)";
+				document.getElementById("legend-sunlight-data").style.display = "none";
+			}
+			else {
+				document.getElementById("expand-legend-button-sunlight").style.transform = "rotate(-90deg)";
+				document.getElementById("legend-sunlight-data").style.display = "block";
+			}
+
+			sunlight_expanded = !sunlight_expanded
 		}
 	}
 </script>
