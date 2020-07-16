@@ -85,36 +85,14 @@ Settings
 					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-temperature-data">
-					<div class="legend-bucket-label">
-						Cold
-					</div>
-					<div class="legend-bucket-data">
-						40-52
-					</div>
-					<div class="legend-bucket-label">
-						Cool
-					</div>
-					<div class="legend-bucket-data">
-						53-65
-					</div>
-					<div class="legend-bucket-label">
-						Medium
-					</div>
-					<div class="legend-bucket-data">
-						66-78
-					</div>
-					<div class="legend-bucket-label">
-						Warm
-					</div>
-					<div class="legend-bucket-data">
-						79-91
-					</div>
-					<div class="legend-bucket-label">
-						Hot
-					</div>
-					<div class="legend-bucket-data">
-						92-104
-					</div>
+					{% for record in legend.temperature.items %}
+						<div class="legend-bucket-label">
+							{{record.1.label}}
+						</div>
+						<div class="legend-bucket-data">
+							{{record.1.low}}-{{record.1.high}}
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 			<div class="sidebar-section-content">
@@ -125,36 +103,14 @@ Settings
 					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-humidity-data">
-					<div class="legend-bucket-label">
-						Cold
-					</div>
-					<div class="legend-bucket-data">
-						40-52
-					</div>
-					<div class="legend-bucket-label">
-						Cool
-					</div>
-					<div class="legend-bucket-data">
-						53-65
-					</div>
-					<div class="legend-bucket-label">
-						Medium
-					</div>
-					<div class="legend-bucket-data">
-						66-78
-					</div>
-					<div class="legend-bucket-label">
-						Warm
-					</div>
-					<div class="legend-bucket-data">
-						79-91
-					</div>
-					<div class="legend-bucket-label">
-						Hot
-					</div>
-					<div class="legend-bucket-data">
-						92-104
-					</div>
+					{% for record in legend.humidity.items %}
+						<div class="legend-bucket-label">
+							{{record.1.label}}
+						</div>
+						<div class="legend-bucket-data">
+							{{record.1.low}}-{{record.1.high}}
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 			<div class="sidebar-section-content">
@@ -165,36 +121,14 @@ Settings
 					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-soil-moisture-data">
-					<div class="legend-bucket-label">
-						Cold
-					</div>
-					<div class="legend-bucket-data">
-						40-52
-					</div>
-					<div class="legend-bucket-label">
-						Cool
-					</div>
-					<div class="legend-bucket-data">
-						53-65
-					</div>
-					<div class="legend-bucket-label">
-						Medium
-					</div>
-					<div class="legend-bucket-data">
-						66-78
-					</div>
-					<div class="legend-bucket-label">
-						Warm
-					</div>
-					<div class="legend-bucket-data">
-						79-91
-					</div>
-					<div class="legend-bucket-label">
-						Hot
-					</div>
-					<div class="legend-bucket-data">
-						92-104
-					</div>
+					{% for record in legend.soil_moisture.items %}
+						<div class="legend-bucket-label">
+							{{record.1.label}}
+						</div>
+						<div class="legend-bucket-data">
+							{{record.1.low}}-{{record.1.high}}
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 			<div class="sidebar-section-content">
@@ -205,36 +139,14 @@ Settings
 					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-sunlight-data">
-					<div class="legend-bucket-label">
-						Cold
-					</div>
-					<div class="legend-bucket-data">
-						40-52
-					</div>
-					<div class="legend-bucket-label">
-						Cool
-					</div>
-					<div class="legend-bucket-data">
-						53-65
-					</div>
-					<div class="legend-bucket-label">
-						Medium
-					</div>
-					<div class="legend-bucket-data">
-						66-78
-					</div>
-					<div class="legend-bucket-label">
-						Warm
-					</div>
-					<div class="legend-bucket-data">
-						79-91
-					</div>
-					<div class="legend-bucket-label">
-						Hot
-					</div>
-					<div class="legend-bucket-data">
-						92-104
-					</div>
+					{% for record in legend.sunlight.items %}
+						<div class="legend-bucket-label">
+							{{record.1.label}}
+						</div>
+						<div class="legend-bucket-data">
+							{{record.1.low}}-{{record.1.high}}
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>

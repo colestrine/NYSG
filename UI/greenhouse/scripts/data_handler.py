@@ -130,3 +130,11 @@ class data_handler:
 		healthy_levels_by_profile_file_w = open('../../Interface Files/healthy_levels_by_profile.json', 'w')
 		healthy_levels_by_profile_file_w.write(json.dumps(healthy_levels_by_profile_dict))
 		healthy_levels_by_profile_file_w.close()
+
+	def get_legend():
+		value_buckets_file_r = open('../../Interface Files/value_buckets.json', 'r')
+		value_buckets_json = value_buckets_file_r.read()
+		value_buckets_file_r.close()
+		value_buckets_dict = json.loads(value_buckets_json)
+
+		return value_buckets_dict

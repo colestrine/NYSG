@@ -86,4 +86,7 @@ def index(request):
 	last_reading = {}
 	last_reading_datetime, last_reading_values = log_data[-1]
 
-	return render(request, 'Settings/settings.html', {'last_temperature': last_reading_values['temperature'], 'last_humidity': last_reading_values['humidity'], 'last_soil_moisture': last_reading_values['soil_moisture'], 'last_sunlight': last_reading_values['sunlight'], 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile})
+	legend = data_handler.get_legend()
+	print(legend)
+
+	return render(request, 'Settings/settings.html', {'legend': legend, 'last_temperature': last_reading_values['temperature'], 'last_humidity': last_reading_values['humidity'], 'last_soil_moisture': last_reading_values['soil_moisture'], 'last_sunlight': last_reading_values['sunlight'], 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile})
