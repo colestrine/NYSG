@@ -255,6 +255,11 @@ peripheral class - peripherals imported
 3. event_loop: measures data from sensor, makes deicsion, logs data and sends out decision to change peripherals, waits a time amount and restarts cycle
 
 
+### ASYNCHRONICITY
+
+The program is not asynchronous at the present moment. If we have difficulties, weith certain areas we can make sure that the program becomes asynchronous. 
+
+
 ### Debugging
 
 TODO in future
@@ -262,8 +267,30 @@ TODO in future
 ## Log (log.py)
 Log contains all the logging utilities and functions to help log data in json files
 
+- get_file_size is the size of the file in bytes
+- append_dict adds on to the dict keys that are assumed not to be in the dict
+- merge_dict is a utility methodn that ios much slower and adds keys uniquely
+- log logs the data, either overwriting prior memory location if the file size is to large or appending data if necessary
+
 ## Alert (alert.py)
 Alert contains all the alert utilities to monitor, raise and log alerts for the user
 
-## Pin Constans (pin_constants.py)
-Pin constants contains pin information like w[GPIO pins, register number, channel numbers and I2C commands.
+- alert is the collection of alerts raised
+
+## Pin Constants (pin_constants.py)
+Pin constants contains pin information like GPIO pins, register number, channel numbers and I2C commands.
+
+## run_greenhouse.sh
+Runs the greenhouse by calling main
+
+
+## Set up to Run
+To Run this program, run the command
+```{bash}
+bash run_greenhouse.sh
+```
+The program will start immediately and will not terminate.
+
+Right now, there is a provision to run the scriot every 10 seconds automatically by bash. The shell will handle all concurrency issues so that we can run other programs.
+
+If you run using the second command, you will be able to run other programs as well. For example, this could allow us to run manage.py to allow the Django context to open up a new webpage server, for user interaction.

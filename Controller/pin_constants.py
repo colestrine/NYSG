@@ -53,7 +53,7 @@ TEMPERATURE_LOG_PATH = "temperature_log.json"
 ALL_DATA_LOG_PATH = "all_data_log.json"
 
 
-# --------- LOGGING -------------
+# --------- LOGGING UTILITIES FOR DEBUGGING PINS -------------
 
 
 def load_data(path):
