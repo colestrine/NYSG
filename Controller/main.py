@@ -10,7 +10,7 @@ DEPENDENCIES:
 
 # -------- IMPORTS  -------------
 import smbus2
-import RPi.GPIO
+import RPi.GPIO as GPIO
 
 # -------- OTHER EXTERNAL IMPORTS ------
 import time
@@ -19,8 +19,8 @@ import pickle
 
 
 # ------ CUSTOM CLASSES ---------
-from sensor_class import *
-from peripheral_class import *
+from sensor_class import LightSensor, HumiditySensor, TemperatureSensor, MoistureSensor, Co2Sensor, create_channel, collect_all_sensors
+from peripheral_class import SolenoidValve, HeatPad, Fan, PlantLight, react_all
 from log import init_log, log, MAX_SIZE
 from alert import alert, ALERT_LOG_PATH
 import pin_constants
@@ -44,6 +44,14 @@ ONE_CYCLE = True
 # -------- OUTSIDE WRAPPERS --------
 
 
+def process(ml_reaction):
+    """
+    process(ml_reaction) processes the ml_reaction from the mL-algorithm
+    into a usable form
+    """
+    return
+
+
 def ml_adapter(args_dict):
     """
     ml_adapter() is a wrapper/adapter to fit for the ml functions
@@ -54,6 +62,7 @@ def ml_adapter(args_dict):
     TODO:
     Change arguments to correct result, and adapt the final results
     """
+    process(None)
     now = datetime.datetime.now()
     dt_string = now.strftime("%d-%m-%Y %H:%M")
     final_dict = {}
@@ -88,13 +97,13 @@ def init(dump_init_path=INIT_DICT_PICKLE_PATH):
     humidity_sensor = HumiditySensor(
         pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, sensor_channel)
     moisture_sensor = MoistureSensor()
-    co2_sensor = Co2Sensor()
+    co2_sensor = Co2Sensor()  # optional
 
     ret_dict["light_sensor"] = light_sensor
     ret_dict["temp_sensor"] = temp_sensor
     ret_dict["moisture_sensor"] = moisture_sensor
     ret_dict["humidity_sensor"] = humidity_sensor
-    ret_dict["co2_sensor"] = co2_sensor
+    ret_dict["co2_sensor"] = co2_sensor  # optional
 
     # --- Set Up Peripherals -----
 
