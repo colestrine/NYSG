@@ -197,7 +197,7 @@ Settings
 	var sunlight_expanded = false;
 
 	function expandSection(section_name) {
-		document.getElementById("expand-legend-button-".concat(section_name)).style.transform = "rotate(-90deg)";
+		document.getElementById("expand-legend-button-".concat(section_name)).style.transform = "rotate(-90deg) translateY(-1px)";
 		document.getElementById("legend-".concat(section_name).concat("-data")).style.display = "block";
 
 		return true

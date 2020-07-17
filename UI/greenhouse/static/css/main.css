@@ -169,6 +169,8 @@ form p label {
 .historical-status-container {
 	width: 50%;
 	margin:auto;
+	display: flex;
+    justify-content: center;
 }
 
 .save-profile-button {
