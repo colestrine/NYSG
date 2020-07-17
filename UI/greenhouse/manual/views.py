@@ -26,6 +26,19 @@ def index(request):
 	sunlights = sunlights[:-1]
 	labels = labels[:-1]
 
+	log_data = data_handler.get_log_data()
+	log_data = OrderedDict(log_data)
+	log_data = list(log_data.items())
+	last_reading = {}
+	last_reading_datetime, last_reading_values = log_data[-1]
+
+	legend = data_handler.get_legend()
+
+	last_temperature = data_handler.bucket_to_nominal("temperature", last_reading_values['temperature'])
+	last_humidity = data_handler.bucket_to_nominal("humidity", last_reading_values['humidity'])
+	last_soil_moisture = data_handler.bucket_to_nominal("soil_moisture", last_reading_values['soil_moisture'])
+	last_sunlight = data_handler.bucket_to_nominal("sunlight", last_reading_values['sunlight'])
+
 	action_form = ActionForm()
 
-	return render(request, 'Manual/manual.html', {'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'action_form': action_form})
+	return render(request, 'Manual/manual.html', {'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'action_form': action_form})

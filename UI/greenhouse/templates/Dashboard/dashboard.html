@@ -306,54 +306,64 @@ Dashboard
 	var soil_moisture_expanded = false;
 	var sunlight_expanded = false;
 
+	function expandSection(section_name) {
+		document.getElementById("expand-legend-button-".concat(section_name)).style.transform = "rotate(-90deg)";
+		document.getElementById("legend-".concat(section_name).concat("-data")).style.display = "block";
+
+		return true
+	}
+
+	function collapseSection(section_name) {
+		document.getElementById("expand-legend-button-".concat(section_name)).style.transform = "rotate(90deg)";
+		document.getElementById("legend-".concat(section_name).concat("-data")).style.display = "none";
+
+		return false
+	}
+
 	function expandLegend(type) {
 		if (type == "temperature"){
 			if (temperature_expanded) {
-				document.getElementById("expand-legend-button-temperature").style.transform = "rotate(90deg)";
-				document.getElementById("legend-temperature-data").style.display = "none";
+				temperature_expanded = collapseSection("temperature")
 			}
 			else {
-				document.getElementById("expand-legend-button-temperature").style.transform = "rotate(-90deg)";
-				document.getElementById("legend-temperature-data").style.display = "block";
+				humidity_expanded = collapseSection("humidity")
+				soil_moisture_expanded = collapseSection("soil-moisture")
+				sunlight_expanded = collapseSection("sunlight")
+				temperature_expanded = expandSection("temperature")
 			}
-
-			temperature_expanded = !temperature_expanded
 		}
 		if (type == "humidity"){
 			if (humidity_expanded) {
-				document.getElementById("expand-legend-button-humidity").style.transform = "rotate(90deg)";
-				document.getElementById("legend-humidity-data").style.display = "none";
+				humidity_expanded = collapseSection("humidity")
 			}
 			else {
-				document.getElementById("expand-legend-button-humidity").style.transform = "rotate(-90deg)";
-				document.getElementById("legend-humidity-data").style.display = "block";
+				temperature_expanded = collapseSection("temperature")
+				soil_moisture_expanded = collapseSection("soil-moisture")
+				sunlight_expanded = collapseSection("sunlight")
+				humidity_expanded = expandSection("humidity")
 			}
-
-			humidity_expanded = !humidity_expanded
 		}
 		if (type == "soil_moisture"){
 			if (soil_moisture_expanded) {
-				document.getElementById("expand-legend-button-soil-moisture").style.transform = "rotate(90deg)";
-				document.getElementById("legend-soil-moisture-data").style.display = "none";
+				soil_moisture_expanded = collapseSection("soil-moisture")
 			}
 			else {
-				document.getElementById("expand-legend-button-soil-moisture").style.transform = "rotate(-90deg)";
-				document.getElementById("legend-soil-moisture-data").style.display = "block";
+				temperature_expanded = collapseSection("temperature")
+				humidity_expanded = collapseSection("humidity")
+				sunlight_expanded = collapseSection("sunlight")
+				soil_moisture_expanded = expandSection("soil-moisture")
 			}
-
-			soil_moisture_expanded = !soil_moisture_expanded
 		}
 		if (type == "sunlight"){
 			if (sunlight_expanded) {
-				document.getElementById("expand-legend-button-sunlight").style.transform = "rotate(90deg)";
-				document.getElementById("legend-sunlight-data").style.display = "none";
+				sunlight_expanded = collapseSection("sunlight")
 			}
 			else {
-				document.getElementById("expand-legend-button-sunlight").style.transform = "rotate(-90deg)";
-				document.getElementById("legend-sunlight-data").style.display = "block";
+				temperature_expanded = collapseSection("temperature")
+				humidity_expanded = collapseSection("humidity")
+				soil_moisture_expanded = collapseSection("soil-moisture")
+				sunlight_expanded = expandSection("sunlight")
 			}
-
-			sunlight_expanded = !sunlight_expanded
 		}
 	}
 </script>
