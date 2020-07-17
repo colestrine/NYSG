@@ -332,9 +332,9 @@ def debug_fan(log_path, pin_addr, n_iter, freq):
         def tach_callback(channel):
             global global_counter
             global_counter += 1
-        GPIO.add_event_detect(self.tach, GPIO.RISING, tach_callback)
+        GPIO.add_event_detect(pin_constants.TACH, GPIO.RISING, tach_callback)
         time.sleep(1)
-        GPIO.remove_event_detect(self.tach)
+        GPIO.remove_event_detect(pin_constants.TACH)
 
         def calculate_rpm(counter):
             return counter / 2 * 60

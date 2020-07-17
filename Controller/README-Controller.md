@@ -275,7 +275,9 @@ Log contains all the logging utilities and functions to help log data in json fi
 ## Alert (alert.py)
 Alert contains all the alert utilities to monitor, raise and log alerts for the user
 
-- alert is the collection of alerts raised
+- alert is the collection of alerts raised, which also logs the alert
+- alert_message_generator creates alerts as needed
+- log_alert logs an alert
 
 ## Pin Constants (pin_constants.py)
 Pin constants contains pin information like GPIO pins, register number, channel numbers and I2C commands.

@@ -287,7 +287,7 @@ class MoistureSensor(Sensor):
         self.sensor = ss
 
         # need to add try and except to locka nd unlcok judiviously
-        channel = Adafruit_PureIO.smbus.SMBus(bus=pin_constants.I2C_PORT_NUM)
+        # channel = Adafruit_PureIO.smbus.SMBus(bus=pin_constants.I2C_PORT_NUM)
 
     def read(self):
         """
