@@ -138,3 +138,23 @@ class data_handler:
 		value_buckets_dict = json.loads(value_buckets_json)
 
 		return value_buckets_dict
+
+	# Variable is element in ['temperature', 'humidity', 'soil_moisture', 'sunlight'], value is a float in [0.0, 6.0)
+	def bucket_to_nominal(variable, value):
+		legend = data_handler.get_legend()
+		legend = legend[variable]
+
+		value_base = str(value).split('.')[0]
+		value_fraction_str = str(value).split('.')[1]
+		value_fraction = int(value_fraction_str)/(10**len(value_fraction_str))
+
+		legend = legend[value_base]
+		low = int(legend['low'])
+		high = int(legend['high'])
+		label = legend['label']
+
+		difference = high - low
+
+		nominal = low + (difference * value_fraction)
+
+		return nominal
