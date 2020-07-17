@@ -7,7 +7,7 @@ Settings
 {% block content %}
 
 
-<h1 class="form-header">Plant Profile</h1>
+<h1 class="form-header">Plant Profileeee</h1>
 <div class="form-wrapper">
 	<form action="/settings/" method="post" id="plant_profile_form" name="plant_profile_form">
 	    {% csrf_token %}
@@ -29,7 +29,6 @@ Settings
 
 <div id="save-profile-modal" class="save-profile-modal">
 	<div class="form-wrapper save-profile-form-wrapper">
-		<button class="close-save-profile-modal-button" id="close-save-profile-modal-button" onclick="hideSaveProfileModal()">x</button>
 		<form action="/settings/" method="post" id="save_profile_form" name="save_profile_form">
 		    {% csrf_token %}
 		    {{ save_profile_form.as_p }}
@@ -159,10 +158,6 @@ Settings
 
 	function showSaveProfileModal() {
 		document.getElementById("save-profile-modal").style.display = "flex";
-	}
-
-	function hideSaveProfileModal() {
-		document.getElementById("save-profile-modal").style.display = "none";
 	}
 
 	function submitSaveProfileForm() {

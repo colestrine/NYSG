@@ -220,10 +220,20 @@ form p label {
 }
 
 .save-profile-submit {
-	width: 75px;
+	text-align: center;
+    border: solid 1px lightgray;
+    border-radius: 4px;
+    padding: 3px 3px;
+    color: slategray;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    width: 75px;
     margin-left: auto;
     margin-right: auto;
     display: block;
+}
+
+.save-profile-submit:focus {
+	outline: none;
 }
 
 #save_profile_form p {
@@ -336,4 +346,24 @@ form p label {
 
 .legend-bucket-data {
 	margin: 5px 0px;
+}
+
+.close-save-profile-modal-button {
+	position: relative;
+    left: -12px;
+    top: -63px;
+    background: transparent;
+    border: none;
+    border-radius: 2px;
+    font-family: monospace;
+    color: slategray;
+    font-weight: bold;
+}
+
+.close-save-profile-modal-button:hover {
+	background-color: none;
+}
+
+.close-save-profile-modal-button:focus {
+	outline: none;
 }
