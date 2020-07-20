@@ -233,16 +233,16 @@ class Environment:
 
         action_set = ActionSet(light_action, ventilation_action, water_action, heat_action)
 
-        #prior_effects = EffectSet.getEffect(str(action_set))
-
         prior_effects = prior_effects[str(action_set)]
 
         prior_effects = EffectSet.decode(prior_effects)
 
-        next_state.temperature = (next_state.temperature + prior_effects['temperature'])/2
-        next_state.humidity = (next_state.humidity + prior_effects['humidity'])/2
-        next_state.soil_moisture = (next_state.soil_moisture + prior_effects['soil_moisture'])/2
-        next_state.sunlight = (next_state.sunlight + prior_effects['sunlight'])/2
+        # If state has already been visited, update based on prior knowledge
+        if (prior_effects['temperature']):
+            next_state.temperature = (next_state.temperature + prior_effects['temperature'])/2
+            next_state.humidity = (next_state.humidity + prior_effects['humidity'])/2
+            next_state.soil_moisture = (next_state.soil_moisture + prior_effects['soil_moisture'])/2
+            next_state.sunlight = (next_state.sunlight + prior_effects['sunlight'])/2
 
         return next_state
 
@@ -661,7 +661,7 @@ class Test:
         pyplot.show()
 
 if __name__ == '__main__':
-    current_state = State(1.9, 3.5, 3.3, 2.1)
+    current_state = State(random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10)
     goal_state = State(3.5, 2.5, 2.8, 4.5)
 
     print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
