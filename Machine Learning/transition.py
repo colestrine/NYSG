@@ -80,7 +80,7 @@ class EffectSet():
 		else:
 			sunlight = float(self.sunlight)
 
-		return [.8*float(self.temperature) + .2*temperature, .8*float(self.humidity) + .2*humidity, .8*float(self.soil_moisture) + .2*soil_moisture, .8*float(self.sunlight) + .2*sunlight]
+		return [.5*float(self.temperature) + .5*temperature, .5*float(self.humidity) + .5*humidity, .5*float(self.soil_moisture) + .5*soil_moisture, .5*float(self.sunlight) + .5*sunlight]
 
 	def putEffect(action_set, effect_set):
 		with open('Files/transition.json', 'r') as transition_file:
