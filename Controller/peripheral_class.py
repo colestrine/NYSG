@@ -8,6 +8,7 @@ in class format
 
 REQUIRES:
 - RPi.GPIO in order to use all the GPIO port ufnctionality on the raspberry pi
+# might need to use spidev as well
 """
 
 
@@ -32,15 +33,18 @@ class Peripheral:
     Peripheral represents peripheral object
 
     active is true if the peripheral is on, else false
+    channel is the GPIO pin chnnale the peripheral is hooked up to
+    burst is the amount of time the perioheral is on for before it deactivates
     """
 
-    def __init__(self, channel, active=False):
+    def __init__(self, channel, active=False, burst=pin_constants.BURST):
         """
         __init__(self, channel, active) constructs a Peripheral in channel channel
         and activity active
         """
         self.channel = channel
         self.active = active
+        self.burst = burst
 
     def set_up(self, resistor_level):
         """
@@ -66,12 +70,16 @@ class Peripheral:
         set_active(self) sets self to be active
         """
         self.change_active(True)
+        self.respond()
+        time.sleep(self.burst)
+        self.set_inactive()
 
     def set_inactive(self):
         """
         set_inactive(self) sets peripheral to be inactive
         """
         self.change_active(False)
+        self.respond()
 
     def respond(self):
         """
@@ -350,7 +358,7 @@ def debug_fan(log_path, pin_addr, n_iter, freq):
 def read_debug_data(log_path, first_few=None):
     """
     read_debug_data(log_path, first_few) reads in debugged daga at the log_path
-    for the first_few characgers, 
+    for the first_few characgers,
     if first_few is None, greads all and prints all to terminal
     """
     data_dict = pin_constants.load_data(log_path)
@@ -359,3 +367,38 @@ def read_debug_data(log_path, first_few=None):
         first_few = len(dict_list)
     for i in range(min(len(dict_list), first_few)):
         print(dict_list[i][1])
+
+
+# ------------ MANUAL CONTROL -------------------------
+
+def manual(peripheral_dict, action_list):
+    """
+    manual(peripheral_dict, cction_dict) allows for mannual control of peripherals
+
+    action_list is a list of pairs where the first element is the name of the action and
+    the second is the action itself
+
+    Intended to be used by the User interface as manualk control
+
+    Returns None
+    """
+    def bistate_set(obj, action):
+        if action == "activate":
+            obj.set_active()
+        elif action == "inactive":
+            obj.set_inactive()
+
+    valve = peripheral_dict["valve"]
+    heater = peripheral_dict["heat"]
+    light = peripheral_dict["light"]
+    fan = peripheral_dict["fan"]
+
+    for action_name, action in action_list:
+        if action_name == "valve":
+            bistate_set(valve, action)
+        elif action_name == "heater":
+            bistate_set(heater, action)
+        elif action_name == "light":
+            bistate_set(light, action)
+        elif action_name == "fan":
+            fan.set_freq(action)
