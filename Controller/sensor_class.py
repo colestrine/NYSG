@@ -17,6 +17,7 @@ I2C protocols)
 - time (used for time and delays)
 - json (used to log read in data from sensors)
 - pin_constants [custom]: holds pin data for I2C communication protocols
+TODO: REQUIRE SPIDEV TODO:
 
 - sudo pip3 install adafruit-circuitpython-seesaw
  You will need to run the above command for the adafruit moisture sensor
@@ -33,8 +34,9 @@ TODO: CHECK AND TEST ALL CLASSES
 
 # ----- ADA FRUIT MOISTURE SENSOR IMPORTS -----------------
 import busio
-from board import SCL, SDA
-import board
+# from board import SCL, SDA
+# import board
+
 from adafruit_seesaw.seesaw import Seesaw
 import Adafruit_PureIO
 
@@ -50,10 +52,38 @@ import smbus2
 # https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code/blob/legacy/Adafruit_I2C/Adafruit_I2C.py
 # https://github.com/adafruit/Adafruit_Python_PureIO/blob/master/Adafruit_PureIO/smbus.py
 
+
 # ------- OTHER IMPORTS -------
 import time
 from datetime import datetime
 import pin_constants
+
+
+# -------- TEST IMPORTS ----------
+import random
+import datetime
+import sys
+import log
+
+
+# ------- TEST CONSTANTS ----------
+N_SENSORS = 4
+N_ITER = 100
+SENSOR_LOG_TEST = "SENSOR_LOG_TEST.json"
+
+num_cli_args = len(sys.argv)
+if num_cli_args <= 1:
+    RUN_TEST = False
+else:
+    try:
+        run_test = True if sys.argv[1].strip().lower() == "true" else False
+        RUN_TEST = run_test
+    except:
+        RUN_TEST = False
+
+
+SCL = 1
+SDA = 1
 
 # --------- SENSORS ----------------
 
@@ -287,7 +317,7 @@ class MoistureSensor(Sensor):
         self.sensor = ss
 
         # need to add try and except to locka nd unlcok judiviously
-        channel = Adafruit_PureIO.smbus.SMBus(bus=pin_constants.I2C_PORT_NUM)
+        # channel = Adafruit_PureIO.smbus.SMBus(bus=pin_constants.I2C_PORT_NUM)
 
     def read(self):
         """
@@ -384,10 +414,13 @@ def collect_all_sensors(sensor_list):
 
         ret_dict[name] = val
 
-    time = datetime.strftime()
+    # get time
+    now = datetime.datetime.now()
+    # add second and microsecond
+    current_time = now.strftime("%d-%m-%Y %H:%M:%-S:%f")
 
     outer_dict = {}
-    outer_dict[time] = ret_dict
+    outer_dict[current_time] = ret_dict
     return outer_dict
 
 
@@ -459,3 +492,38 @@ def read_debug_data(log_path, first_few=None):
         first_few = len(dict_list)
     for i in range(min(len(dict_list), first_few)):
         print(dict_list[i][1])
+
+
+# ---------- TEST SENSOR LOGGING -------------
+def test_sensor_logging(n_iter, log_path):
+    """
+    test_sensor_logging(n_iter) logs sensor measurement for n_iter
+    at log_path in JSON form
+    """
+    time_dict = {}
+
+    for _iter in range(n_iter):
+        # get time
+        now = datetime.datetime.now()
+        # add second and microsecond
+        current_time = now.strftime("%d-%m-%Y %H:%M:%-S:%f")
+
+        actions = []
+        for _ in range(N_SENSORS):
+            sensor_action = random.randint(0, 100)
+            actions.append(sensor_action)
+
+        sensors = ["temperature", "humidity", "soil_moisture", "Light"]
+        combined_list = list(zip(sensors, actions))
+        combined_dict = {key[0]: key[1] for key in combined_list}
+
+        time_dict[current_time] = combined_dict
+
+    log.log(log_path, time_dict, log.MAX_SIZE)
+
+
+# ---------- MAIN TESTING --------------------
+if __name__ == "__main__":
+    if RUN_TEST:
+        log.init_log(SENSOR_LOG_TEST)
+        test_sensor_logging(N_ITER, SENSOR_LOG_TEST)

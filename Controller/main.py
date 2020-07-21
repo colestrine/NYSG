@@ -10,17 +10,18 @@ DEPENDENCIES:
 
 # -------- IMPORTS  -------------
 import smbus2
-import RPi.GPIO
+import RPi.GPIO as GPIO
 
 # -------- OTHER EXTERNAL IMPORTS ------
 import time
 from datetime import datetime
+import pickle
 
 
 # ------ CUSTOM CLASSES ---------
-from sensor_class import *
-from peripheral_class import *
-from log import log, MAX_SIZE
+from sensor_class import LightSensor, HumiditySensor, TemperatureSensor, MoistureSensor, Co2Sensor, create_channel, collect_all_sensors
+from peripheral_class import SolenoidValve, HeatPad, Fan, PlantLight, react_all
+from log import init_log, log, MAX_SIZE
 from alert import alert, ALERT_LOG_PATH
 import pin_constants
 
@@ -33,9 +34,22 @@ WAIT_INTERVAL_SECONDS = 60
 SENSOR_LOG = "sensor_log.json"
 ML_ACTION_LOG = "ml_action_log.json"
 ALERT_LOG = "alert_log.json"
+INIT_DICT_PICKLE_PATH = "init_dict_pickle_path.pickle"
+
+
+# -------- RUN ENVIRONMENT VARIABLES ---------
+ONE_CYCLE = True
 
 
 # -------- OUTSIDE WRAPPERS --------
+
+
+def process(ml_reaction):
+    """
+    process(ml_reaction) processes the ml_reaction from the mL-algorithm
+    into a usable form
+    """
+    return
 
 
 def ml_adapter(args_dict):
@@ -48,6 +62,7 @@ def ml_adapter(args_dict):
     TODO:
     Change arguments to correct result, and adapt the final results
     """
+    process(None)
     now = datetime.datetime.now()
     dt_string = now.strftime("%d-%m-%Y %H:%M")
     final_dict = {}
@@ -58,7 +73,7 @@ def ml_adapter(args_dict):
 # -------- INTIALIZATION WRAPPERS --------
 
 
-def init():
+def init(dump_init_path=INIT_DICT_PICKLE_PATH):
     """
     init() sets up the controller with appropriate objects
     and calls appropriate set up/init functions to get ready for event loop
@@ -82,13 +97,13 @@ def init():
     humidity_sensor = HumiditySensor(
         pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, sensor_channel)
     moisture_sensor = MoistureSensor()
-    co2_sensor = Co2Sensor()
+    co2_sensor = Co2Sensor()  # optional
 
     ret_dict["light_sensor"] = light_sensor
     ret_dict["temp_sensor"] = temp_sensor
     ret_dict["moisture_sensor"] = moisture_sensor
     ret_dict["humidity_sensor"] = humidity_sensor
-    ret_dict["co2_sensor"] = co2_sensor
+    ret_dict["co2_sensor"] = co2_sensor  # optional
 
     # --- Set Up Peripherals -----
 
@@ -104,6 +119,14 @@ def init():
     ret_dict["heat"] = heat
     ret_dict["fan"] = fan
     ret_dict["light"] = light
+
+    # set up logging dictionaries
+    init_log(SENSOR_LOG)
+    init_log(ML_ACTION_LOG)
+    init_log(ALERT_LOG)
+
+    # set up init pickle path
+    pin_constants.dump_pickled_data(ret_dict, dump_init_path)
 
     return ret_dict
 
@@ -151,6 +174,20 @@ def one_cycle(init_dict, sensor_log_path, ml_action_log, alert_log, max_log_size
     time.sleep(interval)
 
 
+def one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH, sensor_log_path=SENSOR_LOG, ml_action_log=ML_ACTION_LOG, alert_log=ALERT_LOG, max_log_size=MAX_SIZE, interval=0):
+    """
+    one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH) does one cycle based on the 
+    information from init_path
+
+    PRIMARILY INTENDENDED FOR ASYNC USE WITH BASH SCRIPT
+
+    REQIIRES: init_dict has beenm initalized already
+    """
+    init_dict = pin_constants.load_pickled_data(init_dict_path)
+    one_cycle(init_dict, sensor_log_path, ml_action_log,
+              alert_log, max_log_size, interval)
+
+
 def event_loop(init_dict, sensor_log_path, ml_action_log, alert_log, max_log_size, interval, max_iter):
     """ 
     event_loop() the main event loop
@@ -175,9 +212,12 @@ def event_loop(init_dict, sensor_log_path, ml_action_log, alert_log, max_log_siz
 
 
 if __name__ == "__main__":
-    init_dict = init()
-    event_loop(init_dict, SENSOR_LOG, ML_ACTION_LOG,
-               ALERT_LOG, MAX_SIZE, WAIT_INTERVAL_SECONDS, None)
+    init_dict = init(INIT_DICT_PICKLE_PATH)
+    if ONE_CYCLE:
+        one_cycle_driver()
+    else:
+        event_loop(init_dict, SENSOR_LOG, ML_ACTION_LOG,
+                   ALERT_LOG, MAX_SIZE, WAIT_INTERVAL_SECONDS, None)
 
 
 # ------- DEBUGGING -------------------
