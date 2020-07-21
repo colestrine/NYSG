@@ -239,10 +239,10 @@ class Environment:
 
         # If actions have already been taken, update based on prior knowledge
         if (prior_effects['temperature'] or prior_effects['humidity'] or prior_effects['soil_moisture'] or prior_effects['sunlight']):
-            next_state.temperature = (next_state.temperature + (next_state.temperature + prior_effects['temperature']))/2
-            next_state.humidity = (next_state.humidity + (next_state.humidity + prior_effects['humidity']))/2
-            next_state.soil_moisture = (next_state.soil_moisture + (next_state.soil_moisture + prior_effects['soil_moisture']))/2
-            next_state.sunlight = (next_state.sunlight + (next_state.sunlight + prior_effects['sunlight']))/2
+            next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_effects['temperature'])
+            next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_effects['humidity'])
+            next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_effects['soil_moisture'])
+            next_state.sunlight = .2*next_state.sunlight + .8*(next_state.sunlight + prior_effects['sunlight'])
 
         return next_state
 
@@ -321,11 +321,11 @@ class Test:
     def transition(current_state, light_action, water_action, ventilation_action, heat_action):
         next_state = State(current_state.temperature, current_state.humidity, current_state.soil_moisture, current_state.sunlight)
 
-        big_random_low = 50
-        big_random_high = 60
+        big_random_low = 86
+        big_random_high = 88
 
-        small_random_low = 3
-        small_random_high = 10
+        small_random_low = 19
+        small_random_high = 21
 
         if light_action == 'big_increase':
             factor = round(random.randint(
@@ -627,7 +627,7 @@ class Test:
         pyplot.show()
 
 if __name__ == '__main__':
-    current_state = State(random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10)
+    current_state = State(2.8, 3.2, 4.0, 3.1) #random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10)
     goal_state = State(3.5, 2.5, 2.8, 4.5)
 
     print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
