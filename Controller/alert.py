@@ -3,9 +3,14 @@ alert deals with possible alert messages
 """
 
 # ---------- IMPORTS ----------------------
-import random  # for testing
 import datetime
 import time
+
+
+# ---------- TESTING IMPORTS ----------------------
+import random  # for testing
+import sys
+
 
 # --------- CUSTOM IMPORTS ---------------
 import pin_constants
@@ -18,8 +23,17 @@ WATER_LEVEL = 100
 ALERT_LOG_PATH = "alert_log.json"
 N_TEST_ITER = 100
 
+
 # --------- TEST RUNNER ENVIRONMENT VARS --------
-RUN_TEST = False
+num_cli_args = len(sys.argv)
+if num_cli_args <= 1:
+    RUN_TEST = False
+else:
+    try:
+        run_test = True if sys.argv[1].strip().lower() == "true" else False
+        RUN_TEST = run_test
+    except:
+        RUN_TEST = False
 
 
 # --------- HELPERS ---------------------
