@@ -134,6 +134,9 @@ form p label {
 	margin-left: 0px;
 	z-index: 2;
 	position: relative;
+    opacity: 0;
+    transition: .5s;
+    transition-delay: .5s;
 }
 
 .status-bar-container label {
