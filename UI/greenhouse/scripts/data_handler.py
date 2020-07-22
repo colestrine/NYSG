@@ -158,3 +158,19 @@ class data_handler:
 		nominal = low + (difference * value_fraction)
 
 		return nominal
+
+	def put_manual_actions(water, fan, heat, light):
+		actions_file = open('../../Interface Files/manual_actions.json', 'w')
+
+		actions = {'water': water, 'fan': fan, 'heat': heat, 'light': light}
+
+		actions_file.write(json.dumps(actions))
+		
+		actions_file.close()
+
+	def get_manual_actions():
+		actions_file = open('../../Interface Files/manual_actions.json', 'r')
+		actions_json = actions_file.read()
+		actions_file.close()
+	
+		return json.loads(actions_json)
