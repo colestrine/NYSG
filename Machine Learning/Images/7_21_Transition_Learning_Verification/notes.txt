@@ -1,0 +1,18 @@
+- test scenario:
+	current state: (2.8,3.2,4.0,3.1)
+	goal state: (3.5,2.5,2.8,4.5)
+- environment dynamics assumptions:
+	big_random_low = 50
+        big_random_high = 60
+
+        small_random_low = 3
+        small_random_high = 10
+- environment dynamics actual:
+        big_random_low = 86
+        big_random_high = 88
+
+        small_random_low = 19
+        small_random_high = 21
+- interpretation:
+	1. moving to a warmer, brighter, and drier climate
+	2. assumptions underestimate effects of both big and small actions

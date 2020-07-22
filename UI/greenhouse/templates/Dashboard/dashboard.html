@@ -108,7 +108,7 @@ Dashboard
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Temperature
+						Temperature (<span>&#176;</span>F)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
 				</div>
@@ -126,7 +126,7 @@ Dashboard
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Humidity
+						Humidity (%)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
 				</div>
@@ -144,7 +144,7 @@ Dashboard
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Soil Moisture
+						Soil Moisture (%)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
 				</div>
@@ -162,7 +162,7 @@ Dashboard
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Sunlight
+						Sunlight (lm)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
 				</div>
@@ -190,6 +190,7 @@ Dashboard
 	var currentTemperature = "{{temperatures}}".split(',').slice(-1) * 100; // This number should be the temperature, scaled to range [0, 600]
 	var currentTemperatureMargin = (currentTemperature - 200 - healthyTemperatureMargin).toString();
 	document.getElementById("temperature-current-level-bar").style.marginLeft = currentTemperatureMargin.concat("px");
+	document.getElementById("temperature-current-level-bar").style.opacity = 1;
 
 	var healthyHumidity = Number("{{healthy_humidity}}");
 	var healthyHumidityMargin = ((healthyHumidity - 1) * 100).toString();
@@ -198,6 +199,7 @@ Dashboard
 	var currentHumidity = "{{humidities}}".split(',').slice(-1) * 100; // This number should be the humidity, scaled to range [0, 600]
 	var currentHumidityMargin = (currentHumidity - 200 - healthyHumidityMargin).toString();
 	document.getElementById("humidity-current-level-bar").style.marginLeft = currentHumidityMargin.concat("px");
+	document.getElementById("humidity-current-level-bar").style.opacity = 1;
 
 	var healthySoilMoisture = Number("{{healthy_soil_moisture}}");
 	var healthySoilMoistureMargin = ((healthySoilMoisture - 1) * 100).toString();
@@ -206,6 +208,7 @@ Dashboard
 	var currentSoilMoisture = "{{soil_moistures}}".split(',').slice(-1) * 100; // This number should be the soil moisture, scaled to range [0, 600]
 	var currentSoilMoistureMargin = (currentSoilMoisture - 200 - healthySoilMoistureMargin).toString();
 	document.getElementById("soil-moisture-current-level-bar").style.marginLeft = currentSoilMoistureMargin.concat("px");
+	document.getElementById("soil-moisture-current-level-bar").style.opacity = 1;
 
 	var healthySunlight = Number("{{healthy_sunlight}}");
 	var healthySunlightMargin = ((healthySunlight - 1) * 100).toString();
@@ -214,6 +217,7 @@ Dashboard
 	var currentSunlight = "{{sunlights}}".split(',').slice(-1) * 100; // This number should be the sunlight, scaled to range [0, 600]
 	var currentSunlightMargin = (currentSunlight - 200 - healthySunlightMargin).toString();
 	document.getElementById("sunlight-current-level-bar").style.marginLeft = currentSunlightMargin.concat("px");
+	document.getElementById("sunlight-current-level-bar").style.opacity = 1;
 
 	var chart_config = {
 		type: 'line',
