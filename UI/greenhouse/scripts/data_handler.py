@@ -116,3 +116,45 @@ class data_handler:
 		log_dict = json.loads(log_json)
 
 		return log_dict
+
+	def save_profile(profile_name, temperature, humidity, soil_moisture, sunlight):
+		healthy_levels_by_profile_file_r = open('../../Interface Files/healthy_levels_by_profile.json', 'r')
+		healthy_levels_by_profile_json = healthy_levels_by_profile_file_r.read()
+		healthy_levels_by_profile_file_r.close()
+		healthy_levels_by_profile_dict = json.loads(healthy_levels_by_profile_json)
+
+		new_profile = {'temperature': temperature, 'humidity': humidity, 'soil_moisture': soil_moisture, 'sunlight': sunlight}
+
+		healthy_levels_by_profile_dict[profile_name] = new_profile
+
+		healthy_levels_by_profile_file_w = open('../../Interface Files/healthy_levels_by_profile.json', 'w')
+		healthy_levels_by_profile_file_w.write(json.dumps(healthy_levels_by_profile_dict))
+		healthy_levels_by_profile_file_w.close()
+
+	def get_legend():
+		value_buckets_file_r = open('../../Interface Files/value_buckets.json', 'r')
+		value_buckets_json = value_buckets_file_r.read()
+		value_buckets_file_r.close()
+		value_buckets_dict = json.loads(value_buckets_json)
+
+		return value_buckets_dict
+
+	# Variable is element in ['temperature', 'humidity', 'soil_moisture', 'sunlight'], value is a float in [0.0, 6.0)
+	def bucket_to_nominal(variable, value):
+		legend = data_handler.get_legend()
+		legend = legend[variable]
+
+		value_base = str(value).split('.')[0]
+		value_fraction_str = str(value).split('.')[1]
+		value_fraction = int(value_fraction_str)/(10**len(value_fraction_str))
+
+		legend = legend[value_base]
+		low = int(legend['low'])
+		high = int(legend['high'])
+		label = legend['label']
+
+		difference = high - low
+
+		nominal = low + (difference * value_fraction)
+
+		return nominal

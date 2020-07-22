@@ -65,74 +65,194 @@ Dashboard
 	<canvas id="historical-status"></canvas>
 </div>
 
+<div id="sidebar" class="sidebar">
+	<div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">
+		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()"><</button>
+	</div>
+	<div class="sidebar-content-wrapper" id="sidebar-content-wrapper">
+		<div class="sidebar-section-wrapper">
+			<div class="sidebar-section-header">
+				Current Values
+			</div>
+			<div class="sidebar-section-content">
+				<div class="sidebar-value-label">
+					Temperature
+				</div>
+				<div>
+					{{last_temperature}} <span>&#176;</span>F
+				</div>
+				<div class="sidebar-value-label">
+					Humidity
+				</div>
+				<div>
+					{{last_humidity}}%
+				</div>
+				<div class="sidebar-value-label">
+					Soil Moisture
+				</div>
+				<div>
+					{{last_soil_moisture}}%
+				</div>
+				<div class="sidebar-value-label">
+					Light
+				</div>
+				<div>
+					{{last_sunlight}} lm
+				</div>
+			</div>
+		</div>
+		<div class="sidebar-section-wrapper">
+			<div class="sidebar-section-header">
+				Legend
+			</div>
+			<div class="sidebar-section-content">
+				<div class="lenged-row-wrapper">
+					<div class="legend-row-label">
+						Temperature (<span>&#176;</span>F)
+					</div>
+					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
+				</div>
+				<div class="legend-data-wrapper" id="legend-temperature-data">
+					{% for record in legend.temperature.items %}
+						<div class="legend-bucket-label">
+							{{record.1.label}}
+						</div>
+						<div class="legend-bucket-data">
+							{{record.1.low}}-{{record.1.high}}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="sidebar-section-content">
+				<div class="lenged-row-wrapper">
+					<div class="legend-row-label">
+						Humidity (%)
+					</div>
+					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
+				</div>
+				<div class="legend-data-wrapper" id="legend-humidity-data">
+					{% for record in legend.humidity.items %}
+						<div class="legend-bucket-label">
+							{{record.1.label}}
+						</div>
+						<div class="legend-bucket-data">
+							{{record.1.low}}-{{record.1.high}}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="sidebar-section-content">
+				<div class="lenged-row-wrapper">
+					<div class="legend-row-label">
+						Soil Moisture (%)
+					</div>
+					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
+				</div>
+				<div class="legend-data-wrapper" id="legend-soil-moisture-data">
+					{% for record in legend.soil_moisture.items %}
+						<div class="legend-bucket-label">
+							{{record.1.label}}
+						</div>
+						<div class="legend-bucket-data">
+							{{record.1.low}}-{{record.1.high}}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="sidebar-section-content">
+				<div class="lenged-row-wrapper">
+					<div class="legend-row-label">
+						Sunlight (lm)
+					</div>
+					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
+				</div>
+				<div class="legend-data-wrapper" id="legend-sunlight-data">
+					{% for record in legend.sunlight.items %}
+						<div class="legend-bucket-label">
+							{{record.1.label}}
+						</div>
+						<div class="legend-bucket-data">
+							{{record.1.low}}-{{record.1.high}}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script>
 	var healthyTemperature = Number("{{healthy_temperature}}");
 	var healthyTemperatureMargin = ((healthyTemperature - 1) * 100).toString();
 	document.getElementById("temperature-status-bar-inner").style.marginLeft = healthyTemperatureMargin.concat("px");
 
-	var currentTemperature = "{{temperatures}}".split(',')[9] * 100; // This number should be the temperature, scaled to range [0, 500]
-	var currentTemperatureMargin = (currentTemperature - 100 - healthyTemperatureMargin).toString();
+	var currentTemperature = "{{temperatures}}".split(',').slice(-1) * 100; // This number should be the temperature, scaled to range [0, 600]
+	var currentTemperatureMargin = (currentTemperature - 200 - healthyTemperatureMargin).toString();
 	document.getElementById("temperature-current-level-bar").style.marginLeft = currentTemperatureMargin.concat("px");
+	document.getElementById("temperature-current-level-bar").style.opacity = 1;
 
 	var healthyHumidity = Number("{{healthy_humidity}}");
 	var healthyHumidityMargin = ((healthyHumidity - 1) * 100).toString();
 	document.getElementById("humidity-status-bar-inner").style.marginLeft = healthyHumidityMargin.concat("px");
 
-	var currentHumidity = "{{humidities}}".split(',')[9] * 100; // This number should be the humidity, scaled to range [0, 500]
-	var currentHumidityMargin = (currentHumidity - 100 - healthyHumidityMargin).toString();
+	var currentHumidity = "{{humidities}}".split(',').slice(-1) * 100; // This number should be the humidity, scaled to range [0, 600]
+	var currentHumidityMargin = (currentHumidity - 200 - healthyHumidityMargin).toString();
 	document.getElementById("humidity-current-level-bar").style.marginLeft = currentHumidityMargin.concat("px");
+	document.getElementById("humidity-current-level-bar").style.opacity = 1;
 
 	var healthySoilMoisture = Number("{{healthy_soil_moisture}}");
 	var healthySoilMoistureMargin = ((healthySoilMoisture - 1) * 100).toString();
 	document.getElementById("soil-moisture-status-bar-inner").style.marginLeft = healthySoilMoistureMargin.concat("px");
 
-	var currentSoilMoisture = "{{soil_moistures}}".split(',')[9] * 100; // This number should be the soil moisture, scaled to range [0, 500]
-	var currentSoilMoistureMargin = (currentSoilMoisture - 100 - healthySoilMoistureMargin).toString();
+	var currentSoilMoisture = "{{soil_moistures}}".split(',').slice(-1) * 100; // This number should be the soil moisture, scaled to range [0, 600]
+	var currentSoilMoistureMargin = (currentSoilMoisture - 200 - healthySoilMoistureMargin).toString();
 	document.getElementById("soil-moisture-current-level-bar").style.marginLeft = currentSoilMoistureMargin.concat("px");
+	document.getElementById("soil-moisture-current-level-bar").style.opacity = 1;
 
 	var healthySunlight = Number("{{healthy_sunlight}}");
 	var healthySunlightMargin = ((healthySunlight - 1) * 100).toString();
 	document.getElementById("sunlight-status-bar-inner").style.marginLeft = healthySunlightMargin.concat("px");
 
-	var currentSunlight = "{{sunlights}}".split(',')[9] * 100; // This number should be the sunlight, scaled to range [0, 500]
-	var currentSunlightMargin = (currentSunlight - 100 - healthySunlightMargin).toString();
+	var currentSunlight = "{{sunlights}}".split(',').slice(-1) * 100; // This number should be the sunlight, scaled to range [0, 600]
+	var currentSunlightMargin = (currentSunlight - 200 - healthySunlightMargin).toString();
 	document.getElementById("sunlight-current-level-bar").style.marginLeft = currentSunlightMargin.concat("px");
+	document.getElementById("sunlight-current-level-bar").style.opacity = 1;
 
 	var chart_config = {
 		type: 'line',
 		data: {
 			datasets: [
 				{
-					data: "{{temperatures}}".split(',', 10),
+					data: "{{temperatures}}".split(',').slice(-10),
 					backgroundColor: 'lightgreen',
 					borderColor: 'lightgreen',
 					label: 'Temperature',
 					fill: 'false'
 				},
 				{
-					data: "{{humidities}}".split(',', 10),
+					data: "{{humidities}}".split(',').slice(-10),
 					backgroundColor: 'green',
 					borderColor: 'green',
 					label: 'Humidity',
 					fill: 'false'
 				},
 				{
-					data: "{{soil_moistures}}".split(',', 10),
+					data: "{{soil_moistures}}".split(',').slice(-10),
 					backgroundColor: 'lightseagreen',
 					borderColor: 'lightseagreen',
 					label: 'Soil Moisture',
 					fill: 'false'
 				},
 				{
-					data: "{{sunlights}}".split(',', 10),
+					data: "{{sunlights}}".split(',').slice(-10),
 					backgroundColor: 'darkseagreen',
 					borderColor: 'darkseagreen',
 					label: 'Sunlight',
 					fill: 'false'
 				}
 			],
-			labels: "{{labels}}".split(',', 10)
+			labels: "{{labels}}".split(',').slice(-10)
 		},
 		options: {
 			responsive: true,
@@ -167,5 +287,88 @@ Dashboard
 		var chart_element = document.getElementById('historical-status').getContext('2d');
 		window.chart = new Chart(chart_element, chart_config);
 	};
+
+	var sidebar_hidden = true;
+
+	function toggleSidebar() {
+		if (sidebar_hidden) {
+			document.getElementById("sidebar").style.width = "350px";
+			document.getElementById("sidebar-toggle-button").style.transform = "rotate(180deg)";
+			document.getElementById("sidebar-content-wrapper").style.display="grid";
+		}
+		else {
+			document.getElementById("sidebar").style.width = "30px";
+			document.getElementById("sidebar-toggle-button").style.transform = "none";
+			document.getElementById("sidebar-content-wrapper").style.display="none";
+		}
+
+		sidebar_hidden = !sidebar_hidden
+	}
+
+	var temperature_expanded = false;
+	var humidity_expanded = false;
+	var soil_moisture_expanded = false;
+	var sunlight_expanded = false;
+
+	function expandSection(section_name) {
+		document.getElementById("expand-legend-button-".concat(section_name)).style.transform = "rotate(-90deg) translateY(-1px)";
+		document.getElementById("legend-".concat(section_name).concat("-data")).style.display = "block";
+
+		return true
+	}
+
+	function collapseSection(section_name) {
+		document.getElementById("expand-legend-button-".concat(section_name)).style.transform = "rotate(90deg)";
+		document.getElementById("legend-".concat(section_name).concat("-data")).style.display = "none";
+
+		return false
+	}
+
+	function expandLegend(type) {
+		if (type == "temperature"){
+			if (temperature_expanded) {
+				temperature_expanded = collapseSection("temperature")
+			}
+			else {
+				humidity_expanded = collapseSection("humidity")
+				soil_moisture_expanded = collapseSection("soil-moisture")
+				sunlight_expanded = collapseSection("sunlight")
+				temperature_expanded = expandSection("temperature")
+			}
+		}
+		if (type == "humidity"){
+			if (humidity_expanded) {
+				humidity_expanded = collapseSection("humidity")
+			}
+			else {
+				temperature_expanded = collapseSection("temperature")
+				soil_moisture_expanded = collapseSection("soil-moisture")
+				sunlight_expanded = collapseSection("sunlight")
+				humidity_expanded = expandSection("humidity")
+			}
+		}
+		if (type == "soil_moisture"){
+			if (soil_moisture_expanded) {
+				soil_moisture_expanded = collapseSection("soil-moisture")
+			}
+			else {
+				temperature_expanded = collapseSection("temperature")
+				humidity_expanded = collapseSection("humidity")
+				sunlight_expanded = collapseSection("sunlight")
+				soil_moisture_expanded = expandSection("soil-moisture")
+			}
+		}
+		if (type == "sunlight"){
+			if (sunlight_expanded) {
+				sunlight_expanded = collapseSection("sunlight")
+			}
+			else {
+				temperature_expanded = collapseSection("temperature")
+				humidity_expanded = collapseSection("humidity")
+				soil_moisture_expanded = collapseSection("soil-moisture")
+				sunlight_expanded = expandSection("sunlight")
+			}
+		}
+	}
 </script>
 {% endblock %}

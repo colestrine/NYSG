@@ -3,60 +3,110 @@
 		"temperature": 1.50,
 		"humidity": 0.60,
 		"soil_moisture": 1.40,
-		"sunlight": 1.80
+		"sunlight": 1.80,
+		"water_action": 3,
+		"fan_action": 1, 
+		"light_action": 0.1,
+		"heat_action": 4.2
 	},
 	"2020-07-09 00:30": {
 		"temperature": 2.30,
 		"humidity": 1.00,
 		"soil_moisture": 1.80,
-		"sunlight": 2.10
+		"sunlight": 2.10,
+		"water_action": 3.5,
+		"fan_action": 1.9, 
+		"light_action": 0.3,
+		"heat_action": 3.9
 	},
 	"2020-07-09 01:00": {
 		"temperature": 2.80,
 		"humidity": 1.30,
 		"soil_moisture": 1.90,
-		"sunlight": 2.60
+		"sunlight": 2.60,
+		"water_action": 3.8,
+		"fan_action": 1.2, 
+		"light_action": 0.9,
+		"heat_action": 4.5
 	},
 	"2020-07-09 01:30": {
 		"temperature": 3.00,
 		"humidity": 1.20,
 		"soil_moisture": 2.10,
-		"sunlight": 3.30
+		"sunlight": 3.30,
+		"water_action": 4,
+		"fan_action": 1.5, 
+		"light_action": 0.2,
+		"heat_action": 4.2
 	},
 	"2020-07-09 02:00": {
 		"temperature": 3.30,
 		"humidity": 1.40,
 		"soil_moisture": 2.40,
-		"sunlight": 3.40
+		"sunlight": 3.40,
+		"water_action": 3.5,
+		"fan_action": 1.7, 
+		"light_action": 0.1,
+		"heat_action": 3.8
 	},
 	"2020-07-09 02:30": {
 		"temperature": 3.40,
 		"humidity": 1.60,
 		"soil_moisture": 2.50,
-		"sunlight": 3.80
+		"sunlight": 3.80,
+		"water_action": 3,
+		"fan_action": 1.6, 
+		"light_action": 0.5,
+		"heat_action": 3.9
 	},
 	"2020-07-09 03:00": {
 		"temperature": 3.50,
 		"humidity": 1.50,
 		"soil_moisture": 2.60,
-		"sunlight": 4.20
+		"sunlight": 4.20,
+		"water_action": 3.0,
+		"fan_action": 1.2, 
+		"light_action": 0.7,
+		"heat_action": 4.1
 	},
 	"2020-07-09 03:30": {
 		"temperature": 3.51,
 		"humidity": 1.50,
 		"soil_moisture": 2.40,
-		"sunlight": 4.40
+		"sunlight": 4.40,
+		"water_action": 3,
+		"fan_action": 1.8, 
+		"light_action": 3,
+		"heat_action": 4.1
 	},
 	"2020-07-09 04:00": {
 		"temperature": 3.50,
 		"humidity": 1.51,
 		"soil_moisture": 2.51,
-		"sunlight": 4.60
+		"sunlight": 4.60,
+		"water_action": 3.2,
+		"fan_action": 1.5, 
+		"light_action": 0.1,
+		"heat_action": 4.2
 	},
 	"2020-07-09 04:30": {
 		"temperature": 3.51,
 		"humidity": 1.49,
 		"soil_moisture": 2.50,
-		"sunlight": 4.51
+		"sunlight": 4.51,
+		"water_action": 3,
+		"fan_action": 1.5, 
+		"light_action": 0.1,
+		"heat_action": 4.1
+	},
+	"2020-07-09 05:00": {
+		"temperature": 3.50,
+		"humidity": 1.50,
+		"soil_moisture": 2.50,
+		"sunlight": 4.51,
+		"water_action": 3.2,
+		"fan_action": 1.7, 
+		"light_action": 0.3,
+		"heat_action": 4.2
 	}
 }

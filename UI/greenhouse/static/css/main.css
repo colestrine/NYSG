@@ -17,6 +17,24 @@ select {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
+select:focus {
+	outline: none; 
+}
+
+input {
+	border: solid 1px lightgray;
+    border-radius: 4px;
+    margin: 0px 10px;
+    padding: 3px 3px;
+    color: slategray;
+    width: 100px;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+input:focus {
+	outline: none;
+}
+
 form p label {
 	display: inline-block;
     width: 120px;
@@ -116,6 +134,9 @@ form p label {
 	margin-left: 0px;
 	z-index: 2;
 	position: relative;
+    opacity: 0;
+    transition: .5s;
+    transition-delay: .5s;
 }
 
 .status-bar-container label {
@@ -151,4 +172,205 @@ form p label {
 .historical-status-container {
 	width: 50%;
 	margin:auto;
+	display: flex;
+    justify-content: center;
+}
+
+.save-profile-button {
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: fit-content;
+    border: solid 1px lightgray;
+    border-radius: 4px;
+    padding: 3px 3px;
+    color: slategray;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+.save-profile-button:focus {
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: fit-content;
+    border: solid 1px darkgray;
+    border-radius: 4px;
+    padding: 3px 3px;
+    color: slategray;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    outline: none;
+}
+
+.save-profile-modal {
+	display: none;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.85);
+    bottom: 0px;
+    left: 0px;
+	align-items: center;
+}
+
+.save-profile-form-wrapper {
+	display: flex;
+    background: lightgray;
+    border-radius: 8px;
+    height: 150px;
+    width: 300px;
+    align-items: center;
+    justify-content: center;
+}
+
+.save-profile-submit {
+	text-align: center;
+    border: solid 1px lightgray;
+    border-radius: 4px;
+    padding: 3px 3px;
+    color: slategray;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    width: 75px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.save-profile-submit:focus {
+	outline: none;
+}
+
+#save_profile_form p {
+	display: none;
+}
+
+#save_profile_form p:last-of-type {
+	display: block !important;
+}
+
+.sidebar {
+	height: 75%;
+    width: 30px;
+    position: absolute;
+    right: 0px;
+    background-color: white;
+    top: 60px;
+    z-index: 200;
+    border: solid 1px lightgray;
+    border-right: none;
+    transition: width 1s ease 0s;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.sidebar-toggle-button-wrapper {
+	display: flex;
+    align-content: center;
+    justify-content: left;
+    margin: 5px 5px;
+}
+
+.sidebar-toggle-button {
+	background: transparent;
+    border: none;
+    border-radius: 2px;
+    font-family: monospace;
+    color: slategray;
+    font-weight: bold;
+    transition: transform 1s;
+}
+
+.sidebar-toggle-button:focus {
+	outline: none;
+}
+
+.sidebar-toggle-button:hover {
+	background-color: lightgray;
+}
+
+.sidebar-content-wrapper {
+	display: none;
+	padding: 10px;
+}
+
+.sidebar-section-wrapper {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.sidebar-section-header {
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color: slategray;
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.sidebar-value-label {
+	width: 175px;
+	float: left
+}
+
+.sidebar-section-content div {
+	margin-bottom: 5px;
+}
+
+.legend-row-label {
+	width: 175px;
+    float: left;
+}
+
+.legend-row-button {
+	background: transparent;
+    border: none;
+    border-radius: 2px;
+    font-family: monospace;
+    color: slategray;
+    font-weight: bold;
+    transform: rotate(90deg);
+    transition: transform 0.5s ease 0s;
+}
+
+.legend-row-button:hover {
+	background-color: none;
+}
+
+.legend-row-button:focus {
+	outline: none;
+}
+
+.legend-data-wrapper {
+	margin: 0px 25px;
+	display: none;
+}
+
+.legend-bucket-label {
+	float: left;
+	width: 152px;
+}
+
+.legend-bucket-data {
+	margin: 5px 0px;
+}
+
+.close-save-profile-modal-button {
+	position: relative;
+    left: -12px;
+    top: -63px;
+    background: transparent;
+    border: none;
+    border-radius: 2px;
+    font-family: monospace;
+    color: slategray;
+    font-weight: bold;
+}
+
+.close-save-profile-modal-button:hover {
+	background-color: none;
+}
+
+.close-save-profile-modal-button:focus {
+	outline: none;
 }
