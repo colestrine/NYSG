@@ -66,6 +66,7 @@ class Peripheral:
         and activity active
         """
         self.channel = channel
+        self.set_up(GPIO.LOW)
         self.active = active
         self.burst = burst
 
@@ -76,7 +77,7 @@ class Peripheral:
         [resistor_level] is whether the resitor is pulled up or down,
         use [GPIO.PUD_UP] to pull up
         """
-        GPIO.setup(self.channel, GPIO.IN, GPIO.PUD_UP)
+        GPIO.setup(self.channel, GPIO.OUT, GPIO.LOW)
 
     def change_active(self, activity):
         """
@@ -389,6 +390,15 @@ def debug_fan(log_path, pin_addr, n_iter, freq):
     GPIO.cleanup(pin_addr)
 
 
+def fan_turn_on_test():
+    """
+    fan_turn_on_test() tests turning ona  fan for 20 second sthan off
+    """
+    GPIO.setup(pin_constants.VENT, GPIO.OUT, GPIO.HIGH)
+    time.sleep(20)  # wait 20 seconds
+    GPIO.cleanup(pin_constants.VENT)
+
+
 def read_debug_data(log_path, first_few=None):
     """
     read_debug_data(log_path, first_few) reads in debugged daga at the log_path
@@ -468,6 +478,7 @@ def test_peripheral_logging(n_iter, log_path):
 
 # ---------- MAIN TESTING --------------------
 if __name__ == "__main__":
-    if RUN_TEST:
-        log.init_log(PERIPHERAL_LOG_TEST)
-        test_peripheral_logging(N_ITER, PERIPHERAL_LOG_TEST)
+    # if RUN_TEST:
+    #     log.init_log(PERIPHERAL_LOG_TEST)
+    #     test_peripheral_logging(N_ITER, PERIPHERAL_LOG_TEST)
+    fan_turn_on_test()

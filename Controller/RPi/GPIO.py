@@ -12,6 +12,9 @@ RISING = True
 IN = True
 OUT = False
 
+LOW = "low"
+HIGH = "high"
+
 BOARD = "board"
 BCM = "bcm"
 
