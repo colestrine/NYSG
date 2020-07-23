@@ -35,6 +35,7 @@ SENSOR_LOG = "sensor_log.json"
 ML_ACTION_LOG = "ml_action_log.json"
 ALERT_LOG = "alert_log.json"
 INIT_DICT_PICKLE_PATH = "init_dict_pickle_path.pickle"
+MANUAL_CONTROL_PATH = "manual_control_path.json"
 
 
 # -------- RUN ENVIRONMENT VARIABLES ---------
@@ -125,6 +126,10 @@ def init(dump_init_path=INIT_DICT_PICKLE_PATH):
     init_log(ML_ACTION_LOG)
     init_log(ALERT_LOG)
 
+    # set up manual control and dump into memory
+    manual_control_dict = {"mode": "machine_learning"}
+    pin_constants.dump_data(manual_control_dict, MANUAL_CONTROL_PATH)
+
     # set up init pickle path
     pin_constants.dump_pickled_data(ret_dict, dump_init_path)
 
@@ -160,21 +165,29 @@ def one_cycle_peripherals(init_dict, ml_results):
         return peripheral_actions
 
 
-def one_cycle(init_dict, sensor_log_path, ml_action_log, alert_log, max_log_size, interval):
+def one_cycle(init_dict, manual_control_path, sensor_log_path, ml_action_log, alert_log, max_log_size, interval):
     """
     Executes one cycle of reading, logging, using decision and rwsponding 
     Returns NONE
     """
-    ml_args = one_cycle_sensors(init_dict)
-    log(ml_args, sensor_log_path, max_log_size)
-    ml_results = ml_adapter(ml_args)
-    peripheral_actions = one_cycle_peripherals(init_dict, ml_results)
-    alert(100, ALERT_LOG_PATH)
-    log(peripheral_actions, ml_action_log, max_log_size)
-    time.sleep(interval)
+    manual_control = pin_constants.load_data(manual_control_path)
+    if manual_control["mode"] == "machine_learning":
+        print("Automatic Control")
+        ml_args = one_cycle_sensors(init_dict)
+        log(ml_args, sensor_log_path, max_log_size)
+        ml_results = ml_adapter(ml_args)
+        peripheral_actions = one_cycle_peripherals(init_dict, ml_results)
+        alert(100, ALERT_LOG_PATH)
+        log(peripheral_actions, ml_action_log, max_log_size)
+        time.sleep(interval)
+    elif manual_control["mode"] == "manual":
+        print("Manual Control")
+
+    # set up the manual control read.
+    # call from controller to update manual control
 
 
-def one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH, sensor_log_path=SENSOR_LOG, ml_action_log=ML_ACTION_LOG, alert_log=ALERT_LOG, max_log_size=MAX_SIZE, interval=0):
+def one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH, manual_control_path=MANUAL_CONTROL_PATH, sensor_log_path=SENSOR_LOG, ml_action_log=ML_ACTION_LOG, alert_log=ALERT_LOG, max_log_size=MAX_SIZE, interval=0):
     """
     one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH) does one cycle based on the 
     information from init_path
@@ -184,11 +197,11 @@ def one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH, sensor_log_path=SENSO
     REQIIRES: init_dict has beenm initalized already
     """
     init_dict = pin_constants.load_pickled_data(init_dict_path)
-    one_cycle(init_dict, sensor_log_path, ml_action_log,
+    one_cycle(init_dict, manual_control_path, sensor_log_path, ml_action_log,
               alert_log, max_log_size, interval)
 
 
-def event_loop(init_dict, sensor_log_path, ml_action_log, alert_log, max_log_size, interval, max_iter):
+def event_loop(init_dict, manual_control_path, sensor_log_path, ml_action_log, alert_log, max_log_size, interval, max_iter):
     """ 
     event_loop() the main event loop
 
@@ -200,11 +213,11 @@ def event_loop(init_dict, sensor_log_path, ml_action_log, alert_log, max_log_siz
     """
     if max_iter == None:
         while True:
-            one_cycle(init_dict, sensor_log_path, ml_action_log,
+            one_cycle(init_dict, manual_control_path, sensor_log_path, ml_action_log,
                       alert_log, max_log_size, interval)
     else:
         for _ in range(max_iter):
-            one_cycle(init_dict, sensor_log_path, ml_action_log,
+            one_cycle(init_dict, manual_control_path, sensor_log_path, ml_action_log,
                       alert_log, max_log_size, interval)
 
 
@@ -216,7 +229,7 @@ if __name__ == "__main__":
     if ONE_CYCLE:
         one_cycle_driver()
     else:
-        event_loop(init_dict, SENSOR_LOG, ML_ACTION_LOG,
+        event_loop(init_dict, MANUAL_CONTROL_PATH, SENSOR_LOG, ML_ACTION_LOG,
                    ALERT_LOG, MAX_SIZE, WAIT_INTERVAL_SECONDS, None)
 
 

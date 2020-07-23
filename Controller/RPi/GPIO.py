@@ -57,7 +57,7 @@ def cleanup(channel):
     pass
 
 
-def setup(channel, gpio_in, pull_up_or_down):
+def setup(channel, gpio_in, initial=None, pull_up_or_down=None):
     pass
 
 

@@ -8,28 +8,26 @@ in class format
 
 REQUIRES:
 - RPi.GPIO in order to use all the GPIO port ufnctionality on the raspberry pi
-# might need to use spidev as well
 """
 
 
 # -------- DEPENDENT IMPORTS ---------
-import log
-import sys
-import datetime
-import random
-import pin_constants
-import time  # used for callback monitoring
-import gpiozero
 import RPi.GPIO as GPIO
+import gpiozero
 
 
 # -------- OTHER PACKAGES ----------
-
+import datetime
 
 # ------- CUSTOM PACKAGES --------
+import log
+import pin_constants
 
 
 # -------- TEST IMPORTS ----------
+import sys
+import time  # used for callback monitoring
+import random
 
 
 # ------- TEST CONSTANTS ----------
@@ -53,80 +51,120 @@ else:
 
 class Peripheral:
     """
-    Peripheral represents peripheral object
+    Peripheral represents abstract peripheral object
 
-    active is true if the peripheral is on, else false
-    channel is the GPIO pin chnnale the peripheral is hooked up to
-    burst is the amount of time the perioheral is on for before it deactivates
+    ATTRIBUTES:
+    active [bool] is true if the peripheral is on, else false
+    channel [int] is the GPIO pin channel number the peripheral is hooked up to, e.g. Vent: 40
+
+    INVARIANT: active is true iff voltage is GPIO.HIGH, otherwise active is False iff voltage is GPIO.LOW
+
+    CLASS ATTRIBUTE;
+    num_peripherals is number of peripherals created, starts at 0
+    When the first peripheral is created, GPIO.BOARD is set, otherwise
+    it does not occur for any other peripheral objects
     """
 
-    def __init__(self, channel, active=False, burst=pin_constants.BURST):
+    # number of peripherals
+    num_peripherals = 0
+
+    def __init__(self, channel, active=False):  # , burst=pin_constants.BURST):
         """
-        __init__(self, channel, active) constructs a Peripheral in channel channel
+        __init__(self, channel, active) constructs a Peripheral on channel number channel
         and activity active
+
+        sets up the channel abstraction
         """
         self.channel = channel
         self.set_up()
         self.active = active
-        self.burst = burst
+        Peripheral.num_peripherals += 1
 
-    def set_up():
+    def set_up(self, initial_state=GPIO.LOW):
         """
-        set_up(self) sets up the pull up or pull down resistor state
-        for each Periperhal
-        [resistor_level] is whether the resitor is pulled up or down,
-        use [GPIO.PUD_UP] to pull up
+        set_up(self, initial_state) sets up a GPIO channel on channel number self.channel
+        with initial_state voltage on the peripheral on GPIO channel number self.channel
+        also sets mode to GPIO.BOARD
+
+        RETURNS: NONE
         """
-        GPIO.setup(self.channel, GPIO.OUT, initial=GPIO.LOW)
+        if Peripheral.num_peripherals == 0:
+            GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(self.channel, GPIO.OUT, initial=initial_state)
 
     def change_active(self, activity):
         """
         change_active(self, activity) changes the activity of self
-        tp activity
+        to activity
 
-        active is a truthy type, or bool, 1 or true to activate, 0 or false
-        to deactivate
+        activity is a [bool], true if active peripheral, false if inactive
+
+        RETURNS: NONE
         """
         self.active = activity
 
     def set_active(self):
         """
-        set_active(self) sets self to be active
+        set_active(self) sets self to be active, thus turning on the peripheral at High Voltage
+        e.g. Activates peripeheral by outputing GPIO.HIGH, or 3.3 Volts voltage drop
+        WARNING: NO BURST: 3.3. Voltes contnuously outpout intil set inactive
+        WARNING: DOES NOT SET INACTIVE
+        MAINTINA INVARIANT: also sets active status self.active as True, to keep activity = True and voltage as GPIO.HIGH
+        RETURNS: NONE
         """
+        # change activity to match invariant
         self.change_active(True)
-        self.respond()
-        time.sleep(self.burst)
-        self.set_inactive()
+        # change voltage to match invariant
+        self.respond(GPIO.HIGH)
 
     def set_inactive(self):
         """
-        set_inactive(self) sets peripheral to be inactive
+        set_inactive(self) sets peripheral to be inactive, thus turning off the periperjal to be Low Voltage
+        e.g. Deactivates peripeheral by outputing GPIO.LOW or 0 Volts voltage drop
+        WARNING: NO BURST: 0 Volts contunously output until periperhal set active again
+        WARNING: DOES NOT SET ACTIVE
+        MAINTAIN INVARIANT: also sets self.activr as False to keep activity as False and voltage as GPIO.LOW
+        RETURNS: NONE
         """
+        # change activity to match invariant
         self.change_active(False)
-        self.respond()
+        # change voltage to match invariant
+        self.respond(GPIO.LOW)
 
-    def respond(self):
+    def respond(self, voltage_level):
         """
         respond(self) sends the activity state to the physical peripheral
+        based on the voltage_level, which is GPIO.HIGH or GPIO.LOW
+        on the channel the peripheral is located on
+
+        RAiSES: ASSERTIOMN ERROR Raised if voltage_level is not GPIO>HIGH or GPIO.LOW
+        RAISES: ASWERTION ERROR if voltage_level is GPIO.HIGH but self.active is not True
+        or voltage_level is GPIO.LOw but self.active is not False
+        RETURNS: NONE
         """
-        GPIO.output(self.channel, self.active)
+        assert voltage_level in [GPIO.HIGH, GPIO.LOW]
+        assert (voltage_level, self.active) == (GPIO.HIGH, True) or (
+            voltage_level, self.active) == (GPIO.LOW, False)
+        GPIO.output(self.channel, voltage_level)
 
     def read(self):
         """
         Returns the activity state of the peripheral (high/low)
-        USE: for debugginf
+        USE: for debugging
+        RETURNS: [bool] activity level: True is active/high voltage, False is inactive/low voltage
         """
-        return GPIO.input(self.channel)
+        return self.active
 
     def deactivate(self):
         """
-        deactivate(self) deactivates the peripheral by closing the channel
-        sets active to False
+        deactivate(self) deactivates the peripheral by closing the channel and
+        sets active to False. voltage set to 0 Volts as well
 
         WARNING: After deactivate is claled, peripheral CANNOT be USED!
+        RETURNS: NONE
         """
+        self.set_inactive()
         GPIO.cleanup(self.channel)
-        self.active = False
 
     # ----- DEBUGGING TOOLS -----
 
@@ -135,24 +173,27 @@ class Peripheral:
         __str__(self) is the stringified version of self
         and is the active state of self
         """
-        return str(self.active)
+        return "Peripheral is : " + str(self.active) + ".\n"
 
     def __repr__(self):
         """
         __str__(self) is the printed version of self
         and is the active state of self
         """
-        return str(self.active)
+        return "Peripheral is : " + str(self.active) + ".\n"
 
 
-class SolenoidValve(Peripheral):
+class Fan(Peripheral):
     """
-    SolenoidValve(Peripheral) is a SolenoidValve sensor object
+    Fan(Peripheral) is a Fan object
+
+    SUPERCLASS: PEripheral
+    NO BURST
     """
 
     def __init__(self, channel):
         """
-        Creates a Solenoid valve  object with channel chnnale
+        Createsa Fan peripheral object
         """
         super().__init__(channel)
 
@@ -160,6 +201,8 @@ class SolenoidValve(Peripheral):
 class PlantLight(Peripheral):
     """
     PlantLight(Peripheral) is a Plant Light sensor object
+
+    NOT A BURSTPERIPHERAL
     """
 
     def __init__(self, channel):
@@ -184,25 +227,128 @@ class Heater(Peripheral):
         super().__init__(channel)
 
 
-class Pwm_Peripheral(Peripheral):
-    def __init__(self, channel, freq=0, dc=0):
+class BurstPeripheral(Peripheral):
+    """
+    BurstPeripheral(Peripheral) is a burst peripheral, or a peripheral that activates
+    only for a certain amount of time, the burst time
+
+    ATTRIBUTEs;
+    burst_time [float]/[None] is the burst time in seconds, floats can include parts of a second
+    if burst_time is [NONE], continues forever, never ends the burst until you manually trigger an end
+    """
+
+    def __init__(self, channel, burst_time):
         """
-        Createsa PWM peripheral object with frequency freq
-        duty cycles dc, and PWM pwm
+        Creates a BurstPeripheral on channel number channel
+        with burst_time time for the burst in seconds
         """
         super().__init__(channel)
+        self.burst_time = burst_time
+
+    def set_active(self):
+        """
+        set_active(self) sets self to be active, thus turning on the peripheral at High Voltage, until burst time ends
+        e.g. Activates peripeheral by outputing GPIO.HIGH, or 3.3 Volts voltage drop
+
+        WARNING: if self.burst_time is NONE, continues burst and never sets inactive
+        WARNING: HAS BURST: 3.3. Voltes for burst_time, until shut doiwn
+        WARNING: SETS BURST
+        MAINTINA INVARIANT: also sets active status self.active as True, to keep activity = True and voltage as GPIO.HIGH
+        RETURNS: NONE
+        """
+        # change activity to match invariant
+        self.change_active(True)
+        # change voltage to match invariant
+        self.respond(GPIO.HIGH)
+        # check burst type
+        if self.burst_time == None:
+            # do not reset if burst_time is NONE
+            return
+        # wait burst time
+        time.sleep(self.burst_time)
+        # change activity and voltage to match invariant
+        self.set_inactive()
+
+    def set_inactive(self):
+        """
+        set_inactive(self) sets peripheral to be inactive, thus turning off the periperjal to be Low Voltage
+        e.g. Deactivates peripeheral by outputing GPIO.LOW or 0 Volts voltage drop
+        WARNING: NO BURST: 0 Volts contunously output until periperhal set active again
+        WARNING: DOES NOT SET ACTIVE
+        MAINTAIN INVARIANT: also sets self.activr as False to keep activity as False and voltage as GPIO.LOW
+        RETURNS: NONE
+        """
+        # change activity to match invariant
+        self.change_active(False)
+        # change voltage to match invariant
+        self.respond(GPIO.LOW)
+
+    def get_burst_time(self):
+        """
+        get_burst_time(self) hets the burst time in seconds
+        RETURNS: [float] burst time in seconds
+        """
+        return self.burst_time
+
+    def set_burst_time(self, burst_time):
+        """
+        set_burst_time(self, burst_time) sets the burst time [burst_time] in seconds
+        RETURNS: None
+        """
+        self.burst_time = burst_time
+
+    # ----- DEBUGGING TOOLS -----
+
+    def __str__(self):
+        """
+        __str__(self) is a string form of the Burst Peripjheral
+        """
+        return super().__str__() + " Burst Time : " + str(self.burst_time) + " seconds.\n"
+
+    def __repr__(self):
+        """
+        __repr__(self) is a string form of the Burst Peripjheral
+        """
+        return super().__str__() + " Burst Time : " + str(self.burst_time) + " seconds.\n"
+
+
+class SolenoidValve(BurstPeripheral):
+    """
+    SolenoidValve(Peripheral) is a SolenoidValve sensor object
+
+    IS A BURSTPERIPHERAL
+    """
+
+    def __init__(self, channel, burst_time=pin_constants.BURST):
+        """
+        Creates a Solenoid valve  object with channel chnnale
+        """
+        super().__init__(channel, burst_time)
+
+
+class Pwm_Peripheral(BurstPeripheral):
+    """
+    Pwm_Peripheral(Peripheral) is a peripheral with a pwm controller
+    and burst_time burst_time
+    """
+
+    def __init__(self, channel, burst_time, freq=0, dc=0):
+        """
+        Createsa PWM peripheral object with frequency freq
+        duty cycles dc, and PWM pwm and burst_time burst_time
+        """
+        super().__init__(channel, burst_time)
         self.freq = freq
         self.dc = dc
-        self.pwm = GPIO.PWM(self.channel, self.freq)
+        self.pwm = GPIO.PWM(self.channel, freq)
         self.pwm.start(self.dc)
-        self.set_active()
 
     def set_freq(self, freq):
         """
         set_freq(self, hz) sets the freuqnecy of the pwm peripheral in freq [hz]
         """
         self.freq = freq
-        self.pwm = GPIO.PWM(self.channel, self.freq)
+        self.pwm = self.pwm.ChangeFrequency(freq)
 
     def get_freq(self):
         """
@@ -215,6 +361,7 @@ class Pwm_Peripheral(Peripheral):
         set_duty_cycle(self, dc) sets the duty cylce of the pwm peripheral in [dc] amount
         """
         self.dc = dc
+        self.pwm = self.pwm.ChangeDutyCycle(dc)
 
     def get_duty_cycle(self):
         """
@@ -238,7 +385,7 @@ class Pwm_Peripheral(Peripheral):
         __str__(self) is the stringified version of self
         and is the active state of self
         """
-        return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq)
+        return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq) + ".\n"
 
     def __repr__(self):
         """
@@ -246,7 +393,7 @@ class Pwm_Peripheral(Peripheral):
         __str__(self) is the printed version of self
         and is the active state of self, and the duty cyucles and frequency
         """
-        return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq)
+        return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq) + ".\n"
 
 
 class HeatPad(Pwm_Peripheral):
@@ -260,44 +407,6 @@ class HeatPad(Pwm_Peripheral):
         Creates a HeatPad  object with channel chnnale
         """
         super().__init__(channel, freq, dc)
-
-
-class Fan(Pwm_Peripheral):
-    """
-    Fan(Pwm_Peripheral) is a Fan object
-    Freq is hte frequency of the fan; it is a integer, in HZ
-    PWM is the pwm object to monitor and change frequency
-    dc is the duty_cycle of the pwm
-
-    SUPEF CLaSS: PEripheral
-    """
-
-    def __init__(self, channel, freq=0, dc=0, tach=pin_constants.TACH):
-        """
-        Createsa Fan peripheral object with frequency freq
-        duty cycles dc, and PWM pwm
-        """
-        super().__init__(channel, freq, dc)
-        self.tach = tach
-
-    def read_tach(self):
-        """
-        read_tach(self) reads the tachomer value and returns the RPM of the fan
-        """
-        global_counter = 0
-
-        def tach_callback(channel):
-            global global_counter
-            global_counter += 1
-        GPIO.add_event_detect(self.tach, GPIO.RISING, tach_callback)
-        time.sleep(1)
-        GPIO.remove_event_detect(self.tach)
-
-        def calculate_rpm(counter):
-            # one rotation is 2 pulses https://electronics.stackexchange.com/questions/8295/how-to-interpret-the-output-of-a-3-pin-computer-fan-speed-sensor/52877
-            return counter / 2 * 60
-
-        return calculate_rpm(global_counter)
 
 
 # ---------- SUMMARY FUNCTIONS ------------
@@ -328,111 +437,13 @@ def react_all(ml_results, peripheral_dict):
             fan.set_freq(fan_res)
 
 
-# ----------- DEBUGGING --------------
-
-def debug_peripheral(log_path, pin_addr, n_iter):
-    """
-    debug_peripheral(log_path, pin_addr) debugs any peripheral at [pin_addr]
-    on GPIO pin and stores results in log_path
-    Peripheral cannot be a fan
-    """
-    GPIO.setup(pin_addr, GPIO.IN, GPIO.PUD_UP)
-
-    log_dict = pin_constants.load_data(log_path)
-
-    for _ in range(n_iter):
-        GPIO.output(pin_addr, True)
-        time.sleep(5)
-        GPIO.output(pin_addr, False)
-        time.sleep(5)
-
-        curr_time = time.strftime()
-        log_dict[str(curr_time)] = 1
-
-    pin_constants.dump_data(log_dict, log_path)
-
-    GPIO.cleanup(pin_addr)
-
-
-def debug_fan(log_path, pin_addr, n_iter, freq):
-    """
-    debug_peripheral(log_path, pin_addr) debugs a fan peripheral at [pin_addr]
-    on GPIO pin and stores results in log_path
-    """
-    GPIO.setup(pin_addr, GPIO.IN, GPIO.PUD_UP)
-
-    log_dict = pin_constants.load_data(log_path)
-
-    pwm = GPIO.PWM(pin_addr, freq)
-    for _ in range(n_iter):
-        for dc in range(100):
-            pwm.start(dc)
-            GPIO.output(pin_addr, True)
-            time.sleep(5)
-
-        global_counter = 0
-
-        def tach_callback(channel):
-            global global_counter
-            global_counter += 1
-        GPIO.add_event_detect(pin_constants.TACH, GPIO.RISING, tach_callback)
-        time.sleep(1)
-        GPIO.remove_event_detect(pin_constants.TACH)
-
-        def calculate_rpm(counter):
-            return counter / 2 * 60
-
-        curr_time = time.strftime()
-        log_dict[str(curr_time)] = calculate_rpm(global_counter)
-
-    pin_constants.dump_data(log_dict, log_path)
-
-    GPIO.cleanup(pin_addr)
-
-
-def fan_turn_on_test(frequency):
-    """
-    fan_turn_on_test() tests turning ona  fan for 20 second sthan off
-
-    requency is the frequency fo teh fan
-    """
-    GPIO.setmode(GPIO.BOARD)
-    print("Board set up")
-    GPIO.setup(pin_constants.VENT, GPIO.OUT, initial=GPIO.HIGH)
-    GPIO.output(pin_constants.VENT, GPIO.HIGH)
-    p = GPIO.PWM(pin_constants.VENT, frequency)
-    p.start(0)
-    for i in range(100):
-        p.ChangeDutyCycle(i)
-        time.sleep(2)  # wait 2 seconds
-    for i in range(100, 0, -1):
-        p.ChangeDutyCycle(i)
-        time.sleep(2)
-    p.stop()
-    GPIO.output(pin_constants.VENT, GPIO.LOW)
-    GPIO.cleanup(pin_constants.VENT)
-    print("Board Cleaned up")
-
-
-def read_debug_data(log_path, first_few=None):
-    """
-    read_debug_data(log_path, first_few) reads in debugged daga at the log_path
-    for the first_few characgers,
-    if first_few is None, greads all and prints all to terminal
-    """
-    data_dict = pin_constants.load_data(log_path)
-    dict_list = [(key, data_dict[key]) for key in data_dict]
-    if first_few == None:
-        first_few = len(dict_list)
-    for i in range(min(len(dict_list), first_few)):
-        print(dict_list[i][1])
-
-
 # ------------ MANUAL CONTROL -------------------------
 
 def manual(peripheral_dict, action_list):
     """
     manual(peripheral_dict, cction_dict) allows for mannual control of peripherals
+    peripheral_dict is a dictionary of peripherals, with keys "valve", :heat", light"
+    and "fan
 
     action_list is a list of pairs where the first element is the name of the action and
     the second is the action itself
@@ -460,14 +471,79 @@ def manual(peripheral_dict, action_list):
         elif action_name == "light":
             bistate_set(light, action)
         elif action_name == "fan":
-            fan.set_freq(action)
+            bistate_set(fan, action)
 
 
-# ---------- TEST PERIPHERAL LOGGING -------------
+# ----------- DEBUGGING --------------
+
+
+def debug_peripheral(log_path, peripheral_type, n_iter):
+    """
+    debug_peripheral(log_path, peripheral_type, n_iter) debugs any peripheral peripheral_type
+    on GPIO pin and stores results in log_path for n_iters of data
+    """
+
+    if peripheral_type == "heater":
+        peripheral = HeatPad(pin_constants.HEAT, 50, 50)
+    elif peripheral_type == "light":
+        peripheral = PlantLight(pin_constants.LED)
+    elif peripheral_type == "valve":
+        peripheral = SolenoidValve(pin_constants.VALVE)
+    elif peripheral_type == "fan":
+        peripheral = Fan(pin_constants.VENT)
+    else:
+        raise RuntimeError(
+            "Not a recognized peripheral : " + str(peripheral_type))
+
+    log_dict = {}
+
+    for _ in range(n_iter):
+        peripheral.set_active()
+        time.sleep(5)
+        peripheral.set_inactive()
+        time.sleep(5)
+
+        now = datetime.datetime.now()
+        current_time = now.strftime("%d-%m-%Y %H:%M:%-S:%f")
+
+        log_dict[current_time] = 1
+
+    peripheral.deactivate()
+    pin_constants.dump_data(log_dict, log_path)
+
+
+def fan_turn_on_test():
+    """
+    fan_turn_on_test() tests turning ona  fan for 20 second sthan off
+    """
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(pin_constants.VENT, GPIO.OUT, initial=GPIO.HIGH)
+    time.sleep(10)
+    GPIO.output(pin_constants.VENT, GPIO.LOW)
+    GPIO.cleanup(pin_constants.VENT)
+
+
+def read_debug_data(log_path, first_few=None):
+    """
+    read_debug_data(log_path, first_few) reads in debugged daga at the log_path
+    for the first_few characgers,
+    if first_few is None, greads all and prints all to terminal
+    """
+    data_dict = pin_constants.load_data(log_path)
+    dict_list = [(key, data_dict[key]) for key in data_dict]
+    if first_few == None:
+        first_few = len(dict_list)
+    for i in range(min(len(dict_list), first_few)):
+        print(dict_list[i][1])
+
+
+# ---------- WEEK 1 DEMO TEST PERIPHERAL LOGGING -------------
 def test_peripheral_logging(n_iter, log_path):
     """
     test_peripheral_logging(n_iter) logs peripheral actions for n_iter
     at log_path in JSON form
+
+    WARNING: THIS DEMO ONLY CHECKS LOGGING CAPABILITIES
     """
     time_dict = {}
 
@@ -493,7 +569,6 @@ def test_peripheral_logging(n_iter, log_path):
 
 # ---------- MAIN TESTING --------------------
 if __name__ == "__main__":
-    # if RUN_TEST:m
-    #     log.init_log(PERIPHERAL_LOG_TEST)
-    #     test_peripheral_logging(N_ITER, PERIPHERAL_LOG_TEST)
-    fan_turn_on_test(50)
+    if RUN_TEST:
+        fan_turn_on_test()
+        debug_peripheral('Debug_peripheral_path.json', "fan", 100)
