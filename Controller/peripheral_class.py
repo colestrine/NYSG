@@ -506,7 +506,7 @@ def debug_peripheral(log_path, peripheral_type, n_iter):
         now = datetime.datetime.now()
         current_time = now.strftime("%d-%m-%Y %H:%M:%-S:%f")
 
-        log_dict[current_time] = 1
+        log_dict[current_time] = peripheral.read()
 
     peripheral.deactivate()
     pin_constants.dump_data(log_dict, log_path)
@@ -572,3 +572,4 @@ if __name__ == "__main__":
     if RUN_TEST:
         fan_turn_on_test()
         debug_peripheral('Debug_peripheral_path.json', "fan", 100)
+        read_debug_data('Debug_peripheral_path.json')
