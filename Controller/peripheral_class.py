@@ -15,7 +15,7 @@ REQUIRES:
 # -------- DEPENDENT IMPORTS ---------
 import gpiozero
 import RPi.GPIO as GPIO
-
+GPIO.setmode(GPIO.BOARD)
 
 # -------- OTHER PACKAGES ----------
 import time  # used for callback monitoring
@@ -66,18 +66,18 @@ class Peripheral:
         and activity active
         """
         self.channel = channel
-        self.set_up(GPIO.LOW)
+        self.set_up()
         self.active = active
         self.burst = burst
 
-    def set_up(self, resistor_level):
+    def set_up():
         """
         set_up(self) sets up the pull up or pull down resistor state
         for each Periperhal
         [resistor_level] is whether the resitor is pulled up or down,
         use [GPIO.PUD_UP] to pull up
         """
-        GPIO.setup(self.channel, GPIO.OUT, GPIO.LOW)
+        GPIO.setup(self.channel, GPIO.OUT, initial=GPIO.LOW)
 
     def change_active(self, activity):
         """
@@ -394,8 +394,12 @@ def fan_turn_on_test():
     """
     fan_turn_on_test() tests turning ona  fan for 20 second sthan off
     """
-    GPIO.setup(pin_constants.VENT, GPIO.OUT, GPIO.HIGH)
+    print("Started fan test - Fan on")
+    GPIO.setup(pin_constants.VENT, GPIO.OUT, initial=GPIO.HIGH)
     time.sleep(20)  # wait 20 seconds
+    GPIO.output(pin_constants.VENT, GPIO.LOW)
+    print(" - Fan off")
+    time.sleep(5)
     GPIO.cleanup(pin_constants.VENT)
 
 
@@ -478,7 +482,8 @@ def test_peripheral_logging(n_iter, log_path):
 
 # ---------- MAIN TESTING --------------------
 if __name__ == "__main__":
-    # if RUN_TEST:
+    # if RUN_TEST:m
     #     log.init_log(PERIPHERAL_LOG_TEST)
     #     test_peripheral_logging(N_ITER, PERIPHERAL_LOG_TEST)
     fan_turn_on_test()
+    
