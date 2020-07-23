@@ -5,20 +5,7 @@ Settings
 {% endblock %}
 
 {% block content %}
-<h1 class="form-header">Actions</h1>
-<div class="form-wrapper">
-	<form action="/manual-control/" method="post" id="action_form" name="action_form">
-	    {% csrf_token %}
-	    {{ action_form.as_p }}
-	</form>
-</div>
-
-<!-- <h1 class="dashboard-header">Historical Levels</h1>
-<div id="container" class="historical-status-container">
-	<canvas id="historical-status"></canvas>
-</div> -->
-
-<h1 class="dashboard-header">Historical Actions</h1>
+<h1 class="dashboard-header">Actions and Effects</h1>
 <div id="container" class="historical-status-container">
 	<canvas id="historical-levels"></canvas>
 </div>
