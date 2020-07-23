@@ -522,8 +522,30 @@ def test_sensor_logging(n_iter, log_path):
     log.log(log_path, time_dict, log.MAX_SIZE)
 
 
+# -------------- BASIC TESTS ------------------
+def basic_temp_test():
+    print("Creating Channel")
+    channel = create_channel(pin_constants.I2C_PORT_NUM)
+    print("Opening Channel on port # : " + str(pin_constants.I2C_PORT_NUM))
+    channel.open(pin_constants.I2C_PORT_NUM)
+    print("Writing read command on Channel on port # : " +
+          str(pin_constants.I2C_PORT_NUM))
+    print("Command is to measure temperatuee no hold : " +
+          str(pin_constants.MEASURE_TEMP_REGISTER_NO_HOLD))
+    channel.write_byte(
+        pin_constants.TEMP_ADDR, pin_constants.MEASURE_TEMP_REGISTER_NO_HOLD)
+    print("Reading temperature (2 bytes) with command : " +
+          str(pin_constants.READ_TEMP_HUMID))
+    temp_code = channel.read_i2c_block_data(
+        pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, 2)
+    print(temp_code)
+    print("Closing Channel")
+    channel.close()
+
+
 # ---------- MAIN TESTING --------------------
 if __name__ == "__main__":
-    if RUN_TEST:
-        log.init_log(SENSOR_LOG_TEST)
-        test_sensor_logging(N_ITER, SENSOR_LOG_TEST)
+    # if RUN_TEST:
+    #     log.init_log(SENSOR_LOG_TEST)
+    #     test_sensor_logging(N_ITER, SENSOR_LOG_TEST)
+    basic_temp_test()

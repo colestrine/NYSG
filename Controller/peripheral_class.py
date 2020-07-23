@@ -400,8 +400,8 @@ def fan_turn_on_test(frequency):
     print("Board set up")
     GPIO.setup(pin_constants.VENT, GPIO.OUT, initial=GPIO.HIGH)
     GPIO.output(pin_constants.VENT, GPIO.HIGH)
-    p = GPIO.PWM(pin_constants.VENT, frequency=frequency)
-    p.start(dc=0)
+    p = GPIO.PWM(pin_constants.VENT, frequency)
+    p.start(0)
     for i in range(100):
         p.ChangeDutyCycle(i)
         time.sleep(2)  # wait 2 seconds
