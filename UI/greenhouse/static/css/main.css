@@ -176,6 +176,13 @@ form p label {
     justify-content: center;
 }
 
+.historical-status-container-wide {
+    width: 80%;
+    margin:auto;
+    display: flex;
+    justify-content: center;
+}
+
 .save-profile-button {
 	text-align: center;
 	margin-left: auto;

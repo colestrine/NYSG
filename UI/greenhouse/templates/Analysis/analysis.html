@@ -1,12 +1,12 @@
 {% extends 'Base/base.html' %}
 
 {% block title %}
-Settings
+Analysis
 {% endblock %}
 
 {% block content %}
 <h1 class="dashboard-header">Actions and Effects</h1>
-<div id="container" class="historical-status-container">
+<div id="container" class="historical-status-container-wide">
 	<canvas id="historical-levels"></canvas>
 </div>
 
@@ -167,32 +167,32 @@ Settings
 				{
 					type: 'bar',
 					data: "{{water_actions}}".split(',').slice(-10),
-					backgroundColor: 'lightgreen',
-					borderColor: 'lightgreen',
+					backgroundColor: 'cornflowerblue',
+					borderColor: 'cornflowerblue',
 					label: 'Water',
 					fill: 'false'
 				},
 				{
 					type: 'bar',
 					data: "{{fan_actions}}".split(',').slice(-10),
-					backgroundColor: 'green',
-					borderColor: 'green',
+					backgroundColor: 'darkgray',
+					borderColor: 'darkgray',
 					label: 'Fan',
 					fill: 'false'
 				},
 				{
 					type: 'bar',
 					data: "{{heat_actions}}".split(',').slice(-10),
-					backgroundColor: 'lightseagreen',
-					borderColor: 'lightseagreen',
+					backgroundColor: 'chocolate',
+					borderColor: 'chocolate',
 					label: 'Heat',
 					fill: 'false'
 				},
 				{
 					type: 'bar',
 					data: "{{light_actions}}".split(',').slice(-10),
-					backgroundColor: 'darkseagreen',
-					borderColor: 'darkseagreen',
+					backgroundColor: 'gold',
+					borderColor: 'gold',
 					label: 'Light',
 					fill: 'false'
 				},
