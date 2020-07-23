@@ -35,10 +35,11 @@ TODO: CHECK AND TEST ALL CLASSES
 # ----- ADA FRUIT MOISTURE SENSOR IMPORTS -----------------
 import busio
 # from board import SCL, SDA
-# import board
+import board
 
 from adafruit_seesaw.seesaw import Seesaw
 import Adafruit_PureIO
+import adafruit_si7021
 
 # Adafruit_I2C import Adafruit_I2C
 
@@ -524,23 +525,30 @@ def test_sensor_logging(n_iter, log_path):
 
 # -------------- BASIC TESTS ------------------
 def basic_temp_test():
-    print("Creating Channel")
-    channel = create_channel(pin_constants.I2C_PORT_NUM)
-    print("Opening Channel on port # : " + str(pin_constants.I2C_PORT_NUM))
-    channel.open(pin_constants.I2C_PORT_NUM)
-    print("Writing read command on Channel on port # : " +
-          str(pin_constants.I2C_PORT_NUM))
-    print("Command is to measure temperatuee no hold : " +
-          str(pin_constants.MEASURE_TEMP_REGISTER_NO_HOLD))
-    channel.write_byte(
-        pin_constants.TEMP_ADDR, pin_constants.MEASURE_TEMP_REGISTER_NO_HOLD)
-    print("Reading temperature (2 bytes) with command : " +
-          str(pin_constants.READ_TEMP_HUMID))
-    temp_code = channel.read_i2c_block_data(
-        pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, 2)
-    print(temp_code)
-    print("Closing Channel")
-    channel.close()
+    i2c = busio.I2C(board.SCL, board.SDA)
+    sensor = adafruit_si7021.SI7021(i2c)
+
+    while True:
+        print("\nTemperature: %0.1f C" % sensor.temperature)
+        print("Humidity: %0.1f %%" % sensor.relative_humidity)
+        time.sleep(2)
+    # print("Creating Channel")
+    # channel = create_channel(pin_constants.I2C_PORT_NUM)
+    # print("Opening Channel on port # : " + str(pin_constants.I2C_PORT_NUM))
+    # channel.open(pin_constants.I2C_PORT_NUM)
+    # print("Writing read command on Channel on port # : " +
+    #       str(pin_constants.I2C_PORT_NUM))
+    # print("Command is to measure temperatuee no hold : " +
+    #       str(pin_constants.MEASURE_TEMP_REGISTER_NO_HOLD))
+    # channel.write_byte(
+    #     pin_constants.TEMP_ADDR, pin_constants.MEASURE_TEMP_REGISTER_NO_HOLD)
+    # print("Reading temperature (2 bytes) with command : " +
+    #       str(pin_constants.READ_TEMP_HUMID))
+    # temp_code = channel.read_i2c_block_data(
+    #     pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, 2)
+    # print(temp_code)
+    # print("Closing Channel")
+    # channel.close()
 
 
 # ---------- MAIN TESTING --------------------
