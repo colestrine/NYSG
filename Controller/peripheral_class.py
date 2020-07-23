@@ -394,7 +394,7 @@ def fan_turn_on_test():
     """
     fan_turn_on_test() tests turning ona  fan for 20 second sthan off
     """
-    GPIO.setup(pin_constants.VENT, GPIO.OUT, GPIO.HIGH)
+    GPIO.setup(pin_constants.VENT, GPIO.OUT, initial=GPIO.HIGH)
     time.sleep(20)  # wait 20 seconds
     GPIO.cleanup(pin_constants.VENT)
 
