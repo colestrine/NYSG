@@ -496,4 +496,4 @@ if __name__ == "__main__":
     # if RUN_TEST:m
     #     log.init_log(PERIPHERAL_LOG_TEST)
     #     test_peripheral_logging(N_ITER, PERIPHERAL_LOG_TEST)
-    fan_turn_on_test()
+    fan_turn_on_test(50)
