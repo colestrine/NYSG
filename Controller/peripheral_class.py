@@ -21,7 +21,7 @@ import pin_constants
 import time  # used for callback monitoring
 import gpiozero
 import RPi.GPIO as GPIO
-GPIO.setmode(GPIO.BOARD)
+
 
 # -------- OTHER PACKAGES ----------
 
@@ -390,16 +390,28 @@ def debug_fan(log_path, pin_addr, n_iter, freq):
     GPIO.cleanup(pin_addr)
 
 
-def fan_turn_on_test():
+def fan_turn_on_test(frequency):
     """
     fan_turn_on_test() tests turning ona  fan for 20 second sthan off
+
+    requency is the frequency fo teh fan
     """
+    GPIO.setmode(GPIO.BOARD)
+    print("Board set up")
     GPIO.setup(pin_constants.VENT, GPIO.OUT, initial=GPIO.HIGH)
-    time.sleep(20)  # wait 20 seconds
+    GPIO.output(pin_constants.VENT, GPIO.HIGH)
+    p = GPIO.PWM(pin_constants.VENT, frequency=frequency)
+    p.start(dc=0)
+    for i in range(100):
+        p.ChangeDutyCycle(i)
+        time.sleep(2)  # wait 2 seconds
+    for i in range(100, 0, -1):
+        p.ChangeDutyCycle(i)
+        time.sleep(2)
+    p.stop()
     GPIO.output(pin_constants.VENT, GPIO.LOW)
-    print(" - Fan off")
-    time.sleep(5)
     GPIO.cleanup(pin_constants.VENT)
+    print("Board Cleaned up")
 
 
 def read_debug_data(log_path, first_few=None):
