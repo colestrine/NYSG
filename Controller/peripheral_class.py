@@ -13,23 +13,23 @@ REQUIRES:
 
 
 # -------- DEPENDENT IMPORTS ---------
+import log
+import sys
+import datetime
+import random
+import pin_constants
+import time  # used for callback monitoring
 import gpiozero
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BOARD)
 
 # -------- OTHER PACKAGES ----------
-import time  # used for callback monitoring
 
 
 # ------- CUSTOM PACKAGES --------
-import pin_constants
 
 
 # -------- TEST IMPORTS ----------
-import random
-import datetime
-import sys
-import log
 
 
 # ------- TEST CONSTANTS ----------
@@ -394,7 +394,6 @@ def fan_turn_on_test():
     """
     fan_turn_on_test() tests turning ona  fan for 20 second sthan off
     """
-    print("Started fan test - Fan on")
     GPIO.setup(pin_constants.VENT, GPIO.OUT, initial=GPIO.HIGH)
     time.sleep(20)  # wait 20 seconds
     GPIO.output(pin_constants.VENT, GPIO.LOW)
@@ -486,4 +485,3 @@ if __name__ == "__main__":
     #     log.init_log(PERIPHERAL_LOG_TEST)
     #     test_peripheral_logging(N_ITER, PERIPHERAL_LOG_TEST)
     fan_turn_on_test()
-    
