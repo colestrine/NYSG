@@ -21,9 +21,10 @@ This software is intended to be run on a Raspberry Pi running the Raspberry Pi O
 ### Install Dependencies
 - Run 'pip3 install Django'
 - Run 'pip3 install scipy'
-- Run 'sudo apt get screen'
+- Run 'sudo apt install screen'
 
 ### If Not Already Done, Clone This Repository
+- Run 'cd ~'
 - Run 'git clone https://github.com/colestrine/NYSG.git'
 
 ### Navigate To Local Instantiation
