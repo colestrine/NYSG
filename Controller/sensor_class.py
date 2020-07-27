@@ -583,7 +583,7 @@ def basic_light_test(n_iter):
     sensor = adafruit_veml7700.VEML7700(i2c)
 
     for _ in range(n_iter):
-        print("\Ambient Light: %0.1f " % sensor.light)
+        print("Ambient Light: %0.1f " % sensor.light)
         time.sleep(2)
 
 
@@ -591,25 +591,25 @@ def basic_moisture_test(n_iter):
     sensor = MCP3001(channel=0)
 
     for _ in range(n_iter):
-        print("\Moisture Level: %0.1f " % sensor.value)
+        print("Moisture Level: %0.1f " % sensor.value)
         time.sleep(2)
-    # print("Creating Channel")
-    # channel = create_channel(pin_constants.I2C_PORT_NUM)
-    # print("Opening Channel on port # : " + str(pin_constants.I2C_PORT_NUM))
-    # channel.open(pin_constants.I2C_PORT_NUM)
-    # print("Writing read command on Channel on port # : " +
-    #       str(pin_constants.I2C_PORT_NUM))
-    # print("Command is to measure temperatuee no hold : " +
-    #       str(pin_constants.MEASURE_TEMP_REGISTER_NO_HOLD))
-    # channel.write_byte(
-    #     pin_constants.TEMP_ADDR, pin_constants.MEASURE_TEMP_REGISTER_NO_HOLD)
-    # print("Reading temperature (2 bytes) with command : " +
-    #       str(pin_constants.READ_TEMP_HUMID))
-    # temp_code = channel.read_i2c_block_data(
-    #     pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, 2)
-    # print(temp_code)
-    # print("Closing Channel")
-    # channel.close()
+
+
+def three_sensor_test(n_iter):
+    i2c = busio.I2C(board.SCL, board.SDA)
+    temp_humid = adafruit_si7021.SI7021(i2c)
+    light = adafruit_veml7700.VEML7700(i2c)
+    moisture = MCP3001(channel=0)
+
+    for _ in range(n_iter):
+        print("\nTemperature: %0.1f C" % temp_humid.temperature)
+        print("Humidity: %0.1f %%" % temp_humid.relative_humidity)
+
+        print("Ambient Light: %0.1f " % light.light)
+
+        print("Moisture Level: %0.1f " % moisture.value)
+
+        time.sleep(2)
 
 
 # ---------- MAIN TESTING --------------------
@@ -621,3 +621,5 @@ if __name__ == "__main__":
     basic_temp_humid_test(N_ITER)
     basic_light_test(N_ITER)
     basic_moisture_test(N_ITER)
+
+    three_sensor_test(N_ITER * 10)
