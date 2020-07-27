@@ -174,3 +174,19 @@ class data_handler:
 		actions_file.close()
 	
 		return json.loads(actions_json)
+
+	def get_mode():
+		mode_file = open('../../Interface Files/mode.json', 'r')
+		mode_json = mode_file.read()
+		mode_file.close()
+	
+		return json.loads(mode_json)["mode"]
+
+	def put_mode(mode):
+		mode_file = open('../../Interface Files/mode.json', 'w')
+
+		mode = {"mode": mode}
+
+		mode_file.write(json.dumps(mode))
+		
+		mode_file.close()

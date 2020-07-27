@@ -34,3 +34,13 @@ class SaveProfileForm(forms.Form):
 	custom_soil_moisture = forms.ChoiceField(required=False, label="Soil Moisture", choices=soil_moisture_choices, widget=forms.Select(attrs={'onchange': 'healthy_levels_form.submit();'}))
 	custom_sunlight = forms.ChoiceField(required=False, choices=sunlight_choices, widget=forms.Select(attrs={'onchange': 'healthy_levels_form.submit();'}))
 	profile_name = forms.CharField(max_length=100, label="Profile Name")
+
+class ModeForm(forms.Form):
+	mode = forms.ChoiceField(required=False, choices=[('machine_learning', 'Machine Learning'), ('manual', 'Manual')], widget=forms.Select(attrs={'onchange': 'mode_form.submit();'}))
+
+class ActionForm(forms.Form):
+	actions = [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+	water = forms.ChoiceField(required=True, choices=actions, label="Water", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
+	fan = forms.ChoiceField(required=True, choices=actions, label="Fan", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
+	heat = forms.ChoiceField(required=True, choices=actions, label="Heat", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
+	light = forms.ChoiceField(required=True, choices=actions, label="Light", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))

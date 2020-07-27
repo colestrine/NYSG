@@ -6,7 +6,15 @@ Settings
 
 {% block content %}
 
+<h1 class="form-header">Mode</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" name="mode_form" id="mode-form">
+		{% csrf_token %}
+		{{ mode_form.as_p}}
+	</form>
+</div>
 
+{% if mode == "machine_learning" %}
 <h1 class="form-header">Plant Profile</h1>
 <div class="form-wrapper">
 	<form action="/settings/" method="post" id="plant_profile_form" name="plant_profile_form">
@@ -26,6 +34,18 @@ Settings
 		<button class="save-profile-button" onclick="showSaveProfileModal()">Save As New Profile</button>
 	{% endif %}
 </div>
+
+{% endif %}
+
+{% if mode == "manual" %}
+<h1 class="form-header">Manual Actions</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="action_form" name="action_form">
+	    {% csrf_token %}
+	    {{ action_form.as_p }}
+	</form>
+</div>
+{% endif %}
 
 <div id="save-profile-modal" class="save-profile-modal">
 	<div class="form-wrapper save-profile-form-wrapper">
