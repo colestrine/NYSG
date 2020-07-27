@@ -26,6 +26,10 @@ from alert import alert, ALERT_LOG_PATH
 import pin_constants
 
 
+# --------- MACHINE LEARNING IMPORTS ----------
+from Machine_Learning.reinforcement_learning import Agent
+
+
 # ------ CONSTANTS ------------
 # interval is the amount of time between different sampling from the greenhouse
 WAIT_INTERVAL_SECONDS = 60

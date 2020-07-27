@@ -40,6 +40,7 @@ import board
 from adafruit_seesaw.seesaw import Seesaw
 import Adafruit_PureIO
 import adafruit_si7021
+import adafruit_veml7700
 
 # Adafruit_I2C import Adafruit_I2C
 
@@ -125,6 +126,8 @@ class LightSensor(Sensor):
 
     SUPERCLASS: SENSOR
 
+    pip3 install adafruit-circuitpython-veml7700
+
     [addr] is the I2C address of the sensor in the bus
     [register] is the sensor data location
     [channel] is the channel for the sensor
@@ -135,33 +138,65 @@ class LightSensor(Sensor):
     # 13 .1.4 light sensor
     """
 
-    def __init__(self, addr, register, channel, block_size=1):
+    # def __init__(self, addr, register, channel, block_size=1):
+    #     """
+    #      __init__(self, addr, register) is the LightSensor object representing
+    #     a physical light sensor
+    #     """
+    #     super().__init__()
+    #     self.addr = addr
+    #     self.register = register
+    #     self.channel = channel
+    #     self.block_size = block_size
+
+    #     self.channel.open(pin_constants.I2C_PORT_NUM)
+
+    # def read(self):
+    #     """
+    #     reads the light value from the Light sensor on self.channel
+    #     """
+
+    #     def convert_light(light):
+    #         # take LSB 8 buts
+    #         return light & (2 ** 8)
+
+    #     light = self.channel.read_i2c_block_data(self.addr, self.register, 2)
+    #     return convert_light(light)
+
+    # def shut_down(self):
+    #     self.channel.close()
+
+    def __init__(self, i2c_channel):
+        self.channel = i2c_channel
+        sensor = adafruit_veml7700.VEML7700(i2c_channel)
+        self.sensor = sensor
+
+    def read_light(self):
         """
-         __init__(self, addr, register) is the LightSensor object representing
-        a physical light sensor
+        read_light(sensor) is the ambient light from the sensor
         """
-        super().__init__()
-        self.addr = addr
-        self.register = register
-        self.channel = channel
-        self.block_size = block_size
+        return self.sensor.light
 
-        self.channel.open(pin_constants.I2C_PORT_NUM)
 
-    def read(self):
+class TempHumiditySensor(Sensor):
+    def __init__(self, i2c_channel):
+        self.channel = i2c_channel
+        sensor = adafruit_si7021.SI7021(i2c_channel)
+        self.sensor = sensor
+
+    def read_temp(self):
         """
-        reads the light value from the Light sensor on self.channel
+        read_temp(sensor) is the fahrenheit temperatue  from the sensor
         """
+        def c_to_f(c):
+            return 9/5 * c + 32
+        return c_to_f(self.sensor.temperature)
 
-        def convert_light(light):
-            # take LSB 8 buts
-            return light & (2 ** 8)
-
-        light = self.channel.read_i2c_block_data(self.addr, self.register, 2)
-        return convert_light(light)
-
-    def shut_down(self):
-        self.channel.close()
+    def read_rh(self):
+        """
+        read_rh(sensor) is the relative humidity  from the sensor
+        """
+        return self.sensor.relative_humidity
 
 
 class HumiditySensor(Sensor):
@@ -524,13 +559,22 @@ def test_sensor_logging(n_iter, log_path):
 
 
 # -------------- BASIC TESTS ------------------
-def basic_temp_test():
+def basic_temp_humid_test():
     i2c = busio.I2C(board.SCL, board.SDA)
     sensor = adafruit_si7021.SI7021(i2c)
 
     while True:
         print("\nTemperature: %0.1f C" % sensor.temperature)
         print("Humidity: %0.1f %%" % sensor.relative_humidity)
+        time.sleep(2)
+
+
+def basic_light_test():
+    i2c = busio.I2C(board.SCL, board.SDA)
+    sensor = adafruit_veml7700.VEML7700(i2c)
+
+    while True:
+        print("\Ambient Light: %0.1f " % sensor.light)
         time.sleep(2)
     # print("Creating Channel")
     # channel = create_channel(pin_constants.I2C_PORT_NUM)
@@ -556,4 +600,4 @@ if __name__ == "__main__":
     # if RUN_TEST:
     #     log.init_log(SENSOR_LOG_TEST)
     #     test_sensor_logging(N_ITER, SENSOR_LOG_TEST)
-    basic_temp_test()
+    basic_temp_humid_test()
