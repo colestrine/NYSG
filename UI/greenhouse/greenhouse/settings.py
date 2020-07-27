@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import subprocess
+from os.path import expanduser
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +27,9 @@ SECRET_KEY = 'aa+mg5das*#55#wff#04e2r$w1ope2%%+9q&(-jf_0*5$uqu-_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+current_ip = subprocess.Popen(['hostname', '-I'], stdout = subprocess.PIPE).communicate()[0].decode('utf-8').strip('\n').strip(' ')
+
+ALLOWED_HOSTS = [current_ip, '127.0.0.1', 'raspberrypi']
 
 
 # Application definition
@@ -40,7 +44,7 @@ INSTALLED_APPS = [
     'landing',
     'settings',
     'dashboard',
-    'manual'
+    'analysis'
 ]
 
 MIDDLEWARE = [
@@ -58,7 +62,7 @@ ROOT_URLCONF = 'greenhouse.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates'],
+        'DIRS': [expanduser("~")+'/NYSG/UI/greenhouse/templates'], #['./templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,5 +128,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    "./static"
+    expanduser("~")+"/NYSG/UI/greenhouse/static"
 ]

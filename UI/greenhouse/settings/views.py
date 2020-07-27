@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm
+from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeForm, ActionForm
 from scripts.data_handler import data_handler
 from collections import OrderedDict
 import json
@@ -16,6 +16,8 @@ def index(request):
 		plant_profile_form = PlantProfileForm(request.POST)
 		healthy_levels_form = HealthyLevelsForm(request.POST)
 		save_profile_form = SaveProfileForm(request.POST)
+		mode_form = ModeForm(request.POST)
+		action_form = ActionForm(request.POST)
 
 		# Check each form to see if it is valid. If valid, scrape data. If not, enter empty placeholder.
 		if healthy_levels_form.is_valid():
@@ -47,6 +49,22 @@ def index(request):
 			custom_soil_moisture = ''
 			custom_sunlight = ''
 
+		if mode_form.is_valid():
+			mode = mode_form.cleaned_data['mode']
+		else:
+			mode = ''
+
+		if action_form.is_valid():
+			water = action_form.cleaned_data['water']
+			fan = action_form.cleaned_data['fan']
+			heat = action_form.cleaned_data['heat']
+			light = action_form.cleaned_data['light']
+		else:
+			water = ''
+			fan = ''
+			heat = ''
+			light = ''
+
 		# If data was submitted, write that data to the interface file
 		# If healthy levels data was submitted, update healthy levels interface file, and save plant profile as "custom" in profile interface file
 		if (temperature):
@@ -73,12 +91,24 @@ def index(request):
 			data_handler.write_healthy_levels(temperature, humidity, soil_moisture, sunlight)
 			data_handler.write_plant_profile(profile_name)
 			can_save = False
+		if (mode):
+			data_handler.put_mode(mode)
+		if (water != ''):
+			### CALL CONTROLLER METHODS HERE ###
+
+			data_handler.put_manual_actions(water, fan, heat, light)
+			action_form = ActionForm(initial={'water': water, 'fan': fan, 'heat': heat, 'light': light})
+
+	mode = data_handler.get_mode()
+	current_manual_actions = data_handler.get_manual_actions()
 
 	healthy_levels = data_handler.read_healthy_levels()
 	plant_profile = data_handler.read_plant_profile()
 	plant_profile_form = PlantProfileForm(initial=plant_profile)
 	healthy_levels_form = HealthyLevelsForm(initial=healthy_levels)
 	save_profile_form = SaveProfileForm()
+	mode_form = ModeForm(initial={'mode': mode})
+	action_form = ActionForm(initial=current_manual_actions)
 
 	log_data = data_handler.get_log_data()
 	log_data = OrderedDict(log_data)
@@ -93,4 +123,4 @@ def index(request):
 	last_soil_moisture = data_handler.bucket_to_nominal("soil_moisture", last_reading_values['soil_moisture'])
 	last_sunlight = data_handler.bucket_to_nominal("sunlight", last_reading_values['sunlight'])
 
-	return render(request, 'Settings/settings.html', {'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile})
+	return render(request, 'Settings/settings.html', {'action_form': action_form, 'mode': mode, 'mode_form': mode_form, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile})
