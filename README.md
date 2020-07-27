@@ -10,7 +10,7 @@ This project is created for the NYSG Internship program at Lockheed Martin, and 
 ## System Requirements
 - Python 3.6+
 
-## Required Modules
+## Dependencies
 - Django (pip3 install Django)
 - Scipy (pip3 install scipy)
 - screen (sudo apt get screen)
