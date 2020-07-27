@@ -4,9 +4,6 @@ from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeFor
 from scripts.data_handler import data_handler
 from collections import OrderedDict
 import json
-import sys
-sys.path.insert(0, '../../Controller/')
-import peripheral_class
 
 # Create your views here.
 def index(request):
