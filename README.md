@@ -13,7 +13,7 @@ This project is created for the NYSG Internship program at Lockheed Martin, and 
 ## Dependencies
 - Django (pip3 install Django)
 - Scipy (pip3 install scipy)
-- screen (sudo apt get screen)
+- screen (sudo apt install screen)
 
 ## Usage
 This software is intended to be run on a Raspberry Pi running the Raspberry Pi OS (with recommended software). Development is intended to be conducted via SSH. All instructions hereafter assume that these conditions are met.
