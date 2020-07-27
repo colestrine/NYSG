@@ -32,9 +32,8 @@ easily, without using their cusotm packages
 TODO: CHECK AND TEST ALL CLASSES
 """
 
-# ----- ADA FRUIT MOISTURE SENSOR IMPORTS -----------------
+# ----- ADA FRUIT SENSOR IMPORTS -----------------
 import busio
-# from board import SCL, SDA
 import board
 
 from adafruit_seesaw.seesaw import Seesaw
@@ -50,6 +49,7 @@ import adafruit_sgp30
 # ----- NON ADA FRUIT IMPORTS ------
 
 import smbus2
+from gpiozero import MCP3001
 # https://buildmedia.readthedocs.org/media/pdf/smbus2/latest/smbus2.pdf
 # https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code/blob/legacy/Adafruit_I2C/Adafruit_I2C.py
 # https://github.com/adafruit/Adafruit_Python_PureIO/blob/master/Adafruit_PureIO/smbus.py
@@ -343,33 +343,42 @@ class MoistureSensor(Sensor):
     https://www.mouser.com/pdfdocs/adafruit-stemma-soil-sensor-i2c-capacitive-moisture-sensor.pdf
     """
 
+    # def __init__(self):
+    #     """
+    #     Creates a Moisture sensor represent an adaFruit Moisture Sensor
+    #     """
+    #     super().__init__()
+    #     i2c_bus = busio.I2C(SCL, SDA)
+    #     ss = Seesaw(i2c_bus, addr=pin_constants.MOISTURE_ADDR)
+    #     self.sensor = ss
+
+    #     # need to add try and except to locka nd unlcok judiviously
+    #     # channel = Adafruit_PureIO.smbus.SMBus(bus=pin_constants.I2C_PORT_NUM)
+
+    # def read(self):
+    #     """
+    #     read(self) returns the moisture and the soil_temp for the given
+    #     Moisture sensor
+    #     """
+    #     ss = self.sensor
+    #     # read moisture level through capacitive touch pad
+    #     moisture = ss.moisture_read()
+    #     # read temperature from the temperature sensor
+    #     soil_temp = ss.get_temp()
+    #     _ = soil_temp  # ignore
+    #     return moisture
+
+    # def shut_down(self):
+    #     pass
+
     def __init__(self):
-        """
-        Creates a Moisture sensor represent an adaFruit Moisture Sensor
-        """
-        super().__init__()
-        i2c_bus = busio.I2C(SCL, SDA)
-        ss = Seesaw(i2c_bus, addr=pin_constants.MOISTURE_ADDR)
-        self.sensor = ss
+        self.sensor = MCP3001(channel=0)
 
-        # need to add try and except to locka nd unlcok judiviously
-        # channel = Adafruit_PureIO.smbus.SMBus(bus=pin_constants.I2C_PORT_NUM)
-
-    def read(self):
+    def read_moisture(self):
         """
-        read(self) returns the moisture and the soil_temp for the given
-        Moisture sensor
+        read_moisture(self) is the moisture read
         """
-        ss = self.sensor
-        # read moisture level through capacitive touch pad
-        moisture = ss.moisture_read()
-        # read temperature from the temperature sensor
-        soil_temp = ss.get_temp()
-        _ = soil_temp  # ignore
-        return moisture
-
-    def shut_down(self):
-        pass
+        return self.sensor.value
 
 
 class Co2Sensor(Sensor):
@@ -559,22 +568,30 @@ def test_sensor_logging(n_iter, log_path):
 
 
 # -------------- BASIC TESTS ------------------
-def basic_temp_humid_test():
+def basic_temp_humid_test(n_iter):
     i2c = busio.I2C(board.SCL, board.SDA)
     sensor = adafruit_si7021.SI7021(i2c)
 
-    while True:
+    for _ in range(n_iter):
         print("\nTemperature: %0.1f C" % sensor.temperature)
         print("Humidity: %0.1f %%" % sensor.relative_humidity)
         time.sleep(2)
 
 
-def basic_light_test():
+def basic_light_test(n_iter):
     i2c = busio.I2C(board.SCL, board.SDA)
     sensor = adafruit_veml7700.VEML7700(i2c)
 
-    while True:
+    for _ in range(n_iter):
         print("\Ambient Light: %0.1f " % sensor.light)
+        time.sleep(2)
+
+
+def basic_moisture_test(n_iter):
+    sensor = MCP3001(channel=0)
+
+    for _ in range(n_iter):
+        print("\Moisture Level: %0.1f " % sensor.value)
         time.sleep(2)
     # print("Creating Channel")
     # channel = create_channel(pin_constants.I2C_PORT_NUM)
@@ -600,4 +617,7 @@ if __name__ == "__main__":
     # if RUN_TEST:
     #     log.init_log(SENSOR_LOG_TEST)
     #     test_sensor_logging(N_ITER, SENSOR_LOG_TEST)
-    basic_temp_humid_test()
+    N_ITER = 4
+    basic_temp_humid_test(N_ITER)
+    basic_light_test(N_ITER)
+    basic_moisture_test(N_ITER)
