@@ -29,7 +29,7 @@ DEBUG = True
 
 current_ip = subprocess.Popen(['hostname', '-I'], stdout = subprocess.PIPE).communicate()[0].decode('utf-8').strip('\n').strip(' ')
 
-ALLOWED_HOSTS = [current_ip, '127.0.0.1']
+ALLOWED_HOSTS = [current_ip, '127.0.0.1', 'raspberrypi']
 
 
 # Application definition
