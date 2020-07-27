@@ -39,6 +39,7 @@ This software is intended to be run on a Raspberry Pi running the Raspberry Pi O
 - Run './start-system.sh'
 - Wait for system to start up
 - Once the success message appears, you can navigate to the specified IP address in your browser to access the UI
+- If your device is the only Raspberry Pi on your LAN network, you may also access the UI by navigating to 'raspberrypi:8080'
 
 ### Detach Screen Session
 - Type 'ctrl+a', then 'd' to detach your shell session from the current SSH shell session
