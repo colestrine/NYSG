@@ -27,7 +27,7 @@ import pin_constants
 
 
 # --------- MACHINE LEARNING IMPORTS ----------
-from Machine_Learning.reinforcement_learning import Agent
+from Machine_Learning.reinforcement_learning import Agent, State
 
 
 # ------ CONSTANTS ------------
@@ -174,6 +174,7 @@ def one_cycle(init_dict, manual_control_path, sensor_log_path, ml_action_log, al
     Executes one cycle of reading, logging, using decision and rwsponding 
     Returns NONE
     """
+    # read from manual control interface
     manual_control = pin_constants.load_data(manual_control_path)
     if manual_control["mode"] == "machine_learning":
         print("Automatic Control")
