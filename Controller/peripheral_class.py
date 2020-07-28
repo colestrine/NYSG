@@ -422,19 +422,31 @@ def react_all(ml_results, peripheral_dict):
         if p == "valve":
             valve = peripheral_dict[p]
             valve_res = ml_results["valve"]
-            valve.set_active(valve_res)
+            if valve_res:
+                valve.set_active()
+            else:
+                valve.set_inactive()
         elif p == "heat":
             heat = peripheral_dict[p]
             heat_res = ml_results["heat"]
-            heat.set_active(heat_res)
+            if heat_res:
+                heat.set_active()
+            else:
+                heat.set_inactive()
         elif p == "light":
             light = peripheral_dict[p]
             light_res = ml_results["light"]
-            light.set_active(light_res)
+            if light_res:
+                light.set_active()
+            else:
+                light.set_inactive()
         elif p == "fan":
             fan = peripheral_dict[p]
             fan_res = ml_results["fan"]
-            fan.set_freq(fan_res)
+            if fan_res:
+                fan.set_active()
+            else:
+                fan.set_inactive()
 
 
 # ------------ MANUAL CONTROL -------------------------
@@ -572,4 +584,7 @@ if __name__ == "__main__":
     if RUN_TEST:
         fan_turn_on_test()
         debug_peripheral('Debug_peripheral_path.json', "fan", 100)
+        debug_peripheral('Debug_peripheral_path.json', "heat", 100)
+        debug_peripheral('Debug_peripheral_path.json', "light", 100)
+        debug_peripheral('Debug_peripheral_path.json', "valve", 100)
         read_debug_data('Debug_peripheral_path.json')

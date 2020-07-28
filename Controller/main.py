@@ -19,7 +19,7 @@ import pickle
 
 
 # ------ CUSTOM CLASSES ---------
-from sensor_class import LightSensor, HumiditySensor, TemperatureSensor, MoistureSensor, Co2Sensor, create_channel, collect_all_sensors
+from sensor_class import LightSensor, TempHumiditySensor, MoistureSensor, create_channel, collect_all_sensors
 from peripheral_class import SolenoidValve, HeatPad, Fan, PlantLight, react_all
 from log import init_log, log, MAX_SIZE
 from alert import alert, ALERT_LOG_PATH
@@ -27,7 +27,7 @@ import pin_constants
 
 
 # --------- MACHINE LEARNING IMPORTS ----------
-from Machine_Learning.reinforcement_learning import Agent, State
+from NYSG.Machine_Learning.reinforcement_learning import Agent, State
 
 
 # ------ CONSTANTS ------------
@@ -93,22 +93,14 @@ def init(dump_init_path=INIT_DICT_PICKLE_PATH):
     pin_constants.dump_data({}, ALERT_LOG)
 
     # --- Set Up Sensors ---------
-
-    sensor_channel = create_channel(1)
-    light_sensor = LightSensor(
-        pin_constants.LIGHT_ADDR, pin_constants.AMBIENT_LIGHT_READ, sensor_channel)
-    temp_sensor = TemperatureSensor(
-        pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, sensor_channel)
-    humidity_sensor = HumiditySensor(
-        pin_constants.TEMP_ADDR, pin_constants.READ_TEMP_HUMID, sensor_channel)
+    i2c_channel = create_channel()
+    light_sensor = LightSensor(i2c_channel)
+    temp_humid_sensor = TempHumiditySensor(i2c_channel)
     moisture_sensor = MoistureSensor()
-    co2_sensor = Co2Sensor()  # optional
 
     ret_dict["light_sensor"] = light_sensor
-    ret_dict["temp_sensor"] = temp_sensor
+    ret_dict["temp_humidity_sensor"] = temp_humid_sensor
     ret_dict["moisture_sensor"] = moisture_sensor
-    ret_dict["humidity_sensor"] = humidity_sensor
-    ret_dict["co2_sensor"] = co2_sensor  # optional
 
     # --- Set Up Peripherals -----
 
@@ -148,7 +140,7 @@ def one_cycle_sensors(sensors_dict):
     one_cycle_sensors(sensors_peris) carries out reads on one cycle of sensors
     """
     sensor_list = [sensors_dict[key] for key in sensors_dict if key in [
-        "light_sensor", "temp_sensor", "moisture_sensor", "co2_sensor", "humidity_sensor"]]
+        "light_sensor", "moisture_sensor", "temp_humidity_sensor"]]
     results_dict = collect_all_sensors(sensor_list)
     return results_dict
 
@@ -206,7 +198,7 @@ def one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH, manual_control_path=M
               alert_log, max_log_size, interval)
 
 
-def event_loop(init_dict, manual_control_path, sensor_log_path, ml_action_log, alert_log, max_log_size, interval, max_iter):
+def event_loop(init_dict, manual_control_path, sensor_log_path, ml_action_log, alert_log, max_log_size, interval, max_iter=None):
     """ 
     event_loop() the main event loop
 
