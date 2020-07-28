@@ -5,6 +5,12 @@ direct interaction for poins
 
 abstractions for each type of peripheral are presented
 in class format
+- Peripheral (abstract super class)
+- BurstPeripheral (abstract sub class of Peripheral)
+- PWMPeripheral (abstract sub class of Burst Peripheral)
+- Fan, Light, Heater (concrete subclass of Peripheral)
+- SolenoidValve (subclass of burstPeripheral)
+- HeatPad (subclass of burst peripheral)
 
 REQUIRES:
 - RPi.GPIO in order to use all the GPIO port ufnctionality on the raspberry pi
@@ -13,8 +19,6 @@ REQUIRES:
 
 # -------- DEPENDENT IMPORTS ---------
 import RPi.GPIO as GPIO
-import gpiozero
-
 
 # -------- OTHER PACKAGES ----------
 import datetime
@@ -326,6 +330,19 @@ class SolenoidValve(BurstPeripheral):
         super().__init__(channel, burst_time)
 
 
+class HeatPad(BurstPeripheral):
+    """
+    HeatPad(Pwm_Peripheral) is a Heat Pad sensor object
+    SUbclass of PWM_PERIPHERAL
+    """
+
+    def __init__(self, channel, burst_time=pin_constants.BURST):
+        """
+        Creates a HeatPad  object with channel chnnale
+        """
+        super().__init__(channel, burst_time)
+
+
 class Pwm_Peripheral(BurstPeripheral):
     """
     Pwm_Peripheral(Peripheral) is a peripheral with a pwm controller
@@ -396,19 +413,6 @@ class Pwm_Peripheral(BurstPeripheral):
         return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq) + ".\n"
 
 
-class HeatPad(Pwm_Peripheral):
-    """
-    HeatPad(Pwm_Peripheral) is a Heat Pad sensor object
-    SUbclass of PWM_PERIPHERAL
-    """
-
-    def __init__(self, channel, freq=0, dc=0):
-        """
-        Creates a HeatPad  object with channel chnnale
-        """
-        super().__init__(channel, freq, dc)
-
-
 # ---------- SUMMARY FUNCTIONS ------------
 
 
@@ -419,9 +423,9 @@ def react_all(ml_results, peripheral_dict):
     Returns: NONE
     """
     for p in peripheral_dict:
-        if p == "valve":
+        if p == "water":
             valve = peripheral_dict[p]
-            valve_res = ml_results["valve"]
+            valve_res = ml_results["water"]
             if valve_res:
                 valve.set_active()
             else:
@@ -454,7 +458,7 @@ def react_all(ml_results, peripheral_dict):
 def manual(peripheral_dict, action_list):
     """
     manual(peripheral_dict, cction_dict) allows for mannual control of peripherals
-    peripheral_dict is a dictionary of peripherals, with keys "valve", :heat", light"
+    peripheral_dict is a dictionary of peripherals, with keys "water", :heat", light"
     and "fan
 
     action_list is a list of pairs where the first element is the name of the action and
@@ -470,13 +474,13 @@ def manual(peripheral_dict, action_list):
         elif action == "inactive":
             obj.set_inactive()
 
-    valve = peripheral_dict["valve"]
+    valve = peripheral_dict["water"]
     heater = peripheral_dict["heat"]
     light = peripheral_dict["light"]
     fan = peripheral_dict["fan"]
 
     for action_name, action in action_list:
-        if action_name == "valve":
+        if action_name == "water":
             bistate_set(valve, action)
         elif action_name == "heater":
             bistate_set(heater, action)
@@ -495,11 +499,11 @@ def debug_peripheral(log_path, peripheral_type, n_iter):
     on GPIO pin and stores results in log_path for n_iters of data
     """
 
-    if peripheral_type == "heater":
-        peripheral = HeatPad(pin_constants.HEAT, 50, 50)
+    if peripheral_type == "heat":
+        peripheral = HeatPad(pin_constants.HEAT)
     elif peripheral_type == "light":
         peripheral = PlantLight(pin_constants.LED)
-    elif peripheral_type == "valve":
+    elif peripheral_type == "water":
         peripheral = SolenoidValve(pin_constants.VALVE)
     elif peripheral_type == "fan":
         peripheral = Fan(pin_constants.VENT)
@@ -570,7 +574,7 @@ def test_peripheral_logging(n_iter, log_path):
             peripheral_action = random.randint(0, 1)
             actions.append(peripheral_action)
 
-        peripherals = ["heater", "light", "fan", "valve"]
+        peripherals = ["heat", "light", "fan", "water"]
         combined_list = list(zip(peripherals, actions))
         combined_dict = {key[0]: key[1] for key in combined_list}
 
@@ -586,5 +590,5 @@ if __name__ == "__main__":
         debug_peripheral('Debug_peripheral_path.json', "fan", 100)
         debug_peripheral('Debug_peripheral_path.json', "heat", 100)
         debug_peripheral('Debug_peripheral_path.json', "light", 100)
-        debug_peripheral('Debug_peripheral_path.json', "valve", 100)
+        debug_peripheral('Debug_peripheral_path.json', "water", 100)
         read_debug_data('Debug_peripheral_path.json')

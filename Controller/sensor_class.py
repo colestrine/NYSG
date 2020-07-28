@@ -151,7 +151,10 @@ class MoistureSensor():
         """
         read_moisture(self) is the moisture read
         """
-        return self.sensor.value
+        unstandardized = self.sensor.value
+        # smaller value is low moisture, higher is high moisture, mult by 100 to scale
+        standard = (1 - unstandardized) * 100
+        return standard
 
 
 # -------- UTILITIES ------------

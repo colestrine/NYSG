@@ -2,20 +2,15 @@
 [main] is the driver script for the rapsberry Pi. It runs continously, reading
 in the sensor data, running the ML algorithm, and then responds with an output.
 Along the way, it logs data as well.
-
-DEPENDENCIES:
-- smbus2 for input sensors
-- RPi.GPIO for output peripherals
 """
 
-# -------- IMPORTS  -------------
-import smbus2
-import RPi.GPIO as GPIO
 
-# -------- OTHER EXTERNAL IMPORTS ------
+# -------- EXTERNAL IMPORTS ------
 import time
 from datetime import datetime
 import pickle
+import importlib
+import sys
 
 
 # ------ CUSTOM CLASSES ---------
@@ -27,7 +22,12 @@ import pin_constants
 
 
 # --------- MACHINE LEARNING IMPORTS ----------
-from NYSG.Machine_Learning.reinforcement_learning import Agent, State
+# from Machine_Learning.reinforcement_learning import Agent, State
+
+
+# --------- INTERFACE FILES IMPORTS ------------
+# from Interface_Files.utilities import manual_action_to_activity
+utilities = importlib.import_module('../Interface_Files.utilities')
 
 
 # ------ CONSTANTS ------------
@@ -103,10 +103,7 @@ def init(dump_init_path=INIT_DICT_PICKLE_PATH):
     ret_dict["moisture_sensor"] = moisture_sensor
 
     # --- Set Up Peripherals -----
-
-    # set mode as board
-    GPIO.setmode(GPIO.BOARD)
-
+    # sets up mode internally as well
     valve = SolenoidValve(pin_constants.VALVE)
     heat = HeatPad(pin_constants.HEAT)
     fan = Fan(pin_constants.VENT)
@@ -163,30 +160,30 @@ def one_cycle_peripherals(init_dict, ml_results):
 
 def one_cycle(init_dict, manual_control_path, sensor_log_path, ml_action_log, alert_log, max_log_size, interval):
     """
-    Executes one cycle of reading, logging, using decision and rwsponding 
+    Executes one cycle of reading, logging, using decision and rwsponding
     Returns NONE
     """
     # read from manual control interface
     manual_control = pin_constants.load_data(manual_control_path)
+    manual_results = pin_constants.load_data(MANUAL_CONTROL_PATH)
+    ml_args = one_cycle_sensors(init_dict)
+    log(ml_args, sensor_log_path, max_log_size)
+
     if manual_control["mode"] == "machine_learning":
-        print("Automatic Control")
-        ml_args = one_cycle_sensors(init_dict)
-        log(ml_args, sensor_log_path, max_log_size)
         ml_results = ml_adapter(ml_args)
         peripheral_actions = one_cycle_peripherals(init_dict, ml_results)
-        alert(100, ALERT_LOG_PATH)
-        log(peripheral_actions, ml_action_log, max_log_size)
-        time.sleep(interval)
     elif manual_control["mode"] == "manual":
-        print("Manual Control")
+        manual_results = {"now": {}}
+        peripheral_actions = one_cycle_peripherals(init_dict, manual_results)
 
-    # set up the manual control read.
-    # call from controller to update manual control
+    alert(100, ALERT_LOG_PATH)
+    log(peripheral_actions, ml_action_log, max_log_size)
+    time.sleep(interval)
 
 
 def one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH, manual_control_path=MANUAL_CONTROL_PATH, sensor_log_path=SENSOR_LOG, ml_action_log=ML_ACTION_LOG, alert_log=ALERT_LOG, max_log_size=MAX_SIZE, interval=0):
     """
-    one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH) does one cycle based on the 
+    one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH) does one cycle based on the
     information from init_path
 
     PRIMARILY INTENDENDED FOR ASYNC USE WITH BASH SCRIPT
