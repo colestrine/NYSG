@@ -36,18 +36,12 @@ pip3 install -r requirements.txt
 import busio
 import board
 
-from adafruit_seesaw.seesaw import Seesaw
 import Adafruit_PureIO
 import adafruit_si7021
 import adafruit_veml7700
 
 
-# ---- ADA FRUIT IMPORTS CO2 GAS SENSOR IMPORTS----------
-import adafruit_sgp30
-
-
 # ----- NON ADA FRUIT IMPORTS ------
-import smbus2
 from gpiozero import MCP3001
 
 
@@ -82,40 +76,11 @@ else:
 
 # --------- SENSORS ----------------
 
-
-class Sensor:
-    """
-    Sensor is represents an abstract Sensor, which may be mounted on a 
-    SPI or I2C compatible channel
-
-    INCLUDES: abstract method
-        - read: to read from a sensor
-    SUBCLASSES:
-        - LightSensor [i2c]
-        - TempHumiditySensor [i2c]
-        = MoistureSensor [SPI]
-
-    WARNIN: DO NOT INSTANTIATE
-    Sensor is an ABSTRACT class
-    """
-
-    def __init__(self):
-        pass
-
-    def read(self):
-        pass
-
-    def shut_down(self):
-        pass
-
-
-class LightSensor(Sensor):
+class LightSensor():
     """
     LightSensor represents a Light Sensor from VISHAY ELECTRONICS
 
-    SUPERCLASS: SENSOR
-
-    INSTALLATION: pip3 install adafruit-circuitpython-veml7700
+    INSTALLATION: pip3 install adafruit_si7021
 
     [channel] is the I2C channel of the sensor in the bus
     [sensor] is the i2c sensor object
@@ -137,11 +102,11 @@ class LightSensor(Sensor):
         return self.sensor.light
 
 
-class TempHumiditySensor(Sensor):
+class TempHumiditySensor():
     """
     TempHumiditySensor represents a Temperature Sensor and a Humidity Sensor
 
-    SUPERCLASS: Sensor
+    INSTALLATION: pip3 install adafruit-circuitpython-veml7700
 
     [channel] is the I2C channel of the sensor in the bus
     [sensor] is the i2c sensor object
@@ -167,13 +132,13 @@ class TempHumiditySensor(Sensor):
         return self.sensor.relative_humidity
 
 
-class MoistureSensor(Sensor):
+class MoistureSensor():
     """
     MoistureSensor represents an AdaFruit Moisture Sensor
 
-    [sensor] is the sensor object for Adafruit
-
     INSTALLATION: requires mcp_3001 from gpiozero package
+
+    [sensor] is the sensor object for Adafruit
     """
 
     def __init__(self):
