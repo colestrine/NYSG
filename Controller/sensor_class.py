@@ -232,7 +232,7 @@ def run_debug(log_path, n_iter):
         for key in output:
             log_dict[key] = output[key]
 
-    pin_constants.dump_data(log_path, log_dict)
+    pin_constants.dump_data(log_dict, log_path)
 
 
 def read_debug_data(log_path, first_few=None):

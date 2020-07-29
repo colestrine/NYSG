@@ -59,7 +59,7 @@ def convert_bucket_to_assoc(buckets):
                 low = 0
             elif int(num) == 5:
                 high = 100
-            assoc_dict[(low, high)] = int(num)
+            assoc_dict[(low, high)] = int(num) - 1
         new_dict[key] = assoc_dict
     return new_dict
 
