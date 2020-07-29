@@ -18,14 +18,14 @@ REQUIRES:
 
 
 # -------- DEPENDENT IMPORTS ---------
-import RPi.GPIO as GPIO
+import Controller.RPi.GPIO as GPIO
 
 # -------- OTHER PACKAGES ----------
 import datetime
 
 # ------- CUSTOM PACKAGES --------
-import log
-import pin_constants
+from Controller import log
+from Controller import pin_constants
 
 
 # -------- TEST IMPORTS ----------

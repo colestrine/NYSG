@@ -48,14 +48,17 @@ from gpiozero import MCP3001
 # ------- OTHER IMPORTS -------
 import time
 from datetime import datetime
-import pin_constants
+
+
+# -------- CUSTOM IMPORTS --------
+from Controller import pin_constants
 
 
 # -------- TEST IMPORTS ----------
 import random
 import datetime
 import sys
-import log
+from Controller import log
 
 
 # ------- TEST CONSTANTS ----------

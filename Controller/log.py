@@ -9,7 +9,7 @@ import json
 
 
 # ---------- CUSTOM IMPORTS --------
-import pin_constants
+from Controller import pin_constants
 
 
 # ---------- LOG CONSTANTS ------

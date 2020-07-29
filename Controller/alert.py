@@ -13,8 +13,8 @@ import sys
 
 
 # --------- CUSTOM IMPORTS ---------------
-import pin_constants
-from log import init_log, log, MAX_SIZE
+from Controller import pin_constants
+from Controller.log import init_log, log, MAX_SIZE
 
 
 # --------- CONSTANTS FOR ALERTS ---------
