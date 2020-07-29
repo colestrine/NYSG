@@ -48,14 +48,17 @@ from gpiozero import MCP3001
 # ------- OTHER IMPORTS -------
 import time
 from datetime import datetime
-import pin_constants
+
+
+# -------- CUSTOM IMPORTS --------
+from Controller import pin_constants
 
 
 # -------- TEST IMPORTS ----------
 import random
 import datetime
 import sys
-import log
+from Controller import log
 
 
 # ------- TEST CONSTANTS ----------
@@ -151,7 +154,10 @@ class MoistureSensor():
         """
         read_moisture(self) is the moisture read
         """
-        return self.sensor.value
+        unstandardized = self.sensor.value
+        # smaller value is low moisture, higher is high moisture, mult by 100 to scale
+        standard = (1 - unstandardized) * 100
+        return standard
 
 
 # -------- UTILITIES ------------
@@ -229,7 +235,7 @@ def run_debug(log_path, n_iter):
         for key in output:
             log_dict[key] = output[key]
 
-    pin_constants.dump_data(log_path, log_dict)
+    pin_constants.dump_data(log_dict, log_path)
 
 
 def read_debug_data(log_path, first_few=None):

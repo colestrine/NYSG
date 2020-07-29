@@ -1,6 +1,9 @@
 from numpy import random, mean, zeros
 from matplotlib import pyplot
-from transition import ActionSet, EffectSet
+import importlib
+transition = importlib.import_module(
+    'Machine Learning.transition')
+# from transition import ActionSet, EffectSet
 
 class State:
     # State class holds data for temperature, humidity, soil moisture, and
@@ -231,11 +234,11 @@ class Environment:
             factor = round(random.randint(-2, 3) / 100, 1)
             next_state.temperature += factor
 
-        action_set = ActionSet(light_action, ventilation_action, water_action, heat_action)
+        action_set = transition.ActionSet(light_action, ventilation_action, water_action, heat_action)
 
         prior_effects = prior_effects[str(action_set)]
 
-        prior_effects = EffectSet.decode(prior_effects)
+        prior_effects = transition.EffectSet.decode(prior_effects)
 
         # If actions have already been taken, update based on prior knowledge
         if (prior_effects['temperature'] or prior_effects['humidity'] or prior_effects['soil_moisture'] or prior_effects['sunlight']):
@@ -257,7 +260,7 @@ class Agent:
         action_choices = ['big_increase', 'big_decrease', 'small_increase', 'small_decrease', 'none']
 
         # Get prior effects
-        prior_effects = EffectSet.getEffects()
+        prior_effects = transition.EffectSet.getEffects()
 
         # Iterate through all possible action vectors
         avg_episode_rewards = []
@@ -531,16 +534,16 @@ class Test:
             current_state.soil_moisture += random.randint(-1, 2)/50
             current_state.sunlight += random.randint(-1, 2)/50
 
-            action_set = ActionSet(light_action, ventilation_action, water_action, heat_action)
+            action_set = transition.ActionSet(light_action, ventilation_action, water_action, heat_action)
 
             temperature_diff = current_state.temperature - last_state.temperature
             humidity_diff = current_state.humidity - last_state.humidity
             soil_moisture_diff = current_state.soil_moisture - last_state.soil_moisture
             sunlight_diff = current_state.sunlight - last_state.sunlight
 
-            effect_set = EffectSet(temperature_diff, humidity_diff, soil_moisture_diff, sunlight_diff)
+            effect_set = transition.EffectSet(temperature_diff, humidity_diff, soil_moisture_diff, sunlight_diff)
 
-            put = EffectSet.putEffect(action_set, effect_set)
+            put = transition.EffectSet.putEffect(action_set, effect_set)
 
             print(f'effects: {put}')
 

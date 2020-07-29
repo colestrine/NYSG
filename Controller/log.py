@@ -6,13 +6,10 @@ log.py contains tools to read and write from the log
 import os
 import sys
 import json
-# import psutil
-# psutil can be used to indicate the amount of used and remaining
-# virtual memory for addressing
 
 
 # ---------- CUSTOM IMPORTS --------
-import pin_constants
+from Controller import pin_constants
 
 
 # ---------- LOG CONSTANTS ------
@@ -81,6 +78,7 @@ def get_file_size(file_path):
 def init_log(file_path):
     """
     init_log(file_path) initializes the log at file_path with an empty dictiknary
+    RETURNS: NONE
     """
     empty_dict = {}
     pin_constants.dump_data(empty_dict, file_path)
@@ -90,6 +88,7 @@ def clear_log(file_path):
     """
     clear_log(file_path) clears the log at the file_patha nd replaces ti with an empty dict
     WARNING: ALL DATA ERASES
+    RETURNS: NONE
     """
     init_log(file_path)
 
@@ -106,7 +105,7 @@ def log(file_path, new_dict, max_size):
     """
     old_size = get_file_size(file_path)
     new_size = old_size + sys.getsizeof(new_dict)
-    if new_size > MAX_SIZE:
+    if new_size > max_size:
         # overwrite the memory location
         fp = open(file_path, "w")
         json.dump(new_dict, fp)

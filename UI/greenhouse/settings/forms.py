@@ -39,7 +39,7 @@ class ModeForm(forms.Form):
 	mode = forms.ChoiceField(required=False, choices=[('machine_learning', 'Machine Learning'), ('manual', 'Manual')], widget=forms.Select(attrs={'onchange': 'mode_form.submit();'}))
 
 class ActionForm(forms.Form):
-	actions = [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+	actions = [('big_decrease', 'Big Decrease'), ('small_decrease', 'Small Decrease'), ('none', 'No Action'), ('small_increase', 'Small Increase'), ('big_increase', 'Big Increase')]
 	water = forms.ChoiceField(required=True, choices=actions, label="Water", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
 	fan = forms.ChoiceField(required=True, choices=actions, label="Fan", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
 	heat = forms.ChoiceField(required=True, choices=actions, label="Heat", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
