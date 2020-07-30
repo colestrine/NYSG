@@ -69,7 +69,7 @@ BUCKETS_ASSOC = convert_bucket_to_assoc(buckets_dict)
 
 
 # -------- RUN ENVIRONMENT VARIABLES ---------
-ONE_CYCLE = False
+ONE_CYCLE = True
 
 
 # -------- ML WRAPPERS --------
@@ -196,10 +196,10 @@ def init(dump_init_path=INIT_DICT_PICKLE_PATH):
 
     # set up manual control and dump into memory
     manual_control_dict = {"mode": "manual"}  # TODO: change to ML later
-    pin_constants.dump_data(manual_control_dict, MODE_PATH)
+    pin_constants.dump_data(manual_control_dict,MODE_PATH)
 
     # set up init pickle path
-    pin_constants.dump_pickled_data(ret_dict, dump_init_path)
+ #   pin_constants.dump_pickled_data(ret_dict, dump_init_path)
 
     return ret_dict
 
@@ -243,7 +243,7 @@ def one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_pa
     manual_results = pin_constants.load_data(manual_actions_path)
 
     ml_args = one_cycle_sensors(init_dict)
-    log(ml_args, sensor_log_path, max_log_size)
+    log(sensor_log_path, ml_args, max_log_size)
 
     if manual_control["mode"] == "machine_learning":
         ml_results = ml_adapter(ml_args)
@@ -253,8 +253,8 @@ def one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_pa
         manual_results = {"now": converted_results}
         peripheral_actions = one_cycle_peripherals(init_dict, manual_results)
 
-    alert(100, ALERT_LOG_PATH)
-    log(peripheral_actions, ml_action_log, max_log_size)
+    alert(100, ALERT_LOG)
+    log(ml_action_log, peripheral_actions, max_log_size)
 
     log_dict = {}
     for key in ml_args:
@@ -262,12 +262,12 @@ def one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_pa
     for key in peripheral_actions:
         log_dict[key + str("_action")] = peripheral_actions[key]
 
-    log(log_dict, LOG_PATH, max_log_size)
+    log(LOG_PATH, log_dict, max_log_size)
 
     time.sleep(interval)
 
 
-def one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH, manual_control_path=MODE_PATH, manual_actions_path=MANUAL_ACTIONS_PATH, sensor_log_path=SENSOR_LOG, ml_action_log=ML_ACTION_LOG, alert_log=ALERT_LOG, max_log_size=MAX_SIZE, interval=0):
+def one_cycle_driver(init_dict, manual_control_path=MODE_PATH, manual_actions_path=MANUAL_ACTIONS_PATH, sensor_log_path=SENSOR_LOG, ml_action_log=ML_ACTION_LOG, alert_log=ALERT_LOG, max_log_size=MAX_SIZE, interval=0):
     """
     one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH) does one cycle based on the
     information from init_path
@@ -276,7 +276,7 @@ def one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH, manual_control_path=M
 
     REQIIRES: init_dict has beenm initalized already
     """
-    init_dict = pin_constants.load_pickled_data(init_dict_path)
+  #  init_dict = pin_constants.load_pickled_data(init_dict_path)
     one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_path, ml_action_log,
               alert_log, max_log_size, interval)
 
@@ -307,11 +307,11 @@ def event_loop(init_dict, manual_control_path, manual_actions_path, sensor_log_p
 if __name__ == "__main__":
     init_dict = init(INIT_DICT_PICKLE_PATH)
     if ONE_CYCLE:
-        one_cycle_driver()
+        one_cycle_driver(init_dict)
     else:
         event_loop(init_dict, MODE_PATH, MANUAL_ACTIONS_PATH, SENSOR_LOG, ML_ACTION_LOG,
                    ALERT_LOG, MAX_SIZE, WAIT_INTERVAL_SECONDS, None)
-
+    print("Test")
 
 # ------- DEBUGGING -------------------
 

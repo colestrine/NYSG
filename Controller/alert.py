@@ -51,7 +51,7 @@ def log_alert(alert_message_dict, alert_path=ALERT_LOG_PATH):
     """
     log_alert(alert_message_dict) logs an alert_message_Dict
     """
-    log(ALERT_LOG_PATH, alert_message_dict, MAX_SIZE)
+    log(alert_path, alert_message_dict, MAX_SIZE)
 
 
 # ---------- MAIN -----------------------
