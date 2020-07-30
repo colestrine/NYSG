@@ -116,6 +116,12 @@ class data_handler:
 		log_file.close()
 		log_dict = json.loads(log_json)
 
+		for update in log_dict:
+			log_dict[update]['temperature'] = round(log_dict[update]['temperature'], 2)
+			log_dict[update]['humidity'] = round(log_dict[update]['humidity'], 2)
+			log_dict[update]['soil_moisture'] = round(log_dict[update]['soil_moisture'], 2)
+			log_dict[update]['sunlight'] = round(log_dict[update]['sunlight'], 2)
+
 		return log_dict
 
 	def save_profile(profile_name, temperature, humidity, soil_moisture, sunlight):

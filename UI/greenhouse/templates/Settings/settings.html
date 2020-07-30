@@ -78,19 +78,19 @@ Settings
 					Humidity
 				</div>
 				<div>
-					{{last_humidity}}%
+					{{last_humidity}} %
 				</div>
 				<div class="sidebar-value-label">
 					Soil Moisture
 				</div>
 				<div>
-					{{last_soil_moisture}}%
+					{{last_soil_moisture}} %
 				</div>
 				<div class="sidebar-value-label">
 					Light
 				</div>
 				<div>
-					{{last_sunlight}} lm
+					{{last_sunlight}} lm/m<sup>2</sup>
 				</div>
 			</div>
 		</div>
@@ -101,7 +101,7 @@ Settings
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Temperature
+						Temperature (<span>&#176;</span>F)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
 				</div>
@@ -119,7 +119,7 @@ Settings
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Humidity
+						Humidity (%)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
 				</div>
@@ -137,7 +137,7 @@ Settings
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Soil Moisture
+						Soil Moisture (%)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
 				</div>
@@ -155,7 +155,7 @@ Settings
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Sunlight
+						Sunlight (lm/m<sup>2</sup>)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
 				</div>
