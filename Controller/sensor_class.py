@@ -104,7 +104,7 @@ class LightSensor():
         """
         read_light(sensor) is the ambient light from the sensor
         """
-        return self.sensor.light / MAX_LIGHT_DIVISOR
+        return self.sensor.light
 
 
 class TempHumiditySensor():

@@ -18,7 +18,7 @@ REQUIRES:
 
 
 # -------- DEPENDENT IMPORTS ---------
-import Controller.RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 # -------- OTHER PACKAGES ----------
 import datetime
@@ -94,7 +94,7 @@ class Peripheral:
         """
         if Peripheral.num_peripherals == 0:
             GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.channel, GPIO.OUT, initial=initial_state)
+        GPIO.setup(self.channel, GPIO.OUT) #, initial=initial_state)
 
     def change_active(self, activity):
         """

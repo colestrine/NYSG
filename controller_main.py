@@ -34,7 +34,7 @@ interface_constants = importlib.import_module(
 
 # ------ CONSTANTS ------------
 # interval is the amount of time between different sampling from the greenhouse
-WAIT_INTERVAL_SECONDS = 1
+WAIT_INTERVAL_SECONDS = 60
 
 HEALTHY_LEVELS_PATH = "Interface Files/healthy_levels.json"
 VALUE_BUCKETS_PATH = "Interface Files/value_buckets.json"
@@ -59,7 +59,7 @@ def convert_bucket_to_assoc(buckets):
                 low = 0
             elif int(num) == 5:
                 high = 100
-            assoc_dict[(low, high)] = int(num) - 1
+            assoc_dict[(low, high)] = int(num) 
         new_dict[key] = assoc_dict
     return new_dict
 
@@ -82,12 +82,12 @@ def convert_to_bucket(arg, _type, bucket_assoc):
     """
     lower_dict = bucket_assoc[_type]
     for low, high in lower_dict:
-        if arg >= int(low) and arg <= int(high):
+        if arg >= int(low) and arg <= int(high) + 1:
             remainder = arg - int(low)
             _range = int(high) - int(low)
             fractional_part = remainder/float(_range)
             converted_val = lower_dict[(low, high)] + fractional_part
-            return converted_val
+            return float(converted_val)
 
 
 def process_to_ml(ml_args):
@@ -316,7 +316,7 @@ if __name__ == "__main__":
     else:
         event_loop(init_dict, MODE_PATH, MANUAL_ACTIONS_PATH, SENSOR_LOG, ML_ACTION_LOG,
                    ALERT_LOG, MAX_SIZE, WAIT_INTERVAL_SECONDS, 10)
-    print("Test")
+
 
 # ------- DEBUGGING -------------------
 

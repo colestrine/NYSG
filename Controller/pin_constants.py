@@ -47,7 +47,7 @@ LED = 37
 VALVE = 32
 HEAT = 36
 
-BURST = 0.1  # in seconds
+BURST = 10  # in seconds
 
 # ------- lOG LOCATIONS -------------
 
