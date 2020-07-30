@@ -11,7 +11,7 @@ from datetime import datetime
 import pickle
 import importlib
 import sys
-
+import RPi.GPIO as GPIO
 
 # ------ CUSTOM CLASSES ---------
 from Controller.sensor_class import LightSensor, TempHumiditySensor, MoistureSensor, create_channel, collect_all_sensors
@@ -174,7 +174,7 @@ def init(dump_init_path=INIT_DICT_PICKLE_PATH):
     ret_dict["light_sensor"] = light_sensor
     ret_dict["temp_humidity_sensor"] = temp_humid_sensor
     ret_dict["moisture_sensor"] = moisture_sensor
-
+    print(GPIO.getmode())
     # --- Set Up Peripherals -----
     # sets up mode internally as well
     valve = SolenoidValve(pin_constants.VALVE)
@@ -239,6 +239,7 @@ def one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_pa
     Returns NONE
     """
     # read from manual control interface
+    print("starting loop")
     manual_control = pin_constants.load_data(manual_control_path)
     manual_results = pin_constants.load_data(manual_actions_path)
 

@@ -93,7 +93,7 @@ class Peripheral:
         RETURNS: NONE
         """
         if Peripheral.num_peripherals == 0:
-            GPIO.setmode(GPIO.BOARD)
+            GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.channel, GPIO.OUT) #, initial=initial_state)
 
     def change_active(self, activity):

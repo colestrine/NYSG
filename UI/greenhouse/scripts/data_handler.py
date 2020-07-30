@@ -1,4 +1,6 @@
+
 import json
+import os
 from os.path import expanduser
 
 class data_handler:
@@ -170,23 +172,22 @@ class data_handler:
 		actions_file = open(expanduser("~")+'/NYSG/Interface Files/manual_actions.json', 'w')
 
 		actions = {'water': water, 'fan': fan, 'heat': heat, 'light': light}
-
+		#os.chmod(expanduser("~")+'/NYSG/Interface Files/manual_actions.json',0o777)
 		actions_file.write(json.dumps(actions))
-		
 		actions_file.close()
 
 	def get_manual_actions():
 		actions_file = open(expanduser("~")+'/NYSG/Interface Files/manual_actions.json', 'r')
 		actions_json = actions_file.read()
 		actions_file.close()
-	
+
 		return json.loads(actions_json)
 
 	def get_mode():
 		mode_file = open(expanduser("~")+'/NYSG/Interface Files/mode.json', 'r')
 		mode_json = mode_file.read()
 		mode_file.close()
-	
+
 		return json.loads(mode_json)["mode"]
 
 	def put_mode(mode):
@@ -195,5 +196,5 @@ class data_handler:
 		mode = {"mode": mode}
 
 		mode_file.write(json.dumps(mode))
-		
+
 		mode_file.close()
