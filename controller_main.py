@@ -34,7 +34,7 @@ interface_constants = importlib.import_module(
 
 # ------ CONSTANTS ------------
 # interval is the amount of time between different sampling from the greenhouse
-WAIT_INTERVAL_SECONDS = 60
+WAIT_INTERVAL_SECONDS = 1
 
 HEALTHY_LEVELS_PATH = "Interface Files/healthy_levels.json"
 VALUE_BUCKETS_PATH = "Interface Files/value_buckets.json"
@@ -69,7 +69,7 @@ BUCKETS_ASSOC = convert_bucket_to_assoc(buckets_dict)
 
 
 # -------- RUN ENVIRONMENT VARIABLES ---------
-ONE_CYCLE = True
+ONE_CYCLE = False
 
 
 # -------- ML WRAPPERS --------
@@ -82,9 +82,9 @@ def convert_to_bucket(arg, _type, bucket_assoc):
     """
     lower_dict = bucket_assoc[_type]
     for low, high in lower_dict:
-        if arg >= low and arg <= high:
-            remainder = arg - low
-            _range = high - low
+        if arg >= int(low) and arg <= int(high):
+            remainder = arg - int(low)
+            _range = int(high) - int(low)
             fractional_part = remainder/float(_range)
             converted_val = lower_dict[(low, high)] + fractional_part
             return converted_val
@@ -142,7 +142,7 @@ def ml_adapter(args_dict):
     ml_result_dict = process_from_ml(ml_results)
 
     now = datetime.datetime.now()
-    dt_string = now.strftime("%d-%m-%Y %H:%M:%-S:%f")
+    dt_string = now.strftime("%d-%m-%Y %H:%M:%-S")
     final_dict = {}
     final_dict[dt_string] = ml_result_dict
 
@@ -257,10 +257,15 @@ def one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_pa
     log(ml_action_log, peripheral_actions, max_log_size)
 
     log_dict = {}
+    saved_key = None
     for key in ml_args:
-        log_dict[key] = ml_args[key]
+        new_inner_dict = {}
+        for typ in ml_args[key]:
+            new_inner_dict[typ] = convert_to_bucket(ml_args[key][typ], typ, BUCKETS_ASSOC)
+        log_dict[key] = new_inner_dict
+        saved_key = key
     for key in peripheral_actions:
-        log_dict[key + str("_action")] = peripheral_actions[key]
+        log_dict[saved_key][key + str("_action")] = peripheral_actions[key]
 
     log(LOG_PATH, log_dict, max_log_size)
 
@@ -310,7 +315,7 @@ if __name__ == "__main__":
         one_cycle_driver(init_dict)
     else:
         event_loop(init_dict, MODE_PATH, MANUAL_ACTIONS_PATH, SENSOR_LOG, ML_ACTION_LOG,
-                   ALERT_LOG, MAX_SIZE, WAIT_INTERVAL_SECONDS, None)
+                   ALERT_LOG, MAX_SIZE, WAIT_INTERVAL_SECONDS, 10)
     print("Test")
 
 # ------- DEBUGGING -------------------
