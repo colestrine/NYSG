@@ -431,11 +431,11 @@ async def change_peripheral(peripheral, burst_time):
     """
     if isinstance(peripheral, BurstPeripheral):
         peripheral.set_burst_time(burst_time)
-        peripheral.set_active()
+        await peripheral.set_active()
     else:
         # not a burst peripheral
         if burst_time != 0:
-            peripheral.set_active()
+            await peripheral.set_active()
         else:
             peripheral.set_inactive()
 
