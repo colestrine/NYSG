@@ -23,6 +23,10 @@ import RPi.GPIO as GPIO
 # -------- OTHER PACKAGES ----------
 import datetime
 
+# -------- ASYNC IMPORTS ---------
+import asyncio
+
+
 # ------- CUSTOM PACKAGES --------
 from Controller import log
 from Controller import pin_constants
@@ -94,7 +98,7 @@ class Peripheral:
         """
         if Peripheral.num_peripherals == 0:
             GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.channel, GPIO.OUT) #, initial=initial_state)
+        GPIO.setup(self.channel, GPIO.OUT)  # , initial=initial_state)
 
     def change_active(self, activity):
         """
@@ -107,7 +111,7 @@ class Peripheral:
         """
         self.active = activity
 
-    def set_active(self):
+    async def set_active(self):
         """
         set_active(self) sets self to be active, thus turning on the peripheral at High Voltage
         e.g. Activates peripeheral by outputing GPIO.HIGH, or 3.3 Volts voltage drop
@@ -249,7 +253,7 @@ class BurstPeripheral(Peripheral):
         super().__init__(channel)
         self.burst_time = burst_time
 
-    def set_active(self):
+    async def set_active(self):
         """
         set_active(self) sets self to be active, thus turning on the peripheral at High Voltage, until burst time ends
         e.g. Activates peripeheral by outputing GPIO.HIGH, or 3.3 Volts voltage drop
@@ -269,7 +273,8 @@ class BurstPeripheral(Peripheral):
             # do not reset if burst_time is NONE
             return
         # wait burst time
-        time.sleep(self.burst_time)
+        await asyncio.sleep(self.burst_time)
+        # time.sleep(self.burst_time)
         # change activity and voltage to match invariant
         self.set_inactive()
 
@@ -416,41 +421,72 @@ class Pwm_Peripheral(BurstPeripheral):
 # ---------- SUMMARY FUNCTIONS ------------
 
 
-def react_all(ml_results, peripheral_dict):
+async def change_peripheral(peripheral, activate):
+    if activate:
+        await peripheral.set_active()
+    else:
+        peripheral.set_inactive()
+
+
+async def react_all(ml_results, peripheral_dict):
     """
     react_all(peripheral_dict) changes all the peripherals in the
     [peripheral_dict] based on [ml_results]
     Returns: NONE
     """
+    valve = None
+    heat = None
+    light = None
+    fan = None
+    valve_res = None
+    heat_res = None
+    light_res = None
+    fan_res = None
     for p in peripheral_dict:
         if p == "water":
             valve = peripheral_dict[p]
             valve_res = ml_results["water"]
-            if valve_res:
-                valve.set_active()
-            else:
-                valve.set_inactive()
         elif p == "heat":
             heat = peripheral_dict[p]
             heat_res = ml_results["heat"]
-            if heat_res:
-                heat.set_active()
-            else:
-                heat.set_inactive()
         elif p == "light":
             light = peripheral_dict[p]
             light_res = ml_results["light"]
-            if light_res:
-                light.set_active()
-            else:
-                light.set_inactive()
         elif p == "fan":
             fan = peripheral_dict[p]
             fan_res = ml_results["fan"]
-            if fan_res:
-                fan.set_active()
-            else:
-                fan.set_inactive()
+
+    await asyncio.gather(change_peripheral(valve, valve_res), change_peripheral(heat, heat_res), change_peripheral(light, light_res), change_peripheral(fan, fan_res))
+
+    # for p in peripheral_dict:
+    #     if p == "water":
+    #         valve = peripheral_dict[p]
+    #         valve_res = ml_results["water"]
+    #         if valve_res:
+    #             valve.set_active()
+    #         else:
+    #             valve.set_inactive()
+    #     elif p == "heat":
+    #         heat = peripheral_dict[p]
+    #         heat_res = ml_results["heat"]
+    #         if heat_res:
+    #             heat.set_active()
+    #         else:
+    #             heat.set_inactive()
+    #     elif p == "light":
+    #         light = peripheral_dict[p]
+    #         light_res = ml_results["light"]
+    #         if light_res:
+    #             light.set_active()
+    #         else:
+    #             light.set_inactive()
+    #     elif p == "fan":
+    #         fan = peripheral_dict[p]
+    #         fan_res = ml_results["fan"]
+    #         if fan_res:
+    #             fan.set_active()
+    #         else:
+    #             fan.set_inactive()
 
 
 # ------------ MANUAL CONTROL -------------------------
