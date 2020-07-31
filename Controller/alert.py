@@ -7,6 +7,13 @@ import datetime
 import time
 
 
+# --------- EMAIL IMPORTs ---------------
+import json
+import email
+import smtplib
+import ssl
+
+
 # ---------- TESTING IMPORTS ----------------------
 import random  # for testing
 import sys
@@ -15,6 +22,18 @@ import sys
 # --------- CUSTOM IMPORTS ---------------
 from Controller import pin_constants
 from Controller.log import init_log, log, MAX_SIZE
+
+
+# ---------- EMAIL CONSTANTS -----------
+CONFIG_PATH = "Controller/configuration.json"
+fp = open(CONFIG_PATH, "r")
+CONFIG = json.load(fp)
+fp.close()
+PASSWORD = CONFIG["email_password"]
+EMAIL_ADDR = CONFIG["email_address"]
+RECEIVER_EMAIL_ADDRESSES = CONFIG["receiver_email_address"]
+SSL_PORT = 465  # for SSl
+DEBUG_PORT = 1025
 
 
 # --------- CONSTANTS FOR ALERTS ---------
@@ -54,6 +73,36 @@ def log_alert(alert_message_dict, alert_path=ALERT_LOG_PATH):
     log(alert_path, alert_message_dict, MAX_SIZE)
 
 
+# --------- EMAIL ALERT SYSTEM------------
+
+def generate_message(log_dict):
+    time_key = None
+    for key in log_dict:
+        time_key = key
+        break
+
+    log_data = log_dict[time_key]
+
+    subject = "Subject: NYSG Update @ " + str(time_key) + "\n\n"
+    body = " ".join([str(key) + " : " + str(log_data[key])
+                     for key in log_data])
+    message = subject + body
+    return message
+
+
+def send_email(email_address, email_password, receiver_emails, log_dict, ssl_port):
+    # Create a secure SSL context
+    context = ssl.create_default_context()
+
+    # Generate message
+    message = generate_message(log_dict)
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", ssl_port, context=context) as server:
+        server.login(email_address, email_password)
+        for receiver_email in receiver_emails:
+            server.sendmail(email_address, receiver_email, message)
+
+
 # ---------- MAIN -----------------------
 
 
@@ -91,8 +140,26 @@ def check_alert_works(n_iter, log_path):
         alert(random.randint(0, WATER_LEVEL * 2), log_path)
 
 
-# ----------- MAIN (FOR DEBUGGING) -----------------
+# ---------- TEST EMAIL --------------
 
+
+def test_email():
+    test_log_dict = {}
+    now = datetime.datetime.now()
+    dt_string = now.strftime("%d-%m-%Y %H:%M:%-S")
+    test_log_dict[dt_string] = {"sunlight": 1.2141250000000001,
+                                "temperature": 3.6958802897135405,
+                                "humidity": 3.9864832560221353,
+                                "soil_moisture": 2.1924116593388705,
+                                "water_action": 0,
+                                "fan_action": 1,
+                                "heat_action": 0,
+                                "light_action": 0}
+    send_email(EMAIL_ADDR, PASSWORD,
+               RECEIVER_EMAIL_ADDRESSES, test_log_dict, DEBUG_PORT)
+
+
+# ----------- MAIN (FOR DEBUGGING) -----------------
 if __name__ == "__main__":
     if RUN_TEST:
         # for debugging whether alert logs properly

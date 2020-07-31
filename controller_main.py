@@ -265,7 +265,6 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_
         manual_results = {"now": converted_results}
         peripheral_actions = await one_cycle_peripherals(init_dict, manual_results)
 
-    alert(100, ALERT_LOG)
     log(ml_action_log, peripheral_actions, max_log_size)
 
     log_dict = {}
@@ -281,6 +280,8 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_
         log_dict[saved_key][key + str("_action")] = peripheral_actions[key]
 
     log(LOG_PATH, log_dict, max_log_size)
+
+    alert(100, ALERT_LOG)
 
     # move as an async sleep call into onecycle peripherals as a gather
     # time.sleep(interval)
