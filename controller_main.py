@@ -70,7 +70,7 @@ BUCKETS_ASSOC = convert_bucket_to_assoc(buckets_dict)
 
 # -------- RUN ENVIRONMENT VARIABLES ---------
 ONE_CYCLE = False
-
+APPEND = True
 
 # -------- ML WRAPPERS --------
 
@@ -188,11 +188,12 @@ def init(dump_init_path=INIT_DICT_PICKLE_PATH):
     ret_dict["light"] = light
 
     # set up logging dictionaries
-    init_log(SENSOR_LOG)
-    init_log(ML_ACTION_LOG)
-    init_log(ALERT_LOG)
+    if not APPEND:
+        init_log(SENSOR_LOG)
+        init_log(ML_ACTION_LOG)
+        init_log(ALERT_LOG)
 
-    init_log(LOG_PATH)
+        init_log(LOG_PATH)
 
     # set up manual control and dump into memory
     manual_control_dict = {"mode": "manual"}  # TODO: change to ML later
