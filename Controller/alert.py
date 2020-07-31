@@ -84,8 +84,8 @@ def generate_message(log_dict):
     log_data = log_dict[time_key]
 
     subject = "Subject: NYSG Update @ " + str(time_key) + "\n\n"
-    body = " ".join([str(key) + " : " + str(log_data[key])
-                     for key in log_data])
+    body = "\n".join([str(key) + " : " + str(log_data[key])
+                      for key in log_data])
     message = subject + body
     return message
 
@@ -156,7 +156,7 @@ def test_email():
                                 "heat_action": 0,
                                 "light_action": 0}
     send_email(EMAIL_ADDR, PASSWORD,
-               RECEIVER_EMAIL_ADDRESSES, test_log_dict, DEBUG_PORT)
+               RECEIVER_EMAIL_ADDRESSES, test_log_dict, SSL_PORT)
 
 
 # ----------- MAIN (FOR DEBUGGING) -----------------
