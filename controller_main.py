@@ -184,9 +184,9 @@ def init():
 
     # --- Set Up Peripherals -----
     # sets up mode internally as well
-    valve = SolenoidValve(pin_constants.VALVE)
-    heat = HeatPad(pin_constants.HEAT)
-    fan = Fan(pin_constants.VENT)
+    valve = SolenoidValve(pin_constants.VALVE, 20)
+    heat = HeatPad(pin_constants.HEAT, 50)
+    fan = Fan(pin_constants.VENT, 20)
     light = PlantLight(pin_constants.LED)
 
     ret_dict["water"] = valve

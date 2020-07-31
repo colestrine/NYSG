@@ -191,21 +191,6 @@ class Peripheral:
         return "Peripheral is : " + str(self.active) + ".\n"
 
 
-class Fan(Peripheral):
-    """
-    Fan(Peripheral) is a Fan object
-
-    SUPERCLASS: PEripheral
-    NO BURST
-    """
-
-    def __init__(self, channel):
-        """
-        Createsa Fan peripheral object
-        """
-        super().__init__(channel)
-
-
 class PlantLight(Peripheral):
     """
     PlantLight(Peripheral) is a Plant Light sensor object
@@ -344,6 +329,20 @@ class HeatPad(BurstPeripheral):
     def __init__(self, channel, burst_time=pin_constants.BURST):
         """
         Creates a HeatPad  object with channel chnnale
+        """
+        super().__init__(channel, burst_time)
+
+
+class Fan(BurstPeripheral):
+    """
+    Fan(BurstPeripheral) is a Fan object
+
+    SUPERCLASS: BurstPeripheral
+    """
+
+    def __init__(self, channel, burst_time=pin_constants.BURST):
+        """
+        Createsa Fan peripheral object
         """
         super().__init__(channel, burst_time)
 
