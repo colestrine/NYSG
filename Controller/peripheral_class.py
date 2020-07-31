@@ -424,11 +424,29 @@ class Pwm_Peripheral(BurstPeripheral):
 # ---------- SUMMARY FUNCTIONS ------------
 
 
-async def change_peripheral(peripheral, burst_time):
+def translate_action_to_burst_time(action):
+    """
+    translate_action_to_burst_time() translates a 0 to 4 action to a burstime
+    """
+    if action == 0:
+        return pin_constants.NO_ACTION
+    elif action == 1:
+        return pin_constants.BIG_DECREASE
+    elif action == 2:
+        return pin_constants.SMALL_DECREASE
+    elif action == 3:
+        return pin_constants.SMALL_INCREASE
+    elif action == 4:
+        return pin_constants.BIG_INCREASE
+
+
+async def change_peripheral(peripheral, action):
     """
     change_peripheral(peripheral, burst_time) changes peripheral to burst time
     and activates and deactivates as necessary
     """
+    burst_time = translate_action_to_burst_time(action)
+
     if isinstance(peripheral, BurstPeripheral):
         peripheral.set_burst_time(burst_time)
         await peripheral.set_active()

@@ -350,14 +350,20 @@ async def main(n_cycles=None):
 
 
 if __name__ == "__main__":
-    asyncio.run(main(N_CYCLES))
+    try:
+        asyncio.run(main(N_CYCLES))
+    except (KeyboardInterrupt, SystemExit):
+        print("Interrupt detected")
+        sys.exit(0)
+    except:
+        print("Other exception detected")
+        sys.exit(0)
 
+        # ------- DEBUGGING -------------------
 
-# ------- DEBUGGING -------------------
+        # in the future, would like to have asynchrnous program report back
+        # what is being read from the sensor and what the peripherals are being responded
+        # to
 
-# in the future, would like to have asynchrnous program report back
-# what is being read from the sensor and what the peripherals are being responded
-# to
-
-# TODO: ASYNC
-# TODO: ALERT EMAIL DATAS TO USER
+        # TODO: ASYNC
+        # TODO: ALERT EMAIL DATAS TO USER

@@ -13,15 +13,15 @@ def translate_action(action):
     translate_action(action) translates the manual action to the burst time
     """
     if action == "none":
-        return pin_constants.NO_ACTION
+        return 0
     elif action == "big_decrease":
-        return pin_constants.BIG_DECREASE
+        return 1
     elif action == "small_decrease":
-        return pin_constants.SMALL_DECREASE
+        return 2
     elif action == "small_increase":
-        return pin_constants.SMALL_INCREASE
+        return 3
     elif action == "big_increase":
-        return pin_constants.BIG_INCREASE
+        return 4
 
 
 def manual_action_to_activity(action_dict):
