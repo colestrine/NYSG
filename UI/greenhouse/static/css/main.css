@@ -123,6 +123,7 @@ form p label {
 	width: 100px;
 	margin-left: 0px;
 	position: relative;
+    opacity: 0;
 	transition: 1s;
 }
 
