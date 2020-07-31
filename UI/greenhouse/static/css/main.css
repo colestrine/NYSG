@@ -381,3 +381,11 @@ form p label {
 .close-save-profile-modal-button:focus {
 	outline: none;
 }
+
+.refresh-header {
+    float: right;
+    color: slategray;
+    display: none;
+    opacity: 0;
+    transition-duration: 1.5s;
+}
