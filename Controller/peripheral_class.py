@@ -191,20 +191,6 @@ class Peripheral:
         return "Peripheral is : " + str(self.active) + ".\n"
 
 
-class PlantLight(Peripheral):
-    """
-    PlantLight(Peripheral) is a Plant Light sensor object
-
-    NOT A BURSTPERIPHERAL
-    """
-
-    def __init__(self, channel):
-        """
-        Creates a plant light object with channel chnnale
-        """
-        super().__init__(channel)
-
-
 class Heater(Peripheral):
     """
     Heater represents a Heater object
@@ -419,6 +405,20 @@ class Pwm_Peripheral(BurstPeripheral):
         and is the active state of self, and the duty cyucles and frequency
         """
         return super().__str__() + " duty cycles : " + str(self.dc) + " frequency in HZ: " + str(self.freq) + ".\n"
+
+
+class PlantLight(Pwm_Peripheral):
+    """
+    PlantLight(Peripheral) is a Plant Light sensor object
+
+    A PWM BURST Peripheral
+    """
+
+    def __init__(self, channel, burst_time=None, freq=pin_constants.FREQ, dc=pin_constants.DC):
+        """
+        Creates a plant light object with channel chnnale
+        """
+        super().__init__(channel, burst_time, freq, dc)
 
 
 # ---------- SUMMARY FUNCTIONS ------------

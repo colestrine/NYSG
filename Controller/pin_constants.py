@@ -54,6 +54,9 @@ SMALL_DECREASE = 30
 SMALL_INCREASE = 45
 BIG_INCREASE = 60
 
+DC = 50
+FREQ = 50
+
 
 # ------- lOG LOCATIONS -------------
 
