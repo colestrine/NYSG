@@ -352,6 +352,8 @@ async def main(n_cycles=None):
 
 
 if __name__ == "__main__":
+    print('controller starting...')
+
     try:
         asyncio.run(main(N_CYCLES))
     except (KeyboardInterrupt, SystemExit):

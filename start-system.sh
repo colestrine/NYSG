@@ -1,20 +1,13 @@
 #! /bin/bash
 
 # Start UI
-echo "Starting UI...";
-$HOME/NYSG/UI/greenhouse/start-ui.sh & pid=$!
-PID_LIST+=" $pid";
+echo "Starting UI And Controller...";
+python3 controller_main.py & $HOME/NYSG/UI/greenhouse/start-ui.sh;
+PID=$!;
+echo "CURRENT PID: $PID";
 
-# Start Controller
-echo "Starting UI...";
-$"python3 controller_main.py" & pid=$!
-PID_LIST+=" $pid";
+trap "kill $PID" SIGINT;
 
-trap "kill $PID_LIST" SIGINT
+wait $pid;
 
-echo "Parallel processes have started";
-
-wait $PID_LIST
-
-echo
 echo "All processes have completed";
