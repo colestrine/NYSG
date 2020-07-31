@@ -249,6 +249,10 @@ class BurstPeripheral(Peripheral):
         MAINTINA INVARIANT: also sets active status self.active as True, to keep activity = True and voltage as GPIO.HIGH
         RETURNS: NONE
         """
+        # if burst_time is 0, set inactive right away and return
+        if self.burst_time == 0:
+            self.set_inactive()
+            return
         # change activity to match invariant
         self.change_active(True)
         # change voltage to match invariant
@@ -420,11 +424,20 @@ class Pwm_Peripheral(BurstPeripheral):
 # ---------- SUMMARY FUNCTIONS ------------
 
 
-async def change_peripheral(peripheral, activate):
-    if activate:
-        await peripheral.set_active()
+async def change_peripheral(peripheral, burst_time):
+    """
+    change_peripheral(peripheral, burst_time) changes peripheral to burst time
+    and activates and deactivates as necessary
+    """
+    if isinstance(peripheral, BurstPeripheral):
+        peripheral.set_burst_time(burst_time)
+        peripheral.set_active()
     else:
-        peripheral.set_inactive()
+        # not a burst peripheral
+        if burst_time != 0:
+            peripheral.set_active()
+        else:
+            peripheral.set_inactive()
 
 
 async def react_all(ml_results, peripheral_dict):

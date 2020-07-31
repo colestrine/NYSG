@@ -48,6 +48,13 @@ HEAT = 17
 
 BURST = 10  # in seconds
 
+NO_ACTION = 0
+BIG_DECREASE = 15
+SMALL_DECREASE = 30
+SMALL_INCREASE = 45
+BIG_INCREASE = 60
+
+
 # ------- lOG LOCATIONS -------------
 
 
