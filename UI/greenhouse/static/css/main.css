@@ -123,7 +123,8 @@ form p label {
 	width: 100px;
 	margin-left: 0px;
 	position: relative;
-	transition: 2s;
+    opacity: 0;
+	transition: 1s;
 }
 
 .current-level-bar {
@@ -135,8 +136,9 @@ form p label {
 	z-index: 2;
 	position: relative;
     opacity: 0;
-    transition: .5s;
-    transition-delay: .5s;
+    transition-property: opacity;
+    transition-delay: 1s;
+    transition-duration: 1s;
 }
 
 .status-bar-container label {

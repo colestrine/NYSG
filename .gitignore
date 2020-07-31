@@ -1,5 +1,7 @@
+configuration.json
 __pycache__/
 *.vscode/
 *.DS_Store
 Jupyter\ Notebooks/venv/
 Jupyter\ Notebooks/.ipynb_checkpoints/
+Interface\ Files/
