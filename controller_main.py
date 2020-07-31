@@ -1,3 +1,4 @@
+
 """
 [main] is the driver script for the rapsberry Pi. It runs continously, reading
 in the sensor data, running the ML algorithm, and then responds with an output.
@@ -76,7 +77,7 @@ BUCKETS_ASSOC = convert_bucket_to_assoc(buckets_dict)
 
 # -------- RUN ENVIRONMENT VARIABLES ---------
 ONE_CYCLE = False
-N_CYCLES = 10
+N_CYCLES = None
 APPEND = True
 
 # -------- ML WRAPPERS --------
