@@ -77,8 +77,7 @@ BUCKETS_ASSOC = convert_bucket_to_assoc(buckets_dict)
 # -------- RUN ENVIRONMENT VARIABLES ---------
 ONE_CYCLE = False
 N_CYCLES = 10
-APPEND_LOG = True
-
+APPEND = True
 
 # -------- ML WRAPPERS --------
 
@@ -196,7 +195,7 @@ def init():
     ret_dict["light"] = light
 
     # set up logging dictionaries
-    if not APPEND_LOG:
+    if not APPEND:
         init_log(SENSOR_LOG)
         init_log(ML_ACTION_LOG)
         init_log(ALERT_LOG)

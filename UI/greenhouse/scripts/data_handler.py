@@ -164,7 +164,7 @@ class data_handler:
 
 		difference = high - low
 
-		nominal = low + (difference * value_fraction)
+		nominal = round(low + (difference * value_fraction), 2)
 
 		return nominal
 
@@ -172,7 +172,6 @@ class data_handler:
 		actions_file = open(expanduser("~")+'/NYSG/Interface Files/manual_actions.json', 'w')
 
 		actions = {'water': water, 'fan': fan, 'heat': heat, 'light': light}
-		#os.chmod(expanduser("~")+'/NYSG/Interface Files/manual_actions.json',0o777)
 		actions_file.write(json.dumps(actions))
 		actions_file.close()
 
