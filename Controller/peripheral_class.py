@@ -354,6 +354,22 @@ class Pwm_Peripheral(BurstPeripheral):
         self.pwm = GPIO.PWM(self.channel, freq)
         self.pwm.start(self.dc)
 
+    async def set_active(self):
+        """
+        set_active(self) sets the peripheral active, and modulates duty cycles up and down
+        """
+        # SAVE DC
+        original_dc = self.dc
+        # INCREASE DC
+        for _ in range(30):
+            if self.dc < 100:
+                self.dc += 1
+                self.set_duty_cycle(self.dc)
+            await asyncio.sleep(1)
+        # RESTORE
+        self.dc = original_dc
+        self.set_duty_cycle(self.dc)
+
     def set_freq(self, freq):
         """
         set_freq(self, hz) sets the freuqnecy of the pwm peripheral in freq [hz]
