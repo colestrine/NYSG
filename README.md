@@ -10,18 +10,47 @@ This project is created for the NYSG Internship program at Lockheed Martin, and 
 ## System Requirements
 - Python 3.6+
 
-## Required Modules
-- Django (pip install Django)
-- Scipy (pip install scipy)
+## Dependencies
+- Django (pip3 install Django)
+- Scipy (pip3 install scipy)
+- screen (sudo apt install screen)
 
-## Starting The UI
-### Accessing The UI From Your Laptop
-- Open a command window and navigate to /UI/greenhouse
-- Type the command: python manage.py runserver
-- In a web browser, navigate to the web address provided
+## Usage
+This software is intended to be run on a Raspberry Pi running the Raspberry Pi OS (with recommended software). Development is intended to be conducted via SSH. All instructions hereafter assume that these conditions are met.
 
-### Accessing The UI From Your Phone
-- Open a command window and navigate to /UI/greenhouse
-- Type the command: ipconfig (Windows)/ifconfig (Mac/Linux), and note your LAN IP address
-- Type the command: python manage.py runserver [your ip adddress]:8080
-- In a web browser, navigate to the web address provided
+### Install Dependencies
+- Run 'pip3 install Django'
+- Run 'pip3 install scipy'
+- Run 'sudo apt install screen'
+
+### If Not Already Done, Clone This Repository
+- Run 'cd ~'
+- Run 'git clone https://github.com/colestrine/NYSG.git'
+
+### Navigate To Local Instantiation
+- Run 'cd NYSG'
+
+### Start New Screen Session
+- Run 'screen -S greenhouse'
+- This will create a new screen session called 'greenhouse'
+- Before ending our SSH session, we can detach from this screen session, and it will continue to run as a separate shell process on the Raspberry Pi
+
+### Start System
+- Run './start-system.sh'
+- Wait for system to start up
+- Once the success message appears, you can navigate to the specified IP address in your browser to access the UI
+- If your device is the only Raspberry Pi on your LAN network, you may also access the UI by navigating to 'raspberrypi:8080'
+
+### Detach Screen Session
+- Type 'ctrl+a', then 'd' to detach your shell session from the current SSH shell session
+- This will return you to the original SSH session, and move the screen session to the background
+- When we close our SSH connection, the screen process will continue to run on the Raspberry Pi
+
+### Close SSH Connection
+- You are now free to close your SSH connection
+
+### Resuming Screen Session
+- Open a new SSH connection
+- Run 'screen -r greenhouse'
+- You will now be returned to your screen session
+- Be sure to detach your screen session (see above) before closing your SSH connection to keep the system running

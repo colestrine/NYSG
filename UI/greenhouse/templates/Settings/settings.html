@@ -6,7 +6,15 @@ Settings
 
 {% block content %}
 
+<h1 class="form-header">Mode</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" name="mode_form" id="mode-form">
+		{% csrf_token %}
+		{{ mode_form.as_p}}
+	</form>
+</div>
 
+{% if mode == "machine_learning" %}
 <h1 class="form-header">Plant Profile</h1>
 <div class="form-wrapper">
 	<form action="/settings/" method="post" id="plant_profile_form" name="plant_profile_form">
@@ -26,6 +34,18 @@ Settings
 		<button class="save-profile-button" onclick="showSaveProfileModal()">Save As New Profile</button>
 	{% endif %}
 </div>
+
+{% endif %}
+
+{% if mode == "manual" %}
+<h1 class="form-header">Manual Actions</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="action_form" name="action_form">
+	    {% csrf_token %}
+	    {{ action_form.as_p }}
+	</form>
+</div>
+{% endif %}
 
 <div id="save-profile-modal" class="save-profile-modal">
 	<div class="form-wrapper save-profile-form-wrapper">
@@ -58,19 +78,19 @@ Settings
 					Humidity
 				</div>
 				<div>
-					{{last_humidity}}%
+					{{last_humidity}} %
 				</div>
 				<div class="sidebar-value-label">
 					Soil Moisture
 				</div>
 				<div>
-					{{last_soil_moisture}}%
+					{{last_soil_moisture}} %
 				</div>
 				<div class="sidebar-value-label">
 					Light
 				</div>
 				<div>
-					{{last_sunlight}} lm
+					{{last_sunlight}} lm/m<sup>2</sup>
 				</div>
 			</div>
 		</div>
@@ -81,7 +101,7 @@ Settings
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Temperature
+						Temperature (<span>&#176;</span>F)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
 				</div>
@@ -99,7 +119,7 @@ Settings
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Humidity
+						Humidity (%)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
 				</div>
@@ -117,7 +137,7 @@ Settings
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Soil Moisture
+						Soil Moisture (%)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
 				</div>
@@ -135,7 +155,7 @@ Settings
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Sunlight
+						Sunlight (lm/m<sup>2</sup>)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
 				</div>

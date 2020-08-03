@@ -1,0 +1,12 @@
+Adafruit-Blinka==5.0.1
+adafruit-circuitpython-busdevice==4.3.1
+adafruit-circuitpython-register==1.9.0
+adafruit-circuitpython-seesaw==1.6.1
+adafruit-circuitpython-sgp30==2.2.1
+adafruit-circuitpython-si7021==3.2.1
+adafruit-circuitpython-veml7700==1.1.2
+Adafruit-PlatformDetect==2.14.0
+Adafruit-PureIO==1.1.5
+gpiozero==1.5.1
+smbus2==0.3.0
+virtualenv==16.7.9
