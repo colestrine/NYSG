@@ -98,7 +98,7 @@ class EffectSet():
 		P[str(action_set)]['humidity'][humidity_bucket]['hits'] += 1
 
 		P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect'] = new_effects[2]
-		P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect'] += 1
+		P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits'] += 1
 
 		with open('Files/transition.json', 'w') as transition_file:
 			json.dump(P, transition_file)

@@ -41,26 +41,28 @@ class Environment:
         last_difference = State.distance(last_state, goal_state)
         next_difference = State.distance(next_state, goal_state)
 
-        # Encourage movement towards goal state
-        if last_difference > next_difference:
-            reward = 500
-        elif last_difference < next_difference:
-            reward = -1000
-        else:
-            reward = 0
+        # # Encourage movement towards goal state
+        # if last_difference > next_difference:
+        #     reward = 100 * next_difference
+        # elif last_difference < next_difference:
+        #     reward = -1000
+        # else:
+        #     reward = 0
 
-        # Encourage maintaining close proximity to goal state
-        if next_difference < .25:
-            reward += 7000
-        elif next_difference < .5:
-            reward += 5000
-        elif next_difference < 1:
-            reward += 2000
-        else:
-            reward += -1000
+        # # Encourage maintaining close proximity to goal state
+        # if next_difference < .25:
+        #     reward += 7000
+        # elif next_difference < .5:
+        #     reward += 5000
+        # elif next_difference < 1:
+        #     reward += 2000
+        # else:
+        #     reward += -1000
 
-        # Scaled portion of reward based on distance from goal state
-        reward -= next_difference * 50
+        # # Scaled portion of reward based on distance from goal state
+        # reward -= next_difference * 50
+
+        reward = -100*last_difference
 
         return reward
 
@@ -229,13 +231,17 @@ class Environment:
         prior_humidity_effect = prior_effects[str(action_set)]['humidity'][humidity_bucket]['effect']
         prior_soil_moisture_effect = prior_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
 
-        if (prior_temperature_effect):
+        prior_temperature_hits = prior_effects[str(action_set)]['temperature'][temperature_bucket]['hits']
+        prior_humidity_hits = prior_effects[str(action_set)]['humidity'][humidity_bucket]['hits']
+        prior_soil_moisture_hits = prior_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits']
+
+        if (prior_temperature_hits):
             next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_temperature_effect)
 
-        if (prior_humidity_effect):
+        if (prior_humidity_hits):
             next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_humidity_effect)
 
-        if (prior_soil_moisture_effect):
+        if (prior_soil_moisture_hits):
             next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_soil_moisture_effect)
 
         return next_state
@@ -494,6 +500,7 @@ class Test:
             current_state.humidity += random.randint(-1, 2)/50
             current_state.soil_moisture += random.randint(-1, 2)/50
 
+            # Constrain values between 1.0 and 5.9
             if current_state.temperature < 1.0 :
                 current_state.temperature = 1.0
             elif current_state.temperature > 5.9:
@@ -508,6 +515,10 @@ class Test:
                 current_state.soil_moisture = 1.0
             elif current_state.soil_moisture > 5.9:
                 current_state.soil_moisture = 5.9
+
+            # Temperature Floor
+            if current_state.temperature < 2.8:
+                current_state.temperature = 2.8
 
             action_set = ActionSet(ventilation_action, water_action, heat_action)
 
@@ -599,7 +610,7 @@ class Test:
         pyplot.show()
 
 if __name__ == '__main__':
-    current_state = State(2.8, 1.9, 2.8)
+    current_state = State(3.4, 1.9, 2.8)
     goal_state = State(2.5, 2.8, 4.5)
 
     print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
