@@ -188,7 +188,7 @@ def init():
     valve = SolenoidValve(pin_constants.VALVE, 20)
     heat = HeatPad(pin_constants.HEAT, 50)
     fan = Fan(pin_constants.VENT, 20)
-    light = PlantLight(pin_constants.LED)
+    light = PlantLight(pin_constants.LED, 20)
 
     ret_dict["water"] = valve
     ret_dict["heat"] = heat
