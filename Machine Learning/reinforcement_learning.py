@@ -1,16 +1,15 @@
 from numpy import random, mean, zeros
 from matplotlib import pyplot
 import importlib
-transition = importlib.import_module('Machine Learning.transition')
-# from transition import ActionSet, EffectSet
+from transition import ActionSet, EffectSet
 
 class State:
     # State class holds data for temperature, humidity, and soil moisture
 
     def __init__(self, temperature, humidity, soil_moisture):
-        self.temperature = temperature
-        self.humidity = humidity
-        self.soil_moisture = soil_moisture
+        self.temperature = float(temperature)
+        self.humidity = float(humidity)
+        self.soil_moisture = float(soil_moisture)
 
     # When passed as a string, return data for each dimension
     def __str__(self):
@@ -205,17 +204,39 @@ class Environment:
             factor = round(random.randint(-2, 3) / 100, 1)
             next_state.temperature += factor
 
-        action_set = transition.ActionSet(light_action, ventilation_action, water_action, heat_action)
+        action_set = ActionSet(ventilation_action, water_action, heat_action)
 
-        prior_effects = prior_effects[str(action_set)]
+        if current_state.temperature < 1.0 :
+            current_state.temperature = 1.0
+        elif current_state.temperature > 5.9:
+            current_state.temperature = 5.9
 
-        prior_effects = transition.EffectSet.decode(prior_effects)
+        if current_state.humidity < 1.0 :
+            current_state.humidity = 1.0
+        elif current_state.humidity > 5.9:
+            current_state.humidity = 5.9
 
-        # If actions have already been taken, update based on prior knowledge
-        if (prior_effects['temperature'] or prior_effects['humidity'] or prior_effects['soil_moisture']):
-            next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_effects['temperature'])
-            next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_effects['humidity'])
-            next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_effects['soil_moisture'])
+        if current_state.soil_moisture < 1.0 :
+            current_state.soil_moisture = 1.0
+        elif current_state.soil_moisture > 5.9:
+            current_state.soil_moisture = 5.9
+
+        temperature_bucket = str(current_state.temperature).split('.')[0]
+        humidity_bucket = str(current_state.humidity).split('.')[0]
+        soil_moisture_bucket = str(current_state.soil_moisture).split('.')[0]
+
+        prior_temperature_effect = prior_effects[str(action_set)]['temperature'][temperature_bucket]['effect']
+        prior_humidity_effect = prior_effects[str(action_set)]['humidity'][humidity_bucket]['effect']
+        prior_soil_moisture_effect = prior_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
+
+        if (prior_temperature_effect):
+            next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_temperature_effect)
+
+        if (prior_humidity_effect):
+            next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_humidity_effect)
+
+        if (prior_soil_moisture_effect):
+            next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_soil_moisture_effect)
 
         return next_state
 
@@ -230,7 +251,7 @@ class Agent:
         action_choices = ['big_increase', 'big_decrease', 'small_increase', 'small_decrease', 'none']
 
         # Get prior effects
-        prior_effects = transition.EffectSet.getEffects()
+        prior_effects = EffectSet.getEffects()
 
         # Iterate through all possible action vectors
         avg_episode_rewards = []
@@ -459,7 +480,7 @@ class Test:
             expected_reward = results['expected_reward']
 
             print('------------')
-            print(f'state: {current_state}')
+            print(f'starting state: {current_state}')
             print(f'water: {water_action} ventilation: {ventilation_action} heat: {heat_action}\nexpected reward: {expected_reward}')
 
             # Save last state
@@ -473,16 +494,32 @@ class Test:
             current_state.humidity += random.randint(-1, 2)/50
             current_state.soil_moisture += random.randint(-1, 2)/50
 
-            action_set = transition.ActionSet(ventilation_action, water_action, heat_action)
+            if current_state.temperature < 1.0 :
+                current_state.temperature = 1.0
+            elif current_state.temperature > 5.9:
+                current_state.temperature = 5.9
+
+            if current_state.humidity < 1.0 :
+                current_state.humidity = 1.0
+            elif current_state.humidity > 5.9:
+                current_state.humidity = 5.9
+
+            if current_state.soil_moisture < 1.0 :
+                current_state.soil_moisture = 1.0
+            elif current_state.soil_moisture > 5.9:
+                current_state.soil_moisture = 5.9
+
+            action_set = ActionSet(ventilation_action, water_action, heat_action)
 
             temperature_diff = current_state.temperature - last_state.temperature
             humidity_diff = current_state.humidity - last_state.humidity
             soil_moisture_diff = current_state.soil_moisture - last_state.soil_moisture
 
-            effect_set = transition.EffectSet(temperature_diff, humidity_diff, soil_moisture_diff)
+            effect_set = EffectSet(temperature_diff, humidity_diff, soil_moisture_diff)
 
-            put = transition.EffectSet.putEffect(action_set, effect_set)
+            put = EffectSet.putEffect(action_set, effect_set, last_state)
 
+            print(f'ending state: {current_state}')
             print(f'effects: {put}')
 
             # Record current state, goal state, expected reward, actual reward
@@ -562,13 +599,13 @@ class Test:
         pyplot.show()
 
 if __name__ == '__main__':
-    current_state = State(3.2, 4.0, 3.1) #random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10)
+    current_state = State(2.8, 1.9, 2.8)
     goal_state = State(2.5, 2.8, 4.5)
 
     print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
     print('------------')
 
-    results = Test.run(current_state, goal_state, 50)
+    results = Test.run(current_state, goal_state, 60)
 
     current_states = results['current_states']
     goal_states = results['goal_states']

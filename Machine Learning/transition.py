@@ -39,14 +39,16 @@ class EffectSet():
 
 		return {'temperature': float(temperature), 'humidity': float(humidity), 'soil_moisture': float(soil_moisture)}
 
-	def getEffect(action_set):
+	def getEffect(action_set, temperature_bucket, humidity_bucket, soil_moisture_bucket):
 		with open('Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
 			P = json.loads(contents)
 
-			effects = P[str(action_set)]
+			temperature_effect = P[str(action_set)]['temperature'][temperature_bucket]['effect']
+			humidity_effect = P[str(action_set)]['humidity'][humidity_bucket]['effect']
+			soil_moisture_effect = P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
 
-		return EffectSet.decode(effects)
+		return {'temperature': float(temperature_effect), 'humidity': float(humidity_effect), 'soil_moisture': float(soil_moisture_effect)}
 
 	def getEffects():
 		with open('Files/transition.json', 'r') as transition_file:
@@ -73,17 +75,30 @@ class EffectSet():
 
 		return [.5*float(self.temperature) + .5*temperature, .5*float(self.humidity) + .5*humidity, .5*float(self.soil_moisture) + .5*soil_moisture]
 
-	def putEffect(action_set, effect_set):
+	def putEffect(action_set, effect_set, current_state):
 		with open('Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
 			P = json.loads(contents)
 
-		old_effects = EffectSet.getEffect(action_set)
+		temperature_bucket = str(current_state.temperature).split('.')[0]
+		humidity_bucket = str(current_state.humidity).split('.')[0]
+		soil_moisture_bucket = str(current_state.soil_moisture).split('.')[0]
+
+		old_effects = EffectSet.getEffect(action_set, temperature_bucket, humidity_bucket, soil_moisture_bucket)
 		old_effects = EffectSet(old_effects['temperature'], old_effects['humidity'], old_effects['soil_moisture'])
 
 		new_effects = EffectSet.avg(effect_set, old_effects)
 
-		P[str(action_set)] = str(new_effects[0]) + ',' + str(new_effects[1]) + ',' + str(new_effects[2])
+		P[str(action_set)]['hits'] += 1
+
+		P[str(action_set)]['temperature'][temperature_bucket]['effect'] = new_effects[0]
+		P[str(action_set)]['temperature'][temperature_bucket]['hits'] += 1
+
+		P[str(action_set)]['humidity'][humidity_bucket]['effect'] = new_effects[1]
+		P[str(action_set)]['humidity'][humidity_bucket]['hits'] += 1
+
+		P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect'] = new_effects[2]
+		P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect'] += 1
 
 		with open('Files/transition.json', 'w') as transition_file:
 			json.dump(P, transition_file)
@@ -93,13 +108,32 @@ class EffectSet():
 def initializeToZeros(action_choices):
 	P = {}
 
+	temperature_buckets = ['1', '2', '3', '4', '5']
+	humidity_buckets = ['1', '2', '3', '4', '5']
+	soil_moisture_buckets = ['1', '2', '3', '4', '5']
+
 	for water_action in action_choices:
 		for ventilation_action in action_choices:
 			for heat_action in action_choices:
 				action_set = ActionSet(water_action, ventilation_action, heat_action)
 				effect_set = EffectSet(0, 0, 0)
 
-				P[str(action_set)] = str(effect_set)
+				P[str(action_set)] = {'hits': 0, 'temperature': {}, 'humidity': {}, 'soil_moisture': {}}
+
+				for bucket in temperature_buckets:
+					P[str(action_set)]['temperature'][bucket] = {}
+					P[str(action_set)]['temperature'][bucket]['effect'] = 0
+					P[str(action_set)]['temperature'][bucket]['hits'] = 0
+
+				for bucket in humidity_buckets:
+					P[str(action_set)]['humidity'][bucket] = {}
+					P[str(action_set)]['humidity'][bucket]['effect'] = 0
+					P[str(action_set)]['humidity'][bucket]['hits'] = 0
+
+				for bucket in soil_moisture_buckets:
+					P[str(action_set)]['soil_moisture'][bucket] = {}
+					P[str(action_set)]['soil_moisture'][bucket]['effect'] = 0
+					P[str(action_set)]['soil_moisture'][bucket]['hits'] = 0
 
 	with open('Files/transition.json', 'w') as transition_file:
 		json.dump(P, transition_file)
