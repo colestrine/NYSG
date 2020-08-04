@@ -31,6 +31,7 @@ from Controller import pin_constants
 # --------- MACHINE LEARNING IMPORTS ----------
 machine_learning = importlib.import_module(
     'Machine Learning.reinforcement_learning')
+transition = importlib.import_module('Machine Learning.transition')
 
 
 # --------- INTERFACE FILES IMPORTS ------------
@@ -97,7 +98,7 @@ def convert_to_bucket(arg, _type, bucket_assoc):
             _range = int(high) - int(low)
             fractional_part = remainder/float(_range)
             converted_val = lower_dict[(low, high)] + fractional_part
-            return float(converted_val)
+            return round(float(converted_val), 1)
 
 
 def process_to_ml(ml_args):
@@ -211,6 +212,9 @@ def init():
     # set up manual control and dump into memory
     manual_control_dict = {"mode": "manual"}  # TODO: change to ML later
     pin_constants.dump_data(manual_control_dict, MODE_PATH)
+    
+    # set up a random state
+    ret_dict["state"] = machine_learning.State(1.0, 1.0, 1.0)
 
     # set up init pickle path
  #   pin_constants.dump_pickled_data(ret_dict, dump_init_path)
@@ -276,7 +280,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
         converted_results = utilities.manual_action_to_activity(manual_results)
         manual_results = {"now": converted_results}
         peripheral_actions = await one_cycle_peripherals(init_dict, manual_results, pwm_settings)
-
+    
     log(ml_action_log, peripheral_actions, max_log_size)
 
     log_dict = {}
@@ -295,7 +299,48 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
 
     alert_status = init_dict["alert_status"]
     alert(100, log_dict, alert_status, email_settings, ALERT_LOG)
+    
+    # handle the logging for ML learning
+    for key in (ml_args):
+        processed_args = process_to_ml(ml_args[key])
+        for sensor in processed_args:
+            if sensor == "temperature":
+                temp = processed_args[sensor]
+            elif sensor == "humidity":
+                humid = processed_args[sensor]
+            elif sensor == "soil_moisture":
+                moist = processed_args[sensor]
 
+    current_state = machine_learning.State(temp, humid, moist)
+    
+    
+    def convert_action(action):
+        if action == 0:
+            return "none"
+        elif action == 1:
+            return "big_decrease"
+        elif action == 2:
+            return "small_decrease"
+        elif action == 3:
+            return "small_increase"
+        elif action == 4:
+            return "big_increase"
+        
+    for key in peripheral_actions:
+        if key == "water":
+            water = convert_action(peripheral_actions[key])
+        elif key == "heat":
+            heat = convert_action(peripheral_actions[key])
+        elif key =="fan":
+            fan = convert_action(peripheral_actions[key])
+    action_set = transition.ActionSet(water, fan, heat)
+    
+    
+    put = transition.EffectSet.putEffect(action_set, init_dict["state"], current_state)
+    
+    init_dict["state"] = current_state
+
+ 
     await sleep_task
 
 
@@ -369,8 +414,8 @@ if __name__ == "__main__":
     except (KeyboardInterrupt, SystemExit):
         print("Interrupt detected")
         sys.exit(0)
-    except:
-        print("Other exception detected")
+    except Exception as e:
+        print(f"Other exception detected: {e}")
         sys.exit(0)
 
         # ------- DEBUGGING -------------------

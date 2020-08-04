@@ -39,8 +39,9 @@ class EffectSet():
 
 		return {'temperature': float(temperature), 'humidity': float(humidity), 'soil_moisture': float(soil_moisture)}
 
+
 	def getEffect(action_set, temperature_bucket, humidity_bucket, soil_moisture_bucket):
-		with open('Files/transition.json', 'r') as transition_file:
+		with open('Machine Learning/Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
 			P = json.loads(contents)
 
@@ -62,7 +63,7 @@ class EffectSet():
 		return {'temperature': float(temperature_effect), 'humidity': float(humidity_effect), 'soil_moisture': float(soil_moisture_effect)}
 
 	def getEffects():
-		with open('Files/transition.json', 'r') as transition_file:
+		with open('Machine Learning/Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
 			P = json.loads(contents)
 
@@ -87,7 +88,7 @@ class EffectSet():
 		return [.5*float(self.temperature) + .5*temperature, .5*float(self.humidity) + .5*humidity, .5*float(self.soil_moisture) + .5*soil_moisture]
 
 	def putEffect(action_set, last_state, current_state):
-		with open('Files/transition.json', 'r') as transition_file:
+		with open('Machine Learning/Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
 			P = json.loads(contents)
 
@@ -117,7 +118,7 @@ class EffectSet():
 		P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect'] = new_effects[2]
 		P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits'] += 1
 
-		with open('Files/transition.json', 'w') as transition_file:
+		with open('Machine Learning/Files/transition.json', 'w') as transition_file:
 			json.dump(P, transition_file)
 
 		return P[str(action_set)]
@@ -152,7 +153,7 @@ def initializeToZeros(action_choices):
 					P[str(action_set)]['soil_moisture'][bucket]['effect'] = 0
 					P[str(action_set)]['soil_moisture'][bucket]['hits'] = 0
 
-	with open('Files/transition.json', 'w') as transition_file:
+	with open('Machine Learning/Files/transition.json', 'w') as transition_file:
 		json.dump(P, transition_file)
 
 	return P
