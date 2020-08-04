@@ -55,8 +55,8 @@ SMALL_DECREASE = 30
 SMALL_INCREASE = 45
 BIG_INCREASE = 60
 
-DC = 50
-FREQ = 50
+DC = 50 # percent %
+FREQ = 128 # hZ
 
 # ------- LIGHT CONSTANTS ---------
 LIGHT_ON_TIME = 9 * 60 * 60  # time on in seconds
