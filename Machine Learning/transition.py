@@ -50,6 +50,17 @@ class EffectSet():
 
 		return {'temperature': float(temperature_effect), 'humidity': float(humidity_effect), 'soil_moisture': float(soil_moisture_effect)}
 
+	def getBootstrapEffect(action_set, temperature_bucket, humidity_bucket, soil_moisture_bucket):
+		with open('Files/transition_bootstrap.json', 'r') as transition_file:
+			contents = transition_file.read()
+			P = json.loads(contents)
+
+			temperature_effect = P[str(action_set)]['temperature'][temperature_bucket]['effect']
+			humidity_effect = P[str(action_set)]['humidity'][humidity_bucket]['effect']
+			soil_moisture_effect = P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
+
+		return {'temperature': float(temperature_effect), 'humidity': float(humidity_effect), 'soil_moisture': float(soil_moisture_effect)}
+
 	def getEffects():
 		with open('Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()

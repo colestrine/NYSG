@@ -227,6 +227,7 @@ class Environment:
             factor = round(random.randint(-2, 3) / 100, 1)
             next_state.temperature += factor
 
+        ########################################################################
         action_set = ActionSet(ventilation_action, water_action, heat_action)
 
         if current_state.temperature < 1.0 :
@@ -248,6 +249,16 @@ class Environment:
         humidity_bucket = str(current_state.humidity).split('.')[0]
         soil_moisture_bucket = str(current_state.soil_moisture).split('.')[0]
 
+        # bootstrap_effects = EffectSet.getBootstrapEffects()
+
+        # bootstrap_temperature_effect = bootstrap_effects[str(action_set)]['temperature'][temperature_bucket]['effect']
+        # bootstrap_humidity_effect = bootstrap_effects[str(action_set)]['humidity'][humidity_bucket]['effect']
+        # bootstrap_soil_moisture_effect = bootstrap_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
+
+        # boostrap_temperature_hits = bootstrap_effects[str(action_set)]['temperature'][temperature_bucket]['hits']
+        # bootstrap_humidity_hits = bootstrap_effects[str(action_set)]['humidity'][humidity_bucket]['hits']
+        # bootstrap_soil_moisture_hits = bootstrap_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits']
+
         prior_temperature_effect = prior_effects[str(action_set)]['temperature'][temperature_bucket]['effect']
         prior_humidity_effect = prior_effects[str(action_set)]['humidity'][humidity_bucket]['effect']
         prior_soil_moisture_effect = prior_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
@@ -257,13 +268,13 @@ class Environment:
         prior_soil_moisture_hits = prior_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits']
 
         if (prior_temperature_hits):
-            next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_temperature_effect)
+            next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_temperature_effect) #REPLACE WITH BOOTSTRAP DATA
 
         if (prior_humidity_hits):
-            next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_humidity_effect)
+            next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_humidity_effect) #REPLACE WITH BOOTSTRAP DATA
 
         if (prior_soil_moisture_hits):
-            next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_soil_moisture_effect)
+            next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_soil_moisture_effect) #REPLACE WITH BOOTSTRAP DATA
 
         return next_state
 
@@ -536,9 +547,9 @@ class Test:
             elif current_state.soil_moisture > 5.9:
                 current_state.soil_moisture = 5.9
 
-            # Temperature Floor
-            if current_state.temperature < 2.8:
-                current_state.temperature = 2.8
+            # # Temperature Floor
+            # if current_state.temperature < 2.8:
+            #     current_state.temperature = 2.8
 
             # Create action set
             action_set = ActionSet(water_action, ventilation_action, heat_action)
@@ -626,24 +637,25 @@ class Test:
         pyplot.show()
 
 if __name__ == '__main__':
-    current_state = State(3.4, 1.9, 2.8)
-    goal_state = State.getGoal()#State(2.5, 2.8, 4.5)
+    for i in range(0, 10):
+        current_state = State(random.randint(150, 550)/100, random.randint(150, 550)/100, random.randint(150, 550)/100)
+        goal_state = State(random.randint(150, 550)/100, random.randint(150, 550)/100, random.randint(150, 550)/100) #State.getGoal() #State(2.5, 2.8, 4.5)
 
-    print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
-    print('------------')
+        print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
+        print('------------')
 
-    results = Test.run(current_state, goal_state, 60)
+        results = Test.run(current_state, goal_state, 60)
 
-    current_states = results['current_states']
-    goal_states = results['goal_states']
-    expected_rewards = results['expected_rewards']
+        current_states = results['current_states']
+        goal_states = results['goal_states']
+        expected_rewards = results['expected_rewards']
 
-    distances = []
-    print('------------')
-    for (index, state) in enumerate(current_states):
-        print(f'timestep: {index} state: {state}')
-        distance = State.distance(state, goal_state)
-        distances.append(distance)
-        print(f'distance from goal state: {distance}')
+        distances = []
+        print('------------')
+        for (index, state) in enumerate(current_states):
+            print(f'timestep: {index} state: {state}')
+            distance = State.distance(state, goal_state)
+            distances.append(distance)
+            print(f'distance from goal state: {distance}')
 
-    Test.plot(current_states, goal_states, expected_rewards, distances)
+        Test.plot(current_states, goal_states, expected_rewards, distances)
