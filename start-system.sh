@@ -1,6 +1,5 @@
 #! /bin/bash
 
-# Start UI
 echo "Starting UI And Controller...";
 python3 controller_main.py & $HOME/NYSG/UI/greenhouse/start-ui.sh;
 PID=$!;

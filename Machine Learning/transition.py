@@ -75,14 +75,20 @@ class EffectSet():
 
 		return [.5*float(self.temperature) + .5*temperature, .5*float(self.humidity) + .5*humidity, .5*float(self.soil_moisture) + .5*soil_moisture]
 
-	def putEffect(action_set, effect_set, current_state):
+	def putEffect(action_set, last_state, current_state):
 		with open('Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
 			P = json.loads(contents)
 
-		temperature_bucket = str(current_state.temperature).split('.')[0]
-		humidity_bucket = str(current_state.humidity).split('.')[0]
-		soil_moisture_bucket = str(current_state.soil_moisture).split('.')[0]
+		temperature_diff = current_state.temperature - last_state.temperature
+		humidity_diff = current_state.humidity - last_state.humidity
+		soil_moisture_diff = current_state.soil_moisture - last_state.soil_moisture
+
+		effect_set = EffectSet(temperature_diff, humidity_diff, soil_moisture_diff)
+
+		temperature_bucket = str(last_state.temperature).split('.')[0]
+		humidity_bucket = str(last_state.humidity).split('.')[0]
+		soil_moisture_bucket = str(last_state.soil_moisture).split('.')[0]
 
 		old_effects = EffectSet.getEffect(action_set, temperature_bucket, humidity_bucket, soil_moisture_bucket)
 		old_effects = EffectSet(old_effects['temperature'], old_effects['humidity'], old_effects['soil_moisture'])

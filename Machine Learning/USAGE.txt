@@ -1,0 +1,27 @@
+from reinforcement_learning import Agent, State
+from transition import ActionSet, EffectSet
+
+init:
+	# Initialize to a random (or fixed) state
+	last_state = State(1.0, 1.0, 1.0)
+
+loop:
+	# Get current state and goal state
+	# temp_reading, humidity_reading, soil_moisture_reading are the current update's sensor readings, are of type float, and are in the range [1.0, 5.9]
+	current_state = State(temp_reading, humidity_reading, soil_moisture_reading)
+	goal_state = State.getGoal()
+
+	# Run the ML algorithm and get a decision
+	decision = Agent.run(current_state, goal_state)
+
+	# Extract the actions from the decision
+	water_action = decision['water_action']
+	ventilation_action = decision['ventilation_action']
+	heat_action = decision['heat_action']
+
+	# Create action set from actions, store in transition file for later use
+	action_set = ActionSet(water_action, ventilation_action, heat_action)
+	put = EffectSet.putEffect(action_set, last_state, current_state)
+
+	# Update state for next iteration
+	last_state = current_state
