@@ -2,6 +2,8 @@ from numpy import random, mean, zeros
 from matplotlib import pyplot
 import importlib
 from transition import ActionSet, EffectSet
+from os.path import expanduser
+import json
 
 class State:
     # State class holds data for temperature, humidity, and soil moisture
@@ -32,12 +34,22 @@ class State:
     def distance(self, other):
         return abs(self.temperature - other.temperature) + abs(self.humidity - other.humidity) + abs(self.soil_moisture - other.soil_moisture)
 
+    def getGoal():
+        healthy_levels_file = open(expanduser("~")+'/NYSG/Interface Files/healthy_levels.json', 'r')
+        levels_json = healthy_levels_file.read()
+        healthy_levels_file.close()
+        levels = json.loads(levels_json)
+
+        goal = State(float(levels['temperature']), float(levels['humidity']), float(levels['soil_moisture']))
+
+        return goal
+
 class Environment:
     # Return reward for agent's actions - incorporate considerations for:
     # movement towards goal state, close proximity to goal state, overall
     # distance from goal state
 
-    def reward(last_state, next_state, goal_state):
+    def reward(last_state, next_state, goal_state, water_action, ventilation_action, heat_action):
         last_difference = State.distance(last_state, goal_state)
         next_difference = State.distance(next_state, goal_state)
 
@@ -62,7 +74,16 @@ class Environment:
         # # Scaled portion of reward based on distance from goal state
         # reward -= next_difference * 50
 
-        reward = -100*last_difference
+        # Set intitial reward, scaled based on distance from goal state
+        reward = -100 * last_difference
+
+        # Encourage efficiency
+        if water_action == "none":
+            reward += 10
+        if ventilation_action == "none":
+            reward += 10
+        if heat_action == "none":
+            reward += 10
 
         return reward
 
@@ -272,7 +293,7 @@ class Agent:
 
                         # Look one step ahead, observe next state and reward
                         next_state = Environment.transition(initial_state, initial_water_action, initial_ventilation_action, initial_heat_action, prior_effects)
-                        next_reward = Environment.reward(initial_state, next_state, goal_state)
+                        next_reward = Environment.reward(initial_state, next_state, goal_state, initial_water_action, initial_ventilation_action, initial_heat_action)
 
                         # Take transition
                         current_state = next_state
@@ -289,7 +310,7 @@ class Agent:
 
                             # Look one step ahead, observe new state and reward
                             next_state = Environment.transition(current_state, water_action, ventilation_action, heat_action, prior_effects)
-                            next_reward = Environment.reward(current_state, next_state, goal_state)
+                            next_reward = Environment.reward(current_state, next_state, goal_state, water_action, ventilation_action, heat_action)
 
                             # Take transition
                             current_state = next_state
@@ -312,7 +333,6 @@ class Agent:
         choice = avg_episode_rewards[0]
 
         return {'water_action':  choice['water_action'], 'ventilation_action':  choice['ventilation_action'], 'heat_action': choice['heat_action'], 'expected_reward': choice['avg_episode_reward']}
-
 
 class Test:
     def transition(current_state, water_action, ventilation_action, heat_action):
@@ -520,15 +540,11 @@ class Test:
             if current_state.temperature < 2.8:
                 current_state.temperature = 2.8
 
-            action_set = ActionSet(ventilation_action, water_action, heat_action)
+            # Create action set
+            action_set = ActionSet(water_action, ventilation_action, heat_action)
 
-            temperature_diff = current_state.temperature - last_state.temperature
-            humidity_diff = current_state.humidity - last_state.humidity
-            soil_moisture_diff = current_state.soil_moisture - last_state.soil_moisture
-
-            effect_set = EffectSet(temperature_diff, humidity_diff, soil_moisture_diff)
-
-            put = EffectSet.putEffect(action_set, effect_set, last_state)
+            # Record transition in transition.json
+            put = EffectSet.putEffect(action_set, last_state, current_state)
 
             print(f'ending state: {current_state}')
             print(f'effects: {put}')
@@ -611,7 +627,7 @@ class Test:
 
 if __name__ == '__main__':
     current_state = State(3.4, 1.9, 2.8)
-    goal_state = State(2.5, 2.8, 4.5)
+    goal_state = State.getGoal()#State(2.5, 2.8, 4.5)
 
     print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
     print('------------')
