@@ -63,6 +63,14 @@ Settings
 	</form>
 </div>
 
+<h1 class="form-header">Frequency Settings</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="freq_form" name="freq_form">
+		{% csrf_token %}
+		{{ freq_form.as_p }}
+	</form>
+</div>
+
 <div id="save-profile-modal" class="save-profile-modal">
 	<div class="form-wrapper save-profile-form-wrapper">
 		<button class="close-save-profile-modal-button" id="close-save-profile-modal-button"
@@ -78,7 +86,9 @@ Settings
 <div id="sidebar" class="sidebar">
 	<div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">
 		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()">
-			<</button>
+			<!-- Could cause issues with vs code here -->
+			< </button>
+				<!-- Could cause issues with vs code here -->
 	</div>
 	<div class="sidebar-content-wrapper" id="sidebar-content-wrapper">
 		<div class="sidebar-section-wrapper">

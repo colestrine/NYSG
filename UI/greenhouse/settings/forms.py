@@ -56,3 +56,8 @@ class PwmForm(forms.Form):
 	fan_dc = forms.ChoiceField(required=True, choices=dc_levels, label="Fan Duty Cycles", widget=forms.Select(attrs={'onchange': 'pwm_form.submit();'}))
 	light_dc = forms.ChoiceField(required=True, choices=dc_levels, label="Light Duty Cycles", widget=forms.Select(attrs={'onchange': 'pwm_form.submit();'}))
 	
+class FreqForm(forms.Form):
+	freq_levels = [(str(i), str(i) + " Hz") for i in range(0, 501, 25)]
+	fan_freq = forms.ChoiceField(required=True, choices=freq_levels, label="Fan Frequency", widget=forms.Select(attrs={'onchange': 'freq_form.submit();'}))
+	light_freq = forms.ChoiceField(required=True, choices=freq_levels, label="Light Frequency", widget=forms.Select(attrs={'onchange': 'freq_form.submit();'}))
+	

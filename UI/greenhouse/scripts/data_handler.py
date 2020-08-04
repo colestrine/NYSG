@@ -235,3 +235,26 @@ class data_handler:
 		dc_file.close()
 		loaded_data = json.loads(dc_settings_json)
 		return {"fan_dc":loaded_data["fan"]["duty_cycles"], "light_dc":loaded_data["light"]["duty_cycles"]}
+
+	def put_freq_settings(fan_freq, light_freq):
+		freq_file = open(expanduser("~")+'/NYSG/Interface Files/freq_settings.json', 'w')
+
+		freq_settings = {
+			"light": {
+				"frequency": light_freq
+			},
+			"fan": {
+				"frequency": fan_freq
+			}
+		}
+
+		freq_file.write(json.dumps(freq_settings))
+
+		freq_file.close()
+		
+	def get_freq_settings():
+		freq_file = open(expanduser("~")+'/NYSG/Interface Files/freq_settings.json', 'r')
+		freq_settings_json = freq_file.read()
+		freq_file.close()
+		loaded_data = json.loads(freq_settings_json)
+		return {"fan_freq":loaded_data["fan"]["frequency"], "light_freq":loaded_data["light"]["frequency"]}
