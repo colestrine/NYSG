@@ -1,5 +1,5 @@
 {
-    "plant_light": {
+    "light": {
         "duty_cycles": 50
     },
     "fan": {
