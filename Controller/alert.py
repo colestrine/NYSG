@@ -81,7 +81,7 @@ def low_detail_generator(log_data):
     low_detail_generator(log_data) only generates a body message with essential 
     information, e.g. extreme measurements
     """
-    body = ""
+    body = "EXTRA DETAILS\n"
     for key in log_data:
         if key == "temperature":
             t = log_data[key]
@@ -116,10 +116,10 @@ def high_detail_generator(log_data):
     measurements and peripeheral actions taken, plus low level essential messages
     if needed
     """
-    body = "STANDARD DETAILS"
+    body = "STANDARD DETAILS\n"
     body = body + "\n".join([str(key) + " : " + str(log_data[key])
                              for key in log_data])
-    body = body + "\nEXTRA DETAILS" + low_detail_generator(log_data)
+    body = body + "\n" + low_detail_generator(log_data)
     return body
 
 
@@ -224,7 +224,7 @@ def alert(water_level, log_dict, alert_status, alert_settings, alert_path=ALERT_
     if rate == "day":
         if delta_time_seconds >= 24 * 60 * 60:
             can_send_email = True
-    elif rate == "hourly":
+    elif rate == "hour":
         if delta_time_seconds >= 1 * 60 * 60:
             can_send_email = True
     elif rate == "minute":
