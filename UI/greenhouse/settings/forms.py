@@ -44,3 +44,15 @@ class ActionForm(forms.Form):
 	fan = forms.ChoiceField(required=True, choices=actions, label="Fan", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
 	heat = forms.ChoiceField(required=True, choices=actions, label="Heat", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
 	light = forms.ChoiceField(required=True, choices=actions, label="Light", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
+
+class AlertForm(forms.Form):
+	detail_levels = [('high', 'high detail'), ('low', 'low detail')]
+	rate_levels = [('day', "daily"), ('hour', 'hourly'), ('minute', "by the minute")]
+	detail = forms.ChoiceField(required=True, choices=detail_levels, label="Detail", widget=forms.Select(attrs={'onchange': 'alert_form.submit();'}))
+	rate = forms.ChoiceField(required=True, choices=rate_levels, label="Rate", widget=forms.Select(attrs={'onchange': 'alert_form.submit();'}))
+	
+class PwmForm(forms.Form):
+	dc_levels = [(str(i), str(i) + "% Duty Cycles") for i in range(0, 101, 10)]
+	fan_dc = forms.ChoiceField(required=True, choices=dc_levels, label="Fan Duty Cycles", widget=forms.Select(attrs={'onchange': 'pwm_form.submit();'}))
+	light_dc = forms.ChoiceField(required=True, choices=dc_levels, label="Light Duty Cycles", widget=forms.Select(attrs={'onchange': 'pwm_form.submit();'}))
+	
