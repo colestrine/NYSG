@@ -188,7 +188,7 @@ def init():
     # sets up mode internally as well
     valve = SolenoidValve(pin_constants.VALVE, 20)
     heat = HeatPad(pin_constants.HEAT, 50)
-    fan = Fan(pin_constants.VENT, 20)
+    fan = Fan(pin_constants.VENT, 1 / 20)  # inverse duty cycles
     light = PlantLight(pin_constants.LED, 20)
 
     ret_dict["water"] = valve
