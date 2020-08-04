@@ -414,9 +414,9 @@ if __name__ == "__main__":
     except (KeyboardInterrupt, SystemExit):
         print("Interrupt detected")
         sys.exit(0)
-    except Exception as e:
-        print(f"Other exception detected: {e}")
-        sys.exit(0)
+    # except Exception as e:
+    #    print(f"Other exception detected: {e}")
+    #    sys.exit(0)
 
         # ------- DEBUGGING -------------------
 
