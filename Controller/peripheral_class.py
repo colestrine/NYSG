@@ -451,8 +451,24 @@ class Fan(Pwm_Peripheral):
     def __init__(self, channel, burst_time=None, freq=pin_constants.FREQ, dc=pin_constants.DC):
         """
         Createsa Fan peripheral object
+        Inverts duty cycles
         """
-        super().__init__(channel, burst_time)
+        super().__init__(channel, burst_time, freq=freq, dc=1 / dc)
+
+    def set_duty_cycle(self, dc):
+        """
+        set_duty_cycle(self, dc) sets the duty cylce of the pwm peripheral in [dc] amount
+        inverts the ducty cycles for the fan
+        """
+        self.dc = 1 / dc
+        self.pwm = self.pwm.ChangeDutyCycle(dc)
+
+    def get_duty_cycle(self):
+        """
+        get_duty_cycle(self) gets the duty cycles of the Fan
+        gets correct duty cycles for the fan by inverting the already inverted value
+        """
+        return 1 / self.dc
 
 
 # ---------- SUMMARY FUNCTIONS ------------
@@ -495,12 +511,13 @@ async def change_peripheral(peripheral, action):
     #         peripheral.set_inactive()
 
 
-async def react_all(ml_results, peripheral_dict):
+async def react_all(ml_results, peripheral_dict, pwm_settings):
     """
     react_all(peripheral_dict) changes all the peripherals in the
     [peripheral_dict] based on [ml_results]
     Returns: NONE
     """
+    # get peripheral actions
     valve = None
     heat = None
     light = None
@@ -523,6 +540,17 @@ async def react_all(ml_results, peripheral_dict):
             fan = peripheral_dict[p]
             fan_res = ml_results["fan"]
 
+    # get and change pwm settings actions
+    for dev in pwm_settings:
+        if dev == "light":
+            light_dc = dev["duty_cycles"]
+        elif dev == "fan":
+            fan_dc = dev["duty_cycles"]
+
+    fan.set_duty_cycle(fan_dc)
+    light.set_duty_cycle(light_dc)
+
+    # change peripherals
     await asyncio.gather(change_peripheral(valve, valve_res),
                          change_peripheral(heat, heat_res),
                          change_peripheral(light, light_res),
