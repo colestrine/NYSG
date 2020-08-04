@@ -1,3 +1,4 @@
+
 """
 peripheral_class copntains classes to manipulate the peripherals in thw greenhouse.
 The main package used in this class will be GPIOZero or another package that allows
@@ -281,6 +282,7 @@ class BurstPeripheral(Peripheral):
         RETURNS: None
         """
         self.burst_time = burst_time
+    
 
     # ----- DEBUGGING TOOLS -----
 
@@ -356,6 +358,11 @@ class Pwm_Peripheral(BurstPeripheral):
     #     # RESTORE
     #     self.dc = original_dc
     #     self.set_duty_cycle(self.dc)
+    def set_inactive(self):
+        """
+        set_inactvie)self) overrides to set pwm to 0 dc
+        """
+        self.set_duty_cycle(0)
 
     def set_freq(self, freq):
         """
@@ -375,7 +382,8 @@ class Pwm_Peripheral(BurstPeripheral):
         set_duty_cycle(self, dc) sets the duty cylce of the pwm peripheral in [dc] amount
         """
         self.dc = dc
-        self.pwm = self.pwm.ChangeDutyCycle(dc)
+        # self.pwm = self.pwm.ChangeDutyCycle(dc)
+        self.pwm.ChangeDutyCycle(dc)
 
     def get_duty_cycle(self):
         """
@@ -435,7 +443,7 @@ class PlantLight(Pwm_Peripheral):
         start_hour, start_min = pin_constants.START_LIGHT
         end_hour, end_min = pin_constants.END_LIGHT
 
-        if hour >= start_hour and hour <= end_hour and minute >= start_min and minute <= end_min:
+        if hour >= start_hour and hour <= end_hour: # and minute >= start_min and minute <= end_min:
             await super().set_active()
         else:
             super().set_inactive()
@@ -453,22 +461,23 @@ class Fan(Pwm_Peripheral):
         Createsa Fan peripheral object
         Inverts duty cycles
         """
-        super().__init__(channel, burst_time, freq=freq, dc=1 / dc)
-
+        super().__init__(channel, burst_time, freq=freq, dc=abs(100 - dc))
+        
     def set_duty_cycle(self, dc):
         """
         set_duty_cycle(self, dc) sets the duty cylce of the pwm peripheral in [dc] amount
         inverts the ducty cycles for the fan
         """
-        self.dc = 1 / dc
-        self.pwm = self.pwm.ChangeDutyCycle(dc)
-
+        self.dc = dc
+        # self.pwm = self.pwm.ChangeDutyCycle(dc)
+        self.pwm.ChangeDutyCycle(abs(100 - dc))
+       
     def get_duty_cycle(self):
         """
         get_duty_cycle(self) gets the duty cycles of the Fan
         gets correct duty cycles for the fan by inverting the already inverted value
         """
-        return 1 / self.dc
+        return self.dc
 
 
 # ---------- SUMMARY FUNCTIONS ------------
@@ -526,6 +535,7 @@ async def react_all(ml_results, peripheral_dict, pwm_settings):
     heat_res = None
     light_res = None
     fan_res = None
+    
     for p in peripheral_dict:
         if p == "water":
             valve = peripheral_dict[p]
@@ -539,14 +549,15 @@ async def react_all(ml_results, peripheral_dict, pwm_settings):
         elif p == "fan":
             fan = peripheral_dict[p]
             fan_res = ml_results["fan"]
-
+   
     # get and change pwm settings actions
     for dev in pwm_settings:
         if dev == "light":
-            light_dc = dev["duty_cycles"]
+            light_dc = int(pwm_settings[dev]["duty_cycles"])
         elif dev == "fan":
-            fan_dc = dev["duty_cycles"]
-
+            fan_dc = int(pwm_settings[dev]["duty_cycles"])
+      
+  
     fan.set_duty_cycle(fan_dc)
     light.set_duty_cycle(light_dc)
 
