@@ -552,7 +552,7 @@ class Test:
             action_set = transition.ActionSet(water_action, ventilation_action, heat_action)
 
             # Record transition in transition.json
-            put = transition.EffectSet.putEffect(action_set, last_state, current_state)
+            put = transition.EffectSet.putEffect(action_set, last_state, current_state, True)
 
             print(f'ending state: {current_state}')
             print(f'effects: {put}')

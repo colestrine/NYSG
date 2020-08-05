@@ -111,14 +111,14 @@ class EffectSet():
 
 		if (data_collection_mode):
 			for bucket in range(1, 6):
-				P[str(action_set)]['temperature'][bucket]['effect'] = new_effects[0]
-				P[str(action_set)]['temperature'][bucket]['hits'] += 1
+				P[str(action_set)]['temperature'][str(bucket)]['effect'] = new_effects[0]
+				P[str(action_set)]['temperature'][str(bucket)]['hits'] += 1
 
-				P[str(action_set)]['humidity'][bucket]['effect'] = new_effects[1]
-				P[str(action_set)]['humidity'][bucket]['hits'] += 1
+				P[str(action_set)]['humidity'][str(bucket)]['effect'] = new_effects[1]
+				P[str(action_set)]['humidity'][str(bucket)]['hits'] += 1
 
-				P[str(action_set)]['soil_moisture'][bucket]['effect'] = new_effects[2]
-				P[str(action_set)]['soil_moisture'][bucket]['hits'] += 1
+				P[str(action_set)]['soil_moisture'][str(bucket)]['effect'] = new_effects[2]
+				P[str(action_set)]['soil_moisture'][str(bucket)]['hits'] += 1
 		else:
 			P[str(action_set)]['temperature'][temperature_bucket]['effect'] = new_effects[0]
 			P[str(action_set)]['temperature'][temperature_bucket]['hits'] += 1
