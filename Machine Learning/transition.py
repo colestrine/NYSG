@@ -1,8 +1,9 @@
 import json
 import numpy
 
-
+# ActionSet contains attributes and methods related to actions
 class ActionSet:
+	# ActionSet contains 3 attributes - water_action, ventilation_action, and heat_action, representing the three dimensions of actions that the system can take
 	def __init__(self, water_action, ventilation_action, heat_action):
 		self.water_action = water_action
 		self.ventilation_action = ventilation_action
@@ -11,6 +12,7 @@ class ActionSet:
 	def __str__(self):
 		return (self.water_action + ',' + self.ventilation_action + ',' + self.heat_action)
 
+	# Used to decode from the string representation of an action set to the dictionary representation
 	def decode(string):
 		action_set = string.split(',')
 		water_action = action_set[0]
@@ -19,7 +21,9 @@ class ActionSet:
 
 		return {'water_action': water_action, 'ventilation_action': ventilation_action, 'heat_action': heat_action}
 
+# EffectSet contains attributes and methods related to effects
 class EffectSet():
+	# EffectSet contains 3 attributes - temperature, humidity, and soil_moisture representing the three dimensions of measurements that the system can take
 	def __init__(self, temperature, humidity, soil_moisture):
 		self.temperature = temperature
 		self.humidity = humidity
@@ -31,6 +35,7 @@ class EffectSet():
 	def __add__(self, other):
 		return [float(self.temperature) + float(other.temperature), float(self.humidity) + float(other.humidity), float(self.soil_moisture) + float(other.soil_moisture)]
 
+	# Used to decode from the string representation of an effect set to the dictionary representation
 	def decode(string):
 		effect_set = string.split(',')
 		temperature = effect_set[0]
@@ -39,7 +44,7 @@ class EffectSet():
 
 		return {'temperature': float(temperature), 'humidity': float(humidity), 'soil_moisture': float(soil_moisture)}
 
-
+	# Returns dictionary of current effects from transition.json based on action set and current value buckets
 	def getEffect(action_set, temperature_bucket, humidity_bucket, soil_moisture_bucket):
 		with open('Machine Learning/Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
@@ -51,17 +56,15 @@ class EffectSet():
 
 		return {'temperature': float(temperature_effect), 'humidity': float(humidity_effect), 'soil_moisture': float(soil_moisture_effect)}
 
-	def getBootstrapEffect(action_set, temperature_bucket, humidity_bucket, soil_moisture_bucket):
-		with open('Files/transition_bootstrap.json', 'r') as transition_file:
+	# Returns dictionary of bootstrap effects from transition_bootstrap.json based on action set and current value buckets
+	def getBootstrapEffects():
+		with open('Machine Learning/Files/transition_bootstrap.json', 'r') as transition_file:
 			contents = transition_file.read()
 			P = json.loads(contents)
 
-			temperature_effect = P[str(action_set)]['temperature'][temperature_bucket]['effect']
-			humidity_effect = P[str(action_set)]['humidity'][humidity_bucket]['effect']
-			soil_moisture_effect = P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
+		return P
 
-		return {'temperature': float(temperature_effect), 'humidity': float(humidity_effect), 'soil_moisture': float(soil_moisture_effect)}
-
+	# Returns entire contents of transition.json as a dictionary
 	def getEffects():
 		with open('Machine Learning/Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
@@ -69,6 +72,7 @@ class EffectSet():
 
 		return P
 
+	# Computes 50/50 average of two effect sets on a dimension-by-dimension basis
 	def avg(self, other):
 		if other.temperature:
 			temperature = float(other.temperature)
@@ -87,6 +91,8 @@ class EffectSet():
 
 		return [.5*float(self.temperature) + .5*temperature, .5*float(self.humidity) + .5*humidity, .5*float(self.soil_moisture) + .5*soil_moisture]
 
+	# Computes new observed effect based on last_state and current_state, and maps effect to action set-observation dimension-value bucket data
+	# Specifying the fourth argument (data_collection_mode) as True will turn on data collection mode - this will write data to each of the 5 value buckets for each action set-observation dimension pairs, speeding up the data collection process 
 	def putEffect(action_set, last_state, current_state, data_collection_mode=False):
 		with open('Machine Learning/Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
@@ -134,6 +140,7 @@ class EffectSet():
 
 		return P[str(action_set)]
 
+# Resets transition.json to blank/all zeros
 def initializeToZeros(action_choices):
 	P = {}
 
