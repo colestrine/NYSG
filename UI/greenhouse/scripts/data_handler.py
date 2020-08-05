@@ -1,4 +1,6 @@
+
 import json
+import os
 from os.path import expanduser
 
 class data_handler:
@@ -116,6 +118,12 @@ class data_handler:
 		log_file.close()
 		log_dict = json.loads(log_json)
 
+		for update in log_dict:
+			log_dict[update]['temperature'] = round(log_dict[update]['temperature'], 2)
+			log_dict[update]['humidity'] = round(log_dict[update]['humidity'], 2)
+			log_dict[update]['soil_moisture'] = round(log_dict[update]['soil_moisture'], 2)
+			log_dict[update]['sunlight'] = round(log_dict[update]['sunlight'], 2)
+
 		return log_dict
 
 	def save_profile(profile_name, temperature, humidity, soil_moisture, sunlight):
@@ -156,7 +164,7 @@ class data_handler:
 
 		difference = high - low
 
-		nominal = low + (difference * value_fraction)
+		nominal = round(low + (difference * value_fraction), 2)
 
 		return nominal
 
@@ -164,23 +172,21 @@ class data_handler:
 		actions_file = open(expanduser("~")+'/NYSG/Interface Files/manual_actions.json', 'w')
 
 		actions = {'water': water, 'fan': fan, 'heat': heat, 'light': light}
-
 		actions_file.write(json.dumps(actions))
-		
 		actions_file.close()
 
 	def get_manual_actions():
 		actions_file = open(expanduser("~")+'/NYSG/Interface Files/manual_actions.json', 'r')
 		actions_json = actions_file.read()
 		actions_file.close()
-	
+
 		return json.loads(actions_json)
 
 	def get_mode():
 		mode_file = open(expanduser("~")+'/NYSG/Interface Files/mode.json', 'r')
 		mode_json = mode_file.read()
 		mode_file.close()
-	
+
 		return json.loads(mode_json)["mode"]
 
 	def put_mode(mode):
@@ -189,5 +195,43 @@ class data_handler:
 		mode = {"mode": mode}
 
 		mode_file.write(json.dumps(mode))
-		
+
 		mode_file.close()
+
+	def put_alert_settings(rate, detail):
+		alert_settings_file = open(expanduser("~")+'/NYSG/Interface Files/email_settings.json', 'w')
+
+		alert_settings = {"rate":rate, "detail": detail}
+
+		alert_settings_file.write(json.dumps(alert_settings))
+
+		alert_settings_file.close()
+
+	def get_alert_settings():
+		alert_settings_file = open(expanduser("~")+'/NYSG/Interface Files/email_settings.json', 'r')
+		alert_settings_json = alert_settings_file.read()
+		alert_settings_file.close()
+		return json.loads(alert_settings_json)
+
+	def put_dc_settings(fan_dc, light_dc):
+		dc_file = open(expanduser("~")+'/NYSG/Interface Files/pwm_settings.json', 'w')
+
+		dc_settings = {
+			"light": {
+				"duty_cycles": light_dc
+			},
+			"fan": {
+				"duty_cycles": fan_dc
+			}
+		}
+
+		dc_file.write(json.dumps(dc_settings))
+
+		dc_file.close()
+		
+	def get_dc_settings():
+		dc_file = open(expanduser("~")+'/NYSG/Interface Files/pwm_settings.json', 'r')
+		dc_settings_json = dc_file.read()
+		dc_file.close()
+		loaded_data = json.loads(dc_settings_json)
+		return {"fan_dc":loaded_data["fan"]["duty_cycles"], "light_dc":loaded_data["light"]["duty_cycles"]}

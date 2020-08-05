@@ -83,28 +83,28 @@
 	"sunlight": {
 		"1": {
 			"label": "Very Shady",
-			"low": "36",
-			"high": "48"
+			"low": "0",
+			"high": "24000"
 		},
 		"2": {
 			"label": "Shady",
-			"low": "49",
-			"high": "61"
+			"low": "24001",
+			"high": "48000"
 		},
 		"3": {
 			"label": "Medium",
-			"low": "62",
-			"high": "74"
+			"low": "48001",
+			"high": "72000"
 		},
 		"4": {
 			"label": "Sunny",
-			"low": "75",
-			"high": "87"
+			"low": "72001",
+			"high": "96000"
 		},
 		"5": {
 			"label": "Very Sunny",
-			"low": "88",
-			"high": "100"
+			"low": "96001",
+			"high": "12000"
 		}
 	}
 }

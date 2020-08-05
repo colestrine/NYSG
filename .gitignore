@@ -1,5 +1,10 @@
+configuration.json
 __pycache__/
 *.vscode/
 *.DS_Store
 Jupyter\ Notebooks/venv/
 Jupyter\ Notebooks/.ipynb_checkpoints/
+Interface\ Files/log.json
+Interface\ Files/ml_action_log.json
+Interface\ Files/alert_log.json
+Interface\ Files/sensor_log.json

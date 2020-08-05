@@ -30,19 +30,19 @@ Analysis
 					Humidity
 				</div>
 				<div>
-					{{last_humidity}}%
+					{{last_humidity}} %
 				</div>
 				<div class="sidebar-value-label">
 					Soil Moisture
 				</div>
 				<div>
-					{{last_soil_moisture}}%
+					{{last_soil_moisture}} %
 				</div>
 				<div class="sidebar-value-label">
 					Light
 				</div>
 				<div>
-					{{last_sunlight}} lm
+					{{last_sunlight}} lm/m<sup>2</sup>
 				</div>
 			</div>
 		</div>
@@ -53,7 +53,7 @@ Analysis
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Temperature
+						Temperature (<span>&#176;</span>F)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
 				</div>
@@ -71,7 +71,7 @@ Analysis
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Humidity
+						Humidity (%)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
 				</div>
@@ -89,7 +89,7 @@ Analysis
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Soil Moisture
+						Soil Moisture (%)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
 				</div>
@@ -107,7 +107,7 @@ Analysis
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Sunlight
+						Sunlight (lm/m<sup>2</sup>)
 					</div>
 					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
 				</div>
@@ -169,7 +169,7 @@ Analysis
 					data: "{{water_actions}}".split(',').slice(-10),
 					backgroundColor: 'cornflowerblue',
 					borderColor: 'cornflowerblue',
-					label: 'Water',
+					label: 'Water Actions',
 					fill: 'false'
 				},
 				{
@@ -177,7 +177,7 @@ Analysis
 					data: "{{fan_actions}}".split(',').slice(-10),
 					backgroundColor: 'darkblue',
 					borderColor: 'darkblue',
-					label: 'Fan',
+					label: 'Fan Actions',
 					fill: 'false'
 				},
 				{
@@ -185,7 +185,7 @@ Analysis
 					data: "{{heat_actions}}".split(',').slice(-10),
 					backgroundColor: 'lightblue',
 					borderColor: 'lightblue',
-					label: 'Heat',
+					label: 'Heat Actions',
 					fill: 'false'
 				},
 				{
@@ -193,7 +193,7 @@ Analysis
 					data: "{{light_actions}}".split(',').slice(-10),
 					backgroundColor: 'steelblue',
 					borderColor: 'steelblue',
-					label: 'Light',
+					label: 'Light Actions',
 					fill: 'false'
 				},
 				

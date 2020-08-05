@@ -1,4 +1,3 @@
-
 """
 [main] is the driver script for the rapsberry Pi. It runs continously, reading
 in the sensor data, running the ML algorithm, and then responds with an output.
@@ -24,14 +23,13 @@ import timeit
 from Controller.sensor_class import LightSensor, TempHumiditySensor, MoistureSensor, create_channel, collect_all_sensors
 from Controller.peripheral_class import SolenoidValve, HeatPad, Fan, PlantLight, react_all
 from Controller.log import init_log, log, MAX_SIZE
-from Controller.alert import alert, ALERT_LOG_PATH, AlertStatus
+from Controller.alert import alert, ALERT_LOG_PATH
 from Controller import pin_constants
 
 
 # --------- MACHINE LEARNING IMPORTS ----------
 machine_learning = importlib.import_module(
     'Machine Learning.reinforcement_learning')
-transition = importlib.import_module('Machine Learning.transition')
 
 
 # --------- INTERFACE FILES IMPORTS ------------
@@ -51,9 +49,7 @@ ML_ACTION_LOG = "Interface Files/ml_action_log.json"
 ALERT_LOG = "Interface Files/alert_log.json"
 MODE_PATH = "Interface Files/mode.json"
 MANUAL_ACTIONS_PATH = "Interface Files/manual_actions.json"
-PWM_SETTINGS_PATH = "Interface Files/pwm_settings.json"
 LOG_PATH = "Interface Files/log.json"
-EMAIL_SETTINGS_PATH = "Interface Files/email_settings.json"
 INIT_DICT_PICKLE_PATH = "init_dict_pickle_path.pickle"
 
 
@@ -80,8 +76,9 @@ BUCKETS_ASSOC = convert_bucket_to_assoc(buckets_dict)
 
 # -------- RUN ENVIRONMENT VARIABLES ---------
 ONE_CYCLE = False
-N_CYCLES = None
-APPEND = True
+N_CYCLES = 10
+APPEND_LOG = True
+
 
 # -------- ML WRAPPERS --------
 
@@ -98,7 +95,7 @@ def convert_to_bucket(arg, _type, bucket_assoc):
             _range = int(high) - int(low)
             fractional_part = remainder/float(_range)
             converted_val = lower_dict[(low, high)] + fractional_part
-            return round(float(converted_val), 1)
+            return float(converted_val)
 
 
 def process_to_ml(ml_args):
@@ -188,10 +185,10 @@ def init():
 
     # --- Set Up Peripherals -----
     # sets up mode internally as well
-    valve = SolenoidValve(pin_constants.VALVE, 20)
-    heat = HeatPad(pin_constants.HEAT, 50)
-    fan = Fan(pin_constants.VENT, 20)  # inverts duty cycles inside class
-    light = PlantLight(pin_constants.LED, 20)
+    valve = SolenoidValve(pin_constants.VALVE)
+    heat = HeatPad(pin_constants.HEAT)
+    fan = Fan(pin_constants.VENT)
+    light = PlantLight(pin_constants.LED)
 
     ret_dict["water"] = valve
     ret_dict["heat"] = heat
@@ -199,22 +196,16 @@ def init():
     ret_dict["light"] = light
 
     # set up logging dictionaries
-    if not APPEND:
+    if not APPEND_LOG:
         init_log(SENSOR_LOG)
         init_log(ML_ACTION_LOG)
         init_log(ALERT_LOG)
 
         init_log(LOG_PATH)
 
-    # set up alert time keeping
-    ret_dict["alert_status"] = AlertStatus()
-
     # set up manual control and dump into memory
     manual_control_dict = {"mode": "manual"}  # TODO: change to ML later
     pin_constants.dump_data(manual_control_dict, MODE_PATH)
-    
-    # set up a random state
-    ret_dict["state"] = machine_learning.State(1.0, 1.0, 1.0)
 
     # set up init pickle path
  #   pin_constants.dump_pickled_data(ret_dict, dump_init_path)
@@ -235,7 +226,7 @@ def one_cycle_sensors(sensors_dict):
     return results_dict
 
 
-async def one_cycle_peripherals(init_dict, ml_results, pwm_settings):
+async def one_cycle_peripherals(init_dict, ml_results):
     """
     one_cycle_peripherals(ml_results) executes actions on peripherals from ml_results
     with the peripherals from init_dict
@@ -246,12 +237,12 @@ async def one_cycle_peripherals(init_dict, ml_results, pwm_settings):
         peripheral_actions = ml_results[time]
         peripheral_dict = {key: init_dict[key] for key in init_dict if key in [
             "heat", "water", "fan", "light"]}
-        await react_all(peripheral_actions, peripheral_dict, pwm_settings)
+        await react_all(peripheral_actions, peripheral_dict)
         # return immeidately as ml_results is a dict with only 1 key
         return peripheral_actions
 
 
-async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_settings_path, pwm_settings_path, sensor_log_path, ml_action_log, alert_log, max_log_size, interval):
+async def one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_path, ml_action_log, alert_log, max_log_size, interval):
     """
     Executes one cycle of reading, logging, using decision and rwsponding
     Returns NONE
@@ -264,23 +255,18 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     manual_control = pin_constants.load_data(manual_control_path)
     manual_results = pin_constants.load_data(manual_actions_path)
 
-    # read from email settings
-    email_settings = pin_constants.load_data(email_settings_path)
-
-    # read from pwm settings
-    pwm_settings = pin_constants.load_data(pwm_settings_path)
-
     ml_args = one_cycle_sensors(init_dict)
     log(sensor_log_path, ml_args, max_log_size)
 
     if manual_control["mode"] == "machine_learning":
         ml_results = ml_adapter(ml_args)
-        peripheral_actions = await one_cycle_peripherals(init_dict, ml_results, pwm_settings)
+        peripheral_actions = await one_cycle_peripherals(init_dict, ml_results)
     elif manual_control["mode"] == "manual":
         converted_results = utilities.manual_action_to_activity(manual_results)
         manual_results = {"now": converted_results}
-        peripheral_actions = await one_cycle_peripherals(init_dict, manual_results, pwm_settings)
-    
+        peripheral_actions = await one_cycle_peripherals(init_dict, manual_results)
+
+    alert(100, ALERT_LOG)
     log(ml_action_log, peripheral_actions, max_log_size)
 
     log_dict = {}
@@ -297,54 +283,12 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
 
     log(LOG_PATH, log_dict, max_log_size)
 
-    alert_status = init_dict["alert_status"]
-    alert(100, log_dict, alert_status, email_settings, ALERT_LOG)
-    
-    # handle the logging for ML learning
-    for key in (ml_args):
-        processed_args = process_to_ml(ml_args[key])
-        for sensor in processed_args:
-            if sensor == "temperature":
-                temp = processed_args[sensor]
-            elif sensor == "humidity":
-                humid = processed_args[sensor]
-            elif sensor == "soil_moisture":
-                moist = processed_args[sensor]
-
-    current_state = machine_learning.State(temp, humid, moist)
-    
-    
-    def convert_action(action):
-        if action == 0:
-            return "none"
-        elif action == 1:
-            return "big_decrease"
-        elif action == 2:
-            return "small_decrease"
-        elif action == 3:
-            return "small_increase"
-        elif action == 4:
-            return "big_increase"
-        
-    for key in peripheral_actions:
-        if key == "water":
-            water = convert_action(peripheral_actions[key])
-        elif key == "heat":
-            heat = convert_action(peripheral_actions[key])
-        elif key =="fan":
-            fan = convert_action(peripheral_actions[key])
-    action_set = transition.ActionSet(water, fan, heat)
-    
-    
-    put = transition.EffectSet.putEffect(action_set, init_dict["state"], current_state)
-    
-    init_dict["state"] = current_state
-
- 
+    # move as an async sleep call into onecycle peripherals as a gather
+    # time.sleep(interval)
     await sleep_task
 
 
-async def one_cycle_driver(init_dict, manual_control_path=MODE_PATH, manual_actions_path=MANUAL_ACTIONS_PATH, email_settings_path=EMAIL_SETTINGS_PATH, pwm_settings_path=PWM_SETTINGS_PATH, sensor_log_path=SENSOR_LOG, ml_action_log=ML_ACTION_LOG, alert_log=ALERT_LOG, max_log_size=MAX_SIZE, interval=0):
+async def one_cycle_driver(init_dict, manual_control_path=MODE_PATH, manual_actions_path=MANUAL_ACTIONS_PATH, sensor_log_path=SENSOR_LOG, ml_action_log=ML_ACTION_LOG, alert_log=ALERT_LOG, max_log_size=MAX_SIZE, interval=0):
     """
     one_cycle_driver(init_dict_path=INIT_DICT_PICKLE_PATH) does one cycle based on the
     information from init_path
@@ -354,11 +298,11 @@ async def one_cycle_driver(init_dict, manual_control_path=MODE_PATH, manual_acti
     REQIIRES: init_dict has beenm initalized already
     """
   #  init_dict = pin_constants.load_pickled_data(init_dict_path)
-    await one_cycle(init_dict, manual_control_path, manual_actions_path, email_settings_path, pwm_settings_path, sensor_log_path, ml_action_log,
+    await one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_path, ml_action_log,
                     alert_log, max_log_size, interval)
 
 
-async def event_loop(init_dict, manual_control_path, manual_actions_path, email_settings_path, pwm_settings_path, sensor_log_path, ml_action_log, alert_log, max_log_size, interval, max_iter=None):
+async def event_loop(init_dict, manual_control_path, manual_actions_path, sensor_log_path, ml_action_log, alert_log, max_log_size, interval, max_iter=None):
     """
     event_loop() the main event loop
 
@@ -370,14 +314,14 @@ async def event_loop(init_dict, manual_control_path, manual_actions_path, email_
     """
     if max_iter == None:
         while True:
-            await one_cycle(init_dict, manual_control_path, manual_actions_path, email_settings_path, pwm_settings_path, sensor_log_path, ml_action_log,
+            await one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_path, ml_action_log,
                             alert_log, max_log_size, interval)
     else:
         for _ in range(max_iter):
             # time each loop and tell me how long it takes
             start = timeit.default_timer()
 
-            await one_cycle(init_dict, manual_control_path, manual_actions_path, email_settings_path, pwm_settings_path, sensor_log_path, ml_action_log,
+            await one_cycle(init_dict, manual_control_path, manual_actions_path, sensor_log_path, ml_action_log,
                             alert_log, max_log_size, interval)
 
             stop = timeit.default_timer()
@@ -399,7 +343,7 @@ async def main(n_cycles=None):
     if ONE_CYCLE:
         await one_cycle_driver(init_dict)
     else:
-        await event_loop(init_dict, MODE_PATH, MANUAL_ACTIONS_PATH, EMAIL_SETTINGS_PATH, PWM_SETTINGS_PATH, SENSOR_LOG, ML_ACTION_LOG,
+        await event_loop(init_dict, MODE_PATH, MANUAL_ACTIONS_PATH, SENSOR_LOG, ML_ACTION_LOG,
                          ALERT_LOG, MAX_SIZE, WAIT_INTERVAL_SECONDS, n_cycles)
 
 
@@ -407,22 +351,14 @@ async def main(n_cycles=None):
 
 
 if __name__ == "__main__":
-    print('controller starting...')
+    asyncio.run(main(N_CYCLES))
 
-    try:
-        asyncio.run(main(N_CYCLES))
-    except (KeyboardInterrupt, SystemExit):
-        print("Interrupt detected")
-        sys.exit(0)
-    # except Exception as e:
-    #    print(f"Other exception detected: {e}")
-    #    sys.exit(0)
 
-        # ------- DEBUGGING -------------------
+# ------- DEBUGGING -------------------
 
-        # in the future, would like to have asynchrnous program report back
-        # what is being read from the sensor and what the peripherals are being responded
-        # to
+# in the future, would like to have asynchrnous program report back
+# what is being read from the sensor and what the peripherals are being responded
+# to
 
-        # TODO: ASYNC
-        # TODO: ALERT EMAIL DATAS TO USER
+# TODO: ASYNC
+# TODO: ALERT EMAIL DATAS TO USER

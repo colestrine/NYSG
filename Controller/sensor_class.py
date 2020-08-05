@@ -60,6 +60,8 @@ import datetime
 import sys
 from Controller import log
 
+MAX_LIGHT_DIVISOR = 15000
+
 
 # ------- TEST CONSTANTS ----------
 N_SENSORS = 4
@@ -193,7 +195,7 @@ def collect_all_sensors(sensor_list):
             ret_dict["humidity"] = rh
         elif type(sensor) == MoistureSensor:
             moisture = sensor.read_moisture()
-            ret_dict["moisture"] = moisture
+            ret_dict["soil_moisture"] = moisture
         elif type(sensor) == LightSensor:
             light = sensor.read_light()
             ret_dict["sunlight"] = light
@@ -201,7 +203,7 @@ def collect_all_sensors(sensor_list):
     # get time
     now = datetime.datetime.now()
     # add second and microsecond
-    current_time = now.strftime("%d-%m-%Y %H:%M:%-S:%f")
+    current_time = now.strftime("%d-%m-%Y %H:%M:%-S")
 
     outer_dict = {}
     outer_dict[current_time] = ret_dict

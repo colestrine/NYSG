@@ -18,20 +18,20 @@ Settings
 <h1 class="form-header">Plant Profile</h1>
 <div class="form-wrapper">
 	<form action="/settings/" method="post" id="plant_profile_form" name="plant_profile_form">
-	    {% csrf_token %}
-	    {{ plant_profile_form.as_p }}
+		{% csrf_token %}
+		{{ plant_profile_form.as_p }}
 	</form>
 </div>
 
 <h1 class="form-header">Healthy Levels</h1>
 <div class="form-wrapper">
 	<form action="/settings/" method="post" id="healthy_levels_form" name="healthy_levels_form">
-	    {% csrf_token %}
-	    {{ healthy_levels_form.as_p }}
+		{% csrf_token %}
+		{{ healthy_levels_form.as_p }}
 	</form>
 
 	{% if can_save %}
-		<button class="save-profile-button" onclick="showSaveProfileModal()">Save As New Profile</button>
+	<button class="save-profile-button" onclick="showSaveProfileModal()">Save As New Profile</button>
 	{% endif %}
 </div>
 
@@ -41,26 +41,44 @@ Settings
 <h1 class="form-header">Manual Actions</h1>
 <div class="form-wrapper">
 	<form action="/settings/" method="post" id="action_form" name="action_form">
-	    {% csrf_token %}
-	    {{ action_form.as_p }}
+		{% csrf_token %}
+		{{ action_form.as_p }}
 	</form>
 </div>
 {% endif %}
 
+<h1 class="form-header">Alert Settings</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="alert_form" name="alert_form">
+		{% csrf_token %}
+		{{ alert_form.as_p }}
+	</form>
+</div>
+
+<h1 class="form-header">Duty Cycle Settings</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="pwm_form" name="pwm_form">
+		{% csrf_token %}
+		{{ pwm_form.as_p }}
+	</form>
+</div>
+
 <div id="save-profile-modal" class="save-profile-modal">
 	<div class="form-wrapper save-profile-form-wrapper">
-		<button class="close-save-profile-modal-button" id="close-save-profile-modal-button" onclick="hideSaveProfileModal()">x</button>
+		<button class="close-save-profile-modal-button" id="close-save-profile-modal-button"
+			onclick="hideSaveProfileModal()">x</button>
 		<form action="/settings/" method="post" id="save_profile_form" name="save_profile_form">
-		    {% csrf_token %}
-		    {{ save_profile_form.as_p }}
-		    <button class="save-profile-submit" onclick="submitSaveProfileForm()">Save</button>
+			{% csrf_token %}
+			{{ save_profile_form.as_p }}
+			<button class="save-profile-submit" onclick="submitSaveProfileForm()">Save</button>
 		</form>
 	</div>
 </div>
 
 <div id="sidebar" class="sidebar">
 	<div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">
-		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()"><</button>
+		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()">
+			<</button>
 	</div>
 	<div class="sidebar-content-wrapper" id="sidebar-content-wrapper">
 		<div class="sidebar-section-wrapper">
@@ -78,19 +96,19 @@ Settings
 					Humidity
 				</div>
 				<div>
-					{{last_humidity}}%
+					{{last_humidity}} %
 				</div>
 				<div class="sidebar-value-label">
 					Soil Moisture
 				</div>
 				<div>
-					{{last_soil_moisture}}%
+					{{last_soil_moisture}} %
 				</div>
 				<div class="sidebar-value-label">
 					Light
 				</div>
 				<div>
-					{{last_sunlight}} lm
+					{{last_sunlight}} lm/m<sup>2</sup>
 				</div>
 			</div>
 		</div>
@@ -101,72 +119,76 @@ Settings
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Temperature
+						Temperature (<span>&#176;</span>F)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
+					<button class="legend-row-button" id="expand-legend-button-temperature"
+						onclick="expandLegend('temperature')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-temperature-data">
 					{% for record in legend.temperature.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Humidity
+						Humidity (%)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
+					<button class="legend-row-button" id="expand-legend-button-humidity"
+						onclick="expandLegend('humidity')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-humidity-data">
 					{% for record in legend.humidity.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Soil Moisture
+						Soil Moisture (%)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
+					<button class="legend-row-button" id="expand-legend-button-soil-moisture"
+						onclick="expandLegend('soil_moisture')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-soil-moisture-data">
 					{% for record in legend.soil_moisture.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
 			<div class="sidebar-section-content">
 				<div class="lenged-row-wrapper">
 					<div class="legend-row-label">
-						Sunlight
+						Sunlight (lm/m<sup>2</sup>)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
+					<button class="legend-row-button" id="expand-legend-button-sunlight"
+						onclick="expandLegend('sunlight')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-sunlight-data">
 					{% for record in legend.sunlight.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -200,12 +222,12 @@ Settings
 		if (sidebar_hidden) {
 			document.getElementById("sidebar").style.width = "350px";
 			document.getElementById("sidebar-toggle-button").style.transform = "rotate(180deg)";
-			document.getElementById("sidebar-content-wrapper").style.display="grid";
+			document.getElementById("sidebar-content-wrapper").style.display = "grid";
 		}
 		else {
 			document.getElementById("sidebar").style.width = "30px";
 			document.getElementById("sidebar-toggle-button").style.transform = "none";
-			document.getElementById("sidebar-content-wrapper").style.display="none";
+			document.getElementById("sidebar-content-wrapper").style.display = "none";
 		}
 
 		sidebar_hidden = !sidebar_hidden
@@ -231,7 +253,7 @@ Settings
 	}
 
 	function expandLegend(type) {
-		if (type == "temperature"){
+		if (type == "temperature") {
 			if (temperature_expanded) {
 				temperature_expanded = collapseSection("temperature")
 			}
@@ -242,7 +264,7 @@ Settings
 				temperature_expanded = expandSection("temperature")
 			}
 		}
-		if (type == "humidity"){
+		if (type == "humidity") {
 			if (humidity_expanded) {
 				humidity_expanded = collapseSection("humidity")
 			}
@@ -253,7 +275,7 @@ Settings
 				humidity_expanded = expandSection("humidity")
 			}
 		}
-		if (type == "soil_moisture"){
+		if (type == "soil_moisture") {
 			if (soil_moisture_expanded) {
 				soil_moisture_expanded = collapseSection("soil-moisture")
 			}
@@ -264,7 +286,7 @@ Settings
 				soil_moisture_expanded = expandSection("soil-moisture")
 			}
 		}
-		if (type == "sunlight"){
+		if (type == "sunlight") {
 			if (sunlight_expanded) {
 				sunlight_expanded = collapseSection("sunlight")
 			}

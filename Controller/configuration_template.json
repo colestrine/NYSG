@@ -1,0 +1,7 @@
+{
+    "email_address": "your email",
+    "email_password": "your password",
+    "receiver_email_address": [
+        "list out receiver emails"
+    ]
+}

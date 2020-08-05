@@ -1,110 +1,101 @@
 from numpy import random, mean, zeros
 from matplotlib import pyplot
 import importlib
+#from transition import ActionSet, EffectSet
 transition = importlib.import_module(
     'Machine Learning.transition')
-# from transition import ActionSet, EffectSet
+from os.path import expanduser
+import json
 
 class State:
-    # State class holds data for temperature, humidity, soil moisture, and
-    # sunlight
-
-    def __init__(self, temperature, humidity, soil_moisture, sunlight):
-        self.temperature = temperature
-        self.humidity = humidity
-        self.soil_moisture = soil_moisture
-        self.sunlight = sunlight
+    # State class holds bucket data for temperature, humidity, and soil moisture, values must be between 1.0 and 5.9
+    def __init__(self, temperature, humidity, soil_moisture):
+        self.temperature = float(temperature)
+        self.humidity = float(humidity)
+        self.soil_moisture = float(soil_moisture)
 
     # When passed as a string, return data for each dimension
     def __str__(self):
-        return f"({self.temperature},{self.humidity},{self.soil_moisture},{self.sunlight})"
+        return f"({self.temperature},{self.humidity},{self.soil_moisture})"
 
-    # When suntraction operator used, return tuple containing
-    # self.data-other.data values
+    # When suntraction operator used, return tuple containing self.data-other.data values
     def __sub__(self, other):
-        return (self.temperature - other.temperature, self.humidity - other.humidity, self.soil_moisture - other.soil_moisture, self.sunlight - other.sunlight)
+        return (self.temperature - other.temperature, self.humidity - other.humidity, self.soil_moisture - other.soil_moisture)
 
     # When != operator used, return truth value for equality of all dimensions
     def __ne__(self, other):
-        if ((self.temperature == other.temperature) and (self.humidity == other.humidity) and (self.soil_moisture == other.soil_moisture) and (self.sunlight == other.sunlight)):
+        if ((self.temperature == other.temperature) and (self.humidity == other.humidity) and (self.soil_moisture == other.soil_moisture)):
             return False
         else:
             return True
 
-    # Return uniformly weighted total distance between self's variables and
-    # other's variables
+    # Return uniformly weighted total distance between self's variables and other's variables
     def distance(self, other):
-        return abs(self.temperature - other.temperature) + abs(self.humidity - other.humidity) + abs(self.soil_moisture - other.soil_moisture) + abs(self.sunlight - other.sunlight)
+        return abs(self.temperature - other.temperature) + abs(self.humidity - other.humidity) + abs(self.soil_moisture - other.soil_moisture)
+
+    # Returns the goal state, as specified in healthy_levels.json
+    def getGoal():
+        healthy_levels_file = open(expanduser("~")+'/NYSG/Interface Files/healthy_levels.json', 'r')
+        levels_json = healthy_levels_file.read()
+        healthy_levels_file.close()
+        levels = json.loads(levels_json)
+
+        goal = State(float(levels['temperature']), float(levels['humidity']), float(levels['soil_moisture']))
+
+        return goal
 
 class Environment:
     # Return reward for agent's actions - incorporate considerations for:
     # movement towards goal state, close proximity to goal state, overall
     # distance from goal state
 
-    def reward(last_state, next_state, goal_state):
+    def reward(last_state, next_state, goal_state, water_action, ventilation_action, heat_action):
         last_difference = State.distance(last_state, goal_state)
         next_difference = State.distance(next_state, goal_state)
 
-        # Encourage movement towards goal state
-        if last_difference > next_difference:
-            reward = 500
-        elif last_difference < next_difference:
-            reward = -1000
-        else:
-            reward = 0
+        # # Encourage movement towards goal state
+        # if last_difference > next_difference:
+        #     reward = 100 * next_difference
+        # elif last_difference < next_difference:
+        #     reward = -1000
+        # else:
+        #     reward = 0
 
-        # Encourage maintaining close proximity to goal state
-        if next_difference < .25:
-            reward += 7000
-        elif next_difference < .5:
-            reward += 5000
-        elif next_difference < 1:
-            reward += 2000
-        else:
-            reward += -1000
+        # # Encourage maintaining close proximity to goal state
+        # if next_difference < .25:
+        #     reward += 7000
+        # elif next_difference < .5:
+        #     reward += 5000
+        # elif next_difference < 1:
+        #     reward += 2000
+        # else:
+        #     reward += -1000
 
-        # Scaled portion of reward based on distance from goal state
-        reward -= next_difference * 50
+        # # Scaled portion of reward based on distance from goal state
+        # reward -= next_difference * 50
+
+        # Set intitial reward, scaled based on distance from goal state
+        reward = -100 * last_difference
+
+        # Encourage efficiency
+        if water_action == "none":
+            reward += 10
+        if ventilation_action == "none":
+            reward += 10
+        if heat_action == "none":
+            reward += 10
 
         return reward
 
-    # Take current state and actions, return next state based on model of
-    # system
-    def transition(current_state, light_action, water_action, ventilation_action, heat_action, prior_effects):
-        next_state = State(current_state.temperature, current_state.humidity,
-                           current_state.soil_moisture, current_state.sunlight)
+    # Take current state and actions, return next state based on model of system
+    def transition(current_state, water_action, ventilation_action, heat_action, prior_effects):
+        next_state = State(current_state.temperature, current_state.humidity, current_state.soil_moisture)
 
         big_random_low = 50
         big_random_high = 60
 
         small_random_low = 3
         small_random_high = 10
-
-        if light_action == 'big_increase':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            next_state.sunlight += factor
-        elif light_action == 'small_increase':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            next_state.sunlight += factor
-        elif light_action == 'big_decrease':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            if next_state.sunlight > factor:
-                next_state.sunlight -= factor
-            else:
-                next_state.sunlight = 0
-        elif light_action == 'small_decrease':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            if next_state.sunlight > factor:
-                next_state.sunlight -= factor
-            else:
-                next_state.sunlight = 0
-        else:
-            factor = round(random.randint(-2, 3) / 100, 1)
-            next_state.sunlight += factor
 
         if water_action == 'big_increase':
             factor = round(random.randint(
@@ -234,18 +225,53 @@ class Environment:
             factor = round(random.randint(-2, 3) / 100, 1)
             next_state.temperature += factor
 
-        action_set = transition.ActionSet(light_action, ventilation_action, water_action, heat_action)
+        action_set = transition.ActionSet(water_action, ventilation_action, heat_action)
 
-        prior_effects = prior_effects[str(action_set)]
+        if current_state.temperature < 1.0 :
+            current_state.temperature = 1.0
+        elif current_state.temperature > 5.9:
+            current_state.temperature = 5.9
 
-        prior_effects = transition.EffectSet.decode(prior_effects)
+        if current_state.humidity < 1.0 :
+            current_state.humidity = 1.0
+        elif current_state.humidity > 5.9:
+            current_state.humidity = 5.9
 
-        # If actions have already been taken, update based on prior knowledge
-        if (prior_effects['temperature'] or prior_effects['humidity'] or prior_effects['soil_moisture'] or prior_effects['sunlight']):
-            next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_effects['temperature'])
-            next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_effects['humidity'])
-            next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_effects['soil_moisture'])
-            next_state.sunlight = .2*next_state.sunlight + .8*(next_state.sunlight + prior_effects['sunlight'])
+        if current_state.soil_moisture < 1.0 :
+            current_state.soil_moisture = 1.0
+        elif current_state.soil_moisture > 5.9:
+            current_state.soil_moisture = 5.9
+
+        temperature_bucket = str(current_state.temperature).split('.')[0]
+        humidity_bucket = str(current_state.humidity).split('.')[0]
+        soil_moisture_bucket = str(current_state.soil_moisture).split('.')[0]
+
+        # bootstrap_effects = EffectSet.getBootstrapEffects()
+
+        # bootstrap_temperature_effect = bootstrap_effects[str(action_set)]['temperature'][temperature_bucket]['effect']
+        # bootstrap_humidity_effect = bootstrap_effects[str(action_set)]['humidity'][humidity_bucket]['effect']
+        # bootstrap_soil_moisture_effect = bootstrap_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
+
+        # boostrap_temperature_hits = bootstrap_effects[str(action_set)]['temperature'][temperature_bucket]['hits']
+        # bootstrap_humidity_hits = bootstrap_effects[str(action_set)]['humidity'][humidity_bucket]['hits']
+        # bootstrap_soil_moisture_hits = bootstrap_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits']
+
+        prior_temperature_effect = prior_effects[str(action_set)]['temperature'][temperature_bucket]['effect']
+        prior_humidity_effect = prior_effects[str(action_set)]['humidity'][humidity_bucket]['effect']
+        prior_soil_moisture_effect = prior_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
+
+        prior_temperature_hits = prior_effects[str(action_set)]['temperature'][temperature_bucket]['hits']
+        prior_humidity_hits = prior_effects[str(action_set)]['humidity'][humidity_bucket]['hits']
+        prior_soil_moisture_hits = prior_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits']
+
+        if (prior_temperature_hits):
+            next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_temperature_effect) #REPLACE WITH BOOTSTRAP DATA
+
+        if (prior_humidity_hits):
+            next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_humidity_effect) #REPLACE WITH BOOTSTRAP DATA
+
+        if (prior_soil_moisture_hits):
+            next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_soil_moisture_effect) #REPLACE WITH BOOTSTRAP DATA
 
         return next_state
 
@@ -254,7 +280,7 @@ class Agent:
 
     def run(initial_state, goal_state):
         if initial_state == goal_state:
-            return ({'light_action': light_action, 'water_action': water_action, 'ventilation_action': ventilation_action}, None)
+            return ({'water_action': water_action, 'ventilation_action': ventilation_action, 'heat_action': heat_action}, None)
 
         # Define action choices
         action_choices = ['big_increase', 'big_decrease', 'small_increase', 'small_decrease', 'none']
@@ -264,97 +290,67 @@ class Agent:
 
         # Iterate through all possible action vectors
         avg_episode_rewards = []
-        for initial_light_action in action_choices:
-            for initial_water_action in action_choices:
-                for initial_ventilation_action in action_choices:
-                    for initial_heat_action in action_choices:
-                        episode_rewards = []
-                        for episode in range(0, 75):
-                            timestep = 0
+        for initial_water_action in action_choices:
+            for initial_ventilation_action in action_choices:
+                for initial_heat_action in action_choices:
+                    episode_rewards = []
+                    for episode in range(0, 75):
+                        timestep = 0
 
-                            discount = .7
+                        discount = .7
 
-                            # Look one step ahead, observe next state and reward
-                            next_state = Environment.transition(initial_state, initial_light_action, initial_water_action, initial_ventilation_action, initial_heat_action, prior_effects)
-                            next_reward = Environment.reward(initial_state, next_state, goal_state)
+                        # Look one step ahead, observe next state and reward
+                        next_state = Environment.transition(initial_state, initial_water_action, initial_ventilation_action, initial_heat_action, prior_effects)
+                        next_reward = Environment.reward(initial_state, next_state, goal_state, initial_water_action, initial_ventilation_action, initial_heat_action)
+
+                        # Take transition
+                        current_state = next_state
+                        current_reward = next_reward
+
+                        # Record discounted reward
+                        total_reward = (discount**timestep) * current_reward
+
+                        while(timestep < 3):
+                            # Pick next actions
+                            water_action = action_choices[random.randint(0, 5)]
+                            ventilation_action = action_choices[random.randint(0, 5)]
+                            heat_action = action_choices[random.randint(0, 5)]
+
+                            # Look one step ahead, observe new state and reward
+                            next_state = Environment.transition(current_state, water_action, ventilation_action, heat_action, prior_effects)
+                            next_reward = Environment.reward(current_state, next_state, goal_state, water_action, ventilation_action, heat_action)
 
                             # Take transition
                             current_state = next_state
                             current_reward = next_reward
 
                             # Record discounted reward
-                            total_reward = (discount**timestep) * current_reward
+                            total_reward += (discount**timestep) * current_reward
 
-                            while(timestep < 3):
-                                # Pick next actions
-                                light_action = action_choices[random.randint(0, 5)]
-                                water_action = action_choices[random.randint(0, 5)]
-                                ventilation_action = action_choices[random.randint(0, 5)]
-                                heat_action = action_choices[random.randint(0, 5)]
+                            timestep += 1
 
-                                # Look one step ahead, observe new state and reward
-                                next_state = Environment.transition(current_state, light_action, water_action, ventilation_action, heat_action, prior_effects)
-                                next_reward = Environment.reward(current_state, next_state, goal_state)
+                        episode_rewards.append(total_reward)
 
-                                # Take transition
-                                current_state = next_state
-                                current_reward = next_reward
-
-                                # Record discounted reward
-                                total_reward += (discount**timestep) * current_reward
-
-                                timestep += 1
-
-                            episode_rewards.append(total_reward)
-
-                        # Find average of episode rewards, save data
-                        avg_episode_reward = mean(episode_rewards)
-                        avg_episode_rewards.append({'avg_episode_reward': avg_episode_reward, 'light_action': initial_light_action,
-                                                    'water_action': initial_water_action, 'ventilation_action': initial_ventilation_action, 'heat_action': initial_heat_action})
+                    # Find average of episode rewards, save data
+                    avg_episode_reward = mean(episode_rewards)
+                    avg_episode_rewards.append({'avg_episode_reward': avg_episode_reward, 'water_action': initial_water_action, 'ventilation_action': initial_ventilation_action, 'heat_action': initial_heat_action})
 
         # Find largest average episode reward, the actions used in these
         # episodes are our choice actions
         avg_episode_rewards = sorted(avg_episode_rewards, key=lambda k: k['avg_episode_reward'], reverse=True)
         choice = avg_episode_rewards[0]
 
-        return {'light_action': choice['light_action'], 'water_action':  choice['water_action'], 'ventilation_action':  choice['ventilation_action'], 'heat_action': choice['heat_action'], 'expected_reward': choice['avg_episode_reward']}
-
+        return {'water_action':  choice['water_action'], 'ventilation_action':  choice['ventilation_action'], 'heat_action': choice['heat_action'], 'expected_reward': choice['avg_episode_reward']}
 
 class Test:
-    def transition(current_state, light_action, water_action, ventilation_action, heat_action):
-        next_state = State(current_state.temperature, current_state.humidity, current_state.soil_moisture, current_state.sunlight)
+    def transition(current_state, water_action, ventilation_action, heat_action):
+        next_state = State(current_state.temperature, current_state.humidity, current_state.soil_moisture)
 
         big_random_low = 86
         big_random_high = 88
 
         small_random_low = 19
         small_random_high = 21
-
-        if light_action == 'big_increase':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            next_state.sunlight += factor
-        elif light_action == 'small_increase':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            next_state.sunlight += factor
-        elif light_action == 'big_decrease':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            if next_state.sunlight > factor:
-                next_state.sunlight -= factor
-            else:
-                next_state.sunlight = 0
-        elif light_action == 'small_decrease':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            if next_state.sunlight > factor:
-                next_state.sunlight -= factor
-            else:
-                next_state.sunlight = 0
-        else:
-            factor = round(random.randint(-2, 3) / 100, 1)
-            next_state.sunlight += factor
 
         if water_action == 'big_increase':
             factor = round(random.randint(
@@ -510,7 +506,6 @@ class Test:
             results = Agent.run(current_state, goal_state)
 
             # Extract actions from decision
-            light_action = results['light_action']
             water_action = results['water_action']
             ventilation_action = results['ventilation_action']
             heat_action = results['heat_action']
@@ -519,32 +514,47 @@ class Test:
             expected_reward = results['expected_reward']
 
             print('------------')
-            print(f'state: {current_state}')
-            print(f'light: {light_action} water: {water_action} ventilation: {ventilation_action} heat: {heat_action}\nexpected reward: {expected_reward}')
+            print(f'starting state: {current_state}')
+            print(f'water: {water_action} ventilation: {ventilation_action} heat: {heat_action}\nexpected reward: {expected_reward}')
 
             # Save last state
             last_state = current_state
 
             # Take actions and observe new state
-            current_state = Test.transition(current_state, light_action, water_action, ventilation_action, heat_action)
+            current_state = Test.transition(current_state, water_action, ventilation_action, heat_action)
 
             # Add an extra layer of randomness +/- [0, .02]
             current_state.temperature += random.randint(-1, 2)/50
             current_state.humidity += random.randint(-1, 2)/50
             current_state.soil_moisture += random.randint(-1, 2)/50
-            current_state.sunlight += random.randint(-1, 2)/50
 
-            action_set = transition.ActionSet(light_action, ventilation_action, water_action, heat_action)
+            # Constrain values between 1.0 and 5.9
+            if current_state.temperature < 1.0 :
+                current_state.temperature = 1.0
+            elif current_state.temperature > 5.9:
+                current_state.temperature = 5.9
 
-            temperature_diff = current_state.temperature - last_state.temperature
-            humidity_diff = current_state.humidity - last_state.humidity
-            soil_moisture_diff = current_state.soil_moisture - last_state.soil_moisture
-            sunlight_diff = current_state.sunlight - last_state.sunlight
+            if current_state.humidity < 1.0 :
+                current_state.humidity = 1.0
+            elif current_state.humidity > 5.9:
+                current_state.humidity = 5.9
 
-            effect_set = transition.EffectSet(temperature_diff, humidity_diff, soil_moisture_diff, sunlight_diff)
+            if current_state.soil_moisture < 1.0 :
+                current_state.soil_moisture = 1.0
+            elif current_state.soil_moisture > 5.9:
+                current_state.soil_moisture = 5.9
 
-            put = transition.EffectSet.putEffect(action_set, effect_set)
+            # # Temperature Floor
+            # if current_state.temperature < 2.8:
+            #     current_state.temperature = 2.8
 
+            # Create action set
+            action_set = transition.ActionSet(water_action, ventilation_action, heat_action)
+
+            # Record transition in transition.json
+            put = transition.EffectSet.putEffect(action_set, last_state, current_state, True)
+
+            print(f'ending state: {current_state}')
             print(f'effects: {put}')
 
             # Record current state, goal state, expected reward, actual reward
@@ -565,24 +575,20 @@ class Test:
         current_temperatures = []
         current_humidities = []
         current_soil_moistures = []
-        current_sunlights = []
 
         goal_temperatures = []
         goal_humidities = []
         goal_soil_moistures = []
-        goal_sunlights = []
 
         for current_state in current_states:
             current_temperatures.append(current_state.temperature)
             current_humidities.append(current_state.humidity)
             current_soil_moistures.append(current_state.soil_moisture)
-            current_sunlights.append(current_state.sunlight)
 
         for goal_state in goal_states:
             goal_temperatures.append(goal_state.temperature)
             goal_humidities.append(goal_state.humidity)
             goal_soil_moistures.append(goal_state.soil_moisture)
-            goal_sunlights.append(goal_state.sunlight)
 
         pyplot.figure(1)
 
@@ -591,12 +597,10 @@ class Test:
         pyplot.plot(range(length), current_humidities, 'g-', label="Humiditiy")
         pyplot.plot(range(length), current_soil_moistures,
                     'b-', label="Soil Moisture")
-        pyplot.plot(range(length), current_sunlights, 'y-', label="Sunlight")
 
         pyplot.plot(range(length), goal_temperatures, 'r--')
         pyplot.plot(range(length), goal_humidities, 'g--')
         pyplot.plot(range(length), goal_soil_moistures, 'b--')
-        pyplot.plot(range(length), goal_sunlights, 'y--')
 
         pyplot.xlabel('Timestep')
         pyplot.ylabel('Value')
@@ -630,24 +634,27 @@ class Test:
         pyplot.show()
 
 if __name__ == '__main__':
-    current_state = State(2.8, 3.2, 4.0, 3.1) #random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10, random.randint(0, 59)/10)
-    goal_state = State(3.5, 2.5, 2.8, 4.5)
+    iterations = 1
 
-    print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
-    print('------------')
+    for i in range(0, iterations):
+        current_state = State(random.randint(150, 550)/100, random.randint(150, 550)/100, random.randint(150, 550)/100)
+        goal_state = State(2.5, 2.8, 4.5) #State.getGoal() #State(random.randint(150, 550)/100, random.randint(150, 550)/100, random.randint(150, 550)/100)
 
-    results = Test.run(current_state, goal_state, 50)
+        print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
+        print('------------')
 
-    current_states = results['current_states']
-    goal_states = results['goal_states']
-    expected_rewards = results['expected_rewards']
+        results = Test.run(current_state, goal_state, 60)
 
-    distances = []
-    print('------------')
-    for (index, state) in enumerate(current_states):
-        print(f'timestep: {index} state: {state}')
-        distance = State.distance(state, goal_state)
-        distances.append(distance)
-        print(f'distance from goal state: {distance}')
+        current_states = results['current_states']
+        goal_states = results['goal_states']
+        expected_rewards = results['expected_rewards']
 
-    Test.plot(current_states, goal_states, expected_rewards, distances)
+        distances = []
+        print('------------')
+        for (index, state) in enumerate(current_states):
+            print(f'timestep: {index} state: {state}')
+            distance = State.distance(state, goal_state)
+            distances.append(distance)
+            print(f'distance from goal state: {distance}')
+
+        Test.plot(current_states, goal_states, expected_rewards, distances)
