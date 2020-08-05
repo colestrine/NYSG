@@ -87,7 +87,7 @@ class EffectSet():
 
 		return [.5*float(self.temperature) + .5*temperature, .5*float(self.humidity) + .5*humidity, .5*float(self.soil_moisture) + .5*soil_moisture]
 
-	def putEffect(action_set, last_state, current_state):
+	def putEffect(action_set, last_state, current_state, data_collection_mode=False):
 		with open('Machine Learning/Files/transition.json', 'r') as transition_file:
 			contents = transition_file.read()
 			P = json.loads(contents)
@@ -109,14 +109,25 @@ class EffectSet():
 
 		P[str(action_set)]['hits'] += 1
 
-		P[str(action_set)]['temperature'][temperature_bucket]['effect'] = new_effects[0]
-		P[str(action_set)]['temperature'][temperature_bucket]['hits'] += 1
+		if (data_collection_mode):
+			for bucket in range(1, 6):
+				P[str(action_set)]['temperature'][bucket]['effect'] = new_effects[0]
+				P[str(action_set)]['temperature'][bucket]['hits'] += 1
 
-		P[str(action_set)]['humidity'][humidity_bucket]['effect'] = new_effects[1]
-		P[str(action_set)]['humidity'][humidity_bucket]['hits'] += 1
+				P[str(action_set)]['humidity'][bucket]['effect'] = new_effects[1]
+				P[str(action_set)]['humidity'][bucket]['hits'] += 1
 
-		P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect'] = new_effects[2]
-		P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits'] += 1
+				P[str(action_set)]['soil_moisture'][bucket]['effect'] = new_effects[2]
+				P[str(action_set)]['soil_moisture'][bucket]['hits'] += 1
+		else:
+			P[str(action_set)]['temperature'][temperature_bucket]['effect'] = new_effects[0]
+			P[str(action_set)]['temperature'][temperature_bucket]['hits'] += 1
+
+			P[str(action_set)]['humidity'][humidity_bucket]['effect'] = new_effects[1]
+			P[str(action_set)]['humidity'][humidity_bucket]['hits'] += 1
+
+			P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect'] = new_effects[2]
+			P[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits'] += 1
 
 		with open('Machine Learning/Files/transition.json', 'w') as transition_file:
 			json.dump(P, transition_file)
@@ -157,7 +168,6 @@ def initializeToZeros(action_choices):
 		json.dump(P, transition_file)
 
 	return P
-
 
 if __name__ == '__main__':
 	action_choices = ['big_decrease', 'small_decrease', 'none', 'small_increase', 'big_increase']
