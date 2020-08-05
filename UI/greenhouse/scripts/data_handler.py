@@ -197,3 +197,41 @@ class data_handler:
 		mode_file.write(json.dumps(mode))
 
 		mode_file.close()
+
+	def put_alert_settings(rate, detail):
+		alert_settings_file = open(expanduser("~")+'/NYSG/Interface Files/email_settings.json', 'w')
+
+		alert_settings = {"rate":rate, "detail": detail}
+
+		alert_settings_file.write(json.dumps(alert_settings))
+
+		alert_settings_file.close()
+
+	def get_alert_settings():
+		alert_settings_file = open(expanduser("~")+'/NYSG/Interface Files/email_settings.json', 'r')
+		alert_settings_json = alert_settings_file.read()
+		alert_settings_file.close()
+		return json.loads(alert_settings_json)
+
+	def put_dc_settings(fan_dc, light_dc):
+		dc_file = open(expanduser("~")+'/NYSG/Interface Files/pwm_settings.json', 'w')
+
+		dc_settings = {
+			"light": {
+				"duty_cycles": light_dc
+			},
+			"fan": {
+				"duty_cycles": fan_dc
+			}
+		}
+
+		dc_file.write(json.dumps(dc_settings))
+
+		dc_file.close()
+		
+	def get_dc_settings():
+		dc_file = open(expanduser("~")+'/NYSG/Interface Files/pwm_settings.json', 'r')
+		dc_settings_json = dc_file.read()
+		dc_file.close()
+		loaded_data = json.loads(dc_settings_json)
+		return {"fan_dc":loaded_data["fan"]["duty_cycles"], "light_dc":loaded_data["light"]["duty_cycles"]}

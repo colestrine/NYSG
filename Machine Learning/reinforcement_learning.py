@@ -1,7 +1,9 @@
 from numpy import random, mean, zeros
 from matplotlib import pyplot
 import importlib
-from transition import ActionSet, EffectSet
+#from transition import ActionSet, EffectSet
+transition = importlib.import_module(
+    'Machine Learning.transition')
 from os.path import expanduser
 import json
 
@@ -223,8 +225,7 @@ class Environment:
             factor = round(random.randint(-2, 3) / 100, 1)
             next_state.temperature += factor
 
-        ########################################################################
-        action_set = ActionSet(water_action, ventilation_action, heat_action)
+        action_set = transition.ActionSet(water_action, ventilation_action, heat_action)
 
         if current_state.temperature < 1.0 :
             current_state.temperature = 1.0
@@ -285,7 +286,7 @@ class Agent:
         action_choices = ['big_increase', 'big_decrease', 'small_increase', 'small_decrease', 'none']
 
         # Get prior effects
-        prior_effects = EffectSet.getEffects()
+        prior_effects = transition.EffectSet.getEffects()
 
         # Iterate through all possible action vectors
         avg_episode_rewards = []
@@ -548,10 +549,10 @@ class Test:
             #     current_state.temperature = 2.8
 
             # Create action set
-            action_set = ActionSet(water_action, ventilation_action, heat_action)
+            action_set = transition.ActionSet(water_action, ventilation_action, heat_action)
 
             # Record transition in transition.json
-            put = EffectSet.putEffect(action_set, last_state, current_state)
+            put = transition.EffectSet.putEffect(action_set, last_state, current_state)
 
             print(f'ending state: {current_state}')
             print(f'effects: {put}')

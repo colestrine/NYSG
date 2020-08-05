@@ -2,6 +2,7 @@
 
 import json
 import pickle
+from datetime import datetime, time
 
 
 # -----I2C constants --------
@@ -54,8 +55,17 @@ SMALL_DECREASE = 30
 SMALL_INCREASE = 45
 BIG_INCREASE = 60
 
-DC = 50
-FREQ = 50
+DC = 50 # percent %
+FREQ = 128 # hZ
+
+# ------- LIGHT CONSTANTS ---------
+LIGHT_ON_TIME = 9 * 60 * 60  # time on in seconds
+START_LIGHT = (6, 30)  # when light starts as a tuple using 24 hour day
+END_LIGHT = (20, 30)  # when light ends as a tuple using 24 hour day
+
+
+# -------- ALERT CONSTANTS ------
+ALERT_INTERVAL = 1 * 60 * 60  # time in seconds
 
 
 # ------- lOG LOCATIONS -------------

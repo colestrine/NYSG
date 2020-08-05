@@ -1,3 +1,4 @@
+
 """
 peripheral_class copntains classes to manipulate the peripherals in thw greenhouse.
 The main package used in this class will be GPIOZero or another package that allows
@@ -22,6 +23,7 @@ import RPi.GPIO as GPIO
 
 # -------- OTHER PACKAGES ----------
 import datetime
+from datetime import datetime
 
 # -------- ASYNC IMPORTS ---------
 import asyncio
@@ -280,6 +282,7 @@ class BurstPeripheral(Peripheral):
         RETURNS: None
         """
         self.burst_time = burst_time
+    
 
     # ----- DEBUGGING TOOLS -----
 
@@ -323,20 +326,6 @@ class HeatPad(BurstPeripheral):
         super().__init__(channel, burst_time)
 
 
-class Fan(BurstPeripheral):
-    """
-    Fan(BurstPeripheral) is a Fan object
-
-    SUPERCLASS: BurstPeripheral
-    """
-
-    def __init__(self, channel, burst_time=pin_constants.BURST):
-        """
-        Createsa Fan peripheral object
-        """
-        super().__init__(channel, burst_time)
-
-
 class Pwm_Peripheral(BurstPeripheral):
     """
     Pwm_Peripheral(Peripheral) is a peripheral with a pwm controller
@@ -354,21 +343,26 @@ class Pwm_Peripheral(BurstPeripheral):
         self.pwm = GPIO.PWM(self.channel, freq)
         self.pwm.start(self.dc)
 
-    async def set_active(self):
+    # async def set_active(self):
+    #     """
+    #     set_active(self) sets the peripheral active
+    #     """
+    #     # SAVE DC
+    #     original_dc = self.dc
+    #     # INCREASE DC
+    #     for _ in range(30):
+    #         if self.dc < 100:
+    #             self.dc += 1
+    #             self.set_duty_cycle(self.dc)
+    #         await asyncio.sleep(1)
+    #     # RESTORE
+    #     self.dc = original_dc
+    #     self.set_duty_cycle(self.dc)
+    def set_inactive(self):
         """
-        set_active(self) sets the peripheral active, and modulates duty cycles up and down
+        set_inactvie)self) overrides to set pwm to 0 dc
         """
-        # SAVE DC
-        original_dc = self.dc
-        # INCREASE DC
-        for _ in range(30):
-            if self.dc < 100:
-                self.dc += 1
-                self.set_duty_cycle(self.dc)
-            await asyncio.sleep(1)
-        # RESTORE
-        self.dc = original_dc
-        self.set_duty_cycle(self.dc)
+        self.set_duty_cycle(0)
 
     def set_freq(self, freq):
         """
@@ -388,7 +382,8 @@ class Pwm_Peripheral(BurstPeripheral):
         set_duty_cycle(self, dc) sets the duty cylce of the pwm peripheral in [dc] amount
         """
         self.dc = dc
-        self.pwm = self.pwm.ChangeDutyCycle(dc)
+        # self.pwm = self.pwm.ChangeDutyCycle(dc)
+        self.pwm.ChangeDutyCycle(dc)
 
     def get_duty_cycle(self):
         """
@@ -436,6 +431,54 @@ class PlantLight(Pwm_Peripheral):
         """
         super().__init__(channel, burst_time, freq, dc)
 
+    async def set_active(self):
+        """
+        set_active(self) sets a plant lught active between the hours
+        of START_LIGHT and END_LIGHT
+        """
+        curr_time = datetime.now()
+        hour = curr_time.hour
+        minute = curr_time.minute
+
+        start_hour, start_min = pin_constants.START_LIGHT
+        end_hour, end_min = pin_constants.END_LIGHT
+
+        if hour >= start_hour and hour <= end_hour: # and minute >= start_min and minute <= end_min:
+            await super().set_active()
+        else:
+            super().set_inactive()
+
+
+class Fan(Pwm_Peripheral):
+    """
+    Fan(BurstPeripheral) is a Fan object
+
+    SUPERCLASS: BurstPeripheral
+    """
+
+    def __init__(self, channel, burst_time=None, freq=pin_constants.FREQ, dc=pin_constants.DC):
+        """
+        Createsa Fan peripheral object
+        Inverts duty cycles
+        """
+        super().__init__(channel, burst_time, freq=freq, dc=abs(100 - dc))
+        
+    def set_duty_cycle(self, dc):
+        """
+        set_duty_cycle(self, dc) sets the duty cylce of the pwm peripheral in [dc] amount
+        inverts the ducty cycles for the fan
+        """
+        self.dc = dc
+        # self.pwm = self.pwm.ChangeDutyCycle(dc)
+        self.pwm.ChangeDutyCycle(abs(100 - dc))
+       
+    def get_duty_cycle(self):
+        """
+        get_duty_cycle(self) gets the duty cycles of the Fan
+        gets correct duty cycles for the fan by inverting the already inverted value
+        """
+        return self.dc
+
 
 # ---------- SUMMARY FUNCTIONS ------------
 
@@ -463,23 +506,27 @@ async def change_peripheral(peripheral, action):
     """
     burst_time = translate_action_to_burst_time(action)
 
-    if isinstance(peripheral, BurstPeripheral):
-        peripheral.set_burst_time(burst_time)
-        await peripheral.set_active()
-    else:
-        # not a burst peripheral
-        if burst_time != 0:
-            await peripheral.set_active()
-        else:
-            peripheral.set_inactive()
+    peripheral.set_burst_time(burst_time)
+    await peripheral.set_active()
+
+    # if isinstance(peripheral, BurstPeripheral):
+    #     peripheral.set_burst_time(burst_time)
+    #     await peripheral.set_active()
+    # else:
+    #     # not a burst peripheral
+    #     if burst_time != 0:
+    #         await peripheral.set_active()
+    #     else:
+    #         peripheral.set_inactive()
 
 
-async def react_all(ml_results, peripheral_dict):
+async def react_all(ml_results, peripheral_dict, pwm_settings):
     """
     react_all(peripheral_dict) changes all the peripherals in the
     [peripheral_dict] based on [ml_results]
     Returns: NONE
     """
+    # get peripheral actions
     valve = None
     heat = None
     light = None
@@ -488,6 +535,7 @@ async def react_all(ml_results, peripheral_dict):
     heat_res = None
     light_res = None
     fan_res = None
+    
     for p in peripheral_dict:
         if p == "water":
             valve = peripheral_dict[p]
@@ -501,8 +549,23 @@ async def react_all(ml_results, peripheral_dict):
         elif p == "fan":
             fan = peripheral_dict[p]
             fan_res = ml_results["fan"]
+   
+    # get and change pwm settings actions
+    for dev in pwm_settings:
+        if dev == "light":
+            light_dc = int(pwm_settings[dev]["duty_cycles"])
+        elif dev == "fan":
+            fan_dc = int(pwm_settings[dev]["duty_cycles"])
+      
+  
+    fan.set_duty_cycle(fan_dc)
+    light.set_duty_cycle(light_dc)
 
-    await asyncio.gather(change_peripheral(valve, valve_res), change_peripheral(heat, heat_res), change_peripheral(light, light_res), change_peripheral(fan, fan_res))
+    # change peripherals
+    await asyncio.gather(change_peripheral(valve, valve_res),
+                         change_peripheral(heat, heat_res),
+                         change_peripheral(light, light_res),
+                         change_peripheral(fan, fan_res))
 
     # for p in peripheral_dict:
     #     if p == "water":

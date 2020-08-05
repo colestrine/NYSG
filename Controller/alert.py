@@ -75,7 +75,62 @@ def log_alert(alert_message_dict, alert_path=ALERT_LOG_PATH):
 
 # --------- EMAIL ALERT SYSTEM------------
 
-def generate_message(log_dict):
+
+def low_detail_generator(log_data):
+    """
+    low_detail_generator(log_data) only generates a body message with essential 
+    information, e.g. extreme measurements
+    """
+    body = "EXTRA DETAILS\n"
+    for key in log_data:
+        if key == "temperature":
+            t = log_data[key]
+            if t > 90:
+                body = body + "\n" + f"High Temperature Detected: {t}"
+            elif t < 60:
+                body = body + "\n" + f"Low Temperature Detected: {t}"
+        elif key == "humidity":
+            h = log_data[key]
+            if h > 80:
+                body = body + "\n" + f"High Humidity Detected: {h}"
+            elif h < 20:
+                body = body + "\n" + f"Low Humidity Detected: {h}"
+        elif key == "soil_moisture":
+            sm = log_data[key]
+            if sm > 80:
+                body = body + "\n" + f"High Soil Moisture Detected: {sm}"
+            elif sm < 20:
+                body = body + "\n" + f"Low Soil Moisture Detected: {sm}"
+        elif key == "sunlight":
+            sl = log_data[key]
+            if sl > 100000:
+                body = body + "\n" + f"High Sunlight Levels Detected: {sl}"
+            elif sl < 30000:
+                body = body + "\n" + f"Low Sunlight Levels Detected: {sl}"
+    return body
+
+
+def high_detail_generator(log_data):
+    """
+    high_detail_generator(log_data) gives a body message with all
+    measurements and peripeheral actions taken, plus low level essential messages
+    if needed
+    """
+    body = "STANDARD DETAILS\n"
+    body = body + "\n".join([str(key) + " : " + str(log_data[key])
+                             for key in log_data])
+    body = body + "\n" + low_detail_generator(log_data)
+    return body
+
+
+def generate_message(log_dict, level_of_detail):
+    """
+    generate_message(log_dict, level_of_detail) generates a message based
+    on the current cirecumstances.
+
+    log0dict is the dictionary of dtate with top most key as a datetime time
+    level_of_detail is the level of granulairyt of detail for the message
+    """
     time_key = None
     for key in log_dict:
         time_key = key
@@ -84,18 +139,24 @@ def generate_message(log_dict):
     log_data = log_dict[time_key]
 
     subject = "Subject: NYSG Update @ " + str(time_key) + "\n\n"
-    body = "\n".join([str(key) + " : " + str(log_data[key])
-                      for key in log_data])
+    if level_of_detail == "high":
+        body = high_detail_generator(log_data)
+    elif level_of_detail == "low":
+        body = low_detail_generator(log_data)
     message = subject + body
     return message
 
 
-def send_email(email_address, email_password, receiver_emails, log_dict, ssl_port):
+def send_email(email_address, email_password, receiver_emails, log_dict, level_of_detail, ssl_port):
+    """
+    send_email(email_address, email_password, receiver_emails, log_dict, level_of_detail, ssl_port) sends
+    an email;
+    """
     # Create a secure SSL context
     context = ssl.create_default_context()
 
     # Generate message
-    message = generate_message(log_dict)
+    message = generate_message(log_dict, level_of_detail)
 
     with smtplib.SMTP_SSL("smtp.gmail.com", ssl_port, context=context) as server:
         server.login(email_address, email_password)
@@ -103,10 +164,35 @@ def send_email(email_address, email_password, receiver_emails, log_dict, ssl_por
             server.sendmail(email_address, receiver_email, message)
 
 
+# --------- ALERT TIME Data record --------
+class AlertStatus():
+    """
+    AlertStatus() is a record of when the last time an alert occurred was
+    """
+
+    def __init__(self):
+        """
+        AlertStatus() sets time to now
+        """
+        self.time = datetime.datetime.now()
+
+    def get_time(self):
+        """
+        get_time(self) gets the last time an alert was sent
+        """
+        return self.time
+
+    def set_time(self, time):
+        """
+        set_time(self, time) sets the current time inidicating an alert was sent
+        """
+        self.time = time
+
+
 # ---------- MAIN -----------------------
 
 
-def alert(water_level, alert_path=ALERT_LOG_PATH):
+def alert(water_level, log_dict, alert_status, alert_settings, alert_path=ALERT_LOG_PATH):
     """
     alert(water_level) raises an alert based on the current water level
     logs alert
@@ -124,8 +210,40 @@ def alert(water_level, alert_path=ALERT_LOG_PATH):
     else:
         alert_dict["water_level"] = None
 
+    # log alert
     time_dict[current_time] = alert_dict
     log_alert(time_dict, alert_path)
+
+    # check if email should nbe sent and what type of email is sent
+    rate = alert_settings["rate"]
+    level_of_detail = alert_settings["detail"]
+
+    delta_time = now - alert_status.get_time()
+    delta_time_seconds = delta_time.seconds
+    can_send_email = False
+    if rate == "day":
+        if delta_time_seconds >= 24 * 60 * 60:
+            can_send_email = True
+    elif rate == "hour":
+        if delta_time_seconds >= 1 * 60 * 60:
+            can_send_email = True
+    elif rate == "minute":
+        if delta_time_seconds >= 1 * 60:
+            can_send_email = True
+
+    # send email of alert
+    if can_send_email:
+        try:
+            send_email(EMAIL_ADDR, PASSWORD,
+                       RECEIVER_EMAIL_ADDRESSES, log_dict, level_of_detail, SSL_PORT)
+        except:
+            print(
+                "Email not sent; issue detected. This could be email address or password issue. ")
+            print(
+                "Make sure configuration json is filled in properly. ")
+        # reset time
+        alert_status.set_time(now)
+
     return
 
 # ----------- DEBUGGING ----------------
