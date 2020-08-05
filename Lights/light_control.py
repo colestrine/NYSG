@@ -37,7 +37,7 @@ def subtime(time1, time2): # subtract a time object
     return x
 
 
-def light(today_light,lux): 
+def light(today_light,lux, plant_type): 
 
 # FUNCTION TO BE CALLED BE MAIN LOOP
 #PASS IN THE TIMESTEP BETWEEN CALLING IT IN MINUTES
@@ -49,7 +49,7 @@ def light(today_light,lux):
     GROWSTART = time(6, 30)
     GROWSTOP = time(21,30)
 
-    # READ AND LOG LUX LEVELS, TODAY's DATA
+    # TODAY's DATA
 
 
     if today_light["DATE"].date() != DATETODAY.date():
@@ -76,10 +76,9 @@ def light(today_light,lux):
         today_light["ACTION"] = 0
         return today_light
     else:
-        plant_type = "Full sun"# read in from UI the plant light type
 
         if plant_type == "Full sun":
-            lightcontrol =  plant_light(9,7,8)
+            lightcontrol =  plant_light(9,8,7)
         elif plant_type == "Part sun":
             lightcontrol = plant_light(9,5,10)
         elif plant_type == "Part shade":
