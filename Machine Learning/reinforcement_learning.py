@@ -6,8 +6,7 @@ from os.path import expanduser
 import json
 
 class State:
-    # State class holds data for temperature, humidity, and soil moisture
-
+    # State class holds bucket data for temperature, humidity, and soil moisture, values must be between 1.0 and 5.9
     def __init__(self, temperature, humidity, soil_moisture):
         self.temperature = float(temperature)
         self.humidity = float(humidity)
@@ -17,8 +16,7 @@ class State:
     def __str__(self):
         return f"({self.temperature},{self.humidity},{self.soil_moisture})"
 
-    # When suntraction operator used, return tuple containing
-    # self.data-other.data values
+    # When suntraction operator used, return tuple containing self.data-other.data values
     def __sub__(self, other):
         return (self.temperature - other.temperature, self.humidity - other.humidity, self.soil_moisture - other.soil_moisture)
 
@@ -29,11 +27,11 @@ class State:
         else:
             return True
 
-    # Return uniformly weighted total distance between self's variables and
-    # other's variables
+    # Return uniformly weighted total distance between self's variables and other's variables
     def distance(self, other):
         return abs(self.temperature - other.temperature) + abs(self.humidity - other.humidity) + abs(self.soil_moisture - other.soil_moisture)
 
+    # Returns the goal state, as specified in healthy_levels.json
     def getGoal():
         healthy_levels_file = open(expanduser("~")+'/NYSG/Interface Files/healthy_levels.json', 'r')
         levels_json = healthy_levels_file.read()
@@ -87,11 +85,9 @@ class Environment:
 
         return reward
 
-    # Take current state and actions, return next state based on model of
-    # system
+    # Take current state and actions, return next state based on model of system
     def transition(current_state, water_action, ventilation_action, heat_action, prior_effects):
-        next_state = State(current_state.temperature, current_state.humidity,
-                           current_state.soil_moisture)
+        next_state = State(current_state.temperature, current_state.humidity, current_state.soil_moisture)
 
         big_random_low = 50
         big_random_high = 60
@@ -228,7 +224,7 @@ class Environment:
             next_state.temperature += factor
 
         ########################################################################
-        action_set = ActionSet(ventilation_action, water_action, heat_action)
+        action_set = ActionSet(water_action, ventilation_action, heat_action)
 
         if current_state.temperature < 1.0 :
             current_state.temperature = 1.0
@@ -637,9 +633,11 @@ class Test:
         pyplot.show()
 
 if __name__ == '__main__':
-    for i in range(0, 10):
+    iterations = 1
+
+    for i in range(0, iterations):
         current_state = State(random.randint(150, 550)/100, random.randint(150, 550)/100, random.randint(150, 550)/100)
-        goal_state = State(random.randint(150, 550)/100, random.randint(150, 550)/100, random.randint(150, 550)/100) #State.getGoal() #State(2.5, 2.8, 4.5)
+        goal_state = State(2.5, 2.8, 4.5) #State.getGoal() #State(random.randint(150, 550)/100, random.randint(150, 550)/100, random.randint(150, 550)/100)
 
         print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
         print('------------')
