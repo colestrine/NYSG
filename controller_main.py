@@ -44,6 +44,10 @@ interface_constants = importlib.import_module(
 # interval is the amount of time between different sampling from the greenhouse
 WAIT_INTERVAL_SECONDS = 60
 
+
+# -------- INTERFACE FILE DEPENDENT IMPORTS -------
+
+
 HEALTHY_LEVELS_PATH = "Interface Files/healthy_levels.json"
 VALUE_BUCKETS_PATH = "Interface Files/value_buckets.json"
 SENSOR_LOG = "Interface Files/sensor_log.json"
@@ -56,6 +60,10 @@ LOG_PATH = "Interface Files/log.json"
 EMAIL_SETTINGS_PATH = "Interface Files/email_settings.json"
 FREQUENCY_SETTINGS_PATH = "Interface Files/freq_settings.json"
 INIT_DICT_PICKLE_PATH = "init_dict_pickle_path.pickle"
+UPDATE_INTERVAl_PATH = "Interface Files/interval_settings.json"
+
+
+# ------ UTILITIES AND OTHER CONSTANTS ---------
 
 
 def convert_bucket_to_assoc(buckets):
@@ -258,8 +266,13 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     Returns NONE
     """
 
+    # read from update interval settings
+    interval_settings = load_data(UPDATE_INTERVAl_PATH)
+    # update time in seconds !!!, must be greater than 1 minute (60 sec)
+    update_interval_time = interval_settings["interval"] 
+
     # start task to sleep for one cycle
-    sleep_task = asyncio.create_task(asyncio.sleep(interval))
+    sleep_task = asyncio.create_task(asyncio.sleep(update_interval_time))
 
     # read from manual control interface
     manual_control = pin_constants.load_data(manual_control_path)
