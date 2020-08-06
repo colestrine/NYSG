@@ -51,4 +51,14 @@ def index(request):
 	last_soil_moisture = data_handler.bucket_to_nominal("soil_moisture", last_reading_values['soil_moisture'])
 	last_sunlight = data_handler.bucket_to_nominal("sunlight", last_reading_values['sunlight'])
 
-	return render(request, 'Analysis/analysis.html', {'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights})
+	current_dc_settings = data_handler.get_dc_settings()
+	current_freq_settings = data_handler.get_freq_settings()
+
+	# extract duty cycles for view render
+	fan_dc = current_dc_settings["fan_dc"]
+	light_dc = current_dc_settings["light_dc"]
+	# extract frequencies for view render
+	fan_freq = current_freq_settings["fan_freq"]
+	light_freq = current_freq_settings["light_freq"]
+
+	return render(request, 'Analysis/analysis.html', {'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc})

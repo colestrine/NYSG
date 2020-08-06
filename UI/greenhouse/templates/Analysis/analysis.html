@@ -12,7 +12,8 @@ Analysis
 
 <div id="sidebar" class="sidebar">
 	<div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">
-		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()"><</button>
+		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()">
+			< </button>
 	</div>
 	<div class="sidebar-content-wrapper" id="sidebar-content-wrapper">
 		<div class="sidebar-section-wrapper">
@@ -44,6 +45,30 @@ Analysis
 				<div>
 					{{last_sunlight}} lm/m<sup>2</sup>
 				</div>
+				<div class="sidebar-value-label">
+					Fan Duty Cycles
+				</div>
+				<div>
+					{{fan_dc}} %
+				</div>
+				<div class="sidebar-value-label">
+					Light Duty Cycles
+				</div>
+				<div>
+					{{light_dc}} %
+				</div>
+				<div class="sidebar-value-label">
+					Fan Frequency
+				</div>
+				<div>
+					{{fan_freq}} hz
+				</div>
+				<div class="sidebar-value-label">
+					Light Frequency
+				</div>
+				<div>
+					{{light_freq}} hz
+				</div>
 			</div>
 		</div>
 		<div class="sidebar-section-wrapper">
@@ -55,16 +80,17 @@ Analysis
 					<div class="legend-row-label">
 						Temperature (<span>&#176;</span>F)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
+					<button class="legend-row-button" id="expand-legend-button-temperature"
+						onclick="expandLegend('temperature')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-temperature-data">
 					{% for record in legend.temperature.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -73,16 +99,17 @@ Analysis
 					<div class="legend-row-label">
 						Humidity (%)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
+					<button class="legend-row-button" id="expand-legend-button-humidity"
+						onclick="expandLegend('humidity')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-humidity-data">
 					{% for record in legend.humidity.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -91,16 +118,17 @@ Analysis
 					<div class="legend-row-label">
 						Soil Moisture (%)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
+					<button class="legend-row-button" id="expand-legend-button-soil-moisture"
+						onclick="expandLegend('soil_moisture')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-soil-moisture-data">
 					{% for record in legend.soil_moisture.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -109,16 +137,17 @@ Analysis
 					<div class="legend-row-label">
 						Sunlight (lm/m<sup>2</sup>)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
+					<button class="legend-row-button" id="expand-legend-button-sunlight"
+						onclick="expandLegend('sunlight')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-sunlight-data">
 					{% for record in legend.sunlight.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -196,7 +225,7 @@ Analysis
 					label: 'Light Actions',
 					fill: 'false'
 				},
-				
+
 			],
 			labels: "{{labels}}".split(',').slice(-10)
 		},
@@ -218,7 +247,7 @@ Analysis
 						labelString: 'Time'
 					},
 					categoryPercentage: 1.0,
-            		barPercentage: 1.0
+					barPercentage: 1.0
 				}],
 				yAxes: [{
 					display: true,
@@ -234,7 +263,7 @@ Analysis
 		}
 	};
 
-	window.onload = function() {
+	window.onload = function () {
 		var actions_chart_element = document.getElementById('historical-levels').getContext('2d');
 		window.chart = new Chart(actions_chart_element, actions_chart_config);
 	};
@@ -245,12 +274,12 @@ Analysis
 		if (sidebar_hidden) {
 			document.getElementById("sidebar").style.width = "350px";
 			document.getElementById("sidebar-toggle-button").style.transform = "rotate(180deg)";
-			document.getElementById("sidebar-content-wrapper").style.display="grid";
+			document.getElementById("sidebar-content-wrapper").style.display = "grid";
 		}
 		else {
 			document.getElementById("sidebar").style.width = "30px";
 			document.getElementById("sidebar-toggle-button").style.transform = "none";
-			document.getElementById("sidebar-content-wrapper").style.display="none";
+			document.getElementById("sidebar-content-wrapper").style.display = "none";
 		}
 
 		sidebar_hidden = !sidebar_hidden
@@ -276,7 +305,7 @@ Analysis
 	}
 
 	function expandLegend(type) {
-		if (type == "temperature"){
+		if (type == "temperature") {
 			if (temperature_expanded) {
 				temperature_expanded = collapseSection("temperature")
 			}
@@ -287,7 +316,7 @@ Analysis
 				temperature_expanded = expandSection("temperature")
 			}
 		}
-		if (type == "humidity"){
+		if (type == "humidity") {
 			if (humidity_expanded) {
 				humidity_expanded = collapseSection("humidity")
 			}
@@ -298,7 +327,7 @@ Analysis
 				humidity_expanded = expandSection("humidity")
 			}
 		}
-		if (type == "soil_moisture"){
+		if (type == "soil_moisture") {
 			if (soil_moisture_expanded) {
 				soil_moisture_expanded = collapseSection("soil-moisture")
 			}
@@ -309,7 +338,7 @@ Analysis
 				soil_moisture_expanded = expandSection("soil-moisture")
 			}
 		}
-		if (type == "sunlight"){
+		if (type == "sunlight") {
 			if (sunlight_expanded) {
 				sunlight_expanded = collapseSection("sunlight")
 			}

@@ -258,3 +258,20 @@ class data_handler:
 		freq_file.close()
 		loaded_data = json.loads(freq_settings_json)
 		return {"fan_freq":loaded_data["fan"]["frequency"], "light_freq":loaded_data["light"]["frequency"]}
+
+	def put_interval_settings(interval):
+		interval_file = open(expanduser("~")+'/NYSG/Interface Files/interval_settings.json', 'w')
+
+		interval_settings = {"interval" : interval}
+
+		interval_file.write(json.dumps(interval_settings))
+
+		interval_file.close()
+
+	def get_interval_settings():
+		interval_file = open(expanduser("~")+'/NYSG/Interface Files/interval_settings.json', 'r')
+		interval_settings_json = interval_file.read()
+		interval_file.close()
+		loaded_data = json.loads(interval_settings_json)
+		return loaded_data
+

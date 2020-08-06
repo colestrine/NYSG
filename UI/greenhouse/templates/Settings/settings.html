@@ -47,6 +47,15 @@ Settings
 </div>
 {% endif %}
 
+<h1 class="form-header">Controller Update <br> Interval Settings</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="update_interval" name="update_interval">
+		{% csrf_token %}
+		{{ update_interval.as_p }}
+	</form>
+</div>
+
+
 <h1 class="form-header">Alert Settings</h1>
 <div class="form-wrapper">
 	<form action="/settings/" method="post" id="alert_form" name="alert_form">
@@ -119,6 +128,30 @@ Settings
 				</div>
 				<div>
 					{{last_sunlight}} lm/m<sup>2</sup>
+				</div>
+				<div class="sidebar-value-label">
+					Fan Duty Cycles
+				</div>
+				<div>
+					{{fan_dc}} %
+				</div>
+				<div class="sidebar-value-label">
+					Light Duty Cycles
+				</div>
+				<div>
+					{{light_dc}} %
+				</div>
+				<div class="sidebar-value-label">
+					Fan Frequency
+				</div>
+				<div>
+					{{fan_freq}} hz
+				</div>
+				<div class="sidebar-value-label">
+					Light Frequency
+				</div>
+				<div>
+					{{light_freq}} hz
 				</div>
 			</div>
 		</div>
