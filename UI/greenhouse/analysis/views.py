@@ -61,4 +61,6 @@ def index(request):
 	fan_freq = current_freq_settings["fan_freq"]
 	light_freq = current_freq_settings["light_freq"]
 
-	return render(request, 'Analysis/analysis.html', {'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc})
+	length = len(log_data)
+
+	return render(request, 'Analysis/analysis.html', {'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc, 'length':length})
