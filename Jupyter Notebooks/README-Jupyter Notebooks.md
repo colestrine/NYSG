@@ -78,5 +78,6 @@
     deactivate
     ```
     This returns you back to your terminal.
+12. To start using the notebook, follow the commands above. You should be able to start the Notebook and begin learning how to program in Python. 
 
 Source: https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
