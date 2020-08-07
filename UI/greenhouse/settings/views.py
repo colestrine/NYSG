@@ -1,9 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeForm, ActionForm, AlertForm, PwmForm, FreqForm, UpdateIntervalForm
+from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeForm, ActionForm, AlertForm, PwmForm, FreqForm, UpdateIntervalForm, DeleteForm, StartDateForm
 from scripts.data_handler import data_handler
 from collections import OrderedDict
 import json
+from datetime import datetime
+
+def is_valid_date(y, m, d):
+	try:
+		datetime(year=int(y),month=int(m),day=int(d))
+		return True 
+	except:
+		return False
 
 # Create your views here.
 def index(request):
@@ -22,6 +30,8 @@ def index(request):
 		pwm_form = PwmForm(request.POST)
 		freq_form = FreqForm(request.POST)
 		update_interval = UpdateIntervalForm(request.POST)
+		delete_form = DeleteForm(request.POST)
+		start_date_form = StartDateForm(request.POST)
 
 
 		# Check each form to see if it is valid. If valid, scrape data. If not, enter empty placeholder.
@@ -96,6 +106,24 @@ def index(request):
 		else:
 			interval = ''
 
+		if delete_form.is_valid():
+			data_handler.delete_main_log_data()
+
+		if start_date_form.is_valid():
+			start_day = start_date_form.cleaned_data['start_day']
+			start_month = start_date_form.cleaned_data['start_month']
+			start_year = start_date_form.cleaned_data['start_year']
+			end_day = start_date_form.cleaned_data['end_day']
+			end_month = start_date_form.cleaned_data['end_month']
+			end_year = start_date_form.cleaned_data['end_year']
+		else:
+			start_day = ''
+			start_month = ''
+			start_year = ''
+			end_day = ''
+			end_month = ''
+			end_year = ''
+		
 
 		# If data was submitted, write that data to the interface file
 		# If healthy levels data was submitted, update healthy levels interface file, and save plant profile as "custom" in profile interface file
@@ -144,7 +172,10 @@ def index(request):
 
 		if (interval):
 			data_handler.put_interval_settings(interval)
-		
+
+		if start_day:
+			if is_valid_date(start_year, start_month, start_day) and is_valid_date(end_year, end_month, end_day):
+				data_handler.set_germination_settings(start_day, start_month, start_year, end_day, end_month, end_year)
 		
 		
 
@@ -156,6 +187,19 @@ def index(request):
 	current_dc_settings = data_handler.get_dc_settings()
 	current_freq_settings = data_handler.get_freq_settings()
 	current_interval_settings = data_handler.get_interval_settings()
+	current_start_date = data_handler.get_germination_settings()
+	start_date = current_start_date["start_date"]
+	split_start = start_date.split("-")
+	# split_start = list(map(lambda s : int(s), split_start))
+	start_year = split_start[0]
+	start_month = split_start[1]
+	start_day = split_start[2]
+	end_date = current_start_date["end_date"]
+	split_end = end_date.split("-")
+	# split_end= list(map(lambda s : int(s), split_end))
+	end_year = split_end[0]
+	end_month = split_end[1]
+	end_day = split_end[2]
 
 	# extract duty cycles for view render
 	fan_dc = current_dc_settings["fan_dc"]
@@ -175,6 +219,8 @@ def index(request):
 	pwm_form = PwmForm(initial=current_dc_settings)
 	freq_form = FreqForm(initial=current_freq_settings)
 	update_interval = UpdateIntervalForm(initial=current_interval_settings)
+	delete_form = DeleteForm(initial = {'delete_field':'no'})
+	start_date_form = StartDateForm(initial = {'start_day':start_day, 'start_month':start_month, 'start_year':start_year, 'end_day':end_day, 'end_month':end_month, 'end_year':end_year})
 
 	log_data = data_handler.get_log_data()
 	log_data = OrderedDict(log_data)
@@ -189,4 +235,4 @@ def index(request):
 	last_soil_moisture = data_handler.bucket_to_nominal("soil_moisture", last_reading_values['soil_moisture'])
 	last_sunlight = data_handler.bucket_to_nominal("sunlight", last_reading_values['sunlight'])
 
-	return render(request, 'Settings/settings.html', {'action_form': action_form, 'mode': mode, 'mode_form': mode_form, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile, 'alert_form': alert_form, 'pwm_form':pwm_form, 'freq_form':freq_form, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc, 'update_interval':update_interval})
+	return render(request, 'Settings/settings.html', {'action_form': action_form, 'mode': mode, 'mode_form': mode_form, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile, 'alert_form': alert_form, 'pwm_form':pwm_form, 'freq_form':freq_form, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc, 'update_interval':update_interval, 'delete_form':delete_form, 'start_date_form':start_date_form })

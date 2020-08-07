@@ -2,42 +2,52 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-        <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon/favicon.ico' %}"/>
-    </head>
 
-    <body class="body">
-    	<div id="header" name="header" class="header">
-            {% url 'dashboard' as dashboard_url %}
-            {% url 'settings' as settings_url %}
-            {% url 'analysis' as analysis_url %}
-    		<button {% if request.path == dashboard_url %} class="header-button-active" {% else %} class="header-button-inactive" {% endif %}>
-                <a class="header-link blue" href="{{ dashboard_url }}">Dashboard</a>
-            </button>
-            <button {% if request.path == analysis_url %} class="header-button-active" {% else %} class="header-button-inactive" {% endif %}>
-                <a class="header-link" href="{{ analysis_url }}">Analysis</a>
-            </button>
-			<button {% if request.path == settings_url %} class="header-button-active" {% else %} class="header-button-inactive" {% endif %}>
-                <a class="header-link" href="{{ settings_url }}">Settings</a>
-            </button>
-            <button class="header-button-inactive refresh-header" id="refresh-data-button">
-                <a class="header-link" href="{{ request.path }}">Refresh Data</a>
-            </button>
-		</div>
-        <div id="content" name="content" class="content">
-        	{% block content %}
-            {% endblock %}
-        </div>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon/favicon.ico' %}" />
+</head>
+
+<body class="body">
+    <div id="header" name="header" class="header">
+        {% url 'dashboard' as dashboard_url %}
+        {% url 'settings' as settings_url %}
+        {% url 'analysis' as analysis_url %}
+        {% url 'germination' as germination_url %}
+        <button {% if request.path == dashboard_url %} class="header-button-active" {% else %}
+            class="header-button-inactive" {% endif %}>
+            <a class="header-link blue" href="{{ dashboard_url }}">Dashboard</a>
+        </button>
+        <button {% if request.path == analysis_url %} class="header-button-active" {% else %}
+            class="header-button-inactive" {% endif %}>
+            <a class="header-link" href="{{ analysis_url }}">Analysis</a>
+        </button>
+        <button {% if request.path == germination_url %} class="header-button-active" {% else %}
+            class="header-button-inactive" {% endif %}>
+            <a class="header-link" href="{{ germination_url }}">Germination</a>
+        </button>
+        <button {% if request.path == settings_url %} class="header-button-active" {% else %}
+            class="header-button-inactive" {% endif %}>
+            <a class="header-link" href="{{ settings_url }}">Settings</a>
+        </button>
+        <button class="header-button-inactive refresh-header" id="refresh-data-button">
+            <a class="header-link" href="{{ request.path }}">Refresh Data</a>
+        </button>
+    </div>
+    <div id="content" name="content" class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
 </html>
 
 <script>
-    setTimeout(function() {
+    setTimeout(function () {
         document.getElementById("refresh-data-button").style.display = "block";
-        setTimeout(function() {
+        setTimeout(function () {
             document.getElementById("refresh-data-button").style.opacity = 1;
         }, 200);
     }, 60000);

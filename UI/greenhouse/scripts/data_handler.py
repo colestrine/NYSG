@@ -275,3 +275,50 @@ class data_handler:
 		loaded_data = json.loads(interval_settings_json)
 		return loaded_data
 
+
+	def delete_main_log_data():
+		# get old data
+		main_log_file = open(expanduser("~")+'/NYSG/Interface Files/log.json', 'r')
+		old_main_log_json = main_log_file.read()
+		main_log_file.close()
+		old_main_log = json.loads(old_main_log_json)
+
+		# clear main log
+		main_log_file = open(expanduser("~")+'/NYSG/Interface Files/log.json', 'w')
+		main_log = {
+    "31-07-2020 11:02:58": {
+        "sunlight": 0,
+        "temperature": 0,
+        "humidity": 0,
+        "soil_moisture": 0,
+        "water_action": 0,
+        "fan_action": 0,
+        "heat_action": 0,
+        "light_action": 0
+    }}
+		main_log_file.write(json.dumps(main_log))
+		main_log_file.close()
+
+		# backup old data
+		backup_log_file = open(expanduser("~")+'/NYSG/Interface Files/log_backup1.json', 'w')
+		backup_log_file.write(json.dumps(old_main_log))
+		backup_log_file.close()
+		
+	
+	def get_germination_settings():
+		germ_file = open(expanduser("~")+'/NYSG/Interface Files/germination.json', 'r')
+		germ_json = germ_file.read()
+		germ_file.close()
+		germ_data = json.loads(germ_json)
+		return germ_data 
+
+	
+	def set_germination_settings(d1, m1, y1, d2, m2, y2):
+		germ_file = open(expanduser("~")+'/NYSG/Interface Files/germination.json', 'w')
+		germ_log = {
+			"start_date": str(y1) + "-" + str(m1) + "-" + str(d1),
+			"end_date": str(y2) + "-" + str(m2) + "-" + str(d2)
+		}
+		germ_file.write(json.dumps(germ_log))
+		germ_file.close()
+		

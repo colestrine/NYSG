@@ -80,6 +80,25 @@ Settings
 	</form>
 </div>
 
+<h1 class="form-header">Germination Date Settings</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="start_date_form" name="start_date_form">
+		{% csrf_token %}
+		{{ start_date_form.as_p }}
+	</form>
+</div>
+
+<h1 class="form-header">Delete Data</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="delete_form" name="delete_form">
+		{% csrf_token %}
+		{{ delete_form.as_p }}
+	</form>
+</div>
+
+
+
+
 <div id="save-profile-modal" class="save-profile-modal">
 	<div class="form-wrapper save-profile-form-wrapper">
 		<button class="close-save-profile-modal-button" id="close-save-profile-modal-button"
@@ -240,6 +259,8 @@ Settings
 </div>
 
 <script>
+
+
 	document.getElementById("id_plant_profile").options[0].disabled = true;
 
 	function showSaveProfileModal() {
