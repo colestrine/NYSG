@@ -56,14 +56,6 @@ class EffectSet():
 
 		return {'temperature': float(temperature_effect), 'humidity': float(humidity_effect), 'soil_moisture': float(soil_moisture_effect)}
 
-	# Returns dictionary of bootstrap effects from transition_bootstrap.json based on action set and current value buckets
-	def getBootstrapEffects():
-		with open('Machine Learning/Files/transition_bootstrap.json', 'r') as transition_file:
-			contents = transition_file.read()
-			P = json.loads(contents)
-
-		return P
-
 	# Returns entire contents of transition.json as a dictionary
 	def getEffects():
 		with open('Machine Learning/Files/transition.json', 'r') as transition_file:
@@ -177,8 +169,8 @@ def initializeToZeros(action_choices):
 	return P
 
 if __name__ == '__main__':
-	action_choices = ['big_decrease', 'small_decrease', 'none', 'small_increase', 'big_increase']
-	#action_choices = ['off', 'low', 'medium', 'high']
+	# action_choices = ['big_decrease', 'small_decrease', 'none', 'small_increase', 'big_increase']
+	action_choices = ['off', 'low', 'medium', 'high']
 
 	y_n = input("WARNING: Transition file will be zeroed-out. Enter (y) to continue, any other key to exit.\n")
 
