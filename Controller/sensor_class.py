@@ -178,9 +178,9 @@ def calibrate_soil_sensor():
     buckets = [0,0,0,0,0,0]
     sensor = MCP3001()
     k= input("Place soil moisture sensor in air, then hit any key. ")
-    buckets[0] = moisture.level
+    buckets[0] = sensor.value
     k= input("Place soil moisture sensor in water NO HIGHER THAN THE LINE, then hit any key. ")
-    buckets[5] = moisture.level
+    buckets[5] = sensor.value
     interval = (buckets[0] - buckets[5]) / 5 
     for i in range(1,5):
         buckets[i]= buckets[0] - interval * i 
