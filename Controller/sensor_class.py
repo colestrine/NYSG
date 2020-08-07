@@ -326,7 +326,7 @@ def basic_moisture_test(n_iter):
     sensor = MCP3001()
 
     for _ in range(n_iter):
-        print("Moisture Level: %0.1f " % sensor.value)
+        print("Moisture Level: %f " % sensor.value)
         time.sleep(2)
 
 
@@ -346,7 +346,7 @@ def three_sensor_test(n_iter):
 
         print("Ambient Light: %0.1f " % light.light)
 
-        print("Moisture Level: %0.1f " % moisture.value)
+        print("Moisture Level: %f " % moisture.value)
 
         time.sleep(2)
 
