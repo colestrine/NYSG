@@ -174,6 +174,17 @@ def create_channel():
     """
     return busio.I2C(board.SCL, board.SDA)
 
+def calibrate_soil_sensor():
+    buckets = [0,0,0,0,0,0]
+    sensor = MCP3001()
+    k= input("Place soil moisture sensor in air, then hit any key. ")
+    buckets[0] = moisture.level
+    k= input("Place soil moisture sensor in water NO HIGHER THAN THE LINE, then hit any key. ")
+    buckets[5] = moisture.level
+    interval = (buckets[0] - buckets[5]) / 5 
+    for i in range(1,5):
+        buckets[i]= buckets[0] - interval * i 
+    return buckets
 
 # -------- SUMMARY FUNCTIONS --------
 
