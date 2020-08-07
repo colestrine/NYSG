@@ -61,7 +61,8 @@ import sys
 from Controller import log
 
 MAX_LIGHT_DIVISOR = 15000
-
+DRY_SOIL = .7
+WET_SOIL = .4
 
 # ------- TEST CONSTANTS ----------
 N_SENSORS = 4
@@ -158,7 +159,7 @@ class MoistureSensor():
         """
         unstandardized = self.sensor.value
         # smaller value is low moisture, higher is high moisture, mult by 100 to scale
-        standard = (1 - unstandardized) * 100
+        standard = soil_conversion(unstandardized)
         return standard
 
 
@@ -175,16 +176,20 @@ def create_channel():
     return busio.I2C(board.SCL, board.SDA)
 
 def calibrate_soil_sensor():
-    buckets = [0,0,0,0,0,0]
+    buckets = [0,0]
     sensor = MCP3001()
-    k= input("Place soil moisture sensor in air, then hit any key. ")
+    input("Place soil moisture sensor in air, then hit any key. ")
+
     buckets[0] = sensor.value
-    k= input("Place soil moisture sensor in water NO HIGHER THAN THE LINE, then hit any key. ")
-    buckets[5] = sensor.value
-    interval = (buckets[0] - buckets[5]) / 5 
-    for i in range(1,5):
-        buckets[i]= buckets[0] - interval * i 
+    print("Dry soil value: " + str(buckets[0]))
+    input("Place soil moisture sensor in water NO HIGHER THAN THE LINE, then hit any key. ")
+    buckets[1] = sensor.value
+    print("Wet soil value: " +  str(buckets[1]))
     return buckets
+
+def soil_conversion(raw):
+    final = round(100 - (raw - WET_SOIL)* 100/(DRY_SOIL - WET_SOIL))
+    return final
 
 # -------- SUMMARY FUNCTIONS --------
 
