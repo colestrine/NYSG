@@ -10,7 +10,7 @@ def calibrate_soil_sensor():
     input("Place soil moisture sensor in water NO HIGHER THAN THE LINE, then hit any key. ")
     buckets[1] = sensor.value
     print("Wet soil value: " +  str(buckets[1]))
-    return
+    return buckets
 
 
 calibrate_soil_sensor()
