@@ -159,7 +159,7 @@ class MoistureSensor():
         """
         unstandardized = self.sensor.value
         # smaller value is low moisture, higher is high moisture, mult by 100 to scale
-        standard = soil_conversion(unstandardized)
+        standard = round(99 - (unstandardized - WET_SOIL)* 99/(DRY_SOIL - WET_SOIL))
         return standard
 
 
@@ -174,14 +174,6 @@ def create_channel():
     WRAPPER FUNCTION for students
     """
     return busio.I2C(board.SCL, board.SDA)
-
-def soil_conversion(raw):
-    final = round(100 - (raw - WET_SOIL)* 100/(DRY_SOIL - WET_SOIL))
-    if final < 1:
-        final = 1
-    if final > 99:
-        final = 99
-    return final
 
 # -------- SUMMARY FUNCTIONS --------
 
