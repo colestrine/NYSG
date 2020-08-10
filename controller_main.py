@@ -83,6 +83,34 @@ ONE_CYCLE = False
 N_CYCLES = None
 APPEND = True
 
+
+# ---------- ML TRAINING VARIABLES --------------
+TRAIN_ML = True
+TRAIN_ML_COUNTER = 0
+TRAIN_ML_PATH = "Machine Learning/Files/actions.json"
+ACTIONS_JSON = pin_constants.load_data(TRAIN_ML_PATH)
+
+# add in no light action
+for key in ACTIONS_JSON:
+    ACTIONS_JSON[key]["light"] = "off"
+
+
+def convert_ml_training_actions(action):
+    if action == "off":
+        return 0
+    elif action == "low":
+        return 2
+    elif action == "high":
+        return 4
+    
+    
+ACTIONS_LIST = [ACTIONS_JSON[key] for key in ACTIONS_JSON]
+# convert to a compatible action
+for _dict in ACTIONS_LIST:
+    for key in _dict:
+        _dict[key] = convert_ml_training_actions(_dict[key])
+
+
 # -------- ML WRAPPERS --------
 
 
@@ -272,8 +300,16 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
 
     ml_args = one_cycle_sensors(init_dict)
     log(sensor_log_path, ml_args, max_log_size)
-
-    if manual_control["mode"] == "machine_learning":
+    
+    # ML TRAIN STUFF TO BE REMOVED
+    if TRAIN_ML:
+        if TRAIN_ML_COUNTER == len(ACTIONS_LIST):
+            raise RuntimeError("Stop Execution")
+        training_actions = ACTIONS_LIST[TRAIN_ML_COUNTER]
+        training_results = {"now": training_actions}
+        peripheral_actions = await one_cycle_peripherals(init_dict, training_results, pwm_settings)
+        TRAIN_ML_COUNTER += 1
+    elif manual_control["mode"] == "machine_learning":
         ml_results = ml_adapter(ml_args)
         peripheral_actions = await one_cycle_peripherals(init_dict, ml_results, pwm_settings)
     elif manual_control["mode"] == "manual":
