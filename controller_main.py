@@ -1,9 +1,6 @@
 
-"""
-[main] is the driver script for the rapsberry Pi. It runs continously, reading
-in the sensor data, running the ML algorithm, and then responds with an output.
-Along the way, it logs data as well.
-"""
+""" [main] is the driver script for the rapsberry Pi. It runs continously, reading in the sensor data, running the ML 
+algorithm, and then responds with an output. Along the way, it logs data as well. """
 
 
 # -------- EXTERNAL IMPORTS ------
@@ -13,7 +10,6 @@ import pickle
 import importlib
 import sys
 import RPi.GPIO as GPIO
-
 
 # -------- ASYNCHRONOUS IMPORTS ----------
 import asyncio
@@ -85,7 +81,7 @@ APPEND = True
 
 
 # ---------- ML TRAINING VARIABLES --------------
-TRAIN_ML = True
+TRAIN_ML = False
 TRAIN_ML_COUNTER = 0
 TRAIN_ML_PATH = "Machine Learning/Files/actions.json"
 ACTIONS_JSON = pin_constants.load_data(TRAIN_ML_PATH)
@@ -135,6 +131,7 @@ def process_to_ml(ml_args):
     values between 1 and 5
     """
     converted_dict = {}
+
     for key in ml_args:
         converted_dict[key] = convert_to_bucket(
             ml_args[key], key, BUCKETS_ASSOC)
@@ -165,22 +162,22 @@ def ml_adapter(args_dict):
     healthy_temp = healthy_levels_dict['temperature']
     healthy_humidity = healthy_levels_dict['humidity']
     healthy_moisture = healthy_levels_dict['soil_moisture']
-    healthy_light = healthy_levels_dict['sunlight']
     goal_state = machine_learning.State(healthy_temp, healthy_humidity,
-                                        healthy_moisture, healthy_light)
+                                        healthy_moisture)
 
-    current_state_dict = process_to_ml(args_dict)
+    current_state_dict = process_to_ml(list(args_dict.values())[0])
     curr_t = current_state_dict['temperature']
     curr_h = current_state_dict['humidity']
     curr_m = current_state_dict['soil_moisture']
-    curr_l = current_state_dict['sunlight']
     curr_state = machine_learning.State(curr_t, curr_h,
-                                        curr_m, curr_l)
+                                        curr_m)
 
     ml_results = machine_learning.Agent.run(curr_state, goal_state)
     ml_result_dict = process_from_ml(ml_results)
 
-    now = datetime.datetime.now()
+    print(f'ML DECISION: {ml_result_dict}')
+
+    now = datetime.now()
     dt_string = now.strftime("%d-%m-%Y %H:%M:%-S")
     final_dict = {}
     final_dict[dt_string] = ml_result_dict
@@ -238,7 +235,7 @@ def init():
     ret_dict["alert_status"] = AlertStatus()
 
     # set up manual control and dump into memory
-    manual_control_dict = {"mode": "manual"}  # TODO: change to ML later
+    manual_control_dict = {"mode": "machine_learning"}  # TODO: change to ML later
     pin_constants.dump_data(manual_control_dict, MODE_PATH)
     
     # set up a random state
@@ -374,7 +371,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     action_set = transition.ActionSet(water, fan, heat)
     
     
-    put = transition.EffectSet.putEffect(action_set, init_dict["state"], current_state, True)
+    put = transition.EffectSet.putEffect(action_set, init_dict["state"], current_state)
     
     init_dict["state"] = current_state
 
