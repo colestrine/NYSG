@@ -34,17 +34,35 @@ stdev_humidity = stdev(humidities)
 stdev_soil_moisture = stdev(soil_moistures)
 stdev_sunlight = stdev(sunlights)
 
+max_temperature = max(temperatures)
+max_humidity = max(humidities)
+max_soil_moisture = max(soil_moistures)
+max_sunlight = max(sunlights)
+
+min_temperature = min(temperatures)
+min_humidity = min(humidities)
+min_soil_moisture = min(soil_moistures)
+min_sunlight = min(sunlights)
+
 print(f'AVERAGE TEMPERATURE: {avg_temperature}')
-print(f'STANDARD DEVIATION TEMPERATURE: {stdev_temperature}\n')
+print(f'STANDARD DEVIATION TEMPERATURE: {stdev_temperature}')
+print(f'MAX TEMPERATURE: {max_temperature}')
+print(f'MIN TEMPERATURE: {min_temperature}\n')
 
 print(f'AVERAGE HUMIDITY: {avg_humidity}')
-print(f'STANDARD DEVIATION HUMDIITY: {stdev_humidity}\n')
+print(f'STANDARD DEVIATION HUMDIITY: {stdev_humidity}')
+print(f'MAX HUMIDITY: {max_humidity}')
+print(f'MIN HUMIDITY: {min_humidity}\n')
 
 print(f'AVERAGE SOIL MOISTURE: {avg_soil_moisture}')
-print(f'STANDARD DEVIATION SOIL MOISTURE: {stdev_soil_moisture}\n')
+print(f'STANDARD DEVIATION SOIL MOISTURE: {stdev_soil_moisture}')
+print(f'MAX SOIL MOISTURE: {max_soil_moisture}')
+print(f'MIN SOIL MOISTURE: {min_soil_moisture}\n')
 
 print(f'AVERAGE LIGHT: {avg_sunlight}')
 print(f'STANDARD DEVIATION LIGHT: {stdev_sunlight}')
+print(f'MAX LIGHT: {max_sunlight}')
+print(f'MIN LIGHT: {min_sunlight}\n')
 
 x = range(0, len(records))
 
