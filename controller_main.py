@@ -30,8 +30,8 @@ from Controller import pin_constants
 
 # --------- MACHINE LEARNING IMPORTS ----------
 machine_learning = importlib.import_module(
-    'Machine Learning.reinforcement_learning')
-transition = importlib.import_module('Machine Learning.transition')
+    'Machine Learning.reinforcement_learning-static')
+transition = importlib.import_module('Machine Learning.transition-static')
 
 
 # --------- INTERFACE FILES IMPORTS ------------
@@ -285,6 +285,8 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     Returns NONE
     """
 
+    global TRAIN_ML_COUNTER
+
     # start task to sleep for one cycle
     sleep_task = asyncio.create_task(asyncio.sleep(interval))
 
@@ -352,15 +354,15 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     
     def convert_action(action):
         if action == 0:
-            return "none"
+            return "off"
         elif action == 1:
             return "big_decrease"
         elif action == 2:
-            return "small_decrease"
+            return "low"
         elif action == 3:
             return "small_increase"
         elif action == 4:
-            return "big_increase"
+            return "high"
         
     for key in peripheral_actions:
         if key == "water":
@@ -372,7 +374,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     action_set = transition.ActionSet(water, fan, heat)
     
     
-    put = transition.EffectSet.putEffect(action_set, init_dict["state"], current_state)
+    put = transition.EffectSet.putEffect(action_set, init_dict["state"], current_state, True)
     
     init_dict["state"] = current_state
 
