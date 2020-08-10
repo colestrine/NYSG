@@ -101,11 +101,11 @@ class Environment:
 
         assert (prior_temperature_hits and prior_humidity_hits and prior_soil_moisture_hits), "transition.json not properly initialized - try training first"
 
-        next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_temperature_effect)
+        next_state.temperature = next_state.temperature + prior_temperature_effect
 
-        next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_humidity_effect)
+        next_state.humidity = next_state.humidity + prior_humidity_effect
 
-        next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_soil_moisture_effect)
+        next_state.soil_moisture = next_state.soil_moisture + prior_soil_moisture_effect
 
         return next_state
 
