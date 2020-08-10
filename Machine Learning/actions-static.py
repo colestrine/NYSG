@@ -4,9 +4,9 @@ import json
 # fan_actions = ['big_decrease', 'small_decrease', 'none', 'small_increase', 'big_increase']
 # heat_actions = ['big_decrease', 'small_decrease', 'none', 'small_increase', 'big_increase']
 
-water_actions = ['off', 'low', 'medium', 'high']
-fan_actions = ['off', 'low', 'medium', 'high']
-heat_actions = ['off', 'low', 'medium', 'high']
+water_actions = ['off', 'low', 'high']
+fan_actions = ['off', 'low','high']
+heat_actions = ['off', 'low', 'high']
 
 actions = {}
 index = '1'

@@ -12,309 +12,124 @@
   "3": {
     "water": "off",
     "fan": "off",
-    "heat": "medium"
+    "heat": "high"
   },
   "4": {
     "water": "off",
-    "fan": "off",
-    "heat": "high"
+    "fan": "low",
+    "heat": "off"
   },
   "5": {
     "water": "off",
     "fan": "low",
-    "heat": "off"
+    "heat": "low"
   },
   "6": {
     "water": "off",
     "fan": "low",
-    "heat": "low"
+    "heat": "high"
   },
   "7": {
     "water": "off",
-    "fan": "low",
-    "heat": "medium"
+    "fan": "high",
+    "heat": "off"
   },
   "8": {
     "water": "off",
-    "fan": "low",
-    "heat": "high"
+    "fan": "high",
+    "heat": "low"
   },
   "9": {
     "water": "off",
-    "fan": "medium",
-    "heat": "off"
+    "fan": "high",
+    "heat": "high"
   },
   "10": {
-    "water": "off",
-    "fan": "medium",
-    "heat": "low"
+    "water": "low",
+    "fan": "off",
+    "heat": "off"
   },
   "11": {
-    "water": "off",
-    "fan": "medium",
-    "heat": "medium"
+    "water": "low",
+    "fan": "off",
+    "heat": "low"
   },
   "12": {
-    "water": "off",
-    "fan": "medium",
+    "water": "low",
+    "fan": "off",
     "heat": "high"
   },
   "13": {
-    "water": "off",
-    "fan": "high",
+    "water": "low",
+    "fan": "low",
     "heat": "off"
   },
   "14": {
-    "water": "off",
-    "fan": "high",
+    "water": "low",
+    "fan": "low",
     "heat": "low"
   },
   "15": {
-    "water": "off",
-    "fan": "high",
-    "heat": "medium"
+    "water": "low",
+    "fan": "low",
+    "heat": "high"
   },
   "16": {
-    "water": "off",
+    "water": "low",
     "fan": "high",
-    "heat": "high"
+    "heat": "off"
   },
   "17": {
     "water": "low",
-    "fan": "off",
-    "heat": "off"
+    "fan": "high",
+    "heat": "low"
   },
   "18": {
     "water": "low",
+    "fan": "high",
+    "heat": "high"
+  },
+  "19": {
+    "water": "high",
+    "fan": "off",
+    "heat": "off"
+  },
+  "20": {
+    "water": "high",
     "fan": "off",
     "heat": "low"
   },
-  "19": {
-    "water": "low",
-    "fan": "off",
-    "heat": "medium"
-  },
-  "20": {
-    "water": "low",
+  "21": {
+    "water": "high",
     "fan": "off",
     "heat": "high"
   },
-  "21": {
-    "water": "low",
+  "22": {
+    "water": "high",
     "fan": "low",
     "heat": "off"
   },
-  "22": {
-    "water": "low",
+  "23": {
+    "water": "high",
     "fan": "low",
     "heat": "low"
   },
-  "23": {
-    "water": "low",
-    "fan": "low",
-    "heat": "medium"
-  },
   "24": {
-    "water": "low",
+    "water": "high",
     "fan": "low",
     "heat": "high"
   },
   "25": {
-    "water": "low",
-    "fan": "medium",
+    "water": "high",
+    "fan": "high",
     "heat": "off"
   },
   "26": {
-    "water": "low",
-    "fan": "medium",
+    "water": "high",
+    "fan": "high",
     "heat": "low"
   },
   "27": {
-    "water": "low",
-    "fan": "medium",
-    "heat": "medium"
-  },
-  "28": {
-    "water": "low",
-    "fan": "medium",
-    "heat": "high"
-  },
-  "29": {
-    "water": "low",
-    "fan": "high",
-    "heat": "off"
-  },
-  "30": {
-    "water": "low",
-    "fan": "high",
-    "heat": "low"
-  },
-  "31": {
-    "water": "low",
-    "fan": "high",
-    "heat": "medium"
-  },
-  "32": {
-    "water": "low",
-    "fan": "high",
-    "heat": "high"
-  },
-  "33": {
-    "water": "medium",
-    "fan": "off",
-    "heat": "off"
-  },
-  "34": {
-    "water": "medium",
-    "fan": "off",
-    "heat": "low"
-  },
-  "35": {
-    "water": "medium",
-    "fan": "off",
-    "heat": "medium"
-  },
-  "36": {
-    "water": "medium",
-    "fan": "off",
-    "heat": "high"
-  },
-  "37": {
-    "water": "medium",
-    "fan": "low",
-    "heat": "off"
-  },
-  "38": {
-    "water": "medium",
-    "fan": "low",
-    "heat": "low"
-  },
-  "39": {
-    "water": "medium",
-    "fan": "low",
-    "heat": "medium"
-  },
-  "40": {
-    "water": "medium",
-    "fan": "low",
-    "heat": "high"
-  },
-  "41": {
-    "water": "medium",
-    "fan": "medium",
-    "heat": "off"
-  },
-  "42": {
-    "water": "medium",
-    "fan": "medium",
-    "heat": "low"
-  },
-  "43": {
-    "water": "medium",
-    "fan": "medium",
-    "heat": "medium"
-  },
-  "44": {
-    "water": "medium",
-    "fan": "medium",
-    "heat": "high"
-  },
-  "45": {
-    "water": "medium",
-    "fan": "high",
-    "heat": "off"
-  },
-  "46": {
-    "water": "medium",
-    "fan": "high",
-    "heat": "low"
-  },
-  "47": {
-    "water": "medium",
-    "fan": "high",
-    "heat": "medium"
-  },
-  "48": {
-    "water": "medium",
-    "fan": "high",
-    "heat": "high"
-  },
-  "49": {
-    "water": "high",
-    "fan": "off",
-    "heat": "off"
-  },
-  "50": {
-    "water": "high",
-    "fan": "off",
-    "heat": "low"
-  },
-  "51": {
-    "water": "high",
-    "fan": "off",
-    "heat": "medium"
-  },
-  "52": {
-    "water": "high",
-    "fan": "off",
-    "heat": "high"
-  },
-  "53": {
-    "water": "high",
-    "fan": "low",
-    "heat": "off"
-  },
-  "54": {
-    "water": "high",
-    "fan": "low",
-    "heat": "low"
-  },
-  "55": {
-    "water": "high",
-    "fan": "low",
-    "heat": "medium"
-  },
-  "56": {
-    "water": "high",
-    "fan": "low",
-    "heat": "high"
-  },
-  "57": {
-    "water": "high",
-    "fan": "medium",
-    "heat": "off"
-  },
-  "58": {
-    "water": "high",
-    "fan": "medium",
-    "heat": "low"
-  },
-  "59": {
-    "water": "high",
-    "fan": "medium",
-    "heat": "medium"
-  },
-  "60": {
-    "water": "high",
-    "fan": "medium",
-    "heat": "high"
-  },
-  "61": {
-    "water": "high",
-    "fan": "high",
-    "heat": "off"
-  },
-  "62": {
-    "water": "high",
-    "fan": "high",
-    "heat": "low"
-  },
-  "63": {
-    "water": "high",
-    "fan": "high",
-    "heat": "medium"
-  },
-  "64": {
     "water": "high",
     "fan": "high",
     "heat": "high"

@@ -116,7 +116,7 @@ class Agent:
             return ({'water_action': water_action, 'ventilation_action': ventilation_action, 'heat_action': heat_action}, None)
 
         # Define action choices
-        action_choices = ['off', 'low', 'medium', 'high']
+        action_choices = ['off', 'low', 'high']
 
 
         # Get prior effects
@@ -147,9 +147,9 @@ class Agent:
                         # Iterate through three timesteps (as we are not concerned with longer-term effects)
                         while(timestep < 3):
                             # Pick next actions
-                            water_action = action_choices[random.randint(0, 4)]
-                            ventilation_action = action_choices[random.randint(0, 4)]
-                            heat_action = action_choices[random.randint(0, 4)]
+                            water_action = action_choices[random.randint(0, 3)]
+                            ventilation_action = action_choices[random.randint(0, 3)]
+                            heat_action = action_choices[random.randint(0, 3)]
 
                             # Look one step ahead, observe new state and reward
                             next_state = Environment.transition(current_state, water_action, ventilation_action, heat_action, prior_effects)

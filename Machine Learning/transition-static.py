@@ -170,7 +170,7 @@ def initializeToZeros(action_choices):
 
 if __name__ == '__main__':
 	# action_choices = ['big_decrease', 'small_decrease', 'none', 'small_increase', 'big_increase']
-	action_choices = ['off', 'low', 'medium', 'high']
+	action_choices = ['off', 'low', 'high']
 
 	y_n = input("WARNING: Transition file will be zeroed-out. Enter (y) to continue, any other key to exit.\n")
 
