@@ -24,6 +24,10 @@ from Controller.alert import alert, ALERT_LOG_PATH, AlertStatus
 from Controller import pin_constants
 
 
+# ------ LIGHTS IMPORTS ----------
+from Lights import light_control, start_dict
+
+
 # --------- MACHINE LEARNING IMPORTS ----------
 machine_learning = importlib.import_module(
     'Machine Learning.reinforcement_learning-static')
@@ -153,7 +157,23 @@ def process_from_ml(ml_reaction):
     return final_dict
 
 
-def ml_adapter(args_dict):
+def light_level_to_plant_type(healthy_light):
+    """
+    light_level_to_plant_type(healthy_light) converts the healthy_light level; the goal lioght level
+    which is between 05 and 5 to a shadelevel for the light algoriothm
+    """
+    if healthy_light >= 5:
+        return "Full sun"
+    elif healthy_light >= 3:
+        return "Part sun"
+    elif healthy_light >= 1:
+        return "Part shade"
+    elif healthy_light >= 0:
+        return "Full shade"
+    raise AssertionError("Not a valid healthy light level")
+
+
+def ml_adapter(args_dict, light_dict):
     """
     ml_adapter() is a wrapper/adapter to fit for the ml functions
     [args_dict] is a dictionary of arguments used for the ml_fucntion
@@ -175,6 +195,12 @@ def ml_adapter(args_dict):
     ml_results = machine_learning.Agent.run(curr_state, goal_state)
     ml_result_dict = process_from_ml(ml_results)
 
+    # add in the light implementation here
+    plant_type = light_level_to_plant_type(healthy_light)
+    new_light_dict = light_control(light_dict, curr_l, plant_type)
+    light_action = new_light_dict["action"]
+    ml_result_dict["light"] = light_action
+    
     print(f'ML DECISION: {ml_result_dict}')
 
     now = datetime.now()
@@ -182,7 +208,7 @@ def ml_adapter(args_dict):
     final_dict = {}
     final_dict[dt_string] = ml_result_dict
 
-    return final_dict
+    return final_dict, new_light_dict
 
 # -------- INTIALIZATION WRAPPERS --------
 
@@ -237,12 +263,12 @@ def init():
     # set up manual control and dump into memory
     manual_control_dict = {"mode": "machine_learning"}  # TODO: change to ML later
     pin_constants.dump_data(manual_control_dict, MODE_PATH)
-    
+
     # set up a random state
     ret_dict["state"] = machine_learning.State(1.0, 1.0, 1.0)
 
-    # set up init pickle path
- #   pin_constants.dump_pickled_data(ret_dict, dump_init_path)
+    # set up light dictionary
+    ret_dict["light_dict"] = start_dict()
 
     return ret_dict
 
@@ -297,9 +323,12 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     # read from pwm settings
     pwm_settings = pin_constants.load_data(pwm_settings_path)
 
+    # get light dict
+    light_dict = init_dict["light_dict"]
+
     ml_args = one_cycle_sensors(init_dict)
     log(sensor_log_path, ml_args, max_log_size)
-    
+
     # ML TRAIN STUFF TO BE REMOVED
     if TRAIN_ML:
         if TRAIN_ML_COUNTER == len(ACTIONS_LIST):
@@ -309,13 +338,14 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
         peripheral_actions = await one_cycle_peripherals(init_dict, training_results, pwm_settings)
         TRAIN_ML_COUNTER += 1
     elif manual_control["mode"] == "machine_learning":
-        ml_results = ml_adapter(ml_args)
+        ml_results, new_light_dict = ml_adapter(ml_args, light_dict)
+        init_dict["light_dict"] = new_light_dict
         peripheral_actions = await one_cycle_peripherals(init_dict, ml_results, pwm_settings)
     elif manual_control["mode"] == "manual":
         converted_results = utilities.manual_action_to_activity(manual_results)
         manual_results = {"now": converted_results}
         peripheral_actions = await one_cycle_peripherals(init_dict, manual_results, pwm_settings)
-    
+
     log(ml_action_log, peripheral_actions, max_log_size)
 
     log_dict = {}
@@ -334,7 +364,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
 
     alert_status = init_dict["alert_status"]
     alert(100, log_dict, alert_status, email_settings, ALERT_LOG)
-    
+
     # handle the logging for ML learning
     for key in (ml_args):
         processed_args = process_to_ml(ml_args[key])
@@ -347,8 +377,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
                 moist = processed_args[sensor]
 
     current_state = machine_learning.State(temp, humid, moist)
-    
-    
+
     def convert_action(action):
         if action == 0:
             return "off"
@@ -366,16 +395,15 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
             water = convert_action(peripheral_actions[key])
         elif key == "heat":
             heat = convert_action(peripheral_actions[key])
-        elif key =="fan":
+        elif key == "fan":
             fan = convert_action(peripheral_actions[key])
     action_set = transition.ActionSet(water, fan, heat)
-    
-    
-    put = transition.EffectSet.putEffect(action_set, init_dict["state"], current_state)
-    
+
+    put = transition.EffectSet.putEffect(
+        action_set, init_dict["state"], current_state)
+
     init_dict["state"] = current_state
 
- 
     await sleep_task
 
 
@@ -449,15 +477,6 @@ if __name__ == "__main__":
     except (KeyboardInterrupt, SystemExit):
         print("Interrupt detected")
         sys.exit(0)
-    # except Exception as e:
-    #    print(f"Other exception detected: {e}")
-    #    sys.exit(0)
-
-        # ------- DEBUGGING -------------------
-
-        # in the future, would like to have asynchrnous program report back
-        # what is being read from the sensor and what the peripherals are being responded
-        # to
-
-        # TODO: ASYNC
-        # TODO: ALERT EMAIL DATAS TO USER
+    except Exception as e:
+        print(f"Other exception detected: {e}")
+        sys.exit(0)
