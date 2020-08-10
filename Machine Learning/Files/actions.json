@@ -1,627 +1,137 @@
 {
   "1": {
-    "water": "big_decrease",
-    "fan": "big_decrease",
-    "heat": "big_decrease"
+    "water": "off",
+    "fan": "off",
+    "heat": "off"
   },
   "2": {
-    "water": "big_decrease",
-    "fan": "big_decrease",
-    "heat": "small_decrease"
+    "water": "off",
+    "fan": "off",
+    "heat": "low"
   },
   "3": {
-    "water": "big_decrease",
-    "fan": "big_decrease",
-    "heat": "none"
+    "water": "off",
+    "fan": "off",
+    "heat": "high"
   },
   "4": {
-    "water": "big_decrease",
-    "fan": "big_decrease",
-    "heat": "small_increase"
+    "water": "off",
+    "fan": "low",
+    "heat": "off"
   },
   "5": {
-    "water": "big_decrease",
-    "fan": "big_decrease",
-    "heat": "big_increase"
+    "water": "off",
+    "fan": "low",
+    "heat": "low"
   },
   "6": {
-    "water": "big_decrease",
-    "fan": "small_decrease",
-    "heat": "big_decrease"
+    "water": "off",
+    "fan": "low",
+    "heat": "high"
   },
   "7": {
-    "water": "big_decrease",
-    "fan": "small_decrease",
-    "heat": "small_decrease"
+    "water": "off",
+    "fan": "high",
+    "heat": "off"
   },
   "8": {
-    "water": "big_decrease",
-    "fan": "small_decrease",
-    "heat": "none"
+    "water": "off",
+    "fan": "high",
+    "heat": "low"
   },
   "9": {
-    "water": "big_decrease",
-    "fan": "small_decrease",
-    "heat": "small_increase"
+    "water": "off",
+    "fan": "high",
+    "heat": "high"
   },
   "10": {
-    "water": "big_decrease",
-    "fan": "small_decrease",
-    "heat": "big_increase"
+    "water": "low",
+    "fan": "off",
+    "heat": "off"
   },
   "11": {
-    "water": "big_decrease",
-    "fan": "none",
-    "heat": "big_decrease"
+    "water": "low",
+    "fan": "off",
+    "heat": "low"
   },
   "12": {
-    "water": "big_decrease",
-    "fan": "none",
-    "heat": "small_decrease"
+    "water": "low",
+    "fan": "off",
+    "heat": "high"
   },
   "13": {
-    "water": "big_decrease",
-    "fan": "none",
-    "heat": "none"
+    "water": "low",
+    "fan": "low",
+    "heat": "off"
   },
   "14": {
-    "water": "big_decrease",
-    "fan": "none",
-    "heat": "small_increase"
+    "water": "low",
+    "fan": "low",
+    "heat": "low"
   },
   "15": {
-    "water": "big_decrease",
-    "fan": "none",
-    "heat": "big_increase"
+    "water": "low",
+    "fan": "low",
+    "heat": "high"
   },
   "16": {
-    "water": "big_decrease",
-    "fan": "small_increase",
-    "heat": "big_decrease"
+    "water": "low",
+    "fan": "high",
+    "heat": "off"
   },
   "17": {
-    "water": "big_decrease",
-    "fan": "small_increase",
-    "heat": "small_decrease"
+    "water": "low",
+    "fan": "high",
+    "heat": "low"
   },
   "18": {
-    "water": "big_decrease",
-    "fan": "small_increase",
-    "heat": "none"
+    "water": "low",
+    "fan": "high",
+    "heat": "high"
   },
   "19": {
-    "water": "big_decrease",
-    "fan": "small_increase",
-    "heat": "small_increase"
+    "water": "high",
+    "fan": "off",
+    "heat": "off"
   },
   "20": {
-    "water": "big_decrease",
-    "fan": "small_increase",
-    "heat": "big_increase"
+    "water": "high",
+    "fan": "off",
+    "heat": "low"
   },
   "21": {
-    "water": "big_decrease",
-    "fan": "big_increase",
-    "heat": "big_decrease"
+    "water": "high",
+    "fan": "off",
+    "heat": "high"
   },
   "22": {
-    "water": "big_decrease",
-    "fan": "big_increase",
-    "heat": "small_decrease"
+    "water": "high",
+    "fan": "low",
+    "heat": "off"
   },
   "23": {
-    "water": "big_decrease",
-    "fan": "big_increase",
-    "heat": "none"
+    "water": "high",
+    "fan": "low",
+    "heat": "low"
   },
   "24": {
-    "water": "big_decrease",
-    "fan": "big_increase",
-    "heat": "small_increase"
+    "water": "high",
+    "fan": "low",
+    "heat": "high"
   },
   "25": {
-    "water": "big_decrease",
-    "fan": "big_increase",
-    "heat": "big_increase"
+    "water": "high",
+    "fan": "high",
+    "heat": "off"
   },
   "26": {
-    "water": "small_decrease",
-    "fan": "big_decrease",
-    "heat": "big_decrease"
+    "water": "high",
+    "fan": "high",
+    "heat": "low"
   },
   "27": {
-    "water": "small_decrease",
-    "fan": "big_decrease",
-    "heat": "small_decrease"
-  },
-  "28": {
-    "water": "small_decrease",
-    "fan": "big_decrease",
-    "heat": "none"
-  },
-  "29": {
-    "water": "small_decrease",
-    "fan": "big_decrease",
-    "heat": "small_increase"
-  },
-  "30": {
-    "water": "small_decrease",
-    "fan": "big_decrease",
-    "heat": "big_increase"
-  },
-  "31": {
-    "water": "small_decrease",
-    "fan": "small_decrease",
-    "heat": "big_decrease"
-  },
-  "32": {
-    "water": "small_decrease",
-    "fan": "small_decrease",
-    "heat": "small_decrease"
-  },
-  "33": {
-    "water": "small_decrease",
-    "fan": "small_decrease",
-    "heat": "none"
-  },
-  "34": {
-    "water": "small_decrease",
-    "fan": "small_decrease",
-    "heat": "small_increase"
-  },
-  "35": {
-    "water": "small_decrease",
-    "fan": "small_decrease",
-    "heat": "big_increase"
-  },
-  "36": {
-    "water": "small_decrease",
-    "fan": "none",
-    "heat": "big_decrease"
-  },
-  "37": {
-    "water": "small_decrease",
-    "fan": "none",
-    "heat": "small_decrease"
-  },
-  "38": {
-    "water": "small_decrease",
-    "fan": "none",
-    "heat": "none"
-  },
-  "39": {
-    "water": "small_decrease",
-    "fan": "none",
-    "heat": "small_increase"
-  },
-  "40": {
-    "water": "small_decrease",
-    "fan": "none",
-    "heat": "big_increase"
-  },
-  "41": {
-    "water": "small_decrease",
-    "fan": "small_increase",
-    "heat": "big_decrease"
-  },
-  "42": {
-    "water": "small_decrease",
-    "fan": "small_increase",
-    "heat": "small_decrease"
-  },
-  "43": {
-    "water": "small_decrease",
-    "fan": "small_increase",
-    "heat": "none"
-  },
-  "44": {
-    "water": "small_decrease",
-    "fan": "small_increase",
-    "heat": "small_increase"
-  },
-  "45": {
-    "water": "small_decrease",
-    "fan": "small_increase",
-    "heat": "big_increase"
-  },
-  "46": {
-    "water": "small_decrease",
-    "fan": "big_increase",
-    "heat": "big_decrease"
-  },
-  "47": {
-    "water": "small_decrease",
-    "fan": "big_increase",
-    "heat": "small_decrease"
-  },
-  "48": {
-    "water": "small_decrease",
-    "fan": "big_increase",
-    "heat": "none"
-  },
-  "49": {
-    "water": "small_decrease",
-    "fan": "big_increase",
-    "heat": "small_increase"
-  },
-  "50": {
-    "water": "small_decrease",
-    "fan": "big_increase",
-    "heat": "big_increase"
-  },
-  "51": {
-    "water": "none",
-    "fan": "big_decrease",
-    "heat": "big_decrease"
-  },
-  "52": {
-    "water": "none",
-    "fan": "big_decrease",
-    "heat": "small_decrease"
-  },
-  "53": {
-    "water": "none",
-    "fan": "big_decrease",
-    "heat": "none"
-  },
-  "54": {
-    "water": "none",
-    "fan": "big_decrease",
-    "heat": "small_increase"
-  },
-  "55": {
-    "water": "none",
-    "fan": "big_decrease",
-    "heat": "big_increase"
-  },
-  "56": {
-    "water": "none",
-    "fan": "small_decrease",
-    "heat": "big_decrease"
-  },
-  "57": {
-    "water": "none",
-    "fan": "small_decrease",
-    "heat": "small_decrease"
-  },
-  "58": {
-    "water": "none",
-    "fan": "small_decrease",
-    "heat": "none"
-  },
-  "59": {
-    "water": "none",
-    "fan": "small_decrease",
-    "heat": "small_increase"
-  },
-  "60": {
-    "water": "none",
-    "fan": "small_decrease",
-    "heat": "big_increase"
-  },
-  "61": {
-    "water": "none",
-    "fan": "none",
-    "heat": "big_decrease"
-  },
-  "62": {
-    "water": "none",
-    "fan": "none",
-    "heat": "small_decrease"
-  },
-  "63": {
-    "water": "none",
-    "fan": "none",
-    "heat": "none"
-  },
-  "64": {
-    "water": "none",
-    "fan": "none",
-    "heat": "small_increase"
-  },
-  "65": {
-    "water": "none",
-    "fan": "none",
-    "heat": "big_increase"
-  },
-  "66": {
-    "water": "none",
-    "fan": "small_increase",
-    "heat": "big_decrease"
-  },
-  "67": {
-    "water": "none",
-    "fan": "small_increase",
-    "heat": "small_decrease"
-  },
-  "68": {
-    "water": "none",
-    "fan": "small_increase",
-    "heat": "none"
-  },
-  "69": {
-    "water": "none",
-    "fan": "small_increase",
-    "heat": "small_increase"
-  },
-  "70": {
-    "water": "none",
-    "fan": "small_increase",
-    "heat": "big_increase"
-  },
-  "71": {
-    "water": "none",
-    "fan": "big_increase",
-    "heat": "big_decrease"
-  },
-  "72": {
-    "water": "none",
-    "fan": "big_increase",
-    "heat": "small_decrease"
-  },
-  "73": {
-    "water": "none",
-    "fan": "big_increase",
-    "heat": "none"
-  },
-  "74": {
-    "water": "none",
-    "fan": "big_increase",
-    "heat": "small_increase"
-  },
-  "75": {
-    "water": "none",
-    "fan": "big_increase",
-    "heat": "big_increase"
-  },
-  "76": {
-    "water": "small_increase",
-    "fan": "big_decrease",
-    "heat": "big_decrease"
-  },
-  "77": {
-    "water": "small_increase",
-    "fan": "big_decrease",
-    "heat": "small_decrease"
-  },
-  "78": {
-    "water": "small_increase",
-    "fan": "big_decrease",
-    "heat": "none"
-  },
-  "79": {
-    "water": "small_increase",
-    "fan": "big_decrease",
-    "heat": "small_increase"
-  },
-  "80": {
-    "water": "small_increase",
-    "fan": "big_decrease",
-    "heat": "big_increase"
-  },
-  "81": {
-    "water": "small_increase",
-    "fan": "small_decrease",
-    "heat": "big_decrease"
-  },
-  "82": {
-    "water": "small_increase",
-    "fan": "small_decrease",
-    "heat": "small_decrease"
-  },
-  "83": {
-    "water": "small_increase",
-    "fan": "small_decrease",
-    "heat": "none"
-  },
-  "84": {
-    "water": "small_increase",
-    "fan": "small_decrease",
-    "heat": "small_increase"
-  },
-  "85": {
-    "water": "small_increase",
-    "fan": "small_decrease",
-    "heat": "big_increase"
-  },
-  "86": {
-    "water": "small_increase",
-    "fan": "none",
-    "heat": "big_decrease"
-  },
-  "87": {
-    "water": "small_increase",
-    "fan": "none",
-    "heat": "small_decrease"
-  },
-  "88": {
-    "water": "small_increase",
-    "fan": "none",
-    "heat": "none"
-  },
-  "89": {
-    "water": "small_increase",
-    "fan": "none",
-    "heat": "small_increase"
-  },
-  "90": {
-    "water": "small_increase",
-    "fan": "none",
-    "heat": "big_increase"
-  },
-  "91": {
-    "water": "small_increase",
-    "fan": "small_increase",
-    "heat": "big_decrease"
-  },
-  "92": {
-    "water": "small_increase",
-    "fan": "small_increase",
-    "heat": "small_decrease"
-  },
-  "93": {
-    "water": "small_increase",
-    "fan": "small_increase",
-    "heat": "none"
-  },
-  "94": {
-    "water": "small_increase",
-    "fan": "small_increase",
-    "heat": "small_increase"
-  },
-  "95": {
-    "water": "small_increase",
-    "fan": "small_increase",
-    "heat": "big_increase"
-  },
-  "96": {
-    "water": "small_increase",
-    "fan": "big_increase",
-    "heat": "big_decrease"
-  },
-  "97": {
-    "water": "small_increase",
-    "fan": "big_increase",
-    "heat": "small_decrease"
-  },
-  "98": {
-    "water": "small_increase",
-    "fan": "big_increase",
-    "heat": "none"
-  },
-  "99": {
-    "water": "small_increase",
-    "fan": "big_increase",
-    "heat": "small_increase"
-  },
-  "100": {
-    "water": "small_increase",
-    "fan": "big_increase",
-    "heat": "big_increase"
-  },
-  "101": {
-    "water": "big_increase",
-    "fan": "big_decrease",
-    "heat": "big_decrease"
-  },
-  "102": {
-    "water": "big_increase",
-    "fan": "big_decrease",
-    "heat": "small_decrease"
-  },
-  "103": {
-    "water": "big_increase",
-    "fan": "big_decrease",
-    "heat": "none"
-  },
-  "104": {
-    "water": "big_increase",
-    "fan": "big_decrease",
-    "heat": "small_increase"
-  },
-  "105": {
-    "water": "big_increase",
-    "fan": "big_decrease",
-    "heat": "big_increase"
-  },
-  "106": {
-    "water": "big_increase",
-    "fan": "small_decrease",
-    "heat": "big_decrease"
-  },
-  "107": {
-    "water": "big_increase",
-    "fan": "small_decrease",
-    "heat": "small_decrease"
-  },
-  "108": {
-    "water": "big_increase",
-    "fan": "small_decrease",
-    "heat": "none"
-  },
-  "109": {
-    "water": "big_increase",
-    "fan": "small_decrease",
-    "heat": "small_increase"
-  },
-  "110": {
-    "water": "big_increase",
-    "fan": "small_decrease",
-    "heat": "big_increase"
-  },
-  "111": {
-    "water": "big_increase",
-    "fan": "none",
-    "heat": "big_decrease"
-  },
-  "112": {
-    "water": "big_increase",
-    "fan": "none",
-    "heat": "small_decrease"
-  },
-  "113": {
-    "water": "big_increase",
-    "fan": "none",
-    "heat": "none"
-  },
-  "114": {
-    "water": "big_increase",
-    "fan": "none",
-    "heat": "small_increase"
-  },
-  "115": {
-    "water": "big_increase",
-    "fan": "none",
-    "heat": "big_increase"
-  },
-  "116": {
-    "water": "big_increase",
-    "fan": "small_increase",
-    "heat": "big_decrease"
-  },
-  "117": {
-    "water": "big_increase",
-    "fan": "small_increase",
-    "heat": "small_decrease"
-  },
-  "118": {
-    "water": "big_increase",
-    "fan": "small_increase",
-    "heat": "none"
-  },
-  "119": {
-    "water": "big_increase",
-    "fan": "small_increase",
-    "heat": "small_increase"
-  },
-  "120": {
-    "water": "big_increase",
-    "fan": "small_increase",
-    "heat": "big_increase"
-  },
-  "121": {
-    "water": "big_increase",
-    "fan": "big_increase",
-    "heat": "big_decrease"
-  },
-  "122": {
-    "water": "big_increase",
-    "fan": "big_increase",
-    "heat": "small_decrease"
-  },
-  "123": {
-    "water": "big_increase",
-    "fan": "big_increase",
-    "heat": "none"
-  },
-  "124": {
-    "water": "big_increase",
-    "fan": "big_increase",
-    "heat": "small_increase"
-  },
-  "125": {
-    "water": "big_increase",
-    "fan": "big_increase",
-    "heat": "big_increase"
+    "water": "high",
+    "fan": "high",
+    "heat": "high"
   }
 }
