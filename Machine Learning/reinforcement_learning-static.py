@@ -56,18 +56,18 @@ class Environment:
         # Set intitial reward, scaled based on distance from goal state
         reward = -100 * last_difference
 
-        # Encourage efficiency
-        if water_action == "none":
-            reward += 10
-        if ventilation_action == "none":
-            reward += 10
-        if heat_action == "none":
-            reward += 10
+        # # Encourage efficiency
+        # if water_action == "off":
+        #     reward += 10
+        # if ventilation_action == "off":
+        #     reward += 10
+        # if heat_action == "off":
+        #     reward += 10
 
         return reward
 
     # Take current state and actions, return next state based on model of system
-    def transition(current_state, water_action, ventilation_action, heat_action, prior_effects, bootstrap_effects):
+    def transition(current_state, water_action, ventilation_action, heat_action, prior_effects):
         next_state = State(current_state.temperature, current_state.humidity, current_state.soil_moisture)
 
         action_set = transition.ActionSet(water_action, ventilation_action, heat_action)
@@ -91,18 +91,6 @@ class Environment:
         humidity_bucket = str(current_state.humidity).split('.')[0]
         soil_moisture_bucket = str(current_state.soil_moisture).split('.')[0]
 
-        temperature_effect = bootstrap_effects[str(action_set)]['temperature'][temperature_bucket]['effect']
-        humidity_effect = bootstrap_effects[str(action_set)]['humidity'][humidity_bucket]['effect']
-        soil_moisture_effect = bootstrap_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
-
-        bootstrap_temperature_effect = bootstrap_effects[str(action_set)]['temperature'][temperature_bucket]['effect']
-        bootstrap_humidity_effect = bootstrap_effects[str(action_set)]['humidity'][humidity_bucket]['effect']
-        bootstrap_soil_moisture_effect = bootstrap_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
-
-        boostrap_temperature_hits = bootstrap_effects[str(action_set)]['temperature'][temperature_bucket]['hits']
-        bootstrap_humidity_hits = bootstrap_effects[str(action_set)]['humidity'][humidity_bucket]['hits']
-        bootstrap_soil_moisture_hits = bootstrap_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits']
-
         prior_temperature_effect = prior_effects[str(action_set)]['temperature'][temperature_bucket]['effect']
         prior_humidity_effect = prior_effects[str(action_set)]['humidity'][humidity_bucket]['effect']
         prior_soil_moisture_effect = prior_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['effect']
@@ -111,20 +99,13 @@ class Environment:
         prior_humidity_hits = prior_effects[str(action_set)]['humidity'][humidity_bucket]['hits']
         prior_soil_moisture_hits = prior_effects[str(action_set)]['soil_moisture'][soil_moisture_bucket]['hits']
 
-        if (prior_temperature_hits):
-            next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + prior_temperature_effect)
-        else:
-            next_state.temperature = .2*next_state.temperature + .8*(next_state.temperature + bootstrap_temperature_effect)
+        assert (prior_temperature_hits and prior_humidity_hits and prior_soil_moisture_hits), "transition.json not properly initialized - try training first"
 
-        if (prior_humidity_hits):
-            next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + prior_humidity_effect)
-        else:
-            next_state.humidity = .2*next_state.humidity + .8*(next_state.humidity + bootstrap_humidity_effect)
+        next_state.temperature = next_state.temperature + prior_temperature_effect
 
-        if (prior_soil_moisture_hits):
-            next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + prior_soil_moisture_effect)
-        else:
-            next_state.soil_moisture = .2*next_state.soil_moisture + .8*(next_state.soil_moisture + bootstrap_soil_moisture_effect)
+        next_state.humidity = next_state.humidity + prior_humidity_effect
+
+        next_state.soil_moisture = next_state.soil_moisture + prior_soil_moisture_effect
 
         return next_state
 
@@ -135,13 +116,11 @@ class Agent:
             return ({'water_action': water_action, 'ventilation_action': ventilation_action, 'heat_action': heat_action}, None)
 
         # Define action choices
-        action_choices = ['big_increase', 'big_decrease', 'small_increase', 'small_decrease', 'none']
+        action_choices = ['off', 'low', 'high']
+
 
         # Get prior effects
         prior_effects = transition.EffectSet.getEffects()
-
-        # Get bootstrap effects
-        bootstrap_effects = transition.EffectSet.getBootstrapEffects()
 
         # Iterate through all possible action vectors
         avg_episode_rewards = []
@@ -155,7 +134,7 @@ class Agent:
                         discount = .7
 
                         # Look one step ahead, observe next state and reward
-                        next_state = Environment.transition(initial_state, initial_water_action, initial_ventilation_action, initial_heat_action, prior_effects, bootstrap_effects)
+                        next_state = Environment.transition(initial_state, initial_water_action, initial_ventilation_action, initial_heat_action, prior_effects)
                         next_reward = Environment.reward(initial_state, next_state, goal_state, initial_water_action, initial_ventilation_action, initial_heat_action)
 
                         # Take transition
@@ -168,12 +147,12 @@ class Agent:
                         # Iterate through three timesteps (as we are not concerned with longer-term effects)
                         while(timestep < 3):
                             # Pick next actions
-                            water_action = action_choices[random.randint(0, 5)]
-                            ventilation_action = action_choices[random.randint(0, 5)]
-                            heat_action = action_choices[random.randint(0, 5)]
+                            water_action = action_choices[random.randint(0, 3)]
+                            ventilation_action = action_choices[random.randint(0, 3)]
+                            heat_action = action_choices[random.randint(0, 3)]
 
                             # Look one step ahead, observe new state and reward
-                            next_state = Environment.transition(current_state, water_action, ventilation_action, heat_action, prior_effects, bootstrap_effects)
+                            next_state = Environment.transition(current_state, water_action, ventilation_action, heat_action, prior_effects)
                             next_reward = Environment.reward(current_state, next_state, goal_state, water_action, ventilation_action, heat_action)
 
                             # Take transition
@@ -197,146 +176,75 @@ class Agent:
         avg_episode_rewards = sorted(avg_episode_rewards, key=lambda k: k['avg_episode_reward'], reverse=True)
         choice = avg_episode_rewards[0]
 
-        return {'water_action':  choice['water_action'], 'ventilation_action':  choice['ventilation_action'], 'heat_action': choice['heat_action'], 'expected_reward': choice['avg_episode_reward']}
+        return {'water_action':  choice['water_action'], 'fan_action':  choice['ventilation_action'], 'heat_action': choice['heat_action'], 'expected_reward': choice['avg_episode_reward']}
 
 # Contains methods used specifically for testing and demonstration purposes - not to be used in production
 class Test:
+    def increase(reading, low, high, weight):
+        move = random.randint(low, high)/100
+
+        reading += (move * weight)
+
+        if reading > 5.9:
+            reading = 5.9
+        elif reading < 1.0:
+            reading = 1.0
+
+        return reading
+
+    def decrease(reading, low, high, weight):
+        move = random.randint(low, high)/100
+
+        reading -= (move * weight)
+
+        if reading > 5.9:
+            reading = 5.9
+        elif reading < 1.0:
+            reading = 1.0
+
+        return reading
+
+    def temper(reading, weight):
+        # Weight between 0 and 1, 0: reading, 1: 3.5
+        return (weight * 3.5) + ((1-weight) * reading)
+
     def transition(current_state, water_action, ventilation_action, heat_action):
         next_state = State(current_state.temperature, current_state.humidity, current_state.soil_moisture)
 
-        big_random_low = 86
-        big_random_high = 88
+        actions = {
+            'none': {
+                'low': 0,
+                'high': 3
+            },
+            'low': {
+                'low': 4,
+                'high': 10
+            }, 
+            'medium': {
+                'low': 11,
+                'high': 30
+            }, 
+            'high': {
+                'low': 50,
+                'high': 100
+            },
+        }
 
-        small_random_low = 19
-        small_random_high = 21
+        for action in actions:
+            if water_action == action:
+                next_state.soil_moisture = Test.increase(next_state.soil_moisture, actions[action]['low'], actions[action]['high'], 1)
+                next_state.humidity = Test.increase(next_state.humidity, actions[action]['low'], actions[action]['high'], .6)
+            if ventilation_action == action:
+                next_state.temperature = Test.decrease(next_state.temperature, actions[action]['low'], actions[action]['high'], 1)
+                next_state.humidity = Test.decrease(next_state.humidity, actions[action]['low'], actions[action]['high'], .9)
+                next_state.soil_moisture = Test.decrease(next_state.soil_moisture, actions[action]['low'], actions[action]['high'], .4)
+            if heat_action == action:
+                next_state.temperature = Test.increase(next_state.temperature, actions[action]['low'], actions[action]['high'], .7)
+                next_state.humidity = Test.increase(next_state.humidity, actions[action]['low'], actions[action]['high'], 1)
 
-        if water_action == 'big_increase':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            next_state.soil_moisture += factor
-
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            next_state.humidity += factor
-        elif water_action == 'small_increase':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            next_state.soil_moisture += factor
-
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            next_state.humidity += factor
-        elif water_action == 'big_decrease':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            if next_state.soil_moisture > factor:
-                next_state.soil_moisture -= factor
-            else:
-                next_state.soil_moisture = 0
-
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            if next_state.humidity > factor:
-                next_state.humidity -= factor
-            else:
-                next_state.humidity = 0
-        elif water_action == 'small_decrease':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            if next_state.soil_moisture > factor:
-                next_state.soil_moisture -= factor
-            else:
-                next_state.soil_moisture = 0
-
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            if next_state.humidity > factor:
-                next_state.humidity -= factor
-            else:
-                next_state.humidity = 0
-        else:
-            factor = round(random.randint(-2, 3) / 100, 1)
-            next_state.soil_moisture += factor
-
-            factor = round(random.randint(-2, 3) / 100, 1)
-            next_state.humidity += factor
-
-        if ventilation_action == 'big_increase':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            if next_state.temperature > factor:
-                next_state.temperature -= factor
-            else:
-                next_state.temperature = 0
-
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            if next_state.humidity > factor:
-                next_state.humidity -= factor
-            else:
-                next_state.humidity = 0
-        elif ventilation_action == 'small_increase':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            if next_state.temperature > factor:
-                next_state.temperature -= factor
-            else:
-                next_state.temperature = 0
-
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            if next_state.humidity > factor:
-                next_state.humidity -= factor
-            else:
-                next_state.humidity = 0
-        elif ventilation_action == 'big_decrease':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            next_state.temperature += factor
-
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            next_state.humidity += factor
-        elif ventilation_action == 'small_decrease':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            next_state.temperature += factor
-
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            next_state.humidity += factor
-        else:
-            factor = round(random.randint(-2, 3) / 100, 1)
-            next_state.temperature += factor
-
-            factor = round(random.randint(-2, 3) / 100, 1)
-            next_state.humidity += factor
-
-        if heat_action == 'big_increase':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            next_state.temperature += factor
-        elif heat_action == 'small_increase':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            next_state.temperature += factor
-        elif heat_action == 'big_decrease':
-            factor = round(random.randint(
-                big_random_low, big_random_high) / 100, 1)
-            if next_state.temperature > factor:
-                next_state.temperature -= factor
-            else:
-                next_state.temperature = 0
-        elif heat_action == 'small_decrease':
-            factor = round(random.randint(
-                small_random_low, small_random_high) / 100, 1)
-            if next_state.temperature > factor:
-                next_state.temperature -= factor
-            else:
-                next_state.temperature = 0
-        else:
-            factor = round(random.randint(-2, 3) / 100, 1)
-            next_state.temperature += factor
+        next_state.temperature = Test.temper(next_state.temperature, .05)
+        next_state.humidity = Test.temper(next_state.humidity, .04)
+        next_state.soil_moisture = Test.temper(next_state.soil_moisture, .01)
 
         return next_state
 
@@ -402,10 +310,6 @@ class Test:
             elif current_state.soil_moisture > 5.9:
                 current_state.soil_moisture = 5.9
 
-            # # Temperature Floor
-            # if current_state.temperature < 2.8:
-            #     current_state.temperature = 2.8
-
             # Create action set
             action_set = transition.ActionSet(water_action, ventilation_action, heat_action)
 
@@ -469,10 +373,6 @@ class Test:
                 current_state.soil_moisture = 1.0
             elif current_state.soil_moisture > 5.9:
                 current_state.soil_moisture = 5.9
-
-            # # Temperature Floor
-            # if current_state.temperature < 2.8:
-            #     current_state.temperature = 2.8
 
             # Create action set
             action_set = transition.ActionSet(water_action, ventilation_action, heat_action)
@@ -558,28 +458,38 @@ class Test:
         pyplot.show()
 
 if __name__ == '__main__':
-    iterations = 10
+    MODE = "run"
 
-    for i in range(0, iterations):
-        current_state = State(random.randint(150, 550)/100, random.randint(150, 550)/100, random.randint(150, 550)/100)
-        goal_state = State(random.randint(150, 550)/100, random.randint(150, 550)/100, random.randint(150, 550)/100) #State.getGoal()
+    if MODE == "run":
+        iterations = 10
+
+        for i in range(0, iterations):
+            current_state = State(3.5, 3.5, 3.5)
+            goal_state = State(random.randint(250, 450)/100, random.randint(250, 450)/100, random.randint(250, 450)/100) #State.getGoal()
+
+            print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
+            print('------------')
+
+            results = Test.run(current_state, goal_state, 60)
+
+            current_states = results['current_states']
+            goal_states = results['goal_states']
+            expected_rewards = results['expected_rewards']
+
+            distances = []
+            print('------------')
+            for (index, state) in enumerate(current_states):
+                print(f'timestep: {index} state: {state}')
+                distance = State.distance(state, goal_state)
+                distances.append(distance)
+                print(f'distance from goal state: {distance}')
+
+            Test.plot(current_states, goal_states, expected_rewards, distances)
+    elif MODE == "train":
+        current_state = State(3.5, 3.5, 3.5)
+        goal_state = State(random.randint(250, 450)/100, random.randint(250, 450)/100, random.randint(250, 450)/100) #State.getGoal()
 
         print(f"PARAMS: current state: {current_state}, goal state: {goal_state}")
         print('------------')
 
-        results = Test.run(current_state, goal_state, 10)
-        # observed_states = Test.train(current_state)
-
-        current_states = results['current_states']
-        goal_states = results['goal_states']
-        expected_rewards = results['expected_rewards']
-
-        distances = []
-        print('------------')
-        for (index, state) in enumerate(current_states):
-            print(f'timestep: {index} state: {state}')
-            distance = State.distance(state, goal_state)
-            distances.append(distance)
-            print(f'distance from goal state: {distance}')
-
-        Test.plot(current_states, goal_states, expected_rewards, distances)
+        observed_states = Test.train(current_state)
