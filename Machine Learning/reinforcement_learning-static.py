@@ -176,7 +176,7 @@ class Agent:
         avg_episode_rewards = sorted(avg_episode_rewards, key=lambda k: k['avg_episode_reward'], reverse=True)
         choice = avg_episode_rewards[0]
 
-        return {'water_action':  choice['water_action'], 'ventilation_action':  choice['ventilation_action'], 'heat_action': choice['heat_action'], 'expected_reward': choice['avg_episode_reward']}
+        return {'water_action':  choice['water_action'], 'fan_action':  choice['ventilation_action'], 'heat_action': choice['heat_action'], 'expected_reward': choice['avg_episode_reward']}
 
 # Contains methods used specifically for testing and demonstration purposes - not to be used in production
 class Test:
