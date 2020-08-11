@@ -126,7 +126,12 @@ def convert_to_bucket(arg, _type, bucket_assoc):
             _range = int(high) - int(low)
             fractional_part = remainder/float(_range)
             converted_val = lower_dict[(low, high)] + fractional_part
-            return round(float(converted_val), 1)
+            assert converted_val < 6
+            rounded_result = round(float(converted_val), 1)
+            if rounded_result >= 5.9:
+                rounded_result = 5.9
+            assert rounded_result <= 5.9
+            return rounded_result
     # above highest partition
     if arg >= int(high):
         return 5.9
@@ -409,6 +414,8 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
 
     put = transition.EffectSet.putEffect(
         action_set, init_dict["state"], current_state)
+
+    print(f"EFFECTS: {put}")
 
     init_dict["state"] = current_state
 
