@@ -735,6 +735,7 @@
         "hits": 1
       }
     },
+  "soil_moisture": { 
     "1": {
         "effect": 0.1,
         "hits": 1
@@ -803,6 +804,7 @@
         "hits": 1
       }
     },
+  "soil_moisture": { 
     "1": {
         "effect": 0.1,
         "hits": 1
@@ -871,6 +873,7 @@
         "hits": 1
       }
     },
+  "soil_moisture": {
     "1": {
         "effect": 0.1,
         "hits": 1
@@ -939,7 +942,8 @@
         "hits": 1
       }
     },
-    "1": {
+  "soil_moisture": {
+      "1": {
         "effect": 0.1,
         "hits": 1
       },
@@ -1007,7 +1011,8 @@
         "hits": 1
       }
     },
-    "1": {
+  "soil_moisture": {
+      "1": {
         "effect": 0.1,
         "hits": 1
       },
@@ -1144,7 +1149,8 @@
         "hits": 1
       }
     },
-    "1": {
+  "soil_moisture": {
+      "1": {
         "effect": 0.1,
         "hits": 1
       },
@@ -1212,7 +1218,8 @@
         "hits": 1
       }
     },
-    "1": {
+   "soil_moisture": {
+     "1": {
         "effect": 0.1,
         "hits": 1
       },
@@ -1349,7 +1356,8 @@
         "hits": 1
       }
     },
-    "1": {
+    "soil_moisture": {
+      "1": {
         "effect": 0.2,
         "hits": 1
       },
@@ -1417,7 +1425,8 @@
         "hits": 1
       }
     },
-    "1": {
+  "soil_moisture": {
+      "1": {
         "effect": 0.2,
         "hits": 1
       },
@@ -1485,7 +1494,8 @@
         "hits": 1
       }
     },
-    "1": {
+    "soil_moisture": {
+      "1": {
         "effect": 0.2,
         "hits": 1
       },
@@ -1622,7 +1632,8 @@
         "hits": 1
       }
     },
-    "1": {
+    "soil_moisture": {
+      "1": {
         "effect": 0.2,
         "hits": 1
       },
@@ -1690,7 +1701,8 @@
         "hits": 1
       }
     },
-    "1": {
+    "soil_moisture": {
+      "1": {
         "effect": 0.2,
         "hits": 1
       },
@@ -1758,7 +1770,8 @@
         "hits": 1
       }
     },
-    "1": {
+    "soil_moisture": {
+      "1": {
         "effect": 0.2,
         "hits": 1
       },
@@ -1826,7 +1839,8 @@
         "hits": 1
       }
     },
-    "1": {
+    "soil_moisture": {
+      "1": {
         "effect": 0.2,
         "hits": 1
       },

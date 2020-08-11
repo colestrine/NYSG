@@ -127,7 +127,10 @@ def convert_to_bucket(arg, _type, bucket_assoc):
             fractional_part = remainder/float(_range)
             converted_val = lower_dict[(low, high)] + fractional_part
             return round(float(converted_val), 1)
-
+    # above highest partition
+    if arg >= int(high):
+        return 5.9
+    return 1.0
 
 def process_to_ml(ml_args):
     """
@@ -187,6 +190,8 @@ def ml_adapter(args_dict, light_dict):
                                         healthy_moisture)
 
     current_state_dict = process_to_ml(list(args_dict.values())[0])
+    print(f"arg_dict : {args_dict}")
+    print(f"current_state_dict : {current_state_dict}")
     curr_t = current_state_dict['temperature']
     curr_h = current_state_dict['humidity']
     curr_m = current_state_dict['soil_moisture']
@@ -270,7 +275,7 @@ def init():
     ret_dict["state"] = machine_learning.State(1.0, 1.0, 1.0)
 
     # set up light dictionary
-    ret_dict["light_dict"] = start_dict()
+    ret_dict["light_dict"] = startdict()
 
     return ret_dict
 
@@ -479,6 +484,6 @@ if __name__ == "__main__":
     except (KeyboardInterrupt, SystemExit):
         print("Interrupt detected")
         sys.exit(0)
-    except Exception as e:
-        print(f"Other exception detected: {e}")
-        sys.exit(0)
+#    except Exception as e:
+#        print(f"Other exception detected: {e}")
+#        sys.exit(0)
