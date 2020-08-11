@@ -25,7 +25,7 @@ from Controller import pin_constants
 
 
 # ------ LIGHTS IMPORTS ----------
-from Lights import light_control, start_dict
+from Lights.light_control import light, startdict
 
 
 # --------- MACHINE LEARNING IMPORTS ----------
@@ -182,6 +182,7 @@ def ml_adapter(args_dict, light_dict):
     healthy_temp = healthy_levels_dict['temperature']
     healthy_humidity = healthy_levels_dict['humidity']
     healthy_moisture = healthy_levels_dict['soil_moisture']
+    healthy_light = healthy_levels_dict['sunlight']
     goal_state = machine_learning.State(healthy_temp, healthy_humidity,
                                         healthy_moisture)
 
@@ -189,6 +190,7 @@ def ml_adapter(args_dict, light_dict):
     curr_t = current_state_dict['temperature']
     curr_h = current_state_dict['humidity']
     curr_m = current_state_dict['soil_moisture']
+    curr_l = current_state_dict['sunlight']
     curr_state = machine_learning.State(curr_t, curr_h,
                                         curr_m)
 
@@ -197,8 +199,8 @@ def ml_adapter(args_dict, light_dict):
 
     # add in the light implementation here
     plant_type = light_level_to_plant_type(healthy_light)
-    new_light_dict = light_control(light_dict, curr_l, plant_type)
-    light_action = new_light_dict["action"]
+    new_light_dict = light(light_dict, curr_l, plant_type)
+    light_action = new_light_dict["ACTION"]
     ml_result_dict["light"] = light_action
     
     print(f'ML DECISION: {ml_result_dict}')
@@ -379,15 +381,15 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     current_state = machine_learning.State(temp, humid, moist)
 
     def convert_action(action):
-        if action == 0:
+        if action == 0 or action == "off":
             return "off"
         elif action == 1:
             return "big_decrease"
-        elif action == 2:
+        elif action == 2 or action == "low":
             return "low"
         elif action == 3:
             return "small_increase"
-        elif action == 4:
+        elif action == 4 or action == "high":
             return "high"
         
     for key in peripheral_actions:
