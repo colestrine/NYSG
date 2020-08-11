@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'settings',
     'dashboard',
     'analysis',
-    'germination'
+    'germination',
+    'information'
 ]
 
 MIDDLEWARE = [

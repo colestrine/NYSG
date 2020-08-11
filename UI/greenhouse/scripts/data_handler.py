@@ -321,4 +321,11 @@ class data_handler:
 		}
 		germ_file.write(json.dumps(germ_log))
 		germ_file.close()
-		
+
+	def get_plant_profiles():
+		plant_profiles_file = open(expanduser("~")+'/NYSG/Jupyter Notebooks/ui_plant_scrape.json', 'r')
+		plant_profiles_json = plant_profiles_file.read()
+		plant_profiles_file.close()
+		plant_data = json.loads(plant_profiles_json)
+		# plant_data = plant_json["data"]
+		return plant_data
