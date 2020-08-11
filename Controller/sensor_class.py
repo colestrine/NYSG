@@ -61,8 +61,9 @@ import sys
 from Controller import log
 
 MAX_LIGHT_DIVISOR = 15000
-DRY_SOIL = .7
-WET_SOIL = .4
+DRY_SOIL = 0.771372740595994
+WET_SOIL = 0.3805569125549584
+
 
 # ------- TEST CONSTANTS ----------
 N_SENSORS = 4

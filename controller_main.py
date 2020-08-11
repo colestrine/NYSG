@@ -1,9 +1,6 @@
 
-"""
-[main] is the driver script for the rapsberry Pi. It runs continously, reading
-in the sensor data, running the ML algorithm, and then responds with an output.
-Along the way, it logs data as well.
-"""
+""" [main] is the driver script for the rapsberry Pi. It runs continously, reading in the sensor data, running the ML 
+algorithm, and then responds with an output. Along the way, it logs data as well. """
 
 
 # -------- EXTERNAL IMPORTS ------
@@ -13,7 +10,6 @@ import pickle
 import importlib
 import sys
 import RPi.GPIO as GPIO
-
 
 # -------- ASYNCHRONOUS IMPORTS ----------
 import asyncio
@@ -28,10 +24,14 @@ from Controller.alert import alert, ALERT_LOG_PATH, AlertStatus
 from Controller import pin_constants
 
 
+# ------ LIGHTS IMPORTS ----------
+from Lights.light_control import light, startdict
+
+
 # --------- MACHINE LEARNING IMPORTS ----------
 machine_learning = importlib.import_module(
-    'Machine Learning.reinforcement_learning')
-transition = importlib.import_module('Machine Learning.transition')
+    'Machine Learning.reinforcement_learning-static')
+transition = importlib.import_module('Machine Learning.transition-static')
 
 
 # --------- INTERFACE FILES IMPORTS ------------
@@ -83,6 +83,34 @@ ONE_CYCLE = False
 N_CYCLES = None
 APPEND = True
 
+
+# ---------- ML TRAINING VARIABLES --------------
+TRAIN_ML = False
+TRAIN_ML_COUNTER = 0
+TRAIN_ML_PATH = "Machine Learning/Files/actions.json"
+ACTIONS_JSON = pin_constants.load_data(TRAIN_ML_PATH)
+
+# add in no light action
+for key in ACTIONS_JSON:
+    ACTIONS_JSON[key]["light"] = "off"
+
+
+def convert_ml_training_actions(action):
+    if action == "off":
+        return 0
+    elif action == "low":
+        return 2
+    elif action == "high":
+        return 4
+    
+    
+ACTIONS_LIST = [ACTIONS_JSON[key] for key in ACTIONS_JSON]
+# convert to a compatible action
+for _dict in ACTIONS_LIST:
+    for key in _dict:
+        _dict[key] = convert_ml_training_actions(_dict[key])
+
+
 # -------- ML WRAPPERS --------
 
 
@@ -99,7 +127,10 @@ def convert_to_bucket(arg, _type, bucket_assoc):
             fractional_part = remainder/float(_range)
             converted_val = lower_dict[(low, high)] + fractional_part
             return round(float(converted_val), 1)
-
+    # above highest partition
+    if arg >= int(high):
+        return 5.9
+    return 1.0
 
 def process_to_ml(ml_args):
     """
@@ -107,6 +138,7 @@ def process_to_ml(ml_args):
     values between 1 and 5
     """
     converted_dict = {}
+
     for key in ml_args:
         converted_dict[key] = convert_to_bucket(
             ml_args[key], key, BUCKETS_ASSOC)
@@ -128,7 +160,23 @@ def process_from_ml(ml_reaction):
     return final_dict
 
 
-def ml_adapter(args_dict):
+def light_level_to_plant_type(healthy_light):
+    """
+    light_level_to_plant_type(healthy_light) converts the healthy_light level; the goal lioght level
+    which is between 05 and 5 to a shadelevel for the light algoriothm
+    """
+    if healthy_light >= 5:
+        return "Full sun"
+    elif healthy_light >= 3:
+        return "Part sun"
+    elif healthy_light >= 1:
+        return "Part shade"
+    elif healthy_light >= 0:
+        return "Full shade"
+    raise AssertionError("Not a valid healthy light level")
+
+
+def ml_adapter(args_dict, light_dict):
     """
     ml_adapter() is a wrapper/adapter to fit for the ml functions
     [args_dict] is a dictionary of arguments used for the ml_fucntion
@@ -139,25 +187,35 @@ def ml_adapter(args_dict):
     healthy_moisture = healthy_levels_dict['soil_moisture']
     healthy_light = healthy_levels_dict['sunlight']
     goal_state = machine_learning.State(healthy_temp, healthy_humidity,
-                                        healthy_moisture, healthy_light)
+                                        healthy_moisture)
 
-    current_state_dict = process_to_ml(args_dict)
+    current_state_dict = process_to_ml(list(args_dict.values())[0])
+    print(f"arg_dict : {args_dict}")
+    print(f"current_state_dict : {current_state_dict}")
     curr_t = current_state_dict['temperature']
     curr_h = current_state_dict['humidity']
     curr_m = current_state_dict['soil_moisture']
     curr_l = current_state_dict['sunlight']
     curr_state = machine_learning.State(curr_t, curr_h,
-                                        curr_m, curr_l)
+                                        curr_m)
 
     ml_results = machine_learning.Agent.run(curr_state, goal_state)
     ml_result_dict = process_from_ml(ml_results)
 
-    now = datetime.datetime.now()
+    # add in the light implementation here
+    plant_type = light_level_to_plant_type(healthy_light)
+    new_light_dict = light(light_dict, curr_l, plant_type)
+    light_action = new_light_dict["ACTION"]
+    ml_result_dict["light"] = light_action
+    
+    print(f'ML DECISION: {ml_result_dict}')
+
+    now = datetime.now()
     dt_string = now.strftime("%d-%m-%Y %H:%M:%-S")
     final_dict = {}
     final_dict[dt_string] = ml_result_dict
 
-    return final_dict
+    return final_dict, new_light_dict
 
 # -------- INTIALIZATION WRAPPERS --------
 
@@ -210,14 +268,14 @@ def init():
     ret_dict["alert_status"] = AlertStatus()
 
     # set up manual control and dump into memory
-    manual_control_dict = {"mode": "manual"}  # TODO: change to ML later
+    manual_control_dict = {"mode": "machine_learning"}  # TODO: change to ML later
     pin_constants.dump_data(manual_control_dict, MODE_PATH)
-    
+
     # set up a random state
     ret_dict["state"] = machine_learning.State(1.0, 1.0, 1.0)
 
-    # set up init pickle path
- #   pin_constants.dump_pickled_data(ret_dict, dump_init_path)
+    # set up light dictionary
+    ret_dict["light_dict"] = startdict()
 
     return ret_dict
 
@@ -257,6 +315,8 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     Returns NONE
     """
 
+    global TRAIN_ML_COUNTER
+
     # start task to sleep for one cycle
     sleep_task = asyncio.create_task(asyncio.sleep(interval))
 
@@ -270,17 +330,29 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     # read from pwm settings
     pwm_settings = pin_constants.load_data(pwm_settings_path)
 
+    # get light dict
+    light_dict = init_dict["light_dict"]
+
     ml_args = one_cycle_sensors(init_dict)
     log(sensor_log_path, ml_args, max_log_size)
 
-    if manual_control["mode"] == "machine_learning":
-        ml_results = ml_adapter(ml_args)
+    # ML TRAIN STUFF TO BE REMOVED
+    if TRAIN_ML:
+        if TRAIN_ML_COUNTER == len(ACTIONS_LIST):
+            raise RuntimeError("Stop Execution")
+        training_actions = ACTIONS_LIST[TRAIN_ML_COUNTER]
+        training_results = {"now": training_actions}
+        peripheral_actions = await one_cycle_peripherals(init_dict, training_results, pwm_settings)
+        TRAIN_ML_COUNTER += 1
+    elif manual_control["mode"] == "machine_learning":
+        ml_results, new_light_dict = ml_adapter(ml_args, light_dict)
+        init_dict["light_dict"] = new_light_dict
         peripheral_actions = await one_cycle_peripherals(init_dict, ml_results, pwm_settings)
     elif manual_control["mode"] == "manual":
         converted_results = utilities.manual_action_to_activity(manual_results)
         manual_results = {"now": converted_results}
         peripheral_actions = await one_cycle_peripherals(init_dict, manual_results, pwm_settings)
-    
+
     log(ml_action_log, peripheral_actions, max_log_size)
 
     log_dict = {}
@@ -299,7 +371,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
 
     alert_status = init_dict["alert_status"]
     alert(100, log_dict, alert_status, email_settings, ALERT_LOG)
-    
+
     # handle the logging for ML learning
     for key in (ml_args):
         processed_args = process_to_ml(ml_args[key])
@@ -312,35 +384,33 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
                 moist = processed_args[sensor]
 
     current_state = machine_learning.State(temp, humid, moist)
-    
-    
+
     def convert_action(action):
-        if action == 0:
-            return "none"
+        if action == 0 or action == "off":
+            return "off"
         elif action == 1:
             return "big_decrease"
-        elif action == 2:
-            return "small_decrease"
+        elif action == 2 or action == "low":
+            return "low"
         elif action == 3:
             return "small_increase"
-        elif action == 4:
-            return "big_increase"
+        elif action == 4 or action == "high":
+            return "high"
         
     for key in peripheral_actions:
         if key == "water":
             water = convert_action(peripheral_actions[key])
         elif key == "heat":
             heat = convert_action(peripheral_actions[key])
-        elif key =="fan":
+        elif key == "fan":
             fan = convert_action(peripheral_actions[key])
     action_set = transition.ActionSet(water, fan, heat)
-    
-    
-    put = transition.EffectSet.putEffect(action_set, init_dict["state"], current_state)
-    
+
+    put = transition.EffectSet.putEffect(
+        action_set, init_dict["state"], current_state)
+
     init_dict["state"] = current_state
 
- 
     await sleep_task
 
 
@@ -414,15 +484,6 @@ if __name__ == "__main__":
     except (KeyboardInterrupt, SystemExit):
         print("Interrupt detected")
         sys.exit(0)
-    # except Exception as e:
-    #    print(f"Other exception detected: {e}")
-    #    sys.exit(0)
-
-        # ------- DEBUGGING -------------------
-
-        # in the future, would like to have asynchrnous program report back
-        # what is being read from the sensor and what the peripherals are being responded
-        # to
-
-        # TODO: ASYNC
-        # TODO: ALERT EMAIL DATAS TO USER
+#    except Exception as e:
+#        print(f"Other exception detected: {e}")
+#        sys.exit(0)

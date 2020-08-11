@@ -1,1 +1,1865 @@
-{"big_decrease,big_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,big_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,big_decrease,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,big_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,big_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_decrease,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,none,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,none,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,none,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,none,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,none,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_increase,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,small_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,big_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,big_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,big_increase,none": {"hits": 2, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.0, "hits": 2}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.0, "hits": 2}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0.0, "hits": 2}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,big_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_decrease,big_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_decrease,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_decrease,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,none,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,none,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,none,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,none,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,none,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_increase,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,small_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_increase,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_decrease,big_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_decrease,none": {"hits": 4, "temperature": {"1": {"effect": 2.4, "hits": 1}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.0, "hits": 3}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 2.0, "hits": 1}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.10000000000000009, "hits": 3}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0.8, "hits": 4}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_decrease,none": {"hits": 5, "temperature": {"1": {"effect": 2.7, "hits": 2}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.10000000000000009, "hits": 3}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 2.0, "hits": 2}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.15000000000000013, "hits": 3}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0.1, "hits": 5}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,none,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,none,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,none,none": {"hits": 2, "temperature": {"1": {"effect": 2.4, "hits": 1}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.0, "hits": 1}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 2.3, "hits": 1}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.0, "hits": 1}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0.8, "hits": 2}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,none,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,none,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_increase,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,small_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_increase,none": {"hits": 18, "temperature": {"1": {"effect": 2.4, "hits": 1}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.0002319335937500002, "hits": 17}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 2.3, "hits": 1}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0.038055419921875035, "hits": 17}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0.0015625, "hits": 18}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "none,big_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_decrease,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_decrease,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,none,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,none,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,none,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,none,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,none,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_increase,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,small_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_increase,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "small_increase,big_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_decrease,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_decrease,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_decrease,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_decrease,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_decrease,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_decrease,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,none,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,none,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,none,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,none,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,none,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_increase,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,small_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_increase,big_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_increase,small_decrease": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_increase,none": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_increase,small_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}, "big_increase,big_increase,big_increase": {"hits": 0, "temperature": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "humidity": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}, "soil_moisture": {"1": {"effect": 0, "hits": 0}, "2": {"effect": 0, "hits": 0}, "3": {"effect": 0, "hits": 0}, "4": {"effect": 0, "hits": 0}, "5": {"effect": 0, "hits": 0}}}}
+{
+  "off,off,off": {
+    "hits": 9,
+    "temperature": {
+      "1": {
+        "effect": 0.0,
+        "hits": 7
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 3
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 3
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 2
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 2
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.0,
+        "hits": 7
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 3
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 3
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 2
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 2
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.0,
+        "hits": 7
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 2
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 2
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 2
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 4
+      }
+    }
+  },
+  "off,off,low": {
+    "hits": 2,
+    "temperature": {
+      "1": {
+        "effect": 0.1500000000000004,
+        "hits": 2
+      },
+      "2": {
+        "effect": 0.1500000000000004,
+        "hits": 2
+      },
+      "3": {
+        "effect": 0.1500000000000004,
+        "hits": 2
+      },
+      "4": {
+        "effect": 0.1500000000000004,
+        "hits": 2
+      },
+      "5": {
+        "effect": 0.1500000000000004,
+        "hits": 2
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.2999999999999997,
+        "hits": 2
+      },
+      "2": {
+        "effect": 0.2999999999999997,
+        "hits": 2
+      },
+      "3": {
+        "effect": 0.2999999999999997,
+        "hits": 2
+      },
+      "4": {
+        "effect": 0.2999999999999997,
+        "hits": 2
+      },
+      "5": {
+        "effect": 0.2999999999999997,
+        "hits": 2
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.0,
+        "hits": 2
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 2
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 2
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 2
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 2
+      }
+    }
+  },
+  "off,off,high": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.3999999999999993,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.3999999999999993,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.3999999999999993,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.3999999999999993,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.3999999999999993,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.30000000000000018,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.30000000000000018,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.30000000000000018,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.30000000000000018,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.30000000000000018,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    }
+  },
+  "off,low,off": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.70,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.70,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.70,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.70,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.70,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    }
+  },
+  "off,low,low": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.20000000000000018,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.20000000000000018,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.20000000000000018,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.20000000000000018,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.20000000000000018,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    }
+  },
+  "off,low,high": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    }
+  },
+  "off,high,off": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.2999999999999998,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.2999999999999998,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.2999999999999998,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.2999999999999998,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.2999999999999998,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.20000000000000018,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    }
+  },
+  "off,high,low": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -1.2999999999999998,
+        "hits": 1
+      },
+      "2": {
+        "effect": -1.2999999999999998,
+        "hits": 1
+      },
+      "3": {
+        "effect": -1.2999999999999998,
+        "hits": 1
+      },
+      "4": {
+        "effect": -1.2999999999999998,
+        "hits": 1
+      },
+      "5": {
+        "effect": -1.2999999999999998,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -2.8,
+        "hits": 1
+      },
+      "2": {
+        "effect": -2.8,
+        "hits": 1
+      },
+      "3": {
+        "effect": -2.8,
+        "hits": 1
+      },
+      "4": {
+        "effect": -2.8,
+        "hits": 1
+      },
+      "5": {
+        "effect": -2.8,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    }
+  },
+  "off,high,high": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    }
+  },
+  "low,off,off": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.7000000000000002,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.7000000000000002,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.7000000000000002,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.7000000000000002,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.7000000000000002,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.1,
+        "hits": 1
+      }
+    }
+  },
+  "low,off,low": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.39999999999999947,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.39999999999999947,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.39999999999999947,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.39999999999999947,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.39999999999999947,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      }
+    },
+  "soil_moisture": { 
+    "1": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.1,
+        "hits": 1
+      }
+    }
+  },
+  "low,off,high": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.40000000000000036,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.40000000000000036,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.40000000000000036,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.40000000000000036,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.40000000000000036,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      }
+    },
+  "soil_moisture": { 
+    "1": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.1,
+        "hits": 1
+      }
+    }
+  },
+  "low,low,off": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.19999999999999973,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.19999999999999973,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.19999999999999973,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.19999999999999973,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.19999999999999973,
+        "hits": 1
+      }
+    },
+  "soil_moisture": {
+    "1": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.1,
+        "hits": 1
+      }
+    }
+  },
+  "low,low,low": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.7999999999999998,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.7999999999999998,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.7999999999999998,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.7999999999999998,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.7999999999999998,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.5,
+        "hits": 1
+      }
+    },
+  "soil_moisture": {
+      "1": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.1,
+        "hits": 1
+      }
+    }
+  },
+  "low,low,high": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.5999999999999996,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.5999999999999996,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.5999999999999996,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.5999999999999996,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.5999999999999996,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.09999999999999964,
+        "hits": 1
+      }
+    },
+  "soil_moisture": {
+      "1": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.1,
+        "hits": 1
+      }
+    }
+  },
+  "low,high,off": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.5999999999999996,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.5999999999999996,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.5999999999999996,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.5999999999999996,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.5999999999999996,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.10000000000000053,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.10000000000000053,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.10000000000000053,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.10000000000000053,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.10000000000000053,
+        "hits": 1
+      }
+    }
+  },
+  "low,high,low": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.6999999999999997,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.6999999999999997,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.6999999999999997,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.6999999999999997,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.6999999999999997,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.3999999999999999,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.3999999999999999,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.3999999999999999,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.3999999999999999,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.3999999999999999,
+        "hits": 1
+      }
+    },
+  "soil_moisture": {
+      "1": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.1,
+        "hits": 1
+      }
+    }
+  },
+  "low,high,high": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.5,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      }
+    },
+   "soil_moisture": {
+     "1": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.1,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.1,
+        "hits": 1
+      }
+    }
+  },
+  "high,off,off": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.5,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.5,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2,
+        "hits": 1
+      }
+    }
+  },
+  "high,off,low": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.6999999999999997,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.6999999999999997,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.6999999999999997,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.6999999999999997,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.6999999999999997,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2,
+        "hits": 1
+      }
+    }
+  },
+  "high,off,high": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.3999999999999999,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.7000000000000002,
+        "hits": 1
+      }
+    },
+  "soil_moisture": {
+      "1": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2,
+        "hits": 1
+      }
+    }
+  },
+  "high,low,off": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2999999999999998,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.6000000000000001,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2,
+        "hits": 1
+      }
+    }
+  },
+  "high,low,low": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.0,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.0,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.8000000000000003,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.8000000000000003,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.8000000000000003,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.8000000000000003,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.8000000000000003,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2,
+        "hits": 1
+      }
+    }
+  },
+  "high,low,high": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2,
+        "hits": 1
+      }
+    }
+  },
+  "high,high,off": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.10000000000000009,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.09999999999999964,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2,
+        "hits": 1
+      }
+    }
+  },
+  "high,high,low": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2,
+        "hits": 1
+      }
+    }
+  },
+  "high,high,high": {
+    "hits": 1,
+    "temperature": {
+      "1": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.19999999999999973,
+        "hits": 1
+      }
+    },
+    "humidity": {
+      "1": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "2": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "3": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "4": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      },
+      "5": {
+        "effect": -0.10000000000000009,
+        "hits": 1
+      }
+    },
+    "soil_moisture": {
+      "1": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "2": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "3": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "4": {
+        "effect": 0.2,
+        "hits": 1
+      },
+      "5": {
+        "effect": 0.2,
+        "hits": 1
+      }
+    }
+  }
+}

@@ -42,10 +42,10 @@ I2C_PORT_NUM = 1
 
 # ----- Peripheral Constants --------
 
-VENT = 25
-LED = 27
-VALVE = 23
-HEAT = 17
+VENT = 13
+LED = 26
+VALVE = 12
+HEAT = 16
 
 BURST = 10  # in seconds
 
