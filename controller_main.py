@@ -188,9 +188,9 @@ def ml_adapter(args_dict, light_dict):
     [args_dict] is a dictionary of arguments used for the ml_fucntion
     """
     healthy_levels_dict = pin_constants.load_data(HEALTHY_LEVELS_PATH)
-    healthy_temp = healthy_levels_dict['temperature']
-    healthy_humidity = healthy_levels_dict['humidity']
-    healthy_moisture = healthy_levels_dict['soil_moisture']
+    healthy_temp = str(int(healthy_levels_dict['temperature']) + .5)
+    healthy_humidity = str(int(healthy_levels_dict['humidity']) + .5)
+    healthy_moisture = str(int(healthy_levels_dict['soil_moisture']) + .5)
     healthy_light = healthy_levels_dict['sunlight']
     goal_state = machine_learning.State(healthy_temp, healthy_humidity,
                                         healthy_moisture)
@@ -206,6 +206,8 @@ def ml_adapter(args_dict, light_dict):
                                         curr_m)
 
     ml_results = machine_learning.Agent.run(curr_state, goal_state)
+    print(f'RAW ML RESULTS: {ml_results}')
+
     ml_result_dict = process_from_ml(ml_results)
 
     # add in the light implementation here
