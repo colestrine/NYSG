@@ -165,6 +165,7 @@ def light_level_to_plant_type(healthy_light):
     light_level_to_plant_type(healthy_light) converts the healthy_light level; the goal lioght level
     which is between 05 and 5 to a shadelevel for the light algoriothm
     """
+    healthy_light = int(healthy_light)
     if healthy_light >= 5:
         return "Full sun"
     elif healthy_light >= 3:
