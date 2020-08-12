@@ -333,9 +333,9 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     """
 
     # read from update interval settings
-    interval_settings = load_data(UPDATE_INTERVAl_PATH)
+    interval_settings = pin_constants.load_data(UPDATE_INTERVAl_PATH)
     # update time in seconds !!!, must be greater than 1 minute (60 sec)
-    update_interval_time = interval_settings["interval"] 
+    update_interval_time = int(interval_settings["interval"]) 
     global TRAIN_ML_COUNTER
 
     # start task to sleep for one cycle
@@ -353,6 +353,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
 
     # read from frequency settings
     freq_settings = pin_constants.load_data(freq_settings_path)
+    print(f"Frwquency_settings: {freq_settings}")
     # get light dict
     light_dict = init_dict["light_dict"]
 

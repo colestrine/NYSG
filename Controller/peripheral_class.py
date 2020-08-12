@@ -368,7 +368,7 @@ class Pwm_Peripheral(BurstPeripheral):
         set_freq(self, hz) sets the freuqnecy of the pwm peripheral in freq [hz]
         """
         self.freq = freq
-        self.pwm = self.pwm.ChangeFrequency(freq)
+        self.pwm.ChangeFrequency(freq)
 
     def get_freq(self):
         """
@@ -560,11 +560,11 @@ async def react_all(ml_results, peripheral_dict, pwm_settings, freq_settings):
     light.set_duty_cycle(light_dc)
 
     # get and change pwm frequency actions
-    for dev in pwm_settings:
+    for dev in freq_settings:
         if dev == "light":
-            light_freq = int(pwm_settings[dev]["frequency"])
+            light_freq = int(freq_settings[dev]["frequency"])
         elif dev == "fan":
-            fan_freq = int(pwm_settings[dev]["frequency"])
+            fan_freq = int(freq_settings[dev]["frequency"])
 
     fan.set_freq(fan_freq)
     light.set_freq(light_freq)   
