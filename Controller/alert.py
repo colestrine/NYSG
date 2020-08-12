@@ -182,7 +182,7 @@ class AlertStatus():
         and sets the water level to full 
         """
         self.time = datetime.datetime.now()
-        selt.water_level = WATER_LEVEL
+        self.water_level = WATER_LEVEL
 
     def get_time(self):
         """
@@ -227,7 +227,7 @@ def alert(water_usage, log_dict, alert_status, alert_settings, alert_path=ALERT_
     
     # update water usage
     new_water_level = alert_status.get_water_level() - water_usage
-`   alert_status.set_water_level(new_water_level)
+    alert_status.set_water_level(new_water_level)
 
     alert_dict = {}
     if new_water_level <= MIN_WATER_LEVEL:
