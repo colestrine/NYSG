@@ -12,7 +12,7 @@ class plant_light:
         self.indirect = timedelta(hours=indirectsun_hours)
 
 def startdict(): # Create log to be used in the later functions at reset point
-    d = {"DATE" : datetime.now(), "DARK" : timedelta() , "DIRECT" : timedelta(), "INDIRECT" : timedelta(), "ACTION" : 0}
+    d = {"DATE" : datetime.now(), "DARK" : timedelta() , "DIRECT" : timedelta(), "INDIRECT" : timedelta(), "ACTION" : 0, "LUX" : 0}
     return d
 
 def addtime(time, other):   # Add a time object to other datetime object
@@ -48,6 +48,7 @@ def light(today_light,lux, plant_type):
     REFRESH = DATETODAY - today_light["DATE"]
     GROWSTART = time(6, 30)
     GROWSTOP = time(21,30)
+    today_light["LUX"] = lux
 
     # TODAY's DATA
 
@@ -89,8 +90,8 @@ def light(today_light,lux, plant_type):
         direct_needed = lightcontrol.direct - today_light["DIRECT"]
 
         if lux < 45000 and direct_needed>=time_to_sleep:
-            today_light["ACTION"] = 1
-            return today_light
+            today_light["ACTION"] = 4
         else:
             today_light["ACTION"] = 0
-            return today_light
+        print(today_light)
+        return today_light
