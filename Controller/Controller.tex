@@ -1,0 +1,898 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{nysg-2020}{%
+\section{NYSG 2020}\label{nysg-2020}}
+
+This is the main controller for the greenhouse. It is responsible for
+initializing the software required, and running a main loop by reading
+sensor data, using the ML algorithm to decide on a decision; or using
+manual control to influence the actions, logging the data and decision,
+sending any alerts as specified by the user and then responding to the
+decision by changing the peripherals. The controller than pauses until
+the next cycle of execution.
+
+\hypertarget{setup}{%
+\subsection{Setup}\label{setup}}
+
+In order to use the controller and run any associated code, you must
+setup the environment and dependencies.
+
+\hypertarget{software-runtime-requirements}{%
+\subsubsection{Software Runtime
+Requirements}\label{software-runtime-requirements}}
+
+Please activate the I2C capabilities on the Raspberry Pi 4 Controller.
+To do so follow these instructions:
+
+(these instructions are from:
+https://www.raspberrypi-spy.co.uk/2014/11/enabling-the-i2c-interface-on-the-raspberry-pi/\#:\textasciitilde:text=Method\%201\%20\%E2\%80\%93\%20Using\%20\%E2\%80\%9CRaspi\%2Dconfig\%E2\%80\%9D\%20on\%20Command\%20Line\&text=Highlight\%20the\%20\%E2\%80\%9CI2C\%E2\%80\%9D\%20option\%20and,activate\%20\%E2\%80\%9C\%E2\%80\%9D.\&text=The\%20Raspberry\%20Pi\%20will\%20reboot\%20and\%20the\%20interface\%20will\%20be\%20enabled.)
+
+Please also activate the SPI capabilities on the Raspberry Pi
+Controller.
+https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/
+
+\hypertarget{method-1-command-line}{%
+\paragraph{Method 1: Command Line}\label{method-1-command-line}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Open a new terminal tab
+\item
+  Run
+\end{enumerate}
+
+\begin{verbatim}
+    sudo raspi-config
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Select ``Interfacing Options''
+\item
+  Scroll to the I2C option and activate by selecting
+\item
+  Click ``'' to activate ARM I2C interface
+\item
+  Click ``'' to reboot
+\item
+  Then run
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sudo}\NormalTok{ raspi{-}config}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Select ``Interfacing Options''
+\item
+  Scroll to the SPI option and activate by selecting
+\item
+  Click ``'' to activate ARM I2C interface
+\item
+  Click ``'' to reboot
+\end{enumerate}
+
+\hypertarget{method-2-user-interface}{%
+\paragraph{Method 2: User Interface}\label{method-2-user-interface}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  On Desktop go to Menu \textgreater{} Preferences \textgreater{}
+  Raspberry Pi Configuration
+\item
+  Select ``Interfaces'' and set ``I2C'' to ``Enabled''
+\item
+  Click ``OK''
+\item
+  Click ``Yes'' to reboot
+\item
+  On Desktop go to Menu \textgreater{} Preferences \textgreater{}
+  Raspberry Pi Configuration
+\item
+  Select ``Interfaces'' and set ``SPI'' to ``Enabled''
+\item
+  Click ``OK''
+\item
+  Click ``Yes'' to reboot
+\end{enumerate}
+
+Next, you will need to install smbus, spi and I2C tools. To do so, run
+the following commands on a terminal tab 1. Open a terminal tab 2. Run
+
+\begin{verbatim}
+    sudo apt-get update
+    sudo apt-get install -y python-smbus i2c-tools
+\end{verbatim}
+
+To install I2C hardware, start by shutting down the Raspberry Pi. Run:
+
+\begin{verbatim}
+    sudo halt
+\end{verbatim}
+
+Wait 10 seconds, disconnect PI power, and connect hardware.
+
+Also run the two commands
+
+\begin{verbatim}
+    sudo apt-get install -y python-dev python3-dev
+    sudo apt-get install -y python-spidev python3-spidev
+\end{verbatim}
+
+Then run the following commands:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{cd}\NormalTok{ \textasciitilde{}}
+\FunctionTok{git}\NormalTok{ clone https://github.com/Gadgetoid/py{-}spidev.git}
+\BuiltInTok{cd}\NormalTok{ py{-}spidev}
+\FunctionTok{sudo}\NormalTok{ python setup.py install}
+\FunctionTok{sudo}\NormalTok{ python3 setup.py install}
+\BuiltInTok{cd}\NormalTok{ \textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+To check if I2C enabled, power up the PI. Run:
+
+\begin{verbatim}
+    lsmod | grep i2c_
+\end{verbatim}
+
+If ``i2c\_bcm2708'' is listed, i2c is working.
+
+To check hardware is working: run this command:
+
+\begin{verbatim}
+    i2cdetect -y 1
+\end{verbatim}
+
+You should get a grid of numbers, with the numbers filled in being the
+i2c addresses. Note that you need a newer Raspberry Pi model for the
+last command. So i2c should work.
+
+To verify spi: run
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{lsmod} \KeywordTok{|} \FunctionTok{grep}\NormalTok{ spi\_}
+\end{Highlighting}
+\end{Shaded}
+
+and ``spi\_bcm2708″ or ``spi\_bcm2835'' should be listed
+
+\hypertarget{software-dependency-requirements}{%
+\subsubsection{Software Dependency
+Requirements}\label{software-dependency-requirements}}
+
+\hypertarget{dependencies}{%
+\paragraph{Dependencies}\label{dependencies}}
+
+Two packages are crucial for Raspberry Pi software for the controller. -
+RPi.GPIO - gpiozero Several other packages are used jointly in the
+controller and must also be installed. These include a host of Adafruit
+custom packages To install, run the commands below.
+
+\hypertarget{installation}{%
+\paragraph{Installation}\label{installation}}
+
+To install these dependencies, first install pip on your Raspberry Pi.
+You will need to be on termianl on the command line, type these commands
+and hit enter afer each for them to take effect. If pip3 is installed,
+run
+
+\begin{verbatim}
+     pip3 --version 
+\end{verbatim}
+
+It should show a version number
+
+Also run:
+
+\begin{verbatim}
+     python3 --version
+\end{verbatim}
+
+You'll a version of python3 greater or equal to Python 3.7.6
+
+Next run this command:
+
+\begin{verbatim}
+    pip install -r requirements.txt
+\end{verbatim}
+
+This will install all requisite requirements that the controller
+requires, including all the necessary packages for the controller. This
+command will take some time to run since many dependencies must be
+installed, and started, so be patient.
+
+\hypertarget{controller}{%
+\subsection{Controller}\label{controller}}
+
+\hypertarget{physical-specifications}{%
+\subsubsection{Physical Specifications}\label{physical-specifications}}
+
+\begin{itemize}
+\tightlist
+\item
+  Raspberry Pi 4 B
+\item
+  40 GPIO pins
+\item
+  Power for Raspberry Pi
+\item
+  WIFI connection on Raspberry Pi 4
+\item
+  I2C capability
+\item
+  SPI capability
+\end{itemize}
+
+\hypertarget{sensor-classes-sensor_class.py}{%
+\subsection{Sensor Classes
+(sensor\_class.py)}\label{sensor-classes-sensor_class.py}}
+
+\hypertarget{description}{%
+\subsubsection{Description}\label{description}}
+
+The sensor class represents a sensor abstraction, that can turn on and
+off a sensor and read from the sensor. The Sensor object is meant to be
+compatible with I2C, and GPIOZEROfor the SPI capability.
+
+There are also utility functions, summary functions and debugging
+functions in sensor\_class.py
+
+\hypertarget{sensors}{%
+\subsubsection{Sensors}\label{sensors}}
+
+There are 3 physical sensors: 1. Light Sensor 2. Temperature \& Humidity
+Sensor 3. Soil Moisture Sensor
+
+There are 3 sensor abstractions (4 classes): 1. Light Sensor 2.
+Temperature and Humidity Sensor 3. Soil Moisture Sensor
+
+\hypertarget{dependencies-1}{%
+\subsubsection{Dependencies}\label{dependencies-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  GPIOZERO, for spi communication, specifically MCP7001 (moisture
+  sensor)
+\item
+  busio
+\item
+  board
+\item
+  Adafruit\_PureIO
+\item
+  adafruit\_si7021 (temp humidity sensor\_)
+\item
+  adafruit\_veml7700 (light sensor)
+\end{itemize}
+
+\hypertarget{attributes}{%
+\subsubsection{Attributes}\label{attributes}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  addr - this represents the I2C address for the sensor
+\item
+  register - this represents the register holding data relevant to the
+  sensor
+\end{enumerate}
+
+\hypertarget{methods}{%
+\subsubsection{Methods}\label{methods}}
+
+\begin{itemize}
+\tightlist
+\item
+  read: This reads the requested value(s) from the sensor and returns
+  the value
+\item
+  shut\_down : Shuts down the sensor
+\end{itemize}
+
+\hypertarget{classes}{%
+\subsubsection{Classes}\label{classes}}
+
+There are four classes. Attributes and Methods are documented below
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Light Sensor
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Attributes
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      channel. - this represents the I2C channel number for the sensor
+    \item
+      sensor - this represents the adafruit VEML7700 sensor object
+    \end{enumerate}
+  \item
+    Methods
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      read\_light: This reads the requested ambient light value from the
+      sensor and returns the value
+    \end{enumerate}
+  \end{enumerate}
+\item
+  TempHumidity Sensor
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Attributes
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      channel. - this represents the I2C channel number for the sensor
+    \item
+      sensor - this represents the adafruit si7021 sensor object
+    \end{enumerate}
+  \item
+    Methods
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      read\_temp: This reads the requested temperature value from the
+      sensor and returns the value
+    \item
+      read\_rh: This reads the requested relative humidity value from
+      the sensor and returns the value
+    \end{enumerate}
+  \end{enumerate}
+\item
+  Soil Moisture Sensor
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Attributes
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      Sensor - this reresents the gpiozero MCP3001 soil moisture object
+      abstraction
+    \end{enumerate}
+  \item
+    Methods
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      read\_moisture: This reads the requested soil moisture value from
+      the sensor and returns the value
+    \end{enumerate}
+  \end{enumerate}
+\end{enumerate}
+
+\hypertarget{utility-functions}{%
+\subsubsection{Utility Functions}\label{utility-functions}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create Channel - this creates a Adafruit bus i2C channel . The chnnale
+  must be 1.
+\end{enumerate}
+
+\hypertarget{summary-functions}{%
+\subsubsection{SUMMARY FUNCTIONS}\label{summary-functions}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  collect\_all\_sensors() : this returns all the sensor data from the
+  sensors as a dictionary in the format
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{str\_time: \{}\StringTok{"temperature"}\NormalTok{ : t, }\StringTok{"humidity"}\NormalTok{ : h, }\StringTok{"soil\_moisture"}\NormalTok{ : m, }\StringTok{"sunlight"}\NormalTok{ : s\}\}}
+\end{Highlighting}
+\end{Shaded}
+
+where str\_time is the current time given by strftime in
+datetime.datetime up to seconds.
+
+\hypertarget{debugging-functions}{%
+\subsubsection{DEBUGGING FUNCTIONS}\label{debugging-functions}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Run\_debug runs a sensor and logs the data for that sensor
+\item
+  read\_debug\_data prints out debug data to screen. Must be run only
+  after a debug function was run first to collect data
+\item
+  test\_sensor\_logging tests sensor logging functionality
+\item
+  basic\_temp\_humid\_test makes sure the temperature sensor can be read
+  and prints out the values of temeprature
+\item
+  basic\_light\_test makes sure ambient light can be read
+\item
+  basic\_moisture\_test makes sure mooisture can be read
+\item
+  three\_sensor\_test makes sure all three sensors can be read at once
+  and prints out temperature, himdiity, moisture and light values
+\end{enumerate}
+
+\hypertarget{running-sensor_class.py}{%
+\subsubsection{Running sensor\_class.py}\label{running-sensor_class.py}}
+
+Running
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{python3}\NormalTok{ sensor\_class.py}
+\end{Highlighting}
+\end{Shaded}
+
+will run the final 4 debugging tests above.
+
+\hypertarget{peripheral-classes-peripheral_class.py}{%
+\subsection{Peripheral Classes
+(peripheral\_class.py)}\label{peripheral-classes-peripheral_class.py}}
+
+\hypertarget{description-1}{%
+\subsubsection{Description}\label{description-1}}
+
+The peripheral class represents a peripheral abstraction, that can turn
+on and off a sensor and changed at the peripheral. The peripheral object
+is meant to be compatiable with GPIO pins.
+
+There are also utility functions and debugging functions in
+peripheral\_class.py
+
+\hypertarget{dependencies-2}{%
+\subsubsection{Dependencies}\label{dependencies-2}}
+
+\begin{itemize}
+\tightlist
+\item
+  RPi.GPIO, for GPIO pins communication {[}Requires a Raspberry Pi for
+  this package{]}
+\item
+  Other backup packages
+
+  \begin{itemize}
+  \tightlist
+  \item
+    gpiozero provides more complex abstractions that may prove fruitful
+    should we need them
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{attributes-1}{%
+\subsubsection{Attributes}\label{attributes-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  channel - this represents the GPIO pin channel
+\item
+  active - this represents whether the pin channel is active or not (on
+  or off)
+\end{enumerate}
+
+\hypertarget{methods-1}{%
+\subsubsection{Methods}\label{methods-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  setup: Setsup pin channel and turns on the board settings to BCM at
+  the first peripheral creation
+\item
+  set\_active: makes channel active and makes the GPIO channel respond
+  with high voltage
+\item
+  set\_inactive: makes channl inactive, and make sGPIo channel respond
+  with low voltage
+\item
+  respond: outputs to GPIO channel with correct voltage level to device
+  to activate or deactivate
+\item
+  read: reads from GPIO channe;
+\item
+  deactivate: deactives and closes GPIO channel, cleaning up any
+  remnants of chnnael and activity
+\end{itemize}
+
+\hypertarget{sublasses}{%
+\subsubsection{Sublasses}\label{sublasses}}
+
+There are two abstract subclasses. They are all subclasses of
+Peripheral, and have the same base attributes. 1. BurstPeripheral 1.
+Attributes 1. Burst\_time: the time the peripheral runs before turning
+off 2. Methods 1. set\_active sets the periphjeral ctive for burst time
+seconds and then turns off after 2. Set\_inactive turns off peripheral
+3. get\_burst\_time gets burst time in seconds 4. set\_burst\_time sets
+burst time for the peripheral in seconds 2. Pwm\_Peripheral 1. Attribtes
+1. freq the frequency in Hertz 2. dc: the duty cycles in percent 3. pwm:
+the pwm object to control pwm 2. Methods 1. Set\_inacvtive: changes
+duty\_cycle to 0 to turn off 2. set\_freq sets freuqnercy in hetz 3.
+get\_freq gets frequnecy of the pwm device i hertz 4. set\_duty\_cycle
+sets duty cycle in \% 5. get\_duty\_cycle gets duty cycle in \% 6.
+deactivate turns off all pwm devices completely
+
+There are 4 concrete base classes: 1. PlantLight 1. Superclass 1.
+Pwm\_peripheral 2. Fan 1. Superclass 1. Pwm\_peripjeral 2. Attributes 1.
+set\_duty\_cycle sets the dutcy cyle inverted by subtracting from 100
+and taking absolute value 3. HeatPad 1. Superclass: 1. Burst\_periperhal
+4. SolenoidValve 1. Superclass: 1. Burst\_periperhal
+
+\hypertarget{summary-functions-1}{%
+\subsubsection{Summary Functions}\label{summary-functions-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  react\_all - this reacts to all the peripherals, changing them the way
+  requested. Runs asynchrnously to allow for yielding
+\item
+  translate\_action\_to\_burst\_time translates the action to a burst
+  time from interface files
+\item
+  change\_peripheral changes the peripheral by activating it
+\item
+  manual for manual control
+\end{enumerate}
+
+\hypertarget{debugging-functions-1}{%
+\subsubsection{DEBUGGING FUNCTIONS}\label{debugging-functions-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  debug\_peripheral runs a peripheral and logs the data for that
+  peripheral
+\item
+  debug\_fan runs debugging for a fan, changes duty cycles and logs the
+  recorded tachometer speed
+\item
+  read\_debug\_data prints out debug data to screen. Must be run only
+  after a debug function was run first to collect data
+\item
+  fan\_turn\_on\_test turns on fan
+\item
+  test\_peripheral\_logging tests peripheal logging capability
+\end{enumerate}
+
+Running
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{python3}\NormalTok{ peripheral\_class.py}
+\end{Highlighting}
+\end{Shaded}
+
+will test the fan, check logging and test all four peripherals
+
+\hypertarget{main-controller_main.py}{%
+\subsection{Main (controller\_main.py)}\label{main-controller_main.py}}
+
+Main houses all driver program functions. This is where the function is
+executed from. Running main will start up the initialization and the
+event loop to continuosly monitor sensor data and also change
+peripeherals. The machine learning algorithm ties into the system in
+main, as does the manual control.
+
+\hypertarget{dependencies-3}{%
+\subsubsection{Dependencies:}\label{dependencies-3}}
+
+pin\_constants - these are the constants used sensor\_class - sensors
+imported peripheral class - peripherals imported reinforcement\_learning
+- the ML algorithm
+
+\hypertarget{ml-wrapper}{%
+\subsubsection{ML Wrapper}\label{ml-wrapper}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  ml\_adapter: the ml function is called from here, and argument
+  dictionaries are used to feed in and pipe out data to this adapter
+\end{enumerate}
+
+\hypertarget{intialization}{%
+\subsubsection{INTIALIZATION}\label{intialization}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  init: sets up controller with sensors and peripherasl and the
+  associated channels and reigsters and pins
+\end{enumerate}
+
+\hypertarget{event-loop-driver}{%
+\subsubsection{EVENT LOOP DRIVER}\label{event-loop-driver}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  one\_cycle\_sensors: polls data from all sensors once
+\item
+  one\_cycle\_driver - Testing verhicle fo runnign only one cycle
+\item
+  one\_cycle\_peripherals sends voltages to all peripherals once
+\item
+  event\_loop: reads in user interface input, measures data from sensor,
+  makes deicsion, logs data and sends out decision to change
+  peripherals, waits a time amount and restarts cycle
+\item
+  ml\_adapter calls ml function as an adapter pattern funcrtion
+\item
+  process\_from\_ml processes the ml output into a peripheral
+  controllable output
+\item
+  process\_to\_ml transforms the user input into an ML input
+\item
+  convert\_to\_bucket converts regular values into bucket data based on
+  interface file settings from the user
+\item
+  main : asynchronous driving functio
+\end{enumerate}
+
+\hypertarget{asynchronicity}{%
+\subsubsection{ASYNCHRONICITY}\label{asynchronicity}}
+
+The program is partly asynchronous at the present moment. Notably, async
+package is used to run some commands in a concurrent fashion, actually
+passing back and forth function execution when the functions can be
+idle.
+
+\hypertarget{debugging}{%
+\subsubsection{Debugging}\label{debugging}}
+
+async\_trial.py is a debugging unit to make siure that asynchronous
+execution works as intended
+
+\hypertarget{log-log.py}{%
+\subsection{Log (log.py)}\label{log-log.py}}
+
+Log contains all the logging utilities and functions to help log data in
+json files
+
+\hypertarget{functions}{%
+\subsubsection{Functions}\label{functions}}
+
+\begin{itemize}
+\tightlist
+\item
+  get\_file\_size is the size of the file in bytes
+\item
+  append\_dict adds on to the dict keys that are assumed not to be in
+  the dict
+\item
+  merge\_dict is a utility methodn that ios much slower and adds keys
+  uniquely
+\item
+  log logs the data, either overwriting prior memory location if the
+  file size is to large or appending data if necessary
+\end{itemize}
+
+\hypertarget{debugging-1}{%
+\subsubsection{Debugging}\label{debugging-1}}
+
+log\_test.py tests the functions in log
+
+\hypertarget{alert-alert.py}{%
+\subsection{Alert (alert.py)}\label{alert-alert.py}}
+
+Alert contains all the alert utilities to monitor, raise and log alerts
+for the user
+
+\hypertarget{functions-1}{%
+\subsubsection{Functions}\label{functions-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  alert is the collection of alerts raised, which also logs the alert,
+  cretes the message and sends the email as necessary with the correct
+  settings for the email. If configuration.py not included, causes error
+  to halt eecution, if password/username not correct, catches error and
+  does not send email.
+\item
+  alert\_message\_generator creates alerts as needed
+\item
+  log\_alert logs an alert
+\item
+  low\_detail\_generator generates low detail alerts (only extreme
+  greenhouse conditions)
+\item
+  high\_detail\_generator generates high detail alerts (all greenhouse
+  sensor/peripheral output and extremee conditions
+\item
+  generate\_message creatres an email message with subject and body
+  specified by detail waned by user
+\item
+  send\_email sends email to the user at specified email address and
+  password
+\end{itemize}
+
+\hypertarget{classes-1}{%
+\subsubsection{CLasses}\label{classes-1}}
+
+Also included is a class: AlertStatus Alert Status is a struct tracking
+information about alerting and when the previous alert was sent
+
+\hypertarget{debugging-2}{%
+\subsubsection{Debugging}\label{debugging-2}}
+
+test\_email\_alert.py test the functions in alert by sending an email to
+the intended address
+
+\hypertarget{pin-constants-pin_constants.py}{%
+\subsection{Pin Constants
+(pin\_constants.py)}\label{pin-constants-pin_constants.py}}
+
+Pin constants contains pin information like GPIO pins, register number,
+channel numbers, light constants, alert constants, other path locations
+and I2C commands.
+
+\hypertarget{functions-2}{%
+\subsubsection{FUnctions}\label{functions-2}}
+
+Also included are standard json/pickle utilitie functions used to dump
+and store data.
+
+\hypertarget{run_greenhouse.sh}{%
+\subsection{run\_greenhouse.sh}\label{run_greenhouse.sh}}
+
+DO NOT USE THIS SCRIPT. THERE IS A MODIFIED SCRIPT TO USE
+
+\hypertarget{set-up-to-run}{%
+\subsection{Set up to Run}\label{set-up-to-run}}
+
+To Run this program, run the command in the directory above
+
+\begin{verbatim}
+bash start-system.sh
+\end{verbatim}
+
+The program will start immediately and will not terminate, unless you
+type in the keyboard ctrl-c, which cause an exception. In addition, this
+command will also start the UI so that you can manipulate the program.
+
+\end{document}
