@@ -58,6 +58,8 @@ BIG_INCREASE = 60
 DC = 50 # percent %
 FREQ = 128 # hZ
 
+WATER_FLOW_RATE = 0.004722 # gallons per second water flow rate on average for the soaker hose
+
 # ------- LIGHT CONSTANTS ---------
 LIGHT_ON_TIME = 9 * 60 * 60  # time on in seconds
 START_LIGHT = (6, 30)  # when light starts as a tuple using 24 hour day

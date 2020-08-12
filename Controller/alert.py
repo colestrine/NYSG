@@ -38,8 +38,9 @@ DEBUG_PORT = 1025
 
 # --------- CONSTANTS FOR ALERTS ---------
 
-WATER_LEVEL = 100
-ALERT_LOG_PATH = "alert_log.json"
+WATER_LEVEL = 0.528344 # number in gallons for water tank at full capacity
+MIN_WATER_LEVEL = 0 # minimum acceptable water level in gallons
+ALERT_LOG_PATH = "alert_log.json" # for testing onyly
 N_TEST_ITER = 100
 
 
@@ -76,10 +77,10 @@ def log_alert(alert_message_dict, alert_path=ALERT_LOG_PATH):
 # --------- EMAIL ALERT SYSTEM------------
 
 
-def low_detail_generator(log_data):
+def low_detail_generator(log_data, new_water_level):
     """
     low_detail_generator(log_data) only generates a body message with essential 
-    information, e.g. extreme measurements
+    information, e.g. extreme measurements and water level warning
     """
     body = "EXTRA DETAILS\n"
     for key in log_data:
@@ -107,10 +108,15 @@ def low_detail_generator(log_data):
                 body = body + "\n" + f"High Sunlight Levels Detected: {sl}"
             elif sl < 30000:
                 body = body + "\n" + f"Low Sunlight Levels Detected: {sl}"
+    
+    # add in water level
+    if new_water_level <= MIN_WATER_LEVEL:
+        body = body + "\n" + f"Low Water Level Detected: {new_water_level}"
+        
     return body
 
 
-def high_detail_generator(log_data):
+def high_detail_generator(log_data, new_water_level):
     """
     high_detail_generator(log_data) gives a body message with all
     measurements and peripeheral actions taken, plus low level essential messages
@@ -119,11 +125,11 @@ def high_detail_generator(log_data):
     body = "STANDARD DETAILS\n"
     body = body + "\n".join([str(key) + " : " + str(log_data[key])
                              for key in log_data])
-    body = body + "\n" + low_detail_generator(log_data)
+    body = body + "\n" + low_detail_generator(log_data, new_water_level)
     return body
 
 
-def generate_message(log_dict, level_of_detail):
+def generate_message(log_dict, new_water_level, level_of_detail):
     """
     generate_message(log_dict, level_of_detail) generates a message based
     on the current cirecumstances.
@@ -140,14 +146,14 @@ def generate_message(log_dict, level_of_detail):
 
     subject = "Subject: NYSG Update @ " + str(time_key) + "\n\n"
     if level_of_detail == "high":
-        body = high_detail_generator(log_data)
+        body = high_detail_generator(log_data, new_water_level)
     elif level_of_detail == "low":
-        body = low_detail_generator(log_data)
+        body = low_detail_generator(log_data, new_water_level)
     message = subject + body
     return message
 
 
-def send_email(email_address, email_password, receiver_emails, log_dict, level_of_detail, ssl_port):
+def send_email(email_address, email_password, receiver_emails, log_dict, new_water_level, level_of_detail, ssl_port):
     """
     send_email(email_address, email_password, receiver_emails, log_dict, level_of_detail, ssl_port) sends
     an email;
@@ -156,7 +162,7 @@ def send_email(email_address, email_password, receiver_emails, log_dict, level_o
     context = ssl.create_default_context()
 
     # Generate message
-    message = generate_message(log_dict, level_of_detail)
+    message = generate_message(log_dict, new_water_level, level_of_detail)
 
     with smtplib.SMTP_SSL("smtp.gmail.com", ssl_port, context=context) as server:
         server.login(email_address, email_password)
@@ -173,8 +179,10 @@ class AlertStatus():
     def __init__(self):
         """
         AlertStatus() sets time to now
+        and sets the water level to full 
         """
         self.time = datetime.datetime.now()
+        selt.water_level = WATER_LEVEL
 
     def get_time(self):
         """
@@ -187,15 +195,28 @@ class AlertStatus():
         set_time(self, time) sets the current time inidicating an alert was sent
         """
         self.time = time
+        
+    def get_water_level(self):
+        """
+        returns water level currently 
+        """
+        return self.water_level
+        
+    def set_water_level(self, water_level):
+        """
+        sets water level
+        """
+        self.water_level = water_level
 
 
 # ---------- MAIN -----------------------
 
 
-def alert(water_level, log_dict, alert_status, alert_settings, alert_path=ALERT_LOG_PATH):
+def alert(water_usage, log_dict, alert_status, alert_settings, alert_path=ALERT_LOG_PATH):
     """
-    alert(water_level) raises an alert based on the current water level
+    alert(water_usage) raises an alert based on the current water level
     logs alert
+    water_usage in gallons
     RETURNS None i
     """
     # get time
@@ -203,10 +224,16 @@ def alert(water_level, log_dict, alert_status, alert_settings, alert_path=ALERT_
     # add second and microsecond
     current_time = now.strftime("%d-%m-%Y %H:%M:%-S:%f")
     time_dict = {}
+    
+    # update water usage
+    new_water_level = alert_status.get_water_level() - water_usage
+`   alert_status.set_water_level(new_water_level)
 
     alert_dict = {}
-    if water_level < WATER_LEVEL:
+    if new_water_level <= MIN_WATER_LEVEL:
         alert_dict["water_level"] = alert_message_generator()
+        # reset the water level to full for now
+        alert_status.set_water_level(WATER_LEVEL)
     else:
         alert_dict["water_level"] = None
 
@@ -235,7 +262,7 @@ def alert(water_level, log_dict, alert_status, alert_settings, alert_path=ALERT_
     if can_send_email:
         try:
             send_email(EMAIL_ADDR, PASSWORD,
-                       RECEIVER_EMAIL_ADDRESSES, log_dict, level_of_detail, SSL_PORT)
+                       RECEIVER_EMAIL_ADDRESSES, log_dict, new_water_level, level_of_detail, SSL_PORT)
         except:
             print(
                 "Email not sent; issue detected. This could be email address or password issue. ")
