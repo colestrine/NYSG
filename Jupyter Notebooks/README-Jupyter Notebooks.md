@@ -80,4 +80,18 @@
     This returns you back to your terminal.
 12. To start using the notebook, follow the commands above. You should be able to start the Notebook and begin learning how to program in Python. 
 
+To start using the notebook, follow the commands above. You should be able to start the Notebook and begin learning how to program in Python.  The instructions to use the notebook are in the Notebook file you just opened. 
+        
+As a quick summary: The notebook has cells you can click on. These cells are the rectangular partitions on the webpage. Click the arrow to activate and run the cell. A response is displayed under as the response. 
+
+You add new cells: in the upper left corner is a button with a (+) plus sign to add a cell. Go to the cell you want to add under, click on the add button, and a cell will occur underneath. 
+
+You can also delete cells. There is again a button in the top bar to delete a cell.
+
+If your notebook somehow crashes, close the window, and restart using the process below.
+
+Don't skip cells! This can cause unintended errors or crashes. Cells evaluate at the order they are run, so skipping cells changes the intended running order. You can imagine what kind of issues this could cause...
+
+If you skip a cell, go back to the cell you skipped and run it, then run the remainder of the cells you skipped ahead on after, in descending order down the page.
+
 Source: https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
