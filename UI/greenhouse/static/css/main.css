@@ -443,6 +443,7 @@ form p label {
     background: lightgray;
     border: solid 1px lightgray;
     border-radius: 4px;
+    margin: 2px 0px;
 }
 
 .information-button:focus {
