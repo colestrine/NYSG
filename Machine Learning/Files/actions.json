@@ -1,0 +1,137 @@
+{
+  "1": {
+    "water": "off",
+    "fan": "off",
+    "heat": "off"
+  },
+  "2": {
+    "water": "off",
+    "fan": "off",
+    "heat": "low"
+  },
+  "3": {
+    "water": "off",
+    "fan": "off",
+    "heat": "high"
+  },
+  "4": {
+    "water": "off",
+    "fan": "low",
+    "heat": "off"
+  },
+  "5": {
+    "water": "off",
+    "fan": "low",
+    "heat": "low"
+  },
+  "6": {
+    "water": "off",
+    "fan": "low",
+    "heat": "high"
+  },
+  "7": {
+    "water": "off",
+    "fan": "high",
+    "heat": "off"
+  },
+  "8": {
+    "water": "off",
+    "fan": "high",
+    "heat": "low"
+  },
+  "9": {
+    "water": "off",
+    "fan": "high",
+    "heat": "high"
+  },
+  "10": {
+    "water": "low",
+    "fan": "off",
+    "heat": "off"
+  },
+  "11": {
+    "water": "low",
+    "fan": "off",
+    "heat": "low"
+  },
+  "12": {
+    "water": "low",
+    "fan": "off",
+    "heat": "high"
+  },
+  "13": {
+    "water": "low",
+    "fan": "low",
+    "heat": "off"
+  },
+  "14": {
+    "water": "low",
+    "fan": "low",
+    "heat": "low"
+  },
+  "15": {
+    "water": "low",
+    "fan": "low",
+    "heat": "high"
+  },
+  "16": {
+    "water": "low",
+    "fan": "high",
+    "heat": "off"
+  },
+  "17": {
+    "water": "low",
+    "fan": "high",
+    "heat": "low"
+  },
+  "18": {
+    "water": "low",
+    "fan": "high",
+    "heat": "high"
+  },
+  "19": {
+    "water": "high",
+    "fan": "off",
+    "heat": "off"
+  },
+  "20": {
+    "water": "high",
+    "fan": "off",
+    "heat": "low"
+  },
+  "21": {
+    "water": "high",
+    "fan": "off",
+    "heat": "high"
+  },
+  "22": {
+    "water": "high",
+    "fan": "low",
+    "heat": "off"
+  },
+  "23": {
+    "water": "high",
+    "fan": "low",
+    "heat": "low"
+  },
+  "24": {
+    "water": "high",
+    "fan": "low",
+    "heat": "high"
+  },
+  "25": {
+    "water": "high",
+    "fan": "high",
+    "heat": "off"
+  },
+  "26": {
+    "water": "high",
+    "fan": "high",
+    "heat": "low"
+  },
+  "27": {
+    "water": "high",
+    "fan": "high",
+    "heat": "high"
+  }
+}

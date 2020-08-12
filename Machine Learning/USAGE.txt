@@ -4,7 +4,7 @@ from transition import ActionSet, EffectSet
 
 init:
 	# Initialize to a random (or fixed) state
-	last_state = State(1.0, 1.0, 1.0)
+	last_state = State(3.5, 3.5, 3.5)
 
 loop:
 	# Get current state and goal state
@@ -13,8 +13,9 @@ loop:
 
 	# Create action set from actions, store in transition file for later use
 	# water_action, ventilation_action, heat_action are of type string and can take on values in the set ["big_decrease", "small_decrease", "none", "small_increase", "big_increase"]
+	# The fourthargument in putEffect (True) turns "data collection mode" on - this will push observation data to all buckets inside of the action set-variable records, making data collection more efficient
 	action_set = ActionSet(water_action, ventilation_action, heat_action)
-	put = EffectSet.putEffect(action_set, last_state, current_state)
+	put = EffectSet.putEffect(action_set, last_state, current_state, True)
 
 	# Update state for next iteration
 	last_state = current_state
@@ -25,7 +26,7 @@ from transition import ActionSet, EffectSet
 
 init:
 	# Initialize to a random (or fixed) state
-	last_state = State(1.0, 1.0, 1.0)
+	last_state = State(3.5, 3.5, 3.5)
 
 loop:
 	# Get current state and goal state
@@ -42,6 +43,7 @@ loop:
 	heat_action = decision['heat_action']
 
 	# Create action set from actions, store in transition file for later use
+	# Here, the fourth argument in putEffect is omitted, as data collection mode is set to "off" by default
 	action_set = ActionSet(water_action, ventilation_action, heat_action)
 	put = EffectSet.putEffect(action_set, last_state, current_state)
 

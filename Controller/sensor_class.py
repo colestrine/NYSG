@@ -61,6 +61,8 @@ import sys
 from Controller import log
 
 MAX_LIGHT_DIVISOR = 15000
+DRY_SOIL = 0.771372740595994
+WET_SOIL = 0.3805569125549584
 
 
 # ------- TEST CONSTANTS ----------
@@ -158,7 +160,7 @@ class MoistureSensor():
         """
         unstandardized = self.sensor.value
         # smaller value is low moisture, higher is high moisture, mult by 100 to scale
-        standard = (1 - unstandardized) * 100
+        standard = round(99 - (unstandardized - WET_SOIL)* 99/(DRY_SOIL - WET_SOIL))
         return standard
 
 
@@ -173,7 +175,6 @@ def create_channel():
     WRAPPER FUNCTION for students
     """
     return busio.I2C(board.SCL, board.SDA)
-
 
 # -------- SUMMARY FUNCTIONS --------
 
@@ -326,7 +327,7 @@ def basic_moisture_test(n_iter):
     sensor = MCP3001()
 
     for _ in range(n_iter):
-        print("Moisture Level: %0.1f " % sensor.value)
+        print("Moisture Level: %f " % sensor.value)
         time.sleep(2)
 
 
@@ -346,7 +347,7 @@ def three_sensor_test(n_iter):
 
         print("Ambient Light: %0.1f " % light.light)
 
-        print("Moisture Level: %0.1f " % moisture.value)
+        print("Moisture Level: %f " % moisture.value)
 
         time.sleep(2)
 
