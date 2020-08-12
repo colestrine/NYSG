@@ -47,6 +47,15 @@ Settings
 </div>
 {% endif %}
 
+<h1 class="form-header">Controller Update <br> Interval Settings</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="update_interval" name="update_interval">
+		{% csrf_token %}
+		{{ update_interval.as_p }}
+	</form>
+</div>
+
+
 <h1 class="form-header">Alert Settings</h1>
 <div class="form-wrapper">
 	<form action="/settings/" method="post" id="alert_form" name="alert_form">
@@ -63,6 +72,33 @@ Settings
 	</form>
 </div>
 
+<h1 class="form-header">Frequency Settings</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="freq_form" name="freq_form">
+		{% csrf_token %}
+		{{ freq_form.as_p }}
+	</form>
+</div>
+
+<h1 class="form-header">Germination Date Settings</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="start_date_form" name="start_date_form">
+		{% csrf_token %}
+		{{ start_date_form.as_p }}
+	</form>
+</div>
+
+<h1 class="form-header">Delete Data</h1>
+<div class="form-wrapper">
+	<form action="/settings/" method="post" id="delete_form" name="delete_form">
+		{% csrf_token %}
+		{{ delete_form.as_p }}
+	</form>
+</div>
+
+
+
+
 <div id="save-profile-modal" class="save-profile-modal">
 	<div class="form-wrapper save-profile-form-wrapper">
 		<button class="close-save-profile-modal-button" id="close-save-profile-modal-button"
@@ -78,7 +114,9 @@ Settings
 <div id="sidebar" class="sidebar">
 	<div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">
 		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()">
-			<</button>
+			<!-- Could cause issues with vs code here -->
+			< </button>
+				<!-- Could cause issues with vs code here -->
 	</div>
 	<div class="sidebar-content-wrapper" id="sidebar-content-wrapper">
 		<div class="sidebar-section-wrapper">
@@ -109,6 +147,30 @@ Settings
 				</div>
 				<div>
 					{{last_sunlight}} lm/m<sup>2</sup>
+				</div>
+				<div class="sidebar-value-label">
+					Fan Duty Cycles
+				</div>
+				<div>
+					{{fan_dc}} %
+				</div>
+				<div class="sidebar-value-label">
+					Light Duty Cycles
+				</div>
+				<div>
+					{{light_dc}} %
+				</div>
+				<div class="sidebar-value-label">
+					Fan Frequency
+				</div>
+				<div>
+					{{fan_freq}} hz
+				</div>
+				<div class="sidebar-value-label">
+					Light Frequency
+				</div>
+				<div>
+					{{light_freq}} hz
 				</div>
 			</div>
 		</div>
@@ -197,6 +259,8 @@ Settings
 </div>
 
 <script>
+
+
 	document.getElementById("id_plant_profile").options[0].disabled = true;
 
 	function showSaveProfileModal() {

@@ -72,4 +72,14 @@ def index(request):
 
 	mode = data_handler.get_mode()
 
-	return render(request, 'Dashboard/dashboard.html', {'mode': mode, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'healthy_temperature': healthy_temperature, 'healthy_temperature_label': healthy_temperature_label, 'healthy_humidity': healthy_humidity, 'healthy_humidity_label': healthy_humidity_label, 'healthy_soil_moisture': healthy_soil_moisture, 'healthy_soil_moisture_label': healthy_soil_moisture_label, 'healthy_sunlight': healthy_sunlight, 'healthy_sunlight_label': healthy_sunlight_label, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights})
+	current_dc_settings = data_handler.get_dc_settings()
+	current_freq_settings = data_handler.get_freq_settings()
+
+	# extract duty cycles for view render
+	fan_dc = current_dc_settings["fan_dc"]
+	light_dc = current_dc_settings["light_dc"]
+	# extract frequencies for view render
+	fan_freq = current_freq_settings["fan_freq"]
+	light_freq = current_freq_settings["light_freq"]
+
+	return render(request, 'Dashboard/dashboard.html', {'mode': mode, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'healthy_temperature': healthy_temperature, 'healthy_temperature_label': healthy_temperature_label, 'healthy_humidity': healthy_humidity, 'healthy_humidity_label': healthy_humidity_label, 'healthy_soil_moisture': healthy_soil_moisture, 'healthy_soil_moisture_label': healthy_soil_moisture_label, 'healthy_sunlight': healthy_sunlight, 'healthy_sunlight_label': healthy_sunlight_label, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc})
