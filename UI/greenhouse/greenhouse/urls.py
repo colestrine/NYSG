@@ -24,6 +24,8 @@ urlpatterns = [
     path('settings/', include('settings.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('analysis/', include('analysis.urls')),
+    path('germination/', include('germination.urls')),
+    path('information/', include('information.urls')),
     #path('', include('landing.urls')),
     path('', include('dashboard.urls')),
 ]

@@ -8,11 +8,18 @@ Analysis
 <h1 class="dashboard-header">Actions and Effects</h1>
 <div id="container" class="historical-status-container-wide">
 	<canvas id="historical-levels"></canvas>
+	<button onclick="scroll_chart_left(); " type="button">Scroll
+		Left</button>
+	<button onclick="scroll_chart_right(); " type="button">Scroll Right</button>
+	<button onclick="scroll_recent(); " type="button">Go To Recent</button>
+	<button onclick="zoom_out(); " type="button">Zoom Out</button>
+	<button onclick="zoom_in(); " type="button">Zoom In</button>
 </div>
 
 <div id="sidebar" class="sidebar">
 	<div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">
-		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()"><</button>
+		<button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()">
+			< </button>
 	</div>
 	<div class="sidebar-content-wrapper" id="sidebar-content-wrapper">
 		<div class="sidebar-section-wrapper">
@@ -44,6 +51,30 @@ Analysis
 				<div>
 					{{last_sunlight}} lm/m<sup>2</sup>
 				</div>
+				<div class="sidebar-value-label">
+					Fan Duty Cycles
+				</div>
+				<div>
+					{{fan_dc}} %
+				</div>
+				<div class="sidebar-value-label">
+					Light Duty Cycles
+				</div>
+				<div>
+					{{light_dc}} %
+				</div>
+				<div class="sidebar-value-label">
+					Fan Frequency
+				</div>
+				<div>
+					{{fan_freq}} hz
+				</div>
+				<div class="sidebar-value-label">
+					Light Frequency
+				</div>
+				<div>
+					{{light_freq}} hz
+				</div>
 			</div>
 		</div>
 		<div class="sidebar-section-wrapper">
@@ -55,16 +86,17 @@ Analysis
 					<div class="legend-row-label">
 						Temperature (<span>&#176;</span>F)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-temperature" onclick="expandLegend('temperature')">></button>
+					<button class="legend-row-button" id="expand-legend-button-temperature"
+						onclick="expandLegend('temperature')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-temperature-data">
 					{% for record in legend.temperature.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -73,16 +105,17 @@ Analysis
 					<div class="legend-row-label">
 						Humidity (%)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-humidity" onclick="expandLegend('humidity')">></button>
+					<button class="legend-row-button" id="expand-legend-button-humidity"
+						onclick="expandLegend('humidity')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-humidity-data">
 					{% for record in legend.humidity.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -91,16 +124,17 @@ Analysis
 					<div class="legend-row-label">
 						Soil Moisture (%)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-soil-moisture" onclick="expandLegend('soil_moisture')">></button>
+					<button class="legend-row-button" id="expand-legend-button-soil-moisture"
+						onclick="expandLegend('soil_moisture')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-soil-moisture-data">
 					{% for record in legend.soil_moisture.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -109,16 +143,17 @@ Analysis
 					<div class="legend-row-label">
 						Sunlight (lm/m<sup>2</sup>)
 					</div>
-					<button class="legend-row-button" id="expand-legend-button-sunlight" onclick="expandLegend('sunlight')">></button>
+					<button class="legend-row-button" id="expand-legend-button-sunlight"
+						onclick="expandLegend('sunlight')">></button>
 				</div>
 				<div class="legend-data-wrapper" id="legend-sunlight-data">
 					{% for record in legend.sunlight.items %}
-						<div class="legend-bucket-label">
-							{{record.1.label}}
-						</div>
-						<div class="legend-bucket-data">
-							{{record.1.low}}-{{record.1.high}}
-						</div>
+					<div class="legend-bucket-label">
+						{{record.1.label}}
+					</div>
+					<div class="legend-bucket-data">
+						{{record.1.low}}-{{record.1.high}}
+					</div>
 					{% endfor %}
 				</div>
 			</div>
@@ -128,116 +163,325 @@ Analysis
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script>
-	var actions_chart_config = {
-		type: 'bar',
-		data: {
-			datasets: [
-				{
-					type: 'line',
-					data: "{{temperatures}}".split(',').slice(-10),
-					backgroundColor: 'palegreen',
-					borderColor: 'palegreen',
-					label: 'Temperature',
-					fill: 'false'
-				},
-				{
-					type: 'line',
-					data: "{{humidities}}".split(',').slice(-10),
-					backgroundColor: 'green',
-					borderColor: 'green',
-					label: 'Humidity',
-					fill: 'false'
-				},
-				{
-					type: 'line',
-					data: "{{soil_moistures}}".split(',').slice(-10),
-					backgroundColor: 'lightseagreen',
-					borderColor: 'lightseagreen',
-					label: 'Soil Moisture',
-					fill: 'false'
-				},
-				{
-					type: 'line',
-					data: "{{sunlights}}".split(',').slice(-10),
-					backgroundColor: 'darkseagreen',
-					borderColor: 'darkseagreen',
-					label: 'Sunlight',
-					fill: 'false'
-				},
-				{
-					type: 'bar',
-					data: "{{water_actions}}".split(',').slice(-10),
-					backgroundColor: 'cornflowerblue',
-					borderColor: 'cornflowerblue',
-					label: 'Water Actions',
-					fill: 'false'
-				},
-				{
-					type: 'bar',
-					data: "{{fan_actions}}".split(',').slice(-10),
-					backgroundColor: 'darkblue',
-					borderColor: 'darkblue',
-					label: 'Fan Actions',
-					fill: 'false'
-				},
-				{
-					type: 'bar',
-					data: "{{heat_actions}}".split(',').slice(-10),
-					backgroundColor: 'lightblue',
-					borderColor: 'lightblue',
-					label: 'Heat Actions',
-					fill: 'false'
-				},
-				{
-					type: 'bar',
-					data: "{{light_actions}}".split(',').slice(-10),
-					backgroundColor: 'steelblue',
-					borderColor: 'steelblue',
-					label: 'Light Actions',
-					fill: 'false'
-				},
-				
-			],
-			labels: "{{labels}}".split(',').slice(-10)
-		},
-		options: {
-			responsive: true,
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: 'Time'
-					},
-					categoryPercentage: 1.0,
-            		barPercentage: 1.0
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: 'Value',
-					},
-					ticks: {
-						beginAtZero: true
-					}
-				}]
-			}
-		}
-	};
+	var zoom = 1;
+	var min_zoom = 1;
+	var max_zoom = 20;
+	var x_scaling = 10 * zoom;
+	var length = "{{length}}";
+	var x_left = length - x_scaling - 1;
+	var x_right = length - 1;
+	var actions_chart_config = make_chart_config(x_left, x_right);
+	move_chart(actions_chart_config);
 
-	window.onload = function() {
+	function zoom_in() {
+		if (zoom == min_zoom) { return; }
+		zoom = zoom - 1;
+		x_scaling = 10 * zoom;
+		var x_mid = (x_right - x_left) / 2 + x_left;
+		x_right = Math.min(length - 1, x_mid + x_scaling / 2)
+		x_left = Math.max(0, x_mid - x_scaling / 2)
+		// if (x_right == length - 1) {
+		// 	x_right = Math.min(0, x_right - x_scaling)
+		// }
+		// x_right = min(length - 1, x_right + x_scaling / 2)
+		var actions_chart_config = make_chart_config(x_left, x_right);
+		window.chart.destroy();
+		move_chart(actions_chart_config);
+	}
+
+	function zoom_out() {
+		if (zoom == max_zoom) { return; }
+		zoom = zoom + 1;
+		x_scaling = 10 * zoom;
+		// x_left = Math.max(0, x_left - x_scaling)
+		// if (x_left == 0) {
+		// 	x_right = Math.min(length - 1, x_right + x_scaling)
+		// }
+		var x_mid = (x_right - x_left) / 2 + x_left;
+		x_right = Math.min(length - 1, x_mid + x_scaling / 2)
+		x_left = Math.max(0, x_mid - x_scaling / 2)
+		// x_right = min(length - 1, x_right + x_scaling / 2)
+		var actions_chart_config = make_chart_config(x_left, x_right);
+		window.chart.destroy();
+		move_chart(actions_chart_config);
+	}
+
+	function scroll_chart_left() {
+		if (length <= x_scaling) {
+			var actions_chart_config = make_chart_config(0, length - 1);
+			window.chart.destroy();
+			move_chart(actions_chart_config);
+			return;
+		}
+
+		if (x_left >= x_scaling) {
+			x_right = x_left;
+			x_left = x_left - x_scaling;
+		} else {
+			x_left = 0
+			x_right = x_scaling;
+		}
+		var actions_chart_config = make_chart_config(x_left, x_right);
+		window.chart.destroy();
+		move_chart(actions_chart_config);
+	}
+
+	function scroll_chart_right() {
+		if (length <= x_scaling) {
+			var actions_chart_config = make_chart_config(0, length - 1);
+			window.chart.destroy();
+			move_chart(actions_chart_config);
+			return;
+		}
+		if (x_right < length - x_scaling) {
+			x_left = x_right;
+			x_right = x_right + x_scaling;
+		} else {
+			x_right = length - 1;
+			x_left = x_right - x_scaling - 1;
+		}
+		var actions_chart_config = make_chart_config(x_left, x_right);
+		window.chart.destroy();
+		move_chart(actions_chart_config);
+	}
+
+	function scroll_recent() {
+		if (length <= x_scaling) {
+			var actions_chart_config = make_chart_config(0, length - 1);
+			window.chart.destroy();
+			move_chart(actions_chart_config);
+			return;
+		}
+		x_left = length - x_scaling - 1;
+		x_right = length - 1
+		var actions_chart_config = make_chart_config(x_left, x_right);
+		window.chart.destroy();
+		move_chart(actions_chart_config);
+	}
+
+	function move_chart(actions_chart_config) {
 		var actions_chart_element = document.getElementById('historical-levels').getContext('2d');
 		window.chart = new Chart(actions_chart_element, actions_chart_config);
 	};
+
+	function make_chart_config(x_left, x_right) {
+		return {
+			type: 'bar',
+			data: {
+				datasets: [
+					{
+						type: 'line',
+						data: "{{temperatures}}".split(',').slice(x_left, x_right),
+						backgroundColor: 'palegreen',
+						borderColor: 'palegreen',
+						label: 'Temperature',
+						fill: 'false'
+					},
+					{
+						type: 'line',
+						data: "{{humidities}}".split(',').slice(x_left, x_right),
+						backgroundColor: 'green',
+						borderColor: 'green',
+						label: 'Humidity',
+						fill: 'false'
+					},
+					{
+						type: 'line',
+						data: "{{soil_moistures}}".split(',').slice(x_left, x_right),
+						backgroundColor: 'lightseagreen',
+						borderColor: 'lightseagreen',
+						label: 'Soil Moisture',
+						fill: 'false'
+					},
+					{
+						type: 'line',
+						data: "{{sunlights}}".split(',').slice(x_left, x_right),
+						backgroundColor: 'darkseagreen',
+						borderColor: 'darkseagreen',
+						label: 'Sunlight',
+						fill: 'false'
+					},
+					{
+						type: 'bar',
+						data: "{{water_actions}}".split(',').slice(x_left, x_right),
+						backgroundColor: 'cornflowerblue',
+						borderColor: 'cornflowerblue',
+						label: 'Water Actions',
+						fill: 'false'
+					},
+					{
+						type: 'bar',
+						data: "{{fan_actions}}".split(',').slice(x_left, x_right),
+						backgroundColor: 'darkblue',
+						borderColor: 'darkblue',
+						label: 'Fan Actions',
+						fill: 'false'
+					},
+					{
+						type: 'bar',
+						data: "{{heat_actions}}".split(',').slice(x_left, x_right),
+						backgroundColor: 'lightblue',
+						borderColor: 'lightblue',
+						label: 'Heat Actions',
+						fill: 'false'
+					},
+					{
+						type: 'bar',
+						data: "{{light_actions}}".split(',').slice(x_left, x_right),
+						backgroundColor: 'steelblue',
+						borderColor: 'steelblue',
+						label: 'Light Actions',
+						fill: 'false'
+					},
+
+				],
+				labels: "{{labels}}".split(',').slice(x_left, x_right)
+			},
+			options: {
+				responsive: true, //used to be true
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Time'
+						},
+						categoryPercentage: 1.0,
+						barPercentage: 1.0
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Value',
+						},
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		};
+	}
+
+	// var actions_chart_config = {
+	// 	type: 'bar',
+	// 	data: {
+	// 		datasets: [
+	// 			{
+	// 				type: 'line',
+	// 				data: "{{temperatures}}".split(',').slice(x_left, x_right),
+	// 				backgroundColor: 'palegreen',
+	// 				borderColor: 'palegreen',
+	// 				label: 'Temperature',
+	// 				fill: 'false'
+	// 			},
+	// 			{
+	// 				type: 'line',
+	// 				data: "{{humidities}}".split(',').slice(x_left, x_right),
+	// 				backgroundColor: 'green',
+	// 				borderColor: 'green',
+	// 				label: 'Humidity',
+	// 				fill: 'false'
+	// 			},
+	// 			{
+	// 				type: 'line',
+	// 				data: "{{soil_moistures}}".split(',').slice(x_left, x_right),
+	// 				backgroundColor: 'lightseagreen',
+	// 				borderColor: 'lightseagreen',
+	// 				label: 'Soil Moisture',
+	// 				fill: 'false'
+	// 			},
+	// 			{
+	// 				type: 'line',
+	// 				data: "{{sunlights}}".split(',').slice(x_left, x_right),
+	// 				backgroundColor: 'darkseagreen',
+	// 				borderColor: 'darkseagreen',
+	// 				label: 'Sunlight',
+	// 				fill: 'false'
+	// 			},
+	// 			{
+	// 				type: 'bar',
+	// 				data: "{{water_actions}}".split(',').slice(x_left, x_right),
+	// 				backgroundColor: 'cornflowerblue',
+	// 				borderColor: 'cornflowerblue',
+	// 				label: 'Water Actions',
+	// 				fill: 'false'
+	// 			},
+	// 			{
+	// 				type: 'bar',
+	// 				data: "{{fan_actions}}".split(',').slice(x_left, x_right),
+	// 				backgroundColor: 'darkblue',
+	// 				borderColor: 'darkblue',
+	// 				label: 'Fan Actions',
+	// 				fill: 'false'
+	// 			},
+	// 			{
+	// 				type: 'bar',
+	// 				data: "{{heat_actions}}".split(',').slice(x_left, x_right),
+	// 				backgroundColor: 'lightblue',
+	// 				borderColor: 'lightblue',
+	// 				label: 'Heat Actions',
+	// 				fill: 'false'
+	// 			},
+	// 			{
+	// 				type: 'bar',
+	// 				data: "{{light_actions}}".split(',').slice(x_left, x_right),
+	// 				backgroundColor: 'steelblue',
+	// 				borderColor: 'steelblue',
+	// 				label: 'Light Actions',
+	// 				fill: 'false'
+	// 			},
+
+	// 		],
+	// 		labels: "{{labels}}".split(',').slice(x_left, x_right)
+	// 	},
+	// 	options: {
+	// 		responsive: true,
+	// 		tooltips: {
+	// 			mode: 'index',
+	// 			intersect: false,
+	// 		},
+	// 		hover: {
+	// 			mode: 'nearest',
+	// 			intersect: true
+	// 		},
+	// 		scales: {
+	// 			xAxes: [{
+	// 				display: true,
+	// 				scaleLabel: {
+	// 					display: true,
+	// 					labelString: 'Time'
+	// 				},
+	// 				categoryPercentage: 1.0,
+	// 				barPercentage: 1.0
+	// 			}],
+	// 			yAxes: [{
+	// 				display: true,
+	// 				scaleLabel: {
+	// 					display: true,
+	// 					labelString: 'Value',
+	// 				},
+	// 				ticks: {
+	// 					beginAtZero: true
+	// 				}
+	// 			}]
+	// 		}
+	// 	}
+	// };
+
+	// window.onload = function () {
+	// 	var actions_chart_element = document.getElementById('historical-levels').getContext('2d');
+	// 	window.chart = new Chart(actions_chart_element, actions_chart_config);
+	// };
 
 	var sidebar_hidden = true;
 
@@ -245,12 +489,12 @@ Analysis
 		if (sidebar_hidden) {
 			document.getElementById("sidebar").style.width = "350px";
 			document.getElementById("sidebar-toggle-button").style.transform = "rotate(180deg)";
-			document.getElementById("sidebar-content-wrapper").style.display="grid";
+			document.getElementById("sidebar-content-wrapper").style.display = "grid";
 		}
 		else {
 			document.getElementById("sidebar").style.width = "30px";
 			document.getElementById("sidebar-toggle-button").style.transform = "none";
-			document.getElementById("sidebar-content-wrapper").style.display="none";
+			document.getElementById("sidebar-content-wrapper").style.display = "none";
 		}
 
 		sidebar_hidden = !sidebar_hidden
@@ -276,7 +520,7 @@ Analysis
 	}
 
 	function expandLegend(type) {
-		if (type == "temperature"){
+		if (type == "temperature") {
 			if (temperature_expanded) {
 				temperature_expanded = collapseSection("temperature")
 			}
@@ -287,7 +531,7 @@ Analysis
 				temperature_expanded = expandSection("temperature")
 			}
 		}
-		if (type == "humidity"){
+		if (type == "humidity") {
 			if (humidity_expanded) {
 				humidity_expanded = collapseSection("humidity")
 			}
@@ -298,7 +542,7 @@ Analysis
 				humidity_expanded = expandSection("humidity")
 			}
 		}
-		if (type == "soil_moisture"){
+		if (type == "soil_moisture") {
 			if (soil_moisture_expanded) {
 				soil_moisture_expanded = collapseSection("soil-moisture")
 			}
@@ -309,7 +553,7 @@ Analysis
 				soil_moisture_expanded = expandSection("soil-moisture")
 			}
 		}
-		if (type == "sunlight"){
+		if (type == "sunlight") {
 			if (sunlight_expanded) {
 				sunlight_expanded = collapseSection("sunlight")
 			}

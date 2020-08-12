@@ -2,11 +2,12 @@
 
 echo "Starting UI And Controller...";
 python3 controller_main.py & $HOME/NYSG/UI/greenhouse/start-ui.sh;
-PID=$!;
-echo "CURRENT PID: $PID";
+PID=$!
+
+echo "PID: $PID";
 
 trap "kill $PID" SIGINT;
 
-wait $pid;
+wait;
 
 echo "All processes have completed";

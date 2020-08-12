@@ -5,6 +5,14 @@ from collections import OrderedDict
 from scripts.data_handler import data_handler
 import json
 
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from scripts.data_handler import data_handler
+from collections import OrderedDict
+from scripts.data_handler import data_handler
+import json
+from datetime import datetime
+
 # Create your views here.
 def index(request):
 	log_data = data_handler.get_log_data()
@@ -62,5 +70,24 @@ def index(request):
 	light_freq = current_freq_settings["light_freq"]
 
 	length = len(log_data)
+	
+	germ_data = data_handler.get_germination_settings()
+	start_date = germ_data['start_date']
+	start_datetime = datetime.fromisoformat(start_date)
+	end_date = germ_data['end_date']
+	end_datetime = datetime.fromisoformat(end_date)
+	now = datetime.now()
+	delta_passed = now - start_datetime
+	delta_passed_days = delta_passed.days
+	delta_remain = end_datetime - now
+	delta_remain_days = delta_remain.days
+	if delta_remain_days < 0:
+		delta_remain_days = 0
+	if delta_passed_days < 0:
+		delta_passed_days = 0
 
-	return render(request, 'Analysis/analysis.html', {'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc, 'length':length})
+	correct_ordered_dates = start_datetime < end_datetime
+
+	finished_germination = delta_remain_days == 0
+
+	return render(request, 'Germination/germination.html', {'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc, 'length':length, 'start_date':start_date, 'end_date':end_date, 'now':now, 'delta_passed_days':delta_passed_days,'delta_remain_days':delta_remain_days, 'correct_ordered_dates':correct_ordered_dates, 'finished_germination':finished_germination })

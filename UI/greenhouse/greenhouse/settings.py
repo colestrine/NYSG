@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'landing',
     'settings',
     'dashboard',
-    'analysis'
+    'analysis',
+    'germination',
+    'information'
 ]
 
 MIDDLEWARE = [

@@ -10,9 +10,26 @@ import json
 class State:
     # State class holds bucket data for temperature, humidity, and soil moisture, values must be between 1.0 and 5.9
     def __init__(self, temperature, humidity, soil_moisture):
-        self.temperature = float(temperature)
-        self.humidity = float(humidity)
-        self.soil_moisture = float(soil_moisture)
+        if float(temperature) < 1.0:
+            self.temperature = 1.0
+        elif float(temperature) > 5.9:
+            self.temperature = 5.9
+        else:
+            self.temperature = float(temperature)
+
+        if float(humidity) < 1.0:
+            self.humidity = 1.0
+        elif float(humidity) > 5.9:
+            self.humidity = 5.9
+        else:
+            self.humidity = float(humidity)
+
+        if float(soil_moisture) < 1.0:
+            self.soil_moisture = 1.0
+        elif float(soil_moisture) > 5.9:
+            self.soil_moisture = 5.9
+        else:
+            self.soil_moisture = float(soil_moisture)
 
     # When passed as a string, return data for each dimension
     def __str__(self):

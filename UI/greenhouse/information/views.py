@@ -5,6 +5,14 @@ from collections import OrderedDict
 from scripts.data_handler import data_handler
 import json
 
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from scripts.data_handler import data_handler
+from collections import OrderedDict
+from scripts.data_handler import data_handler
+import json
+from datetime import datetime
+
 # Create your views here.
 def index(request):
 	log_data = data_handler.get_log_data()
@@ -63,4 +71,7 @@ def index(request):
 
 	length = len(log_data)
 
-	return render(request, 'Analysis/analysis.html', {'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc, 'length':length})
+	plant_data = data_handler.get_plant_profiles()
+
+
+	return render(request, 'Information/information.html', {'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc, 'length':length, 'plant_data':plant_data})
