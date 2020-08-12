@@ -47,57 +47,63 @@ Settings
 </div>
 {% endif %}
 
-<h1 class="form-header">Controller Update <br> Interval Settings</h1>
-<div class="form-wrapper">
-	<form action="/settings/" method="post" id="update_interval" name="update_interval">
-		{% csrf_token %}
-		{{ update_interval.as_p }}
-	</form>
+<h1 class="form-header">
+	Advanced Settings
+	<div class="advanced-settings-toggle-button-wrapper" id="advanced-settings-toggle-button-wrapper">
+		<button class="advanced-settings-toggle-button" id="advanced-settings-toggle-button" onclick="toggleAdvancedSettings()">></button>
+	</div>
+</h1>
+
+<div class="advanced-settings" id="advanced-settings">
+	<h1 class="form-header">Controller Update <br> Interval Settings</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="update_interval" name="update_interval">
+			{% csrf_token %}
+			{{ update_interval.as_p }}
+		</form>
+	</div>
+
+
+	<h1 class="form-header">Alert Settings</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="alert_form" name="alert_form">
+			{% csrf_token %}
+			{{ alert_form.as_p }}
+		</form>
+	</div>
+
+	<h1 class="form-header">Duty Cycle Settings</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="pwm_form" name="pwm_form">
+			{% csrf_token %}
+			{{ pwm_form.as_p }}
+		</form>
+	</div>
+
+	<h1 class="form-header">Frequency Settings</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="freq_form" name="freq_form">
+			{% csrf_token %}
+			{{ freq_form.as_p }}
+		</form>
+	</div>
+
+	<h1 class="form-header">Germination Date Settings</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="start_date_form" name="start_date_form">
+			{% csrf_token %}
+			{{ start_date_form.as_p }}
+		</form>
+	</div>
+
+	<h1 class="form-header">Delete Data</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="delete_form" name="delete_form">
+			{% csrf_token %}
+			{{ delete_form.as_p }}
+		</form>
+	</div>
 </div>
-
-
-<h1 class="form-header">Alert Settings</h1>
-<div class="form-wrapper">
-	<form action="/settings/" method="post" id="alert_form" name="alert_form">
-		{% csrf_token %}
-		{{ alert_form.as_p }}
-	</form>
-</div>
-
-<h1 class="form-header">Duty Cycle Settings</h1>
-<div class="form-wrapper">
-	<form action="/settings/" method="post" id="pwm_form" name="pwm_form">
-		{% csrf_token %}
-		{{ pwm_form.as_p }}
-	</form>
-</div>
-
-<h1 class="form-header">Frequency Settings</h1>
-<div class="form-wrapper">
-	<form action="/settings/" method="post" id="freq_form" name="freq_form">
-		{% csrf_token %}
-		{{ freq_form.as_p }}
-	</form>
-</div>
-
-<h1 class="form-header">Germination Date Settings</h1>
-<div class="form-wrapper">
-	<form action="/settings/" method="post" id="start_date_form" name="start_date_form">
-		{% csrf_token %}
-		{{ start_date_form.as_p }}
-	</form>
-</div>
-
-<h1 class="form-header">Delete Data</h1>
-<div class="form-wrapper">
-	<form action="/settings/" method="post" id="delete_form" name="delete_form">
-		{% csrf_token %}
-		{{ delete_form.as_p }}
-	</form>
-</div>
-
-
-
 
 <div id="save-profile-modal" class="save-profile-modal">
 	<div class="form-wrapper save-profile-form-wrapper">
@@ -278,6 +284,23 @@ Settings
 		document.getElementById("id_custom_sunlight").value = document.getElementById("id_sunlight").value
 
 		document.getElementById("save_profile_form").submit()
+	}
+
+	var advanced_settings_hidden = true;
+
+	function toggleAdvancedSettings() {
+		if (advanced_settings_hidden) {
+			// document.getElementById("sidebar").style.width = "350px";
+			document.getElementById("advanced-settings-toggle-button").style.transform = "rotate(-90deg)";
+			document.getElementById("advanced-settings").style.display = "block";
+		}
+		else {
+			// document.getElementById("sidebar").style.width = "30px";
+			document.getElementById("advanced-settings-toggle-button").style.transform = "rotate(90deg)";
+			document.getElementById("advanced-settings").style.display = "none";
+		}
+
+		advanced_settings_hidden = !advanced_settings_hidden
 	}
 
 	var sidebar_hidden = true;
