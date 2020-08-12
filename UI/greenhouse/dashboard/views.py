@@ -81,5 +81,7 @@ def index(request):
 	# extract frequencies for view render
 	fan_freq = current_freq_settings["fan_freq"]
 	light_freq = current_freq_settings["light_freq"]
-
-	return render(request, 'Dashboard/dashboard.html', {'mode': mode, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'healthy_temperature': healthy_temperature, 'healthy_temperature_label': healthy_temperature_label, 'healthy_humidity': healthy_humidity, 'healthy_humidity_label': healthy_humidity_label, 'healthy_soil_moisture': healthy_soil_moisture, 'healthy_soil_moisture_label': healthy_soil_moisture_label, 'healthy_sunlight': healthy_sunlight, 'healthy_sunlight_label': healthy_sunlight_label, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc})
+	
+	length = len(log_data)
+	
+	return render(request, 'Dashboard/dashboard.html', {'mode': mode, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'healthy_temperature': healthy_temperature, 'healthy_temperature_label': healthy_temperature_label, 'healthy_humidity': healthy_humidity, 'healthy_humidity_label': healthy_humidity_label, 'healthy_soil_moisture': healthy_soil_moisture, 'healthy_soil_moisture_label': healthy_soil_moisture_label, 'healthy_sunlight': healthy_sunlight, 'healthy_sunlight_label': healthy_sunlight_label, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc, 'length':length})

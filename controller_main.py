@@ -393,8 +393,9 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
 
     log(LOG_PATH, log_dict, max_log_size)
 
-    alert_status = init_dict["alert_status"]
-    alert(100, log_dict, alert_status, email_settings, ALERT_LOG)
+    alert_status = init_dict["alert_status"] 
+    water_use = pin_constants.WATER_FLOW_RATE * peripheral_actions["water"] * 15 # 15 second cycle
+    alert(water_use, log_dict, alert_status, email_settings, ALERT_LOG)
 
     # handle the logging for ML learning
     for key in (ml_args):
