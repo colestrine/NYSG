@@ -73,13 +73,20 @@ class Environment:
         # Set intitial reward, scaled based on distance from goal state
         reward = -100 * last_difference
 
-        # # Encourage efficiency
-        # if water_action == "off":
-        #     reward += 10
-        # if ventilation_action == "off":
-        #     reward += 10
-        # if heat_action == "off":
-        #     reward += 10
+        goal_temperature_bucket = int(str(goal_state.temperature).split('.')[0])
+        goal_humidity_bucket = int(str(goal_state.humidity).split('.')[0])
+        goal_soil_moisture_bucket = int(str(goal_state.soil_moisture).split('.')[0])
+
+        next_temperature_bucket = int(str(next_state.temperature).split('.')[0])
+        next_humidity_bucket = int(str(next_state.humidity).split('.')[0])
+        next_soil_moisture_bucket = int(str(next_state.soil_moisture).split('.')[0])
+
+        if next_temperature_bucket == goal_temperature_bucket:
+            reward += 20
+        if next_humidity_bucket == goal_humidity_bucket:
+            reward += 20
+        if next_soil_moisture_bucket == goal_soil_moisture_bucket:
+            reward += 20
 
         return reward
 

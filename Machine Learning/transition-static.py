@@ -94,6 +94,11 @@ class EffectSet():
 		humidity_diff = current_state.humidity - last_state.humidity
 		soil_moisture_diff = current_state.soil_moisture - last_state.soil_moisture
 
+		if action_set.water_action == 'low':
+			soil_moisture_diff += .1
+		elif action_set.water_action == 'high':
+			soil_moisture_diff += .2
+
 		effect_set = EffectSet(temperature_diff, humidity_diff, soil_moisture_diff)
 
 		temperature_bucket = str(last_state.temperature).split('.')[0]
