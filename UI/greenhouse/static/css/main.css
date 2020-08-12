@@ -448,3 +448,25 @@ form p label {
 .information-button:focus {
     outline: none;
 }
+
+.germination-information-container {
+    padding: 39px 0px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.germination-information-label {
+    width: 120px;
+}
+
+.germination-information-data {
+    width: auto;
+}
+
+.germination-information-wrapper {
+    display: flex;
+    width: 100%;
+    height: auto;
+}

@@ -7,21 +7,33 @@ Germination
 {% block content %}
 <h1 class="dashboard-header">Germination Time</h1>
 {% if correct_ordered_dates %}
-<div id="container" class="historical-status-container-wide">
-    <canvas id="germination-time"></canvas>
-    Start Date: {{start_date}}<br>
-    Current Date: {{now}}<br>
-    End Date: {{end_date}}<br>
+    <div id="container" class="historical-status-container-wide">
+        <canvas id="germination-time"></canvas>
+        <div id="container" class="historical-status-container-wide"></div>
+    </div>
 
+    <div class='germination-information-container'>
+        <div class='germination-information-wrapper'>
+            <div class='germination-information-label'>Start Date:</div>
+            <div class='germination-information-data'>{{start_date}}</div>
+        </div>
+
+        <div class='germination-information-wrapper'>
+            <div class='germination-information-label'>Current Date:</div>
+            <div class='germination-information-data'>{{now}}</div>
+        </div>
+
+        <div class='germination-information-wrapper'>
+            <div class='germination-information-label'>End Date:</div>
+            <div class='germination-information-data'>{{end_date}}</div>
+        </div>
+    </div>
 
     {% if finished_germination %}
-    <div id="container" class="historical-status-container-wide"></div>
-    <h2 class="finished-germination">The germination end date has been reached.</h2>
-</div>
-{% endif %}
-
+        <h2 class="finished-germination">The germination end date has been reached.</h2>
+    {% endif %}
 {% else %}
-<h2 class="incorrect-date-order">The start date is not before the end date.</h2>
+    <h2 class="incorrect-date-order">The start date is not before the end date.</h2>
 {% endif %}
 
 <div id="sidebar" class="sidebar">
@@ -184,8 +196,8 @@ Germination
 
             // These labels appear in the legend and in the tooltips when hovering different arcs
             labels: [
-                'Time in Germination',
-                'Time Remaining to Germination'
+                'Time Elapsed Since Planting',
+                'Time Remaining Until Germination'
             ]
         },
         options: options
