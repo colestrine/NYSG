@@ -391,3 +391,7 @@ form p label {
     opacity: 0;
     transition-duration: 1.5s;
 }
+
+.sunlight-status-bar-inner {
+    background-color: mistyrose;
+}
