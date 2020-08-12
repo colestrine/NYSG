@@ -7,26 +7,31 @@ Germination
 {% block content %}
 <h1 class="dashboard-header">Plant Information</h1>
 
-<script> var plant_dict = {}; </script>
-
-{% for plant_name, inner_dict in plant_data.items %}
-<script> plant_dict["{{plant_name}}"] = false; </script>
-<button class = "{{plant_name}}-button" id = "{{plant_name}}-button" onclick = 'toggleCard("{{plant_name}}")' >View {{plant_name}}</button>
-<div class="card" id = "card-{{plant_name}}">
-    <img src = {{inner_dict.Image_Url}}
-        alt="{{plant_name}}" style="width:25%">
-    <div class="container" id = "{{plant_name}}" >
-        <h4><b>{{plant_name}}</b></h4>
-        {% for characteristic, paragraph in inner_dict.items %}
-        {% if characteristic != 'Image_Url' %}
-            <h5>{{characteristic}}</h5>
-            <p>{{paragraph}}</p>
-        {% endif %}
-        {% endfor %}
-    </div>
+<div class='information-description'>
+    Click on a plant to learn more about it!
 </div>
-<br>
-{% endfor %}
+
+<script> var plant_dict = {}; </script>
+<div class='information-button-container'>
+    {% for plant_name, inner_dict in plant_data.items %}
+    <script> plant_dict["{{plant_name}}"] = false; </script>
+    <button class = "{{plant_name}}-button information-button" id = "{{plant_name}}-button" onclick = 'toggleCard("{{plant_name}}")' >{{plant_name}}</button>
+    <div class="card" id = "card-{{plant_name}}">
+        <img src = {{inner_dict.Image_Url}}
+            alt="{{plant_name}}" style="width:25%">
+        <div class="container" id = "{{plant_name}}" >
+            <h4><b>{{plant_name}}</b></h4>
+            {% for characteristic, paragraph in inner_dict.items %}
+            {% if characteristic != 'Image_Url' %}
+                <h5>{{characteristic}}</h5>
+                <p>{{paragraph}}</p>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+</div>
 
 <div id="sidebar" class="sidebar">
     <div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">

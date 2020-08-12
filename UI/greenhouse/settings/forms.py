@@ -46,13 +46,13 @@ class ActionForm(forms.Form):
 	light = forms.ChoiceField(required=True, choices=actions, label="Light", widget=forms.Select(attrs={'onchange': 'action_form.submit();'}))
 
 class AlertForm(forms.Form):
-	detail_levels = [('high', 'high detail'), ('low', 'low detail')]
-	rate_levels = [('day', "daily"), ('hour', 'hourly'), ('minute', "by the minute")]
+	detail_levels = [('high', 'High Detail'), ('low', 'Low Detail')]
+	rate_levels = [('day', "Daily"), ('hour', 'Hourly'), ('minute', "Minutely")]
 	detail = forms.ChoiceField(required=True, choices=detail_levels, label="Detail", widget=forms.Select(attrs={'onchange': 'alert_form.submit();'}))
 	rate = forms.ChoiceField(required=True, choices=rate_levels, label="Rate", widget=forms.Select(attrs={'onchange': 'alert_form.submit();'}))
 	
 class PwmForm(forms.Form):
-	dc_levels = [(str(i), str(i) + "% Duty Cycles") for i in range(0, 101, 10)]
+	dc_levels = [(str(i), str(i) + ' %') for i in range(0, 101, 10)]
 	fan_dc = forms.ChoiceField(required=True, choices=dc_levels, label="Fan Duty Cycles", widget=forms.Select(attrs={'onchange': 'pwm_form.submit();'}))
 	light_dc = forms.ChoiceField(required=True, choices=dc_levels, label="Light Duty Cycles", widget=forms.Select(attrs={'onchange': 'pwm_form.submit();'}))
 	
@@ -62,11 +62,11 @@ class FreqForm(forms.Form):
 	light_freq = forms.ChoiceField(required=True, choices=freq_levels, label="Light Frequency", widget=forms.Select(attrs={'onchange': 'freq_form.submit();'}))
 	
 class UpdateIntervalForm(forms.Form):
-	interval_levels = [('60', '1 minute'), ('120', '2 minutes'), ('300', '5 minutes'), ('600', '10 minutes'), ('1800', '30 minutes'), ('3600', '1 hour'), ('7200', '2 hours'), ('14400', '4 hours'), ('28800', '8 hours'), ('86400', '1 day')]
+	interval_levels = [('60', '1 Minute'), ('120', '2 Minutes'), ('300', '5 Minutes')]
 	interval = forms.ChoiceField(required=True, choices=interval_levels, label="Interval Update Period", widget=forms.Select(attrs={'onchange': 'update_interval.submit();'}))
 	
 class DeleteForm(forms.Form):
-	delete_levels = [('no', 'no'),('yes', 'yes')]
+	delete_levels = [('no', 'No'),('yes', 'Yes')]
 	delete_field = forms.ChoiceField(required=True, choices=delete_levels, label="Delete Data", widget=forms.Select(attrs={'onchange': 'delete_form.submit();'}))
 	
 class StartDateForm(forms.Form):

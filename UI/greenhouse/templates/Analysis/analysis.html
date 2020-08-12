@@ -6,14 +6,18 @@ Analysis
 
 {% block content %}
 <h1 class="dashboard-header">Actions and Effects</h1>
+<div class="chart-control-container">
+	<div>
+		<button onclick="scroll_chart_left();" type="button" class="chart-control"><</button>
+		<button onclick="scroll_chart_right();" type="button" class="chart-control">></button>
+		<button onclick="scroll_recent();" type="button" class="chart-control">Go To Last Update</button>
+		<button onclick="zoom_out();" type="button" class="chart-control">-</button>
+		<button onclick="zoom_in();" type="button" class="chart-control">+</button>
+	</div>
+</div>
+
 <div id="container" class="historical-status-container-wide">
 	<canvas id="historical-levels"></canvas>
-	<button onclick="scroll_chart_left(); " type="button">Scroll
-		Left</button>
-	<button onclick="scroll_chart_right(); " type="button">Scroll Right</button>
-	<button onclick="scroll_recent(); " type="button">Go To Recent</button>
-	<button onclick="zoom_out(); " type="button">Zoom Out</button>
-	<button onclick="zoom_in(); " type="button">Zoom In</button>
 </div>
 
 <div id="sidebar" class="sidebar">
