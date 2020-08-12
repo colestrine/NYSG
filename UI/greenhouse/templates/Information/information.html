@@ -8,22 +8,40 @@ Germination
 <h1 class="dashboard-header">Plant Information</h1>
 
 <script> var plant_dict = {}; </script>
-
+<script> var plant_summary_dict = {}; </script>
 {% for plant_name, inner_dict in plant_data.items %}
 <script> plant_dict["{{plant_name}}"] = false; </script>
-<button class = "{{plant_name}}-button" id = "{{plant_name}}-button" onclick = 'toggleCard("{{plant_name}}")' >View {{plant_name}}</button>
+<script> plant_summary_dict["{{plant_name}}"] = false; </script>
+<button class = "{{plant_name}}-button-open" id = "{{plant_name}}-button-open" onclick = 'toggleCard("{{plant_name}}")' >View {{plant_name}}</button>
 <div class="card" id = "card-{{plant_name}}">
+    <button class = "{{plant_name}}-button-close" id = "{{plant_name}}-button-close" onclick = 'toggleCard("{{plant_name}}")' >Close {{plant_name}}</button>
     <img src = {{inner_dict.Image_Url}}
         alt="{{plant_name}}" style="width:25%">
     <div class="container" id = "{{plant_name}}" >
-        <h4><b>{{plant_name}}</b></h4>
+        <h2><b>{{plant_name}}</b></h2>
         {% for characteristic, paragraph in inner_dict.items %}
-        {% if characteristic != 'Image_Url' %}
-            <h5>{{characteristic}}</h5>
-            <p>{{paragraph}}</p>
-        {% endif %}
+            {% if characteristic == 'Full Summary' %}
+                <button class = "{{plant_name}}-summary-open" id = "{{plant_name}}-summary-open" onclick = 'toggleSummary("{{plant_name}}")' >View {{plant_name}} Summary</button>
+                <div class="summary" id = "{{plant_name}}-summary" >
+                    <button class = "{{plant_name}}-button-close" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >Close {{plant_name}} Summary</button>
+                    <h3><b>{{characteristic}}</b></h3>
+                    {% for para in paragraph %}
+                        {% if ":" in para %}
+                            <button class = "{{plant_name}}-button-close" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >Close {{plant_name}} Summary</button>
+                            <h3>{{para}}</h3>
+                        {% else %}
+                            <li>{{para}}</li> 
+                        {% endif %}
+                    {% endfor %}
+                    <button class = "{{plant_name}}-button-close" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >Close {{plant_name}} Summary</button>
+                </div>
+            {% elif characteristic != 'Image_Url' %}
+                <h3><b>{{characteristic}}</b></h3>
+                <p>{{paragraph}}</p>
+            {% endif %}
         {% endfor %}
     </div>
+    <button class = "{{plant_name}}-button-close" id = "{{plant_name}}-button-close" onclick = 'toggleCard("{{plant_name}}")' >Close {{plant_name}}</button>
 </div>
 <br>
 {% endfor %}
@@ -179,10 +197,32 @@ Germination
     function toggleCard(plant_name){
         if (plant_dict[plant_name]){
             document.getElementById("card-".concat(plant_name)).style.display = "none";
+            document.getElementById("".concat(plant_name).concat('-button-open')).style.display = "initial";
+            
+            // also close the inner summary folder and restore its invariants
+            document.getElementById("".concat(plant_name).concat("-summary")).style.display = "none";
+            document.getElementById("".concat(plant_name).concat('-summary-open')).style.display = "initial";
+            plant_summary_dict[plant_name] = false;
+            var summary_elt = document.getElementById("".concat(plant_name).concat('-summary-open'));
+            summary_elt.scrollIntoView(false);
         } else {
             document.getElementById("card-".concat(plant_name)).style.display = "grid";
+            document.getElementById("".concat(plant_name).concat('-button-open')).style.display = "none";
         }
         plant_dict[plant_name] = !plant_dict[plant_name];
+    }
+    
+    function toggleSummary(plant_name){
+        if (plant_summary_dict[plant_name]){
+            document.getElementById("".concat(plant_name).concat("-summary")).style.display = "none";
+            document.getElementById("".concat(plant_name).concat('-summary-open')).style.display = "initial";
+            var summary_elt = document.getElementById("".concat(plant_name).concat('-summary-open'));
+            summary_elt.scrollIntoView(false);
+        } else {
+            document.getElementById("".concat(plant_name).concat("-summary")).style.display = "grid";
+            document.getElementById("".concat(plant_name).concat('-summary-open')).style.display = "none";
+        }
+        plant_summary_dict[plant_name] = !plant_summary_dict[plant_name];
     }
     
     var sidebar_hidden = true;

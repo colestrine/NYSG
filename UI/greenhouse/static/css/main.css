@@ -409,6 +409,10 @@ form p label {
     padding: 2px 16px;
 }
 
+.summary {
+    display: none;
+}
+
 .sunlight-status-bar-inner {
     background-color: mistyrose;
 }
