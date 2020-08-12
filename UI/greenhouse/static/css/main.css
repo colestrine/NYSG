@@ -475,3 +475,31 @@ form p label {
     width: 100%;
     height: auto;
 }
+
+.advanced-settings-toggle-button-wrapper {
+    display: inline-block;
+    writing-mode: vertical-rl;
+}
+
+.advanced-settings-toggle-button {
+    background: transparent;
+    border: none;
+    border-radius: 2px;
+    font-family: monospace;
+    color: slategray;
+    font-weight: bold;
+    transition: transform 1s;
+    transform: rotate(90deg);
+}
+
+.advanced-settings-toggle-button:focus {
+    outline: none;
+}
+
+.advanced-settings-toggle-button:hover {
+    background-color: lightgray;
+}
+
+.advanced-settings {
+    display: none;
+}
