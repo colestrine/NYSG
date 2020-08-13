@@ -104,7 +104,14 @@ run
 lsmod | grep spi_
 ```
 and “spi_bcm2708″ or “spi_bcm2835” should be listed
-
+### I2C clock stretching
+1. Open terminal
+2. Type "sudo nano /boot/config.txt"
+3. Scroll down to where you see the line "dtparam=spi=on" (assuming SPI is on)
+4. After that line, add the line "dtparam=i2c_arm_baudrate=10000"
+5. Hit ctrl-x and y to save the file.
+6. Type "sudo reboot" into terminal to restart the Pi. 
+This changes the clock rate for the I2C bus to 10kHz. If this is still too fast, chang 10000 to 5000  
 
 ### Software Dependency Requirements
 
