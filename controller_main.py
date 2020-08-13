@@ -358,7 +358,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     light_dict = init_dict["light_dict"]
 
     ml_args = one_cycle_sensors(init_dict)
-    light_intensity = ml_args['sunlight']
+    light_intensity = list(ml_args.values())[0]['sunlight']
     log(sensor_log_path, ml_args, max_log_size)
 
     # ML TRAIN STUFF TO BE REMOVED
