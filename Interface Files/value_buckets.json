@@ -82,29 +82,24 @@
 	},
 	"sunlight": {
 		"1": {
-			"label": "Very Shady",
+			"label": "Full Shade",
 			"low": "0",
 			"high": "13999"
 		},
 		"2": {
-			"label": "Shady",
+			"label": "Part Shade",
 			"low": "14000",
 			"high": "27999"
 		},
 		"3": {
-			"label": "Medium",
+			"label": "Part Sun",
 			"low": "28000",
 			"high": "41999"
 		},
 		"4": {
-			"label": "Sunny",
+			"label": "Full Sun",
 			"low": "42000",
 			"high": "55999"
-		},
-		"5": {
-			"label": "Very Sunny",
-			"low": "60000",
-			"high": "73999"
 		}
 	}
 }

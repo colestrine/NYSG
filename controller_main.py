@@ -180,13 +180,13 @@ def light_level_to_plant_type(healthy_light):
     which is between 05 and 5 to a shadelevel for the light algoriothm
     """
     healthy_light = int(healthy_light)
-    if healthy_light >= 5:
+    if healthy_light >= 4:
         return "Full sun"
     elif healthy_light >= 3:
         return "Part sun"
-    elif healthy_light >= 1:
+    elif healthy_light >= 2:
         return "Part shade"
-    elif healthy_light >= 0:
+    elif healthy_light >= 1:
         return "Full shade"
     raise AssertionError("Not a valid healthy light level")
 
