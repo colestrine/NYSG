@@ -191,7 +191,7 @@ def light_level_to_plant_type(healthy_light):
     raise AssertionError("Not a valid healthy light level")
 
 
-def ml_adapter(args_dict, light_dict):
+def ml_adapter(args_dict, light_dict, light_intensity):
     """
     ml_adapter() is a wrapper/adapter to fit for the ml functions
     [args_dict] is a dictionary of arguments used for the ml_fucntion
@@ -221,7 +221,7 @@ def ml_adapter(args_dict, light_dict):
 
     # add in the light implementation here
     plant_type = light_level_to_plant_type(healthy_light)
-    new_light_dict = light(light_dict, curr_l, plant_type)
+    new_light_dict = light(light_dict, light_intensity, plant_type) # used to be curr_l
     light_action = new_light_dict["ACTION"]
     ml_result_dict["light"] = light_action
     
@@ -358,6 +358,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     light_dict = init_dict["light_dict"]
 
     ml_args = one_cycle_sensors(init_dict)
+    light_intensity = ml_args['sunlight']
     log(sensor_log_path, ml_args, max_log_size)
 
     # ML TRAIN STUFF TO BE REMOVED
@@ -369,7 +370,7 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
         peripheral_actions = await one_cycle_peripherals(init_dict, training_results, pwm_settings, freq_settings)
         TRAIN_ML_COUNTER += 1
     elif manual_control["mode"] == "machine_learning":
-        ml_results, new_light_dict = ml_adapter(ml_args, light_dict)
+        ml_results, new_light_dict = ml_adapter(ml_args, light_dict, light_intensity)
         init_dict["light_dict"] = new_light_dict
         peripheral_actions = await one_cycle_peripherals(init_dict, ml_results, pwm_settings, freq_settings)
     elif manual_control["mode"] == "manual":

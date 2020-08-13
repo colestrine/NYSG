@@ -6,7 +6,7 @@ PID=$!
 
 echo "PID: $PID";
 
-trap "kill $PID" SIGINT;
+trap "kill $PID; pkill python3;" SIGINT;
 
 wait;
 
