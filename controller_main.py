@@ -205,8 +205,11 @@ def ml_adapter(args_dict, light_dict, light_intensity):
     healthy_light = healthy_levels_dict['sunlight']
     goal_state = machine_learning.State(healthy_temp, healthy_humidity,
                                         healthy_moisture)
-
-    current_state_dict = process_to_ml(args_dict)
+    
+    for key in args_dict:
+        ml_args = args_dict[key]
+    
+    current_state_dict = process_to_ml(ml_args)
     print(f"arg_dict : {args_dict}")
     print(f"current_state_dict : {current_state_dict}")
     curr_t = current_state_dict['temperature']
@@ -360,8 +363,9 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     light_dict = init_dict["light_dict"]
 
     ml_args = one_cycle_sensors(init_dict)
-    light_intensity = ml_args['sunlight']
-    light_intensity = list(ml_args.values())[0]['sunlight']
+    for key in ml_args:
+        inner_dict = ml_args[key]
+        light_intensity = inner_dict['sunlight']
     log(sensor_log_path, ml_args, max_log_size)
 
     # ML TRAIN STUFF TO BE REMOVED
