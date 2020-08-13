@@ -17,6 +17,7 @@
         {% url 'analysis' as analysis_url %}
         {% url 'germination' as germination_url %}
         {% url 'information' as information_url %}
+        {% url 'weather' as weather_url %}
         <button {% if request.path == dashboard_url %} class="header-button-active" {% else %}
             class="header-button-inactive" {% endif %}>
             <a class="header-link blue" href="{{ dashboard_url }}">Dashboard</a>
@@ -36,6 +37,10 @@
         <button {% if request.path == information_url %} class="header-button-active" {% else %}
             class="header-button-inactive" {% endif %}>
             <a class="header-link" href="{{ information_url }}">Information</a>
+        </button>
+        <button {% if request.path == weather_url %} class="header-button-active" {% else %}
+            class="header-button-inactive" {% endif %}>
+            <a class="header-link" href="{{ weather_url }}">Weather</a>
         </button>
         <button class="header-button-inactive refresh-header" id="refresh-data-button">
             <a class="header-link" href="{{ request.path }}">Refresh Data</a>

@@ -26,6 +26,7 @@ urlpatterns = [
     path('analysis/', include('analysis.urls')),
     path('germination/', include('germination.urls')),
     path('information/', include('information.urls')),
+    path('weather/', include('weather.urls')),
     #path('', include('landing.urls')),
     path('', include('dashboard.urls')),
 ]
