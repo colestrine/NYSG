@@ -50,7 +50,9 @@ class AlertForm(forms.Form):
 	rate_levels = [('day', "Daily"), ('hour', 'Hourly'), ('minute', "Minutely")]
 	detail = forms.ChoiceField(required=True, choices=detail_levels, label="Detail", widget=forms.Select(attrs={'onchange': 'alert_form.submit();'}))
 	rate = forms.ChoiceField(required=True, choices=rate_levels, label="Rate", widget=forms.Select(attrs={'onchange': 'alert_form.submit();'}))
-	
+	email = forms.EmailField(required=False, widget=forms.EmailInput(attrs={'onchange': 'alert_form.submit();'}))
+	password = forms.CharField(required=False, widget=forms.PasswordInput(render_value=True, attrs={'onchange': 'alert_form.submit();'}))
+
 class PwmForm(forms.Form):
 	dc_levels = [(str(i), str(i) + ' %') for i in range(0, 101, 10)]
 	fan_dc = forms.ChoiceField(required=True, choices=dc_levels, label="Fan Duty Cycles", widget=forms.Select(attrs={'onchange': 'pwm_form.submit();'}))

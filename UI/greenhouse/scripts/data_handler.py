@@ -198,7 +198,7 @@ class data_handler:
 
 		mode_file.close()
 
-	def put_alert_settings(rate, detail):
+	def put_alert_settings(rate, detail, email, password):
 		alert_settings_file = open(expanduser("~")+'/NYSG/Interface Files/email_settings.json', 'w')
 
 		alert_settings = {"rate":rate, "detail": detail}
@@ -207,11 +207,34 @@ class data_handler:
 
 		alert_settings_file.close()
 
+		old_alert_settings = data_handler.get_alert_settings()
+
+		if not(email):
+			print('no email')
+			email = old_alert_settings['email']
+
+		if not(password):
+			password = old_alert_settings['password']
+
+		with open(expanduser("~")+'/NYSG/Controller/configuration.json', 'w') as email_file:
+			email_settings = {"email_address": email, "email_password": password, "receiver_email_address": [email]}
+
+			email_file.write(json.dumps(email_settings))
+
 	def get_alert_settings():
 		alert_settings_file = open(expanduser("~")+'/NYSG/Interface Files/email_settings.json', 'r')
 		alert_settings_json = alert_settings_file.read()
 		alert_settings_file.close()
-		return json.loads(alert_settings_json)
+
+		json_out = json.loads(alert_settings_json)
+
+		with open(expanduser("~")+'/NYSG/Controller/configuration.json', 'r') as email_file:
+			email_settings = json.loads(email_file.read())
+
+			json_out['email'] = email_settings['email_address']
+			json_out['password'] = email_settings['email_password']
+
+		return json_out
 
 	def put_dc_settings(fan_dc, light_dc):
 		dc_file = open(expanduser("~")+'/NYSG/Interface Files/pwm_settings.json', 'w')
