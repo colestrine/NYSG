@@ -119,7 +119,7 @@ form p label {
 .status-bar-inner {
 	height: 15px;
 	border-radius: 8px;
-	background-color: lightgreen;
+	background-image: linear-gradient(to right, mistyrose, lightgreen, mistyrose);
 	width: 100px;
 	margin-left: 0px;
 	position: relative;
@@ -414,6 +414,7 @@ form p label {
 }
 
 .sunlight-status-bar-inner {
+    background-image: none;
     background-color: mistyrose;
 }
 
