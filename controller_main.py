@@ -153,6 +153,8 @@ def process_to_ml(ml_args):
     """
     converted_dict = {}
 
+    print(f'ml_args: {ml_args}')
+
     for key in ml_args:
         converted_dict[key] = convert_to_bucket(
             ml_args[key], key, BUCKETS_ASSOC)
@@ -204,7 +206,7 @@ def ml_adapter(args_dict, light_dict, light_intensity):
     goal_state = machine_learning.State(healthy_temp, healthy_humidity,
                                         healthy_moisture)
 
-    current_state_dict = process_to_ml(list(args_dict.values())[0])
+    current_state_dict = process_to_ml(args_dict)
     print(f"arg_dict : {args_dict}")
     print(f"current_state_dict : {current_state_dict}")
     curr_t = current_state_dict['temperature']
@@ -353,11 +355,14 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
 
     # read from frequency settings
     freq_settings = pin_constants.load_data(freq_settings_path)
-    print(f"Frwquency_settings: {freq_settings}")
+    print(f"Frequency_settings: {freq_settings}")
     # get light dict
     light_dict = init_dict["light_dict"]
 
     ml_args = one_cycle_sensors(init_dict)
+
+    print(f'ml_args: {ml_args}')
+
     light_intensity = ml_args['sunlight']
     log(sensor_log_path, ml_args, max_log_size)
 
@@ -384,6 +389,8 @@ async def one_cycle(init_dict, manual_control_path, manual_actions_path, email_s
     saved_key = None
     for key in ml_args:
         new_inner_dict = {}
+        print(f'ml_args: {ml_args}')
+        print(f'key: {key}')
         for typ in ml_args[key]:
             new_inner_dict[typ] = convert_to_bucket(
                 ml_args[key][typ], typ, BUCKETS_ASSOC)
