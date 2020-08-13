@@ -49,6 +49,9 @@ class State:
     # Return uniformly weighted total distance between self's variables and other's variables
     def distance(self, other):
         return abs(self.temperature - other.temperature) + abs(self.humidity - other.humidity) + abs(self.soil_moisture - other.soil_moisture)
+    
+    def dimensionalDistance(self, other):
+        return {'temperature': abs(self.temperature - other.temperature), 'humidity': abs(self.humidity - other.humidity), 'soil_moisture': abs(self.soil_moisture - other.soil_moisture)}
 
     # Returns the goal state, as specified in healthy_levels.json
     def getGoal():
@@ -68,10 +71,33 @@ class Environment:
 
     def reward(last_state, next_state, goal_state, water_action, ventilation_action, heat_action):
         last_difference = State.distance(last_state, goal_state)
-        next_difference = State.distance(next_state, goal_state)
+        next_difference = State.distance(next_state, goal_state) 
+        
+        last_dimensional_difference = State.dimensionalDistance(last_state, goal_state)
+        next_dimensional_difference = State.dimensionalDistance(next_state, goal_state)
+        
+        temperature_movement = next_dimensional_difference['temperature'] - last_dimensional_difference['temperature']
+        humidity_movement = next_dimensional_difference['humidity'] - last_dimensional_difference['humidity']
+        soil_moisture_movement = next_dimensional_difference['soil_moisture'] - last_dimensional_difference['soil_moisture']
 
         # Set intitial reward, scaled based on distance from goal state
         reward = -100 * last_difference
+        
+        # Adjust reward based on movement
+        if temperature_movement <= 0:
+            reward += 100
+        else:
+            reward -= 100
+            
+        if humidity_movement <= 0:
+            reward += 100
+        else:
+            reward -= 100
+            
+        if soil_moisture_movement <= 0:
+            reward += 100
+        else:
+            reward -= 100
 
         goal_temperature_bucket = int(str(goal_state.temperature).split('.')[0])
         goal_humidity_bucket = int(str(goal_state.humidity).split('.')[0])
