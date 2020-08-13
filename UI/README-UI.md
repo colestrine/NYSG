@@ -27,12 +27,10 @@ In Machine Learning mode, the user can specify healthy levels for a plant. In Ma
 The Plant Profile form allows the user to choose a profile with an associated set of healthy levels. Some profiles are pre-loaded with the system, but by creating a new set of levels using the Healthy Levels form, the user can create a new profile. Creating a new profile will create a new profile instance in the system and will be available for future use. All profiles are stored in Interface Files/healthy_levels_by_profile.json.
 ##### Healthy Levels
 The Healthy Levels form allows the user to view the healthy levels associated with a profile, as well as create new combinations of levels. When a new combination is created, the "Save as New Profile" button will appear. Clicking this will allow the user to create a new profile with the designated healthy levels. Expanding the Sidebar (see below) will allow the user to view the real-world values associated with each healthy level's available values. The user may reference the Information page (see below) for more information on what levels might be associated with a certain type of plant.
-
-### Advanced Settings
-The Advanced Settings section can be expanded by clicking the arrow button to the right of the header. This section contains settings which affect the system's lower-level operation. Note that adjusting any performance-related settings will alter the applicability of the Machine Learning algorithm's prior learning, and may result in a period where the algorithm needs to re-learn its environment based on new parameters.
-
 #### Manual
 In Manual mode, the user can specify actions which the system will take. This mode will not utilize the machine learning algorithm, and will instead take actions based only on these settings.
+### Advanced Settings
+The Advanced Settings section can be expanded by clicking the arrow button to the right of the header. This section contains settings which affect the system's lower-level operation. Note that adjusting any performance-related settings will alter the applicability of the Machine Learning algorithm's prior learning, and may result in a period where the algorithm needs to re-learn its environment based on new parameters.
 
 ## Information Page
 The Information page receives information from ui_plant_scrape.json. The data is fetched in scripts/data_handler.py and displayed using JS in templates/Information/information.html. All other supporting code is inside of the Information directory. This page is intended to be used as a reference when users are creating new plant profiles.
