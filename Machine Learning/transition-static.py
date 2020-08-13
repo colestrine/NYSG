@@ -94,7 +94,10 @@ class EffectSet():
 		humidity_diff = current_state.humidity - last_state.humidity
 		soil_moisture_diff = current_state.soil_moisture - last_state.soil_moisture
 
-		if action_set.water_action == 'low':
+		if action_set.water_action == 'off':
+			print('WATER ACTION = OFF, adding -.1 to effect')
+			soil_moisture_diff -= .1
+		elif action_set.water_action == 'low':
 			print('WATER ACTION = LOW, adding .1 to effect')
 			soil_moisture_diff += .1
 		elif action_set.water_action == 'high':
