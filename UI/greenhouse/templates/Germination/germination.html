@@ -7,33 +7,43 @@ Germination
 {% block content %}
 <h1 class="dashboard-header">Germination Time</h1>
 {% if correct_ordered_dates %}
-    <div id="container" class="historical-status-container-wide">
-        <canvas id="germination-time"></canvas>
-        <div id="container" class="historical-status-container-wide"></div>
+<div id="container" class="historical-status-container-wide">
+    <canvas id="germination-time"></canvas>
+    <div id="container" class="historical-status-container-wide"></div>
+</div>
+
+<div class='germination-information-container'>
+    <div class='germination-information-wrapper'>
+        <div class='germination-information-label'>Start Date:</div>
+        <div class='germination-information-data'>{{start_date}}</div>
     </div>
 
-    <div class='germination-information-container'>
-        <div class='germination-information-wrapper'>
-            <div class='germination-information-label'>Start Date:</div>
-            <div class='germination-information-data'>{{start_date}}</div>
-        </div>
-
-        <div class='germination-information-wrapper'>
-            <div class='germination-information-label'>Current Date:</div>
-            <div class='germination-information-data'>{{now}}</div>
-        </div>
-
-        <div class='germination-information-wrapper'>
-            <div class='germination-information-label'>End Date:</div>
-            <div class='germination-information-data'>{{end_date}}</div>
-        </div>
+    <div class='germination-information-wrapper'>
+        <div class='germination-information-label'>Current Date:</div>
+        <div class='germination-information-data'>{{now}}</div>
     </div>
 
-    {% if finished_germination %}
-        <h2 class="finished-germination">The germination end date has been reached.</h2>
-    {% endif %}
+    <div class='germination-information-wrapper'>
+        <div class='germination-information-label'>End Date:</div>
+        <div class='germination-information-data'>{{end_date}}</div>
+    </div>
+
+    <div class='germination-information-wrapper'>
+        <div class='germination-information-label'>Days in Germination:</div>
+        <div class='germination-information-data'>{{delta_passed_days}}</div>
+    </div>
+
+    <div class='germination-information-wrapper'>
+        <div class='germination-information-label'>Days Remaining in Germination:</div>
+        <div class='germination-information-data'>{{delta_remain_days}}</div>
+    </div>
+</div>
+
+{% if finished_germination %}
+<h2 class="finished-germination">The germination end date has been reached.</h2>
+{% endif %}
 {% else %}
-    <h2 class="incorrect-date-order">The start date is not before the end date.</h2>
+<h2 class="incorrect-date-order">The start date is not before the end date.</h2>
 {% endif %}
 
 <div id="sidebar" class="sidebar">
