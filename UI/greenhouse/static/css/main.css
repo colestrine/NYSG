@@ -503,3 +503,7 @@ form p label {
 .advanced-settings {
     display: none;
 }
+
+#alert_form input {
+    width: 127px;
+}

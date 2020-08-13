@@ -33,7 +33,6 @@ def index(request):
 		delete_form = DeleteForm(request.POST)
 		start_date_form = StartDateForm(request.POST)
 
-
 		# Check each form to see if it is valid. If valid, scrape data. If not, enter empty placeholder.
 		if healthy_levels_form.is_valid():
 			temperature = healthy_levels_form.cleaned_data['temperature']
@@ -83,9 +82,13 @@ def index(request):
 		if alert_form.is_valid():
 			rate = alert_form.cleaned_data['rate']
 			detail = alert_form.cleaned_data['detail']
+			email = alert_form.cleaned_data['email']
+			password = alert_form.cleaned_data['password']
 		else:
 			rate = ''
 			detail = ''
+			email = ''
+			password = ''
 
 		if pwm_form.is_valid():
 			fan_dc = pwm_form.cleaned_data['fan_dc']
@@ -161,8 +164,8 @@ def index(request):
 
 
 		# check if the alert form was submitted and save teh data in the interface file 
-		if (rate or detail):
-			data_handler.put_alert_settings(rate, detail)
+		if (rate or detail or email or password):
+			data_handler.put_alert_settings(rate, detail, email, password)
 
 		if (fan_dc or light_dc):
 			data_handler.put_dc_settings(fan_dc, light_dc)
@@ -176,10 +179,6 @@ def index(request):
 		if start_day:
 			if is_valid_date(start_year, start_month, start_day) and is_valid_date(end_year, end_month, end_day):
 				data_handler.set_germination_settings(start_day, start_month, start_year, end_day, end_month, end_year)
-		
-		
-
-
 
 	mode = data_handler.get_mode()
 	current_manual_actions = data_handler.get_manual_actions()
