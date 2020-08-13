@@ -129,7 +129,7 @@ td {
 .status-bar-inner {
 	height: 15px;
 	border-radius: 8px;
-	background-color: lightgreen;
+	background-image: linear-gradient(to right, mistyrose, lightgreen, mistyrose);
 	width: 100px;
 	margin-left: 0px;
 	position: relative;
@@ -424,6 +424,7 @@ td {
 }
 
 .sunlight-status-bar-inner {
+    background-image: none;
     background-color: mistyrose;
 }
 
@@ -518,6 +519,7 @@ td {
 #alert_form input {
     width: 127px;
 }
+
 
 .weather-page {
     background-color: rgb(43, 146, 180);
@@ -668,3 +670,4 @@ td {
     align-items: center;
     justify-content: center;
 }
+
