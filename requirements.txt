@@ -12,6 +12,7 @@ gpiozero==1.5.1
 scipy==1.4.1
 smbus2==0.3.0
 virtualenv==16.7.9
+requests==2.20.1
 
 appnope==0.1.0
 attrs==19.3.0

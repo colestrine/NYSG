@@ -1,6 +1,11 @@
 html {
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	color: slategray;
+    color: slategray;
+    height:100%;
+}
+
+body { 
+    height : 100%;
 }
 
 button {
@@ -38,6 +43,11 @@ input:focus {
 form p label {
 	display: inline-block;
     width: 120px;
+}
+
+td {
+    height: 10%;
+    width: 10%; 
 }
 
 .form-header {
@@ -502,4 +512,154 @@ form p label {
 
 .advanced-settings {
     display: none;
+}
+
+.weather-page {
+    background-color: rgb(43, 146, 180);
+    height: 100%;
+}
+
+.weather-heading {
+    height: 33.33%;
+    border-bottom: 1px solid white;
+}
+
+.city-heading {
+    height: 10%;
+}
+
+.city-text {
+    color: white;
+    font-weight: 100;
+    font-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3%;
+}
+
+.temperature-heading {
+    height: 33.33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.temp-text {
+    color: white;
+    font-weight: 100;
+    font-size: 600%;
+    margin: 3%;
+}
+
+.weather-summary {
+    height: 33.33%;
+}
+
+.weather-summary-text {
+    color: white;
+    font-weight: 100;
+    font-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:3%;
+}
+
+.date-summary {
+    height: 10%;
+}
+
+.date-summary-text {
+    color: white;
+    font-weight: 75;
+    font-size: 75%;
+    display: flex;
+    padding:2%;
+}
+
+
+.current-weather-heading {
+    color: white;
+    font-weight: 300;
+    font-size: 200%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.current-weather-values {
+    border-bottom: 1px solid white;
+    height: 20%;
+}
+
+.weather-values-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-values {
+    color: white;
+    font-weight: 100;
+    font-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.national-weather-service {
+    border-bottom: 1px solid white;
+    height: 20%;
+}
+
+.national-weather-service-summary{
+    height: 100%;
+}
+
+.national-weather-service-summary-heading {
+    color: white;
+    font-weight: 100;
+    font-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.national-weather-service-summary-text {
+    color: white;
+    font-weight: 75;
+    font-size: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
+}
+
+.upcoming-weather-values {
+    border-bottom: 1px solid white;
+    height: 10%;
+}
+
+.upcoming-heading {
+    height: 10%;
+}
+
+.upcoming-heading-summary {
+    color: white;
+    font-weight: 100;
+    font-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
+}
+
+.upcoming-weather-heading {
+    color: white;
+    font-weight: 100;
+    font-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
