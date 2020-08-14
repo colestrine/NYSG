@@ -520,10 +520,34 @@ td {
     width: 127px;
 }
 
-
 .weather-page {
     background-color: rgb(43, 146, 180);
     height: 100%;
+}
+
+.weather-header {
+	height: 33.33%;
+}
+
+.weather-header-text {
+    background: #555;
+    color: #f1f1f1;
+    font-weight: 200;
+    font-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 102px;
 }
 
 .weather-heading {
@@ -640,7 +664,7 @@ td {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1%;
+    padding: 2%;
 }
 
 .upcoming-weather-values {

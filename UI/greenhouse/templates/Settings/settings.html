@@ -50,7 +50,8 @@ Settings
 <h1 class="form-header">
 	Advanced Settings
 	<div class="advanced-settings-toggle-button-wrapper" id="advanced-settings-toggle-button-wrapper">
-		<button class="advanced-settings-toggle-button" id="advanced-settings-toggle-button" onclick="toggleAdvancedSettings()">></button>
+		<button class="advanced-settings-toggle-button" id="advanced-settings-toggle-button"
+			onclick="toggleAdvancedSettings()">></button>
 	</div>
 </h1>
 
@@ -93,6 +94,22 @@ Settings
 		<form action="/settings/" method="post" id="start_date_form" name="start_date_form">
 			{% csrf_token %}
 			{{ start_date_form.as_p }}
+		</form>
+	</div>
+
+	<h1 class="form-header">Germination Date Settings (From Current Date)</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="days_form" name="days_form">
+			{% csrf_token %}
+			{{ days_form.as_p }}
+		</form>
+	</div>
+
+	<h1 class="form-header">Address Settings</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="address_form" name="address_form">
+			{% csrf_token %}
+			{{ address_form.as_p }}
 		</form>
 	</div>
 

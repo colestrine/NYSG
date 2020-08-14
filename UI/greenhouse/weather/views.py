@@ -16,13 +16,67 @@ from datetime import datetime
 import requests
 import re
 
-LAT = round(45.516022, 4) # portland, OR, lat lon
+LAT = round(45.516022, 4)  # portland, OR, lat lon
 LON = round(-122.681427, 4)
+
+ADDRESS_JSON_PATH = "Interface Files/home_address.json"
+DEFAULT_ADDRESS_JSON_PATH = "Interface Files/default_home_address.json"
+
+def request_geographic_location(geo_path, default_geo_path):
+	"""
+	request_geographic_location(geo_path, default_geo_path) finds the current geographic location of the user
+	"""
+	fp = open(geo_path, "r")
+	geo_json = json.load(fp)
+	fp.close()
+
+	street_address = geo_json["street_address"]
+	city = geo_json["city"]
+	state = geo_json["state"]
+	zip_code = geo_json["zip"]
+	CENSUS_PAGE = f"https://geocoding.geo.census.gov/geocoder/locations/address?street={street_address}&city={city}&state={state}&zip={zip_code}&benchmark=Public_AR_Census2010&format=json"
+
+	response = requests.get(CENSUS_PAGE)
+	location_json = response.json()
+	
+	try:
+		coordinates = location_json["result"]["addressMatches"][0]["coordinates"]
+		long = coordinates["x"]
+		lat = coordinates["y"]
+	except:
+		fp = open(default_geo_path, "r")
+		geo_json = json.load(fp)
+		fp.close()
+
+		street_address = geo_json["street_address"]
+		city = geo_json["city"]
+		state = geo_json["state"]
+		zip_code = geo_json["zip"]
+		CENSUS_PAGE = f"https://geocoding.geo.census.gov/geocoder/locations/address?street={street_address}&city={city}&state={state}&zip={zip_code}&benchmark=Public_AR_Census2010&format=json"
+
+		response = requests.get(CENSUS_PAGE)
+		location_json = response.json()
+
+		coordinates = location_json["result"]["addressMatches"][0]["coordinates"]
+		long = coordinates["x"]
+		lat = coordinates["y"]
+
+	return (long, lat)
+
+
+LON, LAT = request_geographic_location(
+	ADDRESS_JSON_PATH, DEFAULT_ADDRESS_JSON_PATH)
+LON = round(float(LON), 4)
+LAT = round(float(LAT), 4)
 NWS_PREFIX = f"https://api.weather.gov/points/{LAT},{LON}"
+
 PRECIPITATION_RE = "[0-9][0-9]*%"
 HIGH_LOW_RE = "[0-9][0-9]*"
 
+
 # Create your views here.
+
+
 def index(request):
 	log_data = data_handler.get_log_data()
 	labels = ''
@@ -63,10 +117,14 @@ def index(request):
 
 	legend = data_handler.get_legend()
 
-	last_temperature = data_handler.bucket_to_nominal("temperature", last_reading_values['temperature'])
-	last_humidity = data_handler.bucket_to_nominal("humidity", last_reading_values['humidity'])
-	last_soil_moisture = data_handler.bucket_to_nominal("soil_moisture", last_reading_values['soil_moisture'])
-	last_sunlight = data_handler.bucket_to_nominal("sunlight", last_reading_values['sunlight'])
+	last_temperature = data_handler.bucket_to_nominal(
+		"temperature", last_reading_values['temperature'])
+	last_humidity = data_handler.bucket_to_nominal(
+		"humidity", last_reading_values['humidity'])
+	last_soil_moisture = data_handler.bucket_to_nominal(
+		"soil_moisture", last_reading_values['soil_moisture'])
+	last_sunlight = data_handler.bucket_to_nominal(
+		"sunlight", last_reading_values['sunlight'])
 
 	current_dc_settings = data_handler.get_dc_settings()
 	current_freq_settings = data_handler.get_freq_settings()
@@ -77,7 +135,7 @@ def index(request):
 	# extract frequencies for view render
 	fan_freq = current_freq_settings["fan_freq"]
 	light_freq = current_freq_settings["light_freq"]
-	
+
 	forecast_json = request_weather_data(NWS_PREFIX)
 
 	forecast_data = forecast_json["properties"]["periods"]
@@ -93,11 +151,11 @@ def index(request):
 		highs_dict = forecast_data[i]
 		try:
 			lows_dict = forecast_data[i + 1]
-			high, low = get_high_low(highs_dict['detailedForecast'],lows_dict["detailedForecast"])
+			high, low = get_high_low(
+				highs_dict['detailedForecast'], lows_dict["detailedForecast"])
 		except:
-			high, low = "NA" # random number!!! 
+			high, low = "NA", "NA"  # random number!!!
 			lows_dict = {}
-
 
 		highs_dict["high"] = high
 		highs_dict["low"] = low
@@ -108,7 +166,7 @@ def index(request):
 
 	today_data = forecast_data[0]
 	tonight_data = forecast_data[1]
-	remaining_days_data = forecast_data[1:] # could be empty I suppose
+	remaining_days_data = forecast_data[1:]  # could be empty I suppose
 
 	today_temp = today_data["temperature"]
 	today_windspeed = today_data["windSpeed"]
@@ -119,15 +177,25 @@ def index(request):
 	today_high = today_data["high"]
 	today_low = today_data["low"]
 	today_precipitation = today_data["precipitation"]
+	today_is_day = today_data["isDaytime"]
+	today_is_day = str(today_is_day).lower()
 
 	curr_time = datetime.now()
 	date_string = curr_time.strftime("%-m/%-d/%Y, %-I:%M %p")
 	numeric_weekday = datetime.today().weekday()
 	str_weekday = convert_weekday(numeric_weekday)
 	date_string = str_weekday + ", " + date_string
+	
+	# get city and state
+	fp = open(ADDRESS_JSON_PATH, "r")
+	geo_json = json.load(fp)
+	fp.close()
 
+	city = geo_json["city"]
+	state = geo_json["state"]
+	
 
-	return render(request, 'Weather/weather.html', {'today_low':today_low,'today_high':today_high, 'remaining_days_data':remaining_days_data, 'date_string' :date_string,'today_precipitation':today_precipitation,'today_detailed':today_detailed,'today_short':today_short,'today_sun':today_sun,'today_winddirection':today_winddirection,'today_windspeed':today_windspeed,'today_temp':today_temp,'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq':fan_freq, 'light_freq':light_freq, 'fan_dc':fan_dc, 'light_dc':light_dc})
+	return render(request, 'Weather/weather.html', {'today_is_day':today_is_day, 'city':city, 'state':state,'today_low': today_low, 'today_high': today_high, 'remaining_days_data': remaining_days_data, 'date_string': date_string, 'today_precipitation': today_precipitation, 'today_detailed': today_detailed, 'today_short': today_short, 'today_sun': today_sun, 'today_winddirection': today_winddirection, 'today_windspeed': today_windspeed, 'today_temp': today_temp, 'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc})
 
 
 def convert_weekday(numeric_weekday):
@@ -149,14 +217,14 @@ def convert_weekday(numeric_weekday):
 		return "Saturday"
 	elif numeric_weekday == 6:
 		return "Sunday"
-	assert (0 == 1) # raise error, not a valid weekday
+	assert (0 == 1)  # raise error, not a valid weekday
 
 
 def get_precipitation(detailed_forecast_str):
 	"""
 	get_precipitation(detailed_forecast_str) gets any precipiation chance listed if any
 	"""
-	split_list = detailed_forecast_str.split()
+	split_list = detailed_forecast_str.split(".")
 	for sentence in split_list:
 		if "precipitation" in sentence:
 			numeral = re.search(PRECIPITATION_RE, sentence)
@@ -167,25 +235,25 @@ def get_precipitation(detailed_forecast_str):
 	return "0%"
 
 
-
 def get_high_low(detailed_forecast_str1, detailed_forecast_str2):
 	"""
 	get_high_low() gets highs and lows
 	"""
-	highs_list1 = detailed_forecast_str1.split(".") 
-	lows_list2 = detailed_forecast_str2.split(".") 
+	highs_list1 = detailed_forecast_str1.split(".")
+	lows_list2 = detailed_forecast_str2.split(".")
 	
 	for sentence in highs_list1:
 		if "high" in sentence:
 			numeral = re.search(HIGH_LOW_RE, sentence)
 			if numeral == None:
 				high = "NA"
+				
 			else:
 				high = str(numeral.group(0))
 				break
-	else:
-		high = "NA"
-
+		else:
+			high = "NA"
+	
 	for sentence in lows_list2:
 		if "low" in sentence:
 			numeral = re.search(HIGH_LOW_RE, sentence)
@@ -194,26 +262,49 @@ def get_high_low(detailed_forecast_str1, detailed_forecast_str2):
 			else:
 				low = str(numeral.group(0))
 				break
-	else:
-		low = "NA"
+		else:
+			low = "NA"
+
+	if high == "NA" or low == "NA":
+		for sentence in lows_list2:
+			if "high" in sentence:
+				numeral = re.search(HIGH_LOW_RE, sentence)
+				if numeral == None:
+					high = "NA"
+				else:
+					high = str(numeral.group(0))
+					break
+			else:
+				high = "NA"
+
+		for sentence in highs_list1:
+			if "low" in sentence:
+				numeral = re.search(HIGH_LOW_RE, sentence)
+				if numeral == None:
+					low = "NA"
+					
+				else:
+					low = str(numeral.group(0))
+					break
+			else:
+				low = "NA"
+
 
 	return (high, low)
 
 
-
-
-
-
-def request_weather_data(weather_site = NWS_PREFIX):
+def request_weather_data(weather_site=NWS_PREFIX):
 	"""
 	request_weather_data(weather_site = NWS_PREFIX) pulls a forecast json from the NWS
 	website and returns the  json
 
 	SPEICIFIC TO NWS API ONLY
 	"""
-	response = requests.get(weather_site) 
+	response = requests.get(weather_site)
 	nws_json = response.json()
 	nws_forecast_url = nws_json["properties"]["forecast"]
-	forecast_response = requests.get(nws_forecast_url) 
+	forecast_response = requests.get(nws_forecast_url)
 	forecast_json = forecast_response.json()
 	return forecast_json
+
+
