@@ -1,0 +1,122 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{solutions}{%
+\section{SOLUTIONS}\label{solutions}}
+
+\hypertarget{part-1}{%
+\section{Part 1}\label{part-1}}
+
+init\_dict = init()
+
+\hypertarget{part-2}{%
+\section{Part 2}\label{part-2}}
+
+light\_sensor = LightSensor(i2c\_channel) temp\_humid\_sensor =
+TempHumiditySensor(i2c\_channel) moisture\_sensor = MoistureSensor()
+
+\hypertarget{part-3}{%
+\section{Part 3}\label{part-3}}
+
+valve = SolenoidValve(pin\_constants.VALVE, 20) heat =
+HeatPad(pin\_constants.HEAT, 20) fan = Fan(pin\_constants.VENT, 20) \#
+inverts duty cycles inside class light = PlantLight(pin\_constants.LED,
+20)
+
+\hypertarget{part-4}{%
+\section{Part 4}\label{part-4}}
+
+manual\_control = pin\_constants.load\_data(manual\_control\_path)
+
+manual\_results = pin\_constants.load\_data(manual\_actions\_path)
+
+email\_settings = pin\_constants.load\_data(email\_settings\_path)
+
+pwm\_settings = pin\_constants.load\_data(pwm\_settings\_path)
+
+freq\_settings = pin\_constants.load\_data(freq\_settings\_path)
+
+\hypertarget{part-5}{%
+\section{Part 5}\label{part-5}}
+
+if healthy\_light \textgreater= 4: return ``Full sun'' elif
+healthy\_light \textgreater= 3: return ``Part sun'' elif healthy\_light
+\textgreater= 2: return ``Part shade'' elif healthy\_light \textgreater=
+1: return ``Full shade''
+
+\hypertarget{part-6}{%
+\section{Part 6}\label{part-6}}
+
+if action == 0 or action == ``off'': return ``off'' elif action == 1:
+return ``big\_decrease'' elif action == 2 or action == ``low'': return
+``low'' elif action == 3: return ``small\_increase'' elif action == 4 or
+action == ``high'': return ``high''
+
+\hypertarget{part-7}{%
+\section{Part 7}\label{part-7}}
+
+while True: await one\_cycle(init\_dict, manual\_control\_path,
+manual\_actions\_path, email\_settings\_path, pwm\_settings\_path,
+freq\_settings\_path, sensor\_log\_path, ml\_action\_log,alert\_log,
+max\_log\_size, interval)
+
+\hypertarget{part-8}{%
+\section{Part 8}\label{part-8}}
+
+for \_ in range(max\_iter): await one\_cycle(init\_dict,
+manual\_control\_path, manual\_actions\_path, email\_settings\_path,
+pwm\_settings\_path, freq\_settings\_path, sensor\_log\_path,
+ml\_action\_log, alert\_log, max\_log\_size, interval)
+
+\end{document}

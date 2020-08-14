@@ -1,0 +1,323 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{nysg-controller-construction-guide}{%
+\section{NYSG Controller Construction
+Guide}\label{nysg-controller-construction-guide}}
+
+\hypertarget{summary}{%
+\subsection{Summary}\label{summary}}
+
+This guide is meant as a way for you to build your own controller.
+Follow the instructions carefully and use the Jupyter Notebooks for
+reference when you build the software controller. You can still use the
+system without the controller you build. Our controller also works as
+well, which you can use to compare functionality with.
+
+\hypertarget{materials}{%
+\subsection{Materials}\label{materials}}
+
+You only need one file: \textbf{student\_controller\_main.py}
+
+\textbf{\emph{DO NOT MAKE EDITS IN ANY OTHER FILES.}}
+
+\textbf{For Reference} Please reference controller\_main.py if you ever
+get stuck. Also reference the jupyter notebook in the folder named
+Jupyter Notebook.
+
+\textbf{\emph{AGAIN, DO NOT MAKE EDITS IN ANY OTHER FILES.}}
+
+\hypertarget{the-code-you-will-write.}{%
+\subsection{The Code You Will Write.}\label{the-code-you-will-write.}}
+
+All the code you will write are located in the sections marked at the
+beginning with ----------------------- EDIT BELOW HERE
+-----------------------
+
+and ending with ----------------------- EDIT ABOVE HERE
+-----------------------
+
+\textbf{\emph{DO NOT MAKE EDITS IN ANY OTHER AREAS OF THIS FILE.}}
+\textbf{\emph{DO NOT MAKE EDITS IN ANY ABOVE OR BELOW THESE DEMARCATED
+SECTIONS OF CODE.}}
+
+There will also be TODO flags inside the code portions where you are to
+fill in the code and instructions explaning what you need to do.
+
+\hypertarget{prequisites-and-skills-required}{%
+\subsection{Prequisites and Skills
+Required}\label{prequisites-and-skills-required}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Review and Work through Jupyter Notebooks
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Learn Assignment and variables
+  \item
+    Learn about different data types
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      strings
+    \item
+      lists
+    \item
+      ints
+    \item
+      floats
+    \item
+      booleans
+    \end{enumerate}
+  \item
+    Learn about control flow
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      if statements
+    \item
+      for loops
+    \item
+      while loops
+    \end{enumerate}
+  \item
+    Learn Function Calls
+  \item
+    Learn how to use external packages and libraries / modules
+  \item
+    Learn about classes
+  \item
+    Learn how to debug
+  \end{enumerate}
+\item
+  Patience to figure out a solution
+\item
+  Ability to reason with code
+\end{enumerate}
+
+If you are familiar with programming and with Python, you can consider
+the prerequiste part 1 to be satisfied.
+
+\hypertarget{solutions}{%
+\subsection{Solutions}\label{solutions}}
+
+Solutions are there if you get stuck in
+README-Controller-Main-Solutions.md
+
+\hypertarget{agenda}{%
+\subsection{Agenda}\label{agenda}}
+
+There are 8 code chunks you need to fill in for the
+student\_controller\_main.py file. You can find these by using CONTROL-F
+or ctrl-F or command-F to search for TODO's, which mark the sections
+that you are to do complete and fill in.
+
+Here are the descriptions of the tasks. 1. Finish function main() by
+filling in one line of code. You need to initialize all the sensors and
+peripherals, which requires calling function init(). Set the result of
+init to a variable named init\_dict, which is a dictionary holding all
+the sensor and peripherals. 2. Let us create the sensors that we need
+for this project.
+
+\begin{verbatim}
+We need a light sensor, temperature-humidity sensor and moisture sensor.
+You can create these objects with the constructors: LightSensor, TempHumiditySensor, MoistureSensor,
+To get more information for each constructior, read the module code in
+folder Controller and looking in file sensor_class.py
+
+For the light sensor, use the i2c_channel that was created before this section
+of code. Similarly, use the i2c_channel for the TempHumidity Sensor.
+The Moisture Sensor needs to arguments to be called.
+Save the sensors to variables named light_sensor, temp_humid_sensor and moisture_sensor
+respectively.
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Let us create the peripherals for this project.
+
+  We need a Solenoid Valve, Heat Pad, Fan and Plant Light. These are
+  given by the constructors SolenoidValve, HeatPad, Fan, and PlantLight.
+  Each of these takes in a pin number. The pins are: Solenoid Valve:
+  pin\_constants.VALVE Heat Pad: pin\_constants.HEAT, Fan:
+  pin\_constants.VENT, PlantLight: pin\_constants.LED
+
+  Further, each of the constructors takes in a burst time. Give them all
+  20 second burst times. The burst time is an integer.
+
+  The first argument to each constructor is the pin number, while the
+  second is the burst time. There are no other arguments.
+
+  Finally, save eacj peripheral to its own variable. The cariables
+  should be named, respectively, valve, heat, fan and light.
+\item
+  We need to be able to read data from the Interface files. We need to
+  reading in 5 items: the manual control status, the manual actions, the
+  email settings the pwm settings and the frequency settings.
+
+  TO read in data, call the function load\_data. Because load\_data is
+  in module pin\_constants, you will have to us the module with a dot
+  notation: pin\_constants.load\_data.
+
+  Load\_data takes in one argument, the path of the interface file you
+  want to read. When you can in load\_data, load\_data returns to you
+  the read in data.
+
+  First, read in manual\_control\_path and save the results of the
+  function to a variable named manual\_control.
+
+  Second, read in manual\_actions\_path and save the results of the
+  function to a variable named manual\_results.
+
+  Next, read in email\_settings\_path and save the results of the
+  function to a variable named email\_settings.
+
+  Then, read in pwm\_settings\_path and save the results of the function
+  to a variable named pwm\_settings.
+
+  Finally, read in freq\_settings\_path and save the results of the
+  function to a variable named freq\_settings.
+
+  Remember, there are five variables you need to create via 5 function
+  calls.
+\item
+\begin{verbatim}
+We need to convert the healthy light integer into a string. We do it by       comparing the value of healthy light. 
+\end{verbatim}
+
+  If healthy light is greater than or equal to 4, return the string
+  ``Full Sun''
+
+  If healthy light is greater or equal to 3 and less than 4, return
+  ``Part Sun''
+
+  If healthy light is greater or equal to 2 and less than 3, return
+  ``Part Sun''
+
+  If healthy light is greater or equal to 1 and less than 2, return
+  ``Part Shade''
+
+  If healthy light is greater or equal to 0 and less than 1, return
+  ``Full Sun''
+
+  Remember how to use if statements, elif statements and booleans.
+
+  Do not add in an else clause.
+\item
+\begin{verbatim}
+    We need to convert action to a string. Action can be an integer between 0 and 4 inclusive, or the string "low" or "high".capitalize
+
+ If action is 0 or it is the string "off", return the string "off".
+
+ If action is 1 return the string "big_decrease".
+
+ If action is 2 or it is the string "low", return the string "low".
+
+ If action is 3 return the string "small_increase".
+
+ If action is 4 or it is the string "high", return the string "high".
+
+ Use your boolean comparison equality operation, == , the double equals,
+ as well as if-elif statements. Also return strings inside the if statements.
+\end{verbatim}
+\item
+  We want you to complete the headers of the while loop. In this branch
+  of the if statement, we want the code to runforever. We can use a
+  while loop with true as the guard. Write in the guard. Then paste in
+  the given code below to call the function to run inside the while
+  loop. You do not need to know what await does. Just paste the code
+  indented inside the while loop body.
+
+\begin{verbatim}
+ Given code:
+ await one_cycle(init_dict, manual_control_path, manual_actions_path, email_settings_path, pwm_settings_path, freq_settings_path, sensor_log_path, ml_action_log,
+                 alert_log, max_log_size, interval)
+\end{verbatim}
+\item
+\begin{verbatim}
+    In this branch of the if statement, we want the code to for a
+ certain number of iterations, max_iter, specifically. max_iter is an integer
+ representing how many iterations to run. We can use a for loop.
+  We want you to fill in the for loop guard. Create an iteration variable.
+ Use range to make sure you iterate for max_iter iterations.
+ Paste in the given code below to call the function to run inside the for loop.
+ You do not need to know what await does. Just paste the code indented
+ inside the for loop body.
+
+ Given code:
+ await one_cycle(init_dict, manual_control_path, manual_actions_path, email_settings_path, pwm_settings_path, freq_settings_path, sensor_log_path, ml_action_log,
+                   alert_log, max_log_size, interval)
+\end{verbatim}
+\end{enumerate}
+
+\hypertarget{testing}{%
+\subsection{Testing}\label{testing}}
+
+To test, run ./start-system.sh
+
+The controller and UI should start. Follow instructions to open the UI
+and see the results.
+
+\end{document}
