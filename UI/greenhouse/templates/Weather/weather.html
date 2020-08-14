@@ -11,6 +11,11 @@ Weather
 
 
 <!-- <h1 class="dashboard-header">Weather</h1> -->
+{% if failure_to_load %}
+<div class="weather-load-failure">
+    <h1 class="dashboard-header">National Weather Servuce Page API to Respond</h1>
+</div>
+{% else %}
 <div class="weather-page" id="weather-page">
     <div class="weather-header" id="weather-header">
         <h1 class="weather-header-text">
@@ -136,6 +141,7 @@ Weather
     </div>
 
 </div>
+{% endif %}
 
 <div id="sidebar" class="sidebar">
     <div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">

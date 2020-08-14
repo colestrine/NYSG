@@ -813,3 +813,11 @@ tr#demotable:nth-child(8) {background: lightskyblue;} */
     justify-content: center;
 }
 
+.weather-load-failure {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 5%;
+    border: 1%;
+    padding: 1%;
+}
