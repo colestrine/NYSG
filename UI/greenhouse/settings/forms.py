@@ -156,3 +156,8 @@ class AddressForm(forms.Form):
     ))
     submit_form = forms.ChoiceField(required=True, label="Submit", choices=[('Yes', 'Yes'), ('No', 'No')], widget=forms.Select(
         attrs={'onchange': 'address_form.submit();'}))
+
+
+class TempForm(forms.Form):
+    temp = forms.ChoiceField(required=True, label="Submit", choices=[('Fahrenheit', 'Fahrenheit'), ('Celsius', 'Celsius')], widget=forms.Select(
+        attrs={'onchange': 'temp_form.submit();'}))

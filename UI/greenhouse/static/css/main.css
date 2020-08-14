@@ -47,7 +47,7 @@ form p label {
 
 td {
     height: 10%;
-    width: 10%; 
+    width: 5%; 
 }
 
 .form-header {
@@ -546,6 +546,10 @@ td {
 .weather-page {
 /*    background-color: rgb(43, 146, 180);*/
     height: 100%;
+    border-radius: 2%;
+    padding: 2%;
+    margin: 2%;
+    background-image: linear-gradient(rgb(79, 171, 202), rgb(32, 137, 172));
 }
 
 .weather-header {
@@ -557,6 +561,7 @@ td {
 .weather-header-text {
 /*    background: #555;*/
 /*    color: #f1f1f1;*/
+    /* color: white; */
     font-weight: 200;
     font-size: 100%;
     display: flex;
@@ -568,7 +573,7 @@ td {
 .sticky {
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 87.5%;
   padding: 1%;
 }
 
@@ -582,6 +587,11 @@ td {
     margin: 10px 50px;
     padding: 10px;
     margin: 0px 50px 10px 50px;
+    border: 1px solid white;
+    background-image: url("https://wallpaperaccess.com/full/535628.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .city-heading {
@@ -589,7 +599,7 @@ td {
 }
 
 .city-text {
-/*    color: white;*/
+   color: white;
     font-weight: 100;
     font-size: 100%;
     display: flex;
@@ -606,7 +616,7 @@ td {
 }
 
 .temp-text {
-/*    color: white;*/
+   color: white;
     font-weight: 100;
     font-size: 600%;
     margin: 3%;
@@ -617,7 +627,7 @@ td {
 }
 
 .weather-summary-text {
-/*    color: white;*/
+   color: white;
     font-weight: 100;
     font-size: 100%;
     display: flex;
@@ -631,7 +641,7 @@ td {
 }
 
 .date-summary-text {
-/*    color: white;*/
+   color: white;
     font-weight: 75;
     font-size: 75%;
     display: flex;
@@ -640,7 +650,7 @@ td {
 
 
 .current-weather-heading {
-/*    color: white;*/
+   color: white;
     font-weight: 300;
     font-size: 200%;
     display: flex;
@@ -653,6 +663,13 @@ td {
     border-radius: 10px;
     margin: 10px 50px;
     padding: 10px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    border-left:1px solid white;
+    height: 20%;
+    border-radius: 4%;
+    background-color: rgb(18, 136, 175);
 }
 
 .weather-values-symbol {
@@ -662,7 +679,7 @@ td {
 }
 
 .weather-values {
-/*    color: white;*/
+   color: white;
     font-weight: 100;
     font-size: 100%;
     display: flex;
@@ -671,6 +688,10 @@ td {
 }
 
 .national-weather-service {
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
     height: 20%;
     border-radius: 10px;
     margin: 10px 50px;
@@ -682,7 +703,7 @@ td {
 }
 
 .national-weather-service-summary-heading {
-/*    color: white;*/
+   color: white;
     font-weight: 100;
     font-size: 100%;
     display: flex;
@@ -691,7 +712,7 @@ td {
 }
 
 .national-weather-service-summary-text {
-/*    color: white;*/
+   color: white;
     font-weight: 75;
     font-size: 75%;
     display: flex;
@@ -706,6 +727,13 @@ td {
     border-radius: 10px;
     margin: 10px 50px;
     padding: 10px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    height: 10%;
+    border-radius: 4%;
+    background-color:rgb(22, 115, 146);
 }
 
 .upcoming-heading {
@@ -713,7 +741,7 @@ td {
 }
 
 .upcoming-heading-summary {
-/*    color: white;*/
+   color: white;
     font-weight: 300;
     font-size: 200%;
     display: flex;
@@ -722,7 +750,7 @@ td {
 }
 
 .upcoming-weather-heading {
-/*    color: white;*/
+   color: white;
     font-weight: 100;
     font-size: 100%;
     display: flex;
@@ -736,4 +764,10 @@ td {
 
 .weather-card-background-night {
     background-color: darkgray;
+}
+
+.plant-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

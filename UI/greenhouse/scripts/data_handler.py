@@ -403,7 +403,7 @@ class data_handler:
         }
         address_file.write(json.dumps(address_json))
         address_file.close()
-        
+
     def get_address_profiles():
         plant_profiles_file = open(expanduser(
             "~")+'/NYSG/Interface Files/home_address.json', 'r')
@@ -418,3 +418,20 @@ class data_handler:
         new_data["zip_code"] = plant_data["zip"]
         new_data["submit_form"] = "No"
         return new_data
+
+    def get_temp_profile():
+        temp_profiles_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/temp_format.json', 'r')
+        temp_profiles_json = temp_profiles_file.read()
+        temp_profiles_file.close()
+        temp_data = json.loads(temp_profiles_json)
+        return temp_data
+
+    def set_temp_profile(temp):
+        temp_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/temp_format.json', 'w')
+        temp_json = {
+            "temp": temp
+        }
+        temp_file.write(json.dumps(temp_json))
+        temp_file.close()

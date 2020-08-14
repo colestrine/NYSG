@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeForm, ActionForm, AlertForm, PwmForm, FreqForm, UpdateIntervalForm, DeleteForm, StartDateForm, AddressForm, DaysForm
+from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeForm, ActionForm, AlertForm, PwmForm, FreqForm, UpdateIntervalForm, DeleteForm, StartDateForm, AddressForm, DaysForm, TempForm
 from scripts.data_handler import data_handler
 from collections import OrderedDict
 import json
@@ -37,6 +37,7 @@ def index(request):
         start_date_form = StartDateForm(request.POST)
         address_form = AddressForm(request.POST)
         days_form = DaysForm(request.POST)
+        temp_form = TempForm(request.POST)
 
         # Check each form to see if it is valid. If valid, scrape data. If not, enter empty placeholder.
         if healthy_levels_form.is_valid():
@@ -150,6 +151,11 @@ def index(request):
         else:
             day = ""
 
+        if temp_form.is_valid():
+            temp = temp_form.cleaned_data["temp"]
+        else:
+            temp = ""
+
         # If data was submitted, write that data to the interface file
         # If healthy levels data was submitted, update healthy levels interface file, and save plant profile as "custom" in profile interface file
         if (temperature):
@@ -232,6 +238,9 @@ def index(request):
             y2 = new_date.year
             data_handler.set_germination_settings(d1, m1, y1, d2, m2, y2)
 
+        if temp:
+            data_handler.set_temp_profile(temp)
+
     mode = data_handler.get_mode()
     current_manual_actions = data_handler.get_manual_actions()
     current_alert_settings = data_handler.get_alert_settings()
@@ -240,7 +249,8 @@ def index(request):
     current_interval_settings = data_handler.get_interval_settings()
     current_start_date = data_handler.get_germination_settings()
     current_address = data_handler.get_address_profiles()
-    
+    temp_format = data_handler.get_temp_profile()
+
     start_date = current_start_date["start_date"]
     split_start = start_date.split("-")
     # split_start = list(map(lambda s : int(s), split_start))
@@ -253,7 +263,7 @@ def index(request):
     end_year = split_end[0]
     end_month = split_end[1]
     end_day = split_end[2]
-    
+
     # extract duty cycles for view render
     fan_dc = current_dc_settings["fan_dc"]
     light_dc = current_dc_settings["light_dc"]
@@ -276,7 +286,8 @@ def index(request):
     start_date_form = StartDateForm(initial={'start_day': start_day, 'start_month': start_month,
                                              'start_year': start_year, 'end_day': end_day, 'end_month': end_month, 'end_year': end_year})
     address_form = AddressForm(initial=current_address)
-    days_form = DaysForm(initial={"day" :0})
+    days_form = DaysForm(initial={"day": 0})
+    temp_form = TempForm(initial=temp_format)
 
     log_data = data_handler.get_log_data()
     log_data = OrderedDict(log_data)
@@ -295,4 +306,4 @@ def index(request):
     last_sunlight = data_handler.bucket_to_nominal(
         "sunlight", last_reading_values['sunlight'])
 
-    return render(request, 'Settings/settings.html', {'days_form' :days_form,'action_form': action_form, 'mode': mode, 'mode_form': mode_form, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile, 'alert_form': alert_form, 'pwm_form': pwm_form, 'freq_form': freq_form, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc, 'update_interval': update_interval, 'delete_form': delete_form, 'start_date_form': start_date_form, 'address_form': address_form})
+    return render(request, 'Settings/settings.html', {'temp_form': temp_form, 'days_form': days_form, 'action_form': action_form, 'mode': mode, 'mode_form': mode_form, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile, 'alert_form': alert_form, 'pwm_form': pwm_form, 'freq_form': freq_form, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc, 'update_interval': update_interval, 'delete_form': delete_form, 'start_date_form': start_date_form, 'address_form': address_form})
