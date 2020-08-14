@@ -113,6 +113,14 @@ Settings
 		</form>
 	</div>
 
+	<h1 class="form-header">Temperature Settings</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="temp_form" name="temp_form">
+			{% csrf_token %}
+			{{ temp_form.as_p }}
+		</form>
+	</div>
+
 	<h1 class="form-header">Delete Data</h1>
 	<div class="form-wrapper">
 		<form action="/settings/" method="post" id="delete_form" name="delete_form">

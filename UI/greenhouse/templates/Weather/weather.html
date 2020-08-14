@@ -6,14 +6,15 @@ Weather
 
 {% block content %}
 
-<meta http-equiv="Refresh" content="60"> 
+<meta http-equiv="Refresh" content="60">
 <!-- refresh page every 60 seconds for weather updates -->
+
 
 <!-- <h1 class="dashboard-header">Weather</h1> -->
 <div class="weather-page" id="weather-page">
-    <div class = "weather-header" id="weather-header">
+    <div class="weather-header" id="weather-header">
         <h1 class="weather-header-text">
-            {{city}}, {{state}} - {{date_string}} - {{today_temp}}&#8457 
+            {{city}}, {{state}} - {{date_string}} - {{today_temp}}&deg{{degree_symbol}}
         </h1>
     </div>
     <div class='weather-heading' id='weather-heading'>
@@ -21,7 +22,7 @@ Weather
             <p class="city-text" id="city-text">{{city}}, {{state}}</p>
         </div>
         <div class="temperature-heading" id="temperature-heading">
-            <p class="temp-text" id="temp-text">{{today_temp}}&#8457</p>
+            <p class="temp-text" id="temp-text">{{today_temp}}&deg{{degree_symbol}}</p>
         </div>
         <div class="weather-summary" id="weather-summary">
             <p class="weather-summary-text" id="weather-summary-text">
@@ -30,7 +31,7 @@ Weather
         </div>
         <div class="date-summary" id="date-summary">
             <p class="date-summary-text" id="date-summary-text">
-                {{date_string}}
+                {{date_string}} <br> {{temp_mode}}
             </p>
         </div>
     </div>
@@ -57,22 +58,22 @@ Weather
             </tr>
             <tr>
                 <td>
-                    <h3 class="weather-values" id="temperature-value">{{today_temp}}&#8457</h3>
+                    <h3 class="weather-values" id="temperature-value">{{today_temp}}&deg{{degree_symbol}}</h3>
                 </td>
                 <td>
                     <h3 class="weather-values" id="wind-value">{{today_windspeed}} / {{today_winddirection}}</h3>
                 </td>
                 <td>
                     <div class="weather-values-symbol" id="sun-light-value">
-                        <img src="{{today_sun}}"
-                            style="width:42px;height:42px;" alt="Weather Image" />
+                        <img src="{{today_sun}}" style="width:42px;height:42px;" alt="Weather Image" />
                     </div>
                 </td>
                 <td>
                     <h3 class="weather-values" id="precipitation-value">{{today_precipitation}}</h3>
                 </td>
                 <td>
-                    <h3 class="weather-values" id="high-low-value">{{today_high}}&#8457 / {{today_low}}&#8457</h3>
+                    <h3 class="weather-values" id="high-low-value">{{today_high}}&deg{{degree_symbol}} /
+                        {{today_low}}&deg{{degree_symbol}}</h3>
                 </td>
             </tr>
         </table>
@@ -80,7 +81,7 @@ Weather
 
     <div class='national-weather-service' id='national-weather-service'>
         <div class="national-weather-service-summary" id="national-weather-service-summary">
-            <h2 class = "national-weather-service-summary-heading" id = "national-weather-service-summary-heading"> 
+            <h2 class="national-weather-service-summary-heading" id="national-weather-service-summary-heading">
                 Detailed Forecast
             </h2>
             <p class="national-weather-service-summary-text" id="national-weather-service-summary-text">
@@ -91,32 +92,32 @@ Weather
 
 
     <div class="upcoming-weather-values" id="upcoming-weather-values">
-        <div class= "upcoming-heading" id = "upcoming-heading"> 
+        <div class="upcoming-heading" id="upcoming-heading">
             <h2 class='upcoming-heading-summary' id="upcoming-heading-summary">7 Day Forecast</h2>
         </div>
         <table>
             {% for day_dict in remaining_days_data %}
             <tr>
                 <td>
-                <div class='upcoming-weather-heading' id="upcoming-weather-heading">{{day_dict.name}}</h2>
+                    <div class='upcoming-weather-heading' id="upcoming-weather-heading">{{day_dict.name}}</h2>
                 </td>
                 <td>
-                    <h3 class="weather-values" id="temperature-value">{{day_dict.temperature}}&#8457</h3>
+                    <h3 class="weather-values" id="temperature-value">{{day_dict.temperature}}&deg{{degree_symbol}}</h3>
                 </td>
                 <td>
                     <h3 class="weather-values" id="wind-value">{{day_dict.windSpeed}} / {{day_dict.windDirection}}</h3>
                 </td>
                 <td>
                     <div class="weather-values-symbol" id="sun-light-value">
-                        <img src="{{day_dict.icon}}"
-                            style="width:42px;height:42px;" alt="Sunny Image" />
+                        <img src="{{day_dict.icon}}" style="width:42px;height:42px;" alt="Sunny Image" />
                     </div>
                 </td>
                 <td>
                     <h3 class="weather-values" id="precipitation-value">{{day_dict.precipitation}}</h3>
                 </td>
                 <td>
-                    <h3 class="weather-values" id="high-low-value">{{day_dict.high}}&#8457 / {{day_dict.low}}&#8457</h3>
+                    <h3 class="weather-values" id="high-low-value">{{day_dict.high}}&deg{{degree_symbol}} /
+                        {{day_dict.low}}&deg{{degree_symbol}}</h3>
                 </td>
             </tr>
             {% endfor %}
@@ -272,50 +273,73 @@ Weather
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script>
-    var is_day = {{today_is_day}};
-    if (!is_day){
-        document.getElementById("weather-page").style.backgroundColor = "SteelBlue";
+    var is_day = ("{{today_is_day}}" == 'true');
+    if (!is_day) {
+        document.getElementById("weather-page").style.backgroundImage = "linear-gradient(rgb(18, 94, 117), rgb(9, 74, 94))";
+
     } else {
-        document.getElementById("weather-page").style.backgroundColor = "rgb(43, 146, 180)";
+        document.getElementById("weather-page").style.backgroundImage = "linear-gradient(rgb(79, 171, 202), rgb(32, 137, 172))";
     }
-    
-    window.onscroll = function() {myFunction()};
+
+    is_rainy = ("{{is_rainy}}" == 'true');
+    is_cloudy = ("{{is_cloudy}}" == 'true');
+    is_snowy = ("{{is_snowy}}" == 'true');
+    is_stormy = ("{{is_stormy}}" == 'true');
+    is_high_temp = ("{{is_high_temp}}" == 'true');
+    is_morning = ("{{is_morning}}" == 'true');
+    is_sundown = ("{{is_sundown}}" == 'true');
+    is_night = ("{{is_night}}" == 'true');
+
+
+    if (is_stormy) {
+        document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpapercave.com/wp/wO7581D.jpg')";
+    }
+
+    else if (is_snowy) {
+        document.getElementById("weather-heading").style.backgroundImage = "url('https://c4.wallpaperflare.com/wallpaper/83/239/610/street-light-snow-snowing-winter-wallpaper-preview.jpg')";
+    }
+
+    else if (is_cloudy) {
+        document.getElementById("weather-heading").style.backgroundImage = "url('https://c4.wallpaperflare.com/wallpaper/759/428/990/uplifting-rays-of-sunshine-wallpaper-preview.jpg')";
+    }
+
+    else if (is_rainy) {
+        document.getElementById("weather-heading").style.backgroundImage = "url('https://www.maketecheasier.com/assets/uploads/2020/06/Featured-Image-Live-Weather-Wallpapers-Android.jpg')";
+    }
+
+    else if (is_high_temp) {
+        document.getElementById("weather-heading").style.backgroundImage = "url('https://c4.wallpaperflare.com/wallpaper/80/311/649/sunny-day-4k-summer-beach-wallpaper-preview.jpg')";
+    }
+
+    else if (is_morning) {
+        document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpaperaccess.com/full/428690.jpg')";
+    }
+
+    else if (is_sundown) {
+        document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpapercave.com/wp/3Hg2wQy.jpg')";
+    }
+
+    else if (is_night) {
+        document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpaperaccess.com/full/941788.jpg')";
+    }
+
+    else {
+        document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpaperaccess.com/full/535628.jpg')";
+    }
+
+
+    window.onscroll = function () { myFunction() };
 
     var header = document.getElementById("weather-header");
     var sticky = header.offsetTop;
 
     function myFunction() {
-      if (window.pageYOffset > sticky) {
-        header.classList.add("sticky");
-      } else {
-        header.classList.remove("sticky");
-      }
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
     }
-
-    var options = []
-    var actions_chart_config = {
-        type: 'pie',
-        data: {
-            datasets: [{
-                label: "time-to-germination",
-                data: ['{{delta_passed_days}}', "{{delta_remain_days}}"],
-                backgroundColor: ['darkseagreen', 'cornflowerblue']
-
-            }],
-
-            // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: [
-                'Time Elapsed Since Planting',
-                'Time Remaining Until Germination'
-            ]
-        },
-        options: options
-    }
-
-    window.onload = function () {
-        var actions_chart_element = document.getElementById('germination-time').getContext('2d');
-        window.chart = new Chart(actions_chart_element, actions_chart_config);
-    };
 
     var sidebar_hidden = true;
 

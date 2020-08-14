@@ -47,7 +47,7 @@ form p label {
 
 td {
     height: 10%;
-    width: 10%; 
+    width: 5%; 
 }
 
 .form-header {
@@ -521,12 +521,16 @@ td {
 }
 
 .weather-page {
-    background-color: rgb(43, 146, 180);
+    /* background-color: rgb(43, 146, 180); */
     height: 100%;
+    border-radius: 2%;
+    padding: 2%;
+    margin: 2%;
+    background-image: linear-gradient(rgb(79, 171, 202), rgb(32, 137, 172));
 }
 
 .weather-header {
-	height: 33.33%;
+    height: 33.33%;
 }
 
 .weather-header-text {
@@ -552,7 +556,11 @@ td {
 
 .weather-heading {
     height: 33.33%;
-    border-bottom: 1px solid white;
+    border: 1px solid white;
+    background-image: url("https://wallpaperaccess.com/full/535628.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .city-heading {
@@ -620,8 +628,13 @@ td {
 }
 
 .current-weather-values {
+    border-top: 1px solid white;
     border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    border-left:1px solid white;
     height: 20%;
+    border-radius: 4%;
+    background-color: rgb(18, 136, 175);
 }
 
 .weather-values-symbol {
@@ -641,6 +654,9 @@ td {
 
 .national-weather-service {
     border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
     height: 20%;
 }
 
@@ -668,8 +684,13 @@ td {
 }
 
 .upcoming-weather-values {
+    border-top: 1px solid white;
     border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
     height: 10%;
+    border-radius: 4%;
+    background-color:rgb(22, 115, 146);
 }
 
 .upcoming-heading {
@@ -695,3 +716,9 @@ td {
     justify-content: center;
 }
 
+.lol{
+    color: rgb(18, 94, 117);
+    color: rgb(9, 74, 94);
+    color: rgb(50, 94, 109);
+    color: rgb(10, 94, 122);
+}
