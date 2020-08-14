@@ -520,6 +520,10 @@ td {
     width: 127px;
 }
 
+#address_form input {
+    width: 127px;
+}
+
 .weather-page {
     background-color: rgb(43, 146, 180);
     height: 100%;

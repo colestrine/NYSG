@@ -205,7 +205,9 @@ def ml_adapter(args_dict, light_dict, light_intensity):
     healthy_light = healthy_levels_dict['sunlight']
     goal_state = machine_learning.State(healthy_temp, healthy_humidity,
                                         healthy_moisture)
-    
+
+    print(f'goal_state: {goal_state}')
+
     for key in args_dict:
         ml_args = args_dict[key]
     
