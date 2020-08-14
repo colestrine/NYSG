@@ -180,6 +180,9 @@ class data_handler:
         value_fraction_str = str(value).split('.')[1]
         value_fraction = int(value_fraction_str)/(10**len(value_fraction_str))
 
+        if (variable == 'sunlight') and (value_base == '5'):
+            value_base = '4'
+
         legend = legend[value_base]
         low = int(legend['low'])
         high = int(legend['high'])
