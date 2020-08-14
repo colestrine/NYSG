@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeForm, ActionForm, AlertForm, PwmForm, FreqForm, UpdateIntervalForm, DeleteForm, StartDateForm, AddressForm
+from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeForm, ActionForm, AlertForm, PwmForm, FreqForm, UpdateIntervalForm, DeleteForm, StartDateForm, AddressForm, DaysForm
 from scripts.data_handler import data_handler
 from collections import OrderedDict
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def is_valid_date(y, m, d):
@@ -36,6 +36,7 @@ def index(request):
         delete_form = DeleteForm(request.POST)
         start_date_form = StartDateForm(request.POST)
         address_form = AddressForm(request.POST)
+        days_form = DaysForm(request.POST)
 
         # Check each form to see if it is valid. If valid, scrape data. If not, enter empty placeholder.
         if healthy_levels_form.is_valid():
@@ -144,6 +145,11 @@ def index(request):
             zip_code = ""
             submit_form = ''
 
+        if days_form.is_valid():
+            day = days_form.cleaned_data["day"]
+        else:
+            day = ""
+
         # If data was submitted, write that data to the interface file
         # If healthy levels data was submitted, update healthy levels interface file, and save plant profile as "custom" in profile interface file
         if (temperature):
@@ -206,6 +212,18 @@ def index(request):
             data_handler.set_address_profiles(
                 street_address, city_address, state_address, zip_code)
 
+        if day:
+            curr_date = datetime.now()
+            d1 = curr_date.day
+            m1 = curr_date.month
+            y1 = curr_date.year
+            delta = timedelta(days=day)
+            new_date = curr_date + delta
+            d2 = new_date.day
+            m2 = new_date.month
+            y2 = new_date.year
+            data_handler.set_germination_settings(d1, m1, y1, d2, m2, y2)
+
     mode = data_handler.get_mode()
     current_manual_actions = data_handler.get_manual_actions()
     current_alert_settings = data_handler.get_alert_settings()
@@ -248,7 +266,7 @@ def index(request):
     delete_form = DeleteForm(initial={'delete_field': 'no'})
     start_date_form = StartDateForm(initial={'start_day': start_day, 'start_month': start_month,
                                              'start_year': start_year, 'end_day': end_day, 'end_month': end_month, 'end_year': end_year})
-    address_form = AddressForm(initial = current_address)
+    address_form = AddressForm(initial=current_address)
 
     log_data = data_handler.get_log_data()
     log_data = OrderedDict(log_data)
