@@ -403,3 +403,18 @@ class data_handler:
         }
         address_file.write(json.dumps(address_json))
         address_file.close()
+        
+    def get_address_profiles():
+        plant_profiles_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/home_address.json', 'r')
+        plant_profiles_json = plant_profiles_file.read()
+        plant_profiles_file.close()
+        plant_data = json.loads(plant_profiles_json)
+        # plant_data = plant_json["data"]
+        new_data = {}
+        new_data["street_address"] = plant_data["street_address"]
+        new_data["city_address"] = plant_data["city"]
+        new_data["state_address"] = plant_data["state"]
+        new_data["zip_code"] = plant_data["zip"]
+        new_data["submit_form"] = "No"
+        return new_data

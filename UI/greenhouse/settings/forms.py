@@ -8,6 +8,7 @@ stateAbbreviations = [
     'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT',
     'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'
 ]
+stateAbbreviations = list(map(lambda i, j : (i, j), stateAbbreviations, stateAbbreviations))
 
 
 class PlantProfileForm(forms.Form):
@@ -137,11 +138,13 @@ class StartDateForm(forms.Form):
 
 
 class AddressForm(forms.Form):
-    street_address = forms.CharField(max_length=100, label="Street Address", widget=forms.TextInput(
-        attrs={'onchange': 'address_form.submit();'}))
-    city_address = forms.CharField(max_length=100, label="City", widget=forms.TextInput(
-        attrs={'onchange': 'address_form.submit();'}))
-    state_address = forms.ChoiceField(required=True, label="State", choices=stateAbbreviations, widget=forms.Select(
-        attrs={'onchange': 'address_form.submit();'}))
-    zip_code = forms.CharField(max_length=5, label="Zip Code", widget=forms.NumberInput(
+    street_address = forms.CharField(required=False, max_length=100, label="Street Address", widget=forms.TextInput(
+        ))
+    city_address = forms.CharField(required=False, max_length=100, label="City", widget=forms.TextInput(
+        ))
+    state_address = forms.ChoiceField(required=False, label="State", choices=stateAbbreviations, widget=forms.Select(
+        ))
+    zip_code = forms.CharField(required=False, max_length=5, label="Zip Code", widget=forms.NumberInput(
+        ))
+    submit_form = forms.ChoiceField(required=True, label="Submit", choices=[('Yes', 'Yes'), ('No','No')], widget=forms.Select(
         attrs={'onchange': 'address_form.submit();'}))

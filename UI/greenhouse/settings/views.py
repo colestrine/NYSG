@@ -136,11 +136,13 @@ def index(request):
             city_address = address_form.cleaned_data['city_address']
             state_address = address_form.cleaned_data['state_address']
             zip_code = address_form.cleaned_data['zip_code']
+            submit_form = address_form.cleaned_data['submit_form']
         else:
             street_address = ""
             city_address = ""
             state_address = ""
             zip_code = ""
+            submit_form = ''
 
         # If data was submitted, write that data to the interface file
         # If healthy levels data was submitted, update healthy levels interface file, and save plant profile as "custom" in profile interface file
@@ -200,7 +202,7 @@ def index(request):
                 data_handler.set_germination_settings(
                     start_day, start_month, start_year, end_day, end_month, end_year)
 
-        if street_address:
+        if submit_form:
             data_handler.set_address_profiles(
                 street_address, city_address, state_address, zip_code)
 
@@ -211,6 +213,7 @@ def index(request):
     current_freq_settings = data_handler.get_freq_settings()
     current_interval_settings = data_handler.get_interval_settings()
     current_start_date = data_handler.get_germination_settings()
+    current_address = data_handler.get_address_profiles()
     start_date = current_start_date["start_date"]
     split_start = start_date.split("-")
     # split_start = list(map(lambda s : int(s), split_start))
@@ -245,7 +248,7 @@ def index(request):
     delete_form = DeleteForm(initial={'delete_field': 'no'})
     start_date_form = StartDateForm(initial={'start_day': start_day, 'start_month': start_month,
                                              'start_year': start_year, 'end_day': end_day, 'end_month': end_month, 'end_year': end_year})
-    address_form = AddressForm()
+    address_form = AddressForm(initial = current_address)
 
     log_data = data_handler.get_log_data()
     log_data = OrderedDict(log_data)
