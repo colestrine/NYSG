@@ -4,6 +4,7 @@ from scripts.data_handler import data_handler
 from collections import OrderedDict
 from scripts.data_handler import data_handler
 import json
+from os.path import expanduser
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -19,8 +20,8 @@ import re
 LAT = round(45.516022, 4)  # portland, OR, lat lon
 LON = round(-122.681427, 4)
 
-ADDRESS_JSON_PATH = "Interface Files/home_address.json"
-DEFAULT_ADDRESS_JSON_PATH = "Interface Files/default_home_address.json"
+ADDRESS_JSON_PATH = expanduser("~")+"/NYSG/Interface Files/home_address.json"
+DEFAULT_ADDRESS_JSON_PATH = expanduser("~")+"/NYSG/Interface Files/default_home_address.json"
 
 def request_geographic_location(geo_path, default_geo_path):
 	"""
@@ -181,7 +182,7 @@ def index(request):
 	today_is_day = str(today_is_day).lower()
 
 	curr_time = datetime.now()
-	date_string = curr_time.strftime("%-m/%-d/%Y, %-I:%M %p")
+	date_string = curr_time.strftime("%m/%d/%Y, %I:%M %p")
 	numeric_weekday = datetime.today().weekday()
 	str_weekday = convert_weekday(numeric_weekday)
 	date_string = str_weekday + ", " + date_string
