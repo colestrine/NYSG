@@ -154,7 +154,7 @@ def index(request):
 			high, low = get_high_low(
 				highs_dict['detailedForecast'], lows_dict["detailedForecast"])
 		except:
-			high, low = "NA"  # random number!!!
+			high, low = "NA", "NA"  # random number!!!
 			lows_dict = {}
 
 		highs_dict["high"] = high
@@ -177,14 +177,25 @@ def index(request):
 	today_high = today_data["high"]
 	today_low = today_data["low"]
 	today_precipitation = today_data["precipitation"]
+	today_is_day = today_data["isDaytime"]
+	today_is_day = str(today_is_day).lower()
 
 	curr_time = datetime.now()
 	date_string = curr_time.strftime("%-m/%-d/%Y, %-I:%M %p")
 	numeric_weekday = datetime.today().weekday()
 	str_weekday = convert_weekday(numeric_weekday)
 	date_string = str_weekday + ", " + date_string
+	
+	# get city and state
+	fp = open(ADDRESS_JSON_PATH, "r")
+	geo_json = json.load(fp)
+	fp.close()
 
-	return render(request, 'Weather/weather.html', {'today_low': today_low, 'today_high': today_high, 'remaining_days_data': remaining_days_data, 'date_string': date_string, 'today_precipitation': today_precipitation, 'today_detailed': today_detailed, 'today_short': today_short, 'today_sun': today_sun, 'today_winddirection': today_winddirection, 'today_windspeed': today_windspeed, 'today_temp': today_temp, 'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc})
+	city = geo_json["city"]
+	state = geo_json["state"]
+	
+
+	return render(request, 'Weather/weather.html', {'today_is_day':today_is_day, 'city':city, 'state':state,'today_low': today_low, 'today_high': today_high, 'remaining_days_data': remaining_days_data, 'date_string': date_string, 'today_precipitation': today_precipitation, 'today_detailed': today_detailed, 'today_short': today_short, 'today_sun': today_sun, 'today_winddirection': today_winddirection, 'today_windspeed': today_windspeed, 'today_temp': today_temp, 'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc})
 
 
 def convert_weekday(numeric_weekday):
@@ -213,7 +224,7 @@ def get_precipitation(detailed_forecast_str):
 	"""
 	get_precipitation(detailed_forecast_str) gets any precipiation chance listed if any
 	"""
-	split_list = detailed_forecast_str.split()
+	split_list = detailed_forecast_str.split(".")
 	for sentence in split_list:
 		if "precipitation" in sentence:
 			numeral = re.search(PRECIPITATION_RE, sentence)
@@ -230,18 +241,19 @@ def get_high_low(detailed_forecast_str1, detailed_forecast_str2):
 	"""
 	highs_list1 = detailed_forecast_str1.split(".")
 	lows_list2 = detailed_forecast_str2.split(".")
-
+	
 	for sentence in highs_list1:
 		if "high" in sentence:
 			numeral = re.search(HIGH_LOW_RE, sentence)
 			if numeral == None:
 				high = "NA"
+				
 			else:
 				high = str(numeral.group(0))
 				break
-	else:
-		high = "NA"
-
+		else:
+			high = "NA"
+	
 	for sentence in lows_list2:
 		if "low" in sentence:
 			numeral = re.search(HIGH_LOW_RE, sentence)
@@ -250,8 +262,33 @@ def get_high_low(detailed_forecast_str1, detailed_forecast_str2):
 			else:
 				low = str(numeral.group(0))
 				break
-	else:
-		low = "NA"
+		else:
+			low = "NA"
+
+	if high == "NA" or low == "NA":
+		for sentence in lows_list2:
+			if "high" in sentence:
+				numeral = re.search(HIGH_LOW_RE, sentence)
+				if numeral == None:
+					high = "NA"
+				else:
+					high = str(numeral.group(0))
+					break
+			else:
+				high = "NA"
+
+		for sentence in highs_list1:
+			if "low" in sentence:
+				numeral = re.search(HIGH_LOW_RE, sentence)
+				if numeral == None:
+					low = "NA"
+					
+				else:
+					low = str(numeral.group(0))
+					break
+			else:
+				low = "NA"
+
 
 	return (high, low)
 

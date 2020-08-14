@@ -215,12 +215,20 @@ def index(request):
         if day:
             curr_date = datetime.now()
             d1 = curr_date.day
+            d1 = str(d1)
+            d1 = "0"+d1 if len(d1) < 2 else d1
             m1 = curr_date.month
+            m1 = str(m1)
+            m1 = "0"+m1 if len(m1) < 2 else m1
             y1 = curr_date.year
-            delta = timedelta(days=day)
+            delta = timedelta(days=int(day))
             new_date = curr_date + delta
             d2 = new_date.day
+            d2 = str(d2)
+            d2 = "0"+d2 if len(d2) < 2 else d2
             m2 = new_date.month
+            m2 = str(m2)
+            m2 = "0"+m2 if len(m2) < 2 else m2
             y2 = new_date.year
             data_handler.set_germination_settings(d1, m1, y1, d2, m2, y2)
 
@@ -232,6 +240,7 @@ def index(request):
     current_interval_settings = data_handler.get_interval_settings()
     current_start_date = data_handler.get_germination_settings()
     current_address = data_handler.get_address_profiles()
+    
     start_date = current_start_date["start_date"]
     split_start = start_date.split("-")
     # split_start = list(map(lambda s : int(s), split_start))
@@ -244,7 +253,7 @@ def index(request):
     end_year = split_end[0]
     end_month = split_end[1]
     end_day = split_end[2]
-
+    
     # extract duty cycles for view render
     fan_dc = current_dc_settings["fan_dc"]
     light_dc = current_dc_settings["light_dc"]
@@ -267,6 +276,7 @@ def index(request):
     start_date_form = StartDateForm(initial={'start_day': start_day, 'start_month': start_month,
                                              'start_year': start_year, 'end_day': end_day, 'end_month': end_month, 'end_year': end_year})
     address_form = AddressForm(initial=current_address)
+    days_form = DaysForm(initial={"day" :0})
 
     log_data = data_handler.get_log_data()
     log_data = OrderedDict(log_data)
@@ -285,4 +295,4 @@ def index(request):
     last_sunlight = data_handler.bucket_to_nominal(
         "sunlight", last_reading_values['sunlight'])
 
-    return render(request, 'Settings/settings.html', {'action_form': action_form, 'mode': mode, 'mode_form': mode_form, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile, 'alert_form': alert_form, 'pwm_form': pwm_form, 'freq_form': freq_form, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc, 'update_interval': update_interval, 'delete_form': delete_form, 'start_date_form': start_date_form, 'address_form': address_form})
+    return render(request, 'Settings/settings.html', {'days_form' :days_form,'action_form': action_form, 'mode': mode, 'mode_form': mode_form, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile, 'alert_form': alert_form, 'pwm_form': pwm_form, 'freq_form': freq_form, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc, 'update_interval': update_interval, 'delete_form': delete_form, 'start_date_form': start_date_form, 'address_form': address_form})

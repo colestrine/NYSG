@@ -9,11 +9,16 @@ Weather
 <meta http-equiv="Refresh" content="60"> 
 <!-- refresh page every 60 seconds for weather updates -->
 
-<h1 class="dashboard-header">Weather</h1>
+<!-- <h1 class="dashboard-header">Weather</h1> -->
 <div class="weather-page" id="weather-page">
+    <div class = "weather-header" id="weather-header">
+        <h1 class="weather-header-text">
+            {{city}}, {{state}} - {{date_string}} - {{today_temp}}&#8457 
+        </h1>
+    </div>
     <div class='weather-heading' id='weather-heading'>
         <div class="city-heading" id="city-heading">
-            <p class="city-text" id="city-text">Portland, Oregon</p>
+            <p class="city-text" id="city-text">{{city}}, {{state}}</p>
         </div>
         <div class="temperature-heading" id="temperature-heading">
             <p class="temp-text" id="temp-text">{{today_temp}}&#8457</p>
@@ -267,6 +272,26 @@ Weather
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script>
+    var is_day = {{today_is_day}};
+    if (!is_day){
+        document.getElementById("weather-page").style.backgroundColor = "SteelBlue";
+    } else {
+        document.getElementById("weather-page").style.backgroundColor = "rgb(43, 146, 180)";
+    }
+    
+    window.onscroll = function() {myFunction()};
+
+    var header = document.getElementById("weather-header");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    }
+
     var options = []
     var actions_chart_config = {
         type: 'pie',

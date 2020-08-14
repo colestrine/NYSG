@@ -139,7 +139,8 @@ class StartDateForm(forms.Form):
 
 
 class DaysForm(forms.Form):
-    day_levels = [(i, i) for i in range(60)]
+    day_levels = [(('0' + str(i), '0' + str(i)) if i <
+                   10 else (str(i), str(i))) for i in range(0, 61)]
     day = forms.ChoiceField(required=True, choices=day_levels, label="Days Until Germination", widget=forms.Select(
         attrs={'onchange': 'days_form.submit();'}))
 
