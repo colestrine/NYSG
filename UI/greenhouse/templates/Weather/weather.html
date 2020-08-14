@@ -13,7 +13,7 @@ Weather
 <div class="weather-page" id="weather-page">
     <div class = "weather-header" id="weather-header">
         <h1 class="weather-header-text">
-            {{city}}, {{state}} - {{date_string}} - {{today_temp}}&#8457 
+            {{city}}, {{state}} - {{date_string}} - {{today_temp}}<span>&#176;</span>F 
         </h1>
     </div>
     <div class='weather-heading' id='weather-heading'>
@@ -21,16 +21,21 @@ Weather
             <p class="city-text" id="city-text">{{city}}, {{state}}</p>
         </div>
         <div class="temperature-heading" id="temperature-heading">
-            <p class="temp-text" id="temp-text">{{today_temp}}&#8457</p>
+            <p class="temp-text" id="temp-text">{{today_temp}}<span>&#176;</span>F</p>
         </div>
         <div class="weather-summary" id="weather-summary">
             <p class="weather-summary-text" id="weather-summary-text">
                 {{today_short}}
             </p>
         </div>
-        <div class="date-summary" id="date-summary">
+       <!--  <div class="date-summary" id="date-summary">
             <p class="date-summary-text" id="date-summary-text">
                 {{date_string}}
+            </p>
+        </div> -->
+        <div class="national-weather-service-summary" id="national-weather-service-summary">
+            <p class="national-weather-service-summary-text" id="national-weather-service-summary-text">
+                    {{today_detailed}}
             </p>
         </div>
     </div>
@@ -57,7 +62,7 @@ Weather
             </tr>
             <tr>
                 <td>
-                    <h3 class="weather-values" id="temperature-value">{{today_temp}}&#8457</h3>
+                    <h3 class="weather-values" id="temperature-value">{{today_temp}}<span>&#176;</span>F</h3>
                 </td>
                 <td>
                     <h3 class="weather-values" id="wind-value">{{today_windspeed}} / {{today_winddirection}}</h3>
@@ -65,20 +70,20 @@ Weather
                 <td>
                     <div class="weather-values-symbol" id="sun-light-value">
                         <img src="{{today_sun}}"
-                            style="width:42px;height:42px;" alt="Weather Image" />
+                            style="width:42px;height:42px;border: 2px solid slategray;border-radius: 7px;filter: drop-shadow(2px 2px 3px slategray);" alt="Weather Image" />
                     </div>
                 </td>
                 <td>
                     <h3 class="weather-values" id="precipitation-value">{{today_precipitation}}</h3>
                 </td>
                 <td>
-                    <h3 class="weather-values" id="high-low-value">{{today_high}}&#8457 / {{today_low}}&#8457</h3>
+                    <h3 class="weather-values" id="high-low-value">{{today_high}}<span>&#176;</span>F / {{today_low}}<span>&#176;</span>F</h3>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div class='national-weather-service' id='national-weather-service'>
+    <!-- <div class='national-weather-service' id='national-weather-service'>
         <div class="national-weather-service-summary" id="national-weather-service-summary">
             <h2 class = "national-weather-service-summary-heading" id = "national-weather-service-summary-heading"> 
                 Detailed Forecast
@@ -87,7 +92,7 @@ Weather
                 {{today_detailed}}
             </p>
         </div>
-    </div>
+    </div> -->
 
 
     <div class="upcoming-weather-values" id="upcoming-weather-values">
@@ -101,7 +106,7 @@ Weather
                 <div class='upcoming-weather-heading' id="upcoming-weather-heading">{{day_dict.name}}</h2>
                 </td>
                 <td>
-                    <h3 class="weather-values" id="temperature-value">{{day_dict.temperature}}&#8457</h3>
+                    <h3 class="weather-values" id="temperature-value">{{day_dict.temperature}}<span>&#176;</span>F</h3>
                 </td>
                 <td>
                     <h3 class="weather-values" id="wind-value">{{day_dict.windSpeed}} / {{day_dict.windDirection}}</h3>
@@ -109,14 +114,14 @@ Weather
                 <td>
                     <div class="weather-values-symbol" id="sun-light-value">
                         <img src="{{day_dict.icon}}"
-                            style="width:42px;height:42px;" alt="Sunny Image" />
+                            style="width:42px;height:42px;border: 2px solid slategray;border-radius: 7px;filter: drop-shadow(2px 2px 3px slategray);" alt="Sunny Image" />
                     </div>
                 </td>
                 <td>
                     <h3 class="weather-values" id="precipitation-value">{{day_dict.precipitation}}</h3>
                 </td>
                 <td>
-                    <h3 class="weather-values" id="high-low-value">{{day_dict.high}}&#8457 / {{day_dict.low}}&#8457</h3>
+                    <h3 class="weather-values" id="high-low-value">{{day_dict.high}}<span>&#176;</span>F / {{day_dict.low}}<span>&#176;</span>F</h3>
                 </td>
             </tr>
             {% endfor %}
@@ -274,9 +279,15 @@ Weather
 <script>
     var is_day = {{today_is_day}};
     if (!is_day){
-        document.getElementById("weather-page").style.backgroundColor = "SteelBlue";
+        document.getElementById("weather-heading").style.backgroundColor = "darkgray";
+        document.getElementById("current-weather-values").style.backgroundColor = "darkgray";
+        // document.getElementById("national-weather-service").style.backgroundColor = "darkgray";
+        document.getElementById("upcoming-weather-values").style.backgroundColor = "darkgray";
     } else {
-        document.getElementById("weather-page").style.backgroundColor = "rgb(43, 146, 180)";
+        document.getElementById("weather-heading").style.backgroundColor = "lightgray";
+        document.getElementById("current-weather-values").style.backgroundColor = "lightgray";
+        // document.getElementById("national-weather-service").style.backgroundColor = "lightgray";
+        document.getElementById("upcoming-weather-values").style.backgroundColor = "lightgray";
     }
     
     window.onscroll = function() {myFunction()};

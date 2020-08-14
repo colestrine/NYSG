@@ -521,17 +521,19 @@ td {
 }
 
 .weather-page {
-    background-color: rgb(43, 146, 180);
+/*    background-color: rgb(43, 146, 180);*/
     height: 100%;
 }
 
 .weather-header {
-	height: 33.33%;
+	height: 47px;
+    background-color: white;
+    z-index: 100;
 }
 
 .weather-header-text {
-    background: #555;
-    color: #f1f1f1;
+/*    background: #555;*/
+/*    color: #f1f1f1;*/
     font-weight: 200;
     font-size: 100%;
     display: flex;
@@ -544,6 +546,7 @@ td {
   position: fixed;
   top: 0;
   width: 100%;
+  padding: 1%;
 }
 
 .sticky + .content {
@@ -552,7 +555,10 @@ td {
 
 .weather-heading {
     height: 33.33%;
-    border-bottom: 1px solid white;
+    border-radius: 10px;
+    margin: 10px 50px;
+    padding: 10px;
+    margin: 0px 50px 10px 50px;
 }
 
 .city-heading {
@@ -560,13 +566,13 @@ td {
 }
 
 .city-text {
-    color: white;
+/*    color: white;*/
     font-weight: 100;
     font-size: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3%;
+/*    padding: 3%;*/
 }
 
 .temperature-heading {
@@ -577,7 +583,7 @@ td {
 }
 
 .temp-text {
-    color: white;
+/*    color: white;*/
     font-weight: 100;
     font-size: 600%;
     margin: 3%;
@@ -588,13 +594,13 @@ td {
 }
 
 .weather-summary-text {
-    color: white;
+/*    color: white;*/
     font-weight: 100;
     font-size: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding:3%;
+/*    padding:3%;*/
 }
 
 .date-summary {
@@ -602,7 +608,7 @@ td {
 }
 
 .date-summary-text {
-    color: white;
+/*    color: white;*/
     font-weight: 75;
     font-size: 75%;
     display: flex;
@@ -611,7 +617,7 @@ td {
 
 
 .current-weather-heading {
-    color: white;
+/*    color: white;*/
     font-weight: 300;
     font-size: 200%;
     display: flex;
@@ -620,8 +626,10 @@ td {
 }
 
 .current-weather-values {
-    border-bottom: 1px solid white;
     height: 20%;
+    border-radius: 10px;
+    margin: 10px 50px;
+    padding: 10px;
 }
 
 .weather-values-symbol {
@@ -631,7 +639,7 @@ td {
 }
 
 .weather-values {
-    color: white;
+/*    color: white;*/
     font-weight: 100;
     font-size: 100%;
     display: flex;
@@ -640,8 +648,10 @@ td {
 }
 
 .national-weather-service {
-    border-bottom: 1px solid white;
     height: 20%;
+    border-radius: 10px;
+    margin: 10px 50px;
+    padding: 10px;
 }
 
 .national-weather-service-summary{
@@ -649,7 +659,7 @@ td {
 }
 
 .national-weather-service-summary-heading {
-    color: white;
+/*    color: white;*/
     font-weight: 100;
     font-size: 100%;
     display: flex;
@@ -658,18 +668,21 @@ td {
 }
 
 .national-weather-service-summary-text {
-    color: white;
+/*    color: white;*/
     font-weight: 75;
     font-size: 75%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2%;
+    padding: 0 10%;
+    text-align: center;
 }
 
 .upcoming-weather-values {
-    border-bottom: 1px solid white;
     height: 10%;
+    border-radius: 10px;
+    margin: 10px 50px;
+    padding: 10px;
 }
 
 .upcoming-heading {
@@ -677,17 +690,16 @@ td {
 }
 
 .upcoming-heading-summary {
-    color: white;
-    font-weight: 100;
-    font-size: 100%;
+/*    color: white;*/
+    font-weight: 300;
+    font-size: 200%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1%;
 }
 
 .upcoming-weather-heading {
-    color: white;
+/*    color: white;*/
     font-weight: 100;
     font-size: 100%;
     display: flex;
@@ -695,3 +707,10 @@ td {
     justify-content: center;
 }
 
+.weather-card-background-day {
+    background-color: lightgray;
+}
+
+.weather-card-background-night {
+    background-color: darkgray;
+}
