@@ -30,10 +30,6 @@
             class="header-button-inactive" {% endif %}>
             <a class="header-link" href="{{ germination_url }}">Germination</a>
         </button>
-        <button {% if request.path == settings_url %} class="header-button-active" {% else %}
-            class="header-button-inactive" {% endif %}>
-            <a class="header-link" href="{{ settings_url }}">Settings</a>
-        </button>
         <button {% if request.path == information_url %} class="header-button-active" {% else %}
             class="header-button-inactive" {% endif %}>
             <a class="header-link" href="{{ information_url }}">Information</a>
@@ -42,9 +38,14 @@
             class="header-button-inactive" {% endif %}>
             <a class="header-link" href="{{ weather_url }}">Weather</a>
         </button>
-        <button class="header-button-inactive refresh-header" id="refresh-data-button">
-            <a class="header-link" href="{{ request.path }}">Refresh Data</a>
+        <button {% if request.path == settings_url %} class="header-button-active" {% else %}
+            class="header-button-inactive" {% endif %}>
+            <a class="header-link" href="{{ settings_url }}">Settings</a>
         </button>
+
+      <!--   <button class="header-button-inactive refresh-header" id="refresh-data-button">
+            <a class="header-link" href="{{ request.path }}">Refresh Data</a>
+        </button> -->
     </div>
     <div id="content" name="content" class="content">
         {% block content %}
@@ -53,12 +54,3 @@
 </body>
 
 </html>
-
-<script>
-    setTimeout(function () {
-        document.getElementById("refresh-data-button").style.display = "block";
-        setTimeout(function () {
-            document.getElementById("refresh-data-button").style.opacity = 1;
-        }, 200);
-    }, 60000);
-</script>
