@@ -4,7 +4,6 @@ from scripts.data_handler import data_handler
 from collections import OrderedDict
 from scripts.data_handler import data_handler
 import json
-from os.path import expanduser
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -20,8 +19,8 @@ import re
 LAT = round(45.516022, 4)  # portland, OR, lat lon
 LON = round(-122.681427, 4)
 
-ADDRESS_JSON_PATH = expanduser("~")+"/NYSG/Interface Files/home_address.json"
-DEFAULT_ADDRESS_JSON_PATH = expanduser("~")+"/NYSG/Interface Files/default_home_address.json"
+ADDRESS_JSON_PATH = "Interface Files/home_address.json"
+DEFAULT_ADDRESS_JSON_PATH = "Interface Files/default_home_address.json"
 
 def request_geographic_location(geo_path, default_geo_path):
 	"""
@@ -305,6 +304,7 @@ def request_weather_data(weather_site=NWS_PREFIX):
 	nws_json = response.json()
 	nws_forecast_url = nws_json["properties"]["forecast"]
 	forecast_response = requests.get(nws_forecast_url)
+	print(f'forecast_response: {forecast_response}')
 	forecast_json = forecast_response.json()
 	return forecast_json
 
