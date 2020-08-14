@@ -6,18 +6,184 @@ Analysis
 
 {% block content %}
 
-<meta http-equiv="Refresh" content="60"> 
+<meta http-equiv="Refresh" content="60">
+<h1 class="dashboard-header">Descriptive & Summary Statistics</h1>
+<div class="summary-statistics">
+	<table class="demotable" id="demotable">
+		<tr id="demotable">
+			<td colspan="9">Average Statistics</td>
+		</tr>
+		<tr id="demotable">
+			<td>
+				Update Period
+			</td>
+			<td>
+				Average Temperature
+			</td>
+			<td>
+				Average Humidity
+			</td>
+			<td>
+				Average Soil Moisture
+			</td>
+			<td>
+				Average Sunlight
+			</td>
+			<td>
+				Average Water Action
+			</td>
+			<td>
+				Average Fan Action
+			</td>
+			<td>
+				Average Heat Action
+			</td>
+			<td>
+				Average Light Action
+			</td>
+		</tr>
+		<tr id="demotable">
+			<td>
+				Last 10 Updates
+			</td>
+			{% for key, value in top_10.items %}
+			<td>
+				{{value}}
+			</td>
+			{% endfor %}
+		</tr>
+		<tr id="demotable">
+			<td>
+				Last 20 Updates
+			</td>
+			{% for key, value in top_20.items %}
+			<td>
+				{{value}}
+			</td>
+			{% endfor %}
+		</tr>
+		<tr id="demotable">
+			<td>
+				Last 30 Updates
+			</td>
+			{% for key, value in top_30.items %}
+			<td>
+				{{value}}
+			</td>
+			{% endfor %}
+		</tr>
+		<tr id="demotable">
+			<td>
+				Updates for All Time
+			</td>
+			{% for key, value in top_all.items %}
+			<td>
+				{{value}}
+			</td>
+			{% endfor %}
+		</tr>
+	</table>
+</div>
+
+<div class="summary-statistics">
+	<table id="demotable">
+		<tr id="demotable">
+			<td colspan="9">Descriptive Statistics</td>
+		</tr>
+		<tr id="demotable">
+			<td>
+
+			</td>
+			<td>
+				Max / Min Temperature (F)
+			</td>
+			<td>
+				Max / Min Humidity (%)
+			</td>
+			<td>
+				Max / Min Soil Moisture (%)
+			</td>
+			<td>
+				Max / Min Sunlight (lm / m<sup>2</sup>)
+			</td>
+			<td>
+				Max / Min Water Action
+			</td>
+			<td>
+				Max / Min Fan Action
+			</td>
+			<td>
+				Max / Min Heat Action
+			</td>
+			<td>
+				Max / Min Light Action
+			</td>
+		</tr>
+		<tr id="demotable">
+			<td>
+				Max / Min
+			</td>
+			{% for v1, v2 in max_min %}
+			<td>
+				{{v1}} / {{v2}}
+			</td>
+			{% endfor %}
+		</tr>
+		<tr id="demotable">
+			<td>
+				Range
+			</td>
+			{% for range in items_range %}
+			<td>
+				{{range}}
+			</td>
+			{% endfor %}
+		</tr>
+		<tr id="demotable">
+			<td>
+				25% Quantile
+			</td>
+			{% for q in q25 %}
+			<td>
+				{{q}}
+			</td>
+			{% endfor %}
+		</tr>
+		<tr id="demotable">
+			<td>
+				50% Quantile
+			</td>
+			{% for q in q50 %}
+			<td>
+				{{q}}
+			</td>
+			{% endfor %}
+		</tr>
+		<tr id="demotable">
+			<td>
+				75% Quantile
+			</td>
+			{% for q in q75 %}
+			<td>
+				{{q}}
+			</td>
+			{% endfor %}
+		</tr>
+	</table>
+</div>
 
 <h1 class="dashboard-header">Actions and Effects</h1>
 <div class="chart-control-container">
 	<div>
-		<button onclick="scroll_chart_left();" type="button" class="chart-control"><</button>
-		<button onclick="scroll_chart_right();" type="button" class="chart-control">></button>
-		<button onclick="scroll_recent();" type="button" class="chart-control">Go To Latest Update</button>
-		<button onclick="zoom_out();" type="button" class="chart-control">-</button>
-		<button onclick="zoom_in();" type="button" class="chart-control">+</button>
+		<button onclick="scroll_chart_left();" type="button" class="chart-control">
+			< </button>
+				<button onclick="scroll_chart_right();" type="button" class="chart-control">></button>
+				<button onclick="scroll_recent();" type="button" class="chart-control">Go To Latest Update</button>
+				<button onclick="zoom_out();" type="button" class="chart-control">-</button>
+				<button onclick="zoom_in();" type="button" class="chart-control">+</button>
 	</div>
 </div>
+
 
 <div id="container" class="historical-status-container-wide">
 	<canvas id="historical-levels"></canvas>

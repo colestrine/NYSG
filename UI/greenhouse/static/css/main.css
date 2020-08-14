@@ -771,3 +771,45 @@ td {
     align-items: center;
     justify-content: center;
 }
+
+.summary-statistics {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
+    margin: 1%;
+}
+
+table#demotable {
+    table-layout: fixed ;
+    width: 90% ;
+    border-collapse: collapse ;
+    border: 1px black solid ;
+}
+table#demotable td {
+    width: 50% ;
+    border: 1px black solid ;
+    padding: 10px ;
+}
+table#demotable caption {
+    font-style: italic ;
+}
+
+#demotable:nth-child(even){
+    font-weight: bold
+}
+
+tr#demotable:nth-child(even) {background: #CCC}
+tr#demotable:nth-child(odd) {background: #FFF}
+tr#demotable:nth-child(1) {background: lightskyblue;}
+tr#demotable:nth-child(2) {background: lightskyblue;}
+
+/* tr#demotable:nth-child(7) {background: lightskyblue;}
+tr#demotable:nth-child(8) {background: lightskyblue;} */
+#demotable td:nth-child(1) { 
+    /* display: flex; */
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
