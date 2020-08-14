@@ -18,28 +18,28 @@ Germination
     {% for plant_name, inner_dict in plant_data.items %}
         <script> plant_dict["{{plant_name}}"] = false; </script>
         <script> plant_summary_dict["{{plant_name}}"] = false; </script>
-        <button class = "{{plant_name}}-button information-button" id = "{{plant_name}}-button-open" onclick = 'toggleCard("{{plant_name}}")' >View {{plant_name}}</button>
+        <button class = "{{plant_name}}-button information-button" id = "{{plant_name}}-button-open" onclick = 'toggleCard("{{plant_name}}")' >{{plant_name}}</button>
         <div class="card" id = "card-{{plant_name}}">
-            <button class = "{{plant_name}}-button-close information-button" id = "{{plant_name}}-button-close" onclick = 'toggleCard("{{plant_name}}")' >Close {{plant_name}}</button>
+            <button class = "{{plant_name}}-button-close information-close-button" id = "{{plant_name}}-button-close" onclick = 'toggleCard("{{plant_name}}")' >x</button>
             <img src = {{inner_dict.Image_Url}}
                 alt="{{plant_name}}" style="width:25%">
             <div class="container" id = "{{plant_name}}" >
                 <h2><b>{{plant_name}}</b></h2>
                 {% for characteristic, paragraph in inner_dict.items %}
                     {% if characteristic == 'Full Summary' %}
-                        <button class = "{{plant_name}}-summary-open information-button" id = "{{plant_name}}-summary-open" onclick = 'toggleSummary("{{plant_name}}")' >View {{plant_name}} Summary</button>
+                        <button class = "{{plant_name}}-summary-open information-button" id = "{{plant_name}}-summary-open" onclick = 'toggleSummary("{{plant_name}}")' >View Detailed Summary</button>
                         <div class="summary" id = "{{plant_name}}-summary" >
-                            <button class = "{{plant_name}}-button-close information-button" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >Close {{plant_name}} Summary</button>
+                            <button class = "{{plant_name}}-button-close information-close-button" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >x</button>
                             <h3><b>{{characteristic}}</b></h3>
                             {% for para in paragraph %}
                                 {% if ":" in para %}
-                                    <button class = "{{plant_name}}-button-close information-button" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >Close {{plant_name}} Summary</button>
+                                    <!-- <button class = "{{plant_name}}-button-close information-button" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >Close {{plant_name}} Summary</button> -->
                                     <h3>{{para}}</h3>
                                 {% else %}
                                     <li>{{para}}</li> 
                                 {% endif %}
                             {% endfor %}
-                            <button class = "{{plant_name}}-button-close information-button" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >Close {{plant_name}} Summary</button>
+                            <!-- <button class = "{{plant_name}}-button-close information-button" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >Close {{plant_name}} Summary</button> -->
                         </div>
                     {% elif characteristic != 'Image_Url' %}
                         <h3><b>{{characteristic}}</b></h3>
@@ -47,7 +47,7 @@ Germination
                     {% endif %}
                 {% endfor %}
             </div>
-            <button class = "{{plant_name}}-button-close information-button" id = "{{plant_name}}-button-close" onclick = 'toggleCard("{{plant_name}}")' >Close {{plant_name}}</button>
+            <!-- <button class = "{{plant_name}}-button-close information-button" id = "{{plant_name}}-button-close" onclick = 'toggleCard("{{plant_name}}")' >Close {{plant_name}}</button> -->
         </div>
         <br>
     {% endfor %}
