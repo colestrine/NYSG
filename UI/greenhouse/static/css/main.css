@@ -822,3 +822,7 @@ tr#demotable:nth-child(8) {background: lightskyblue;} */
     border: 1%;
     padding: 1%;
 }
+
+#demotable {
+    overflow-wrap: break-word;
+}

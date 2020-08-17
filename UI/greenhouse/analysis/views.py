@@ -81,7 +81,7 @@ def index(request):
     min_all = [min(original40[key]) for key in original40]
 
     max_min = list(zip(max_all, min_all))
-    items_range = list(map(lambda pair: pair[0] - pair[1], max_min))
+    items_range = list(map(lambda pair: float(round(pair[0] - pair[1], 2)), max_min))
 
     q25 = quantile_calc(0.25, original40)
     q50 = quantile_calc(0.5, original40)
