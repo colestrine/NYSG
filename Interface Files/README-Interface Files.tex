@@ -1,0 +1,335 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{nysg}{%
+\section{NYSG}\label{nysg}}
+
+\hypertarget{interface-files}{%
+\subsection{Interface Files}\label{interface-files}}
+
+Interface files serve as the exchange and storage medium for information
+between software subsystems. In this project, we chose to make use of
+the JSON format (as opposed to .txt or databases) for simplicity and
+ease of use for the end-users (high school students). THese files are
+also meant to provide configurability to the user. Changes to the
+information in these files will propagate throughout the entire software
+system.
+
+The files are read from in both the controller\_main.py and also in the
+settings page, analysis page and dashboard pages of the UI. The settings
+page also writes back data to the interface files, so that data can be
+updated. This shows how the data can persist and be updated and changed.
+Essentally, the interface files are a memory medium, rather like RAM or
+a database, excepy we structure it by JSON for simplicity in this small
+scale project.
+
+\hypertarget{healthy-levels-healthy_levels.json}{%
+\subsubsection{Healthy Levels
+(healthy\_levels.json)}\label{healthy-levels-healthy_levels.json}}
+
+This file stores healthy levels as specified by the user in the Settings
+page of the UI. Each level is represented by a bucket number
+corresponding to bucket in value\_buckets.json. These levels serve as
+goals onto which the machine learning algorithm will seek to optimize.
+
+\hypertarget{healthy-levels-by-profile-healthy_levels_by_profile.json}{%
+\subsubsection{Healthy Levels By Profile
+(healthy\_levels\_by\_profile.json)}\label{healthy-levels-by-profile-healthy_levels_by_profile.json}}
+
+This file maps profiles to sets of healthy levels. These profiles will
+appear in the drop down menu on the Settings page of the UI as
+pre-configured plant profiles.
+
+\hypertarget{healthy-levels-by-profile-sample-healthy_levels_by_profile_sample.json}{%
+\subsubsection{Healthy Levels By Profile SAMPLE
+(healthy\_levels\_by\_profile\_SAMPLE.json)}\label{healthy-levels-by-profile-sample-healthy_levels_by_profile_sample.json}}
+
+This file maps profiles to sets of healthy levels. These profiles will
+appear in the drop down menu on the Settings page of the UI as
+pre-configured plant profiles. \textbf{THIS IS A SAMPLE FILE} that
+allows the user to have a basic idea of what they will see in the user
+interface and is not meant to be used except as a sample or default
+method.
+
+\hypertarget{log-log.json}{%
+\subsubsection{Log (log.json)}\label{log-log.json}}
+
+This file holds information pertaining to the updates of the system. It
+contains one record for each update, labeled with the datetime of that
+update. Inside of these records, information on the sensor readings is
+stored, as well as the actions that were taken during that update. All
+values are presented on a scale from 0-5.9. There are different keys:
+sunlight, temperature, humidity, soil\_moisture, water\_action,
+heat\_action, fan\_action and light\_action.
+
+\hypertarget{backup-log-log_backup1.json}{%
+\subsubsection{Backup Log
+(log\_backup1.json)}\label{backup-log-log_backup1.json}}
+
+This file holds information pertaining to the updates of the system. It
+contains one record for each update, labeled with the datetime of that
+update. Inside of these records, information on the sensor readings is
+stored, as well as the actions that were taken during that update. All
+values are presented on a scale from 0-5.9. There are different keys:
+sunlight, temperature, humidity, soil\_moisture, water\_action,
+heat\_action, fan\_action and light\_action.
+
+\textbf{THis file is a backup file} which means when the user clears all
+data on the advanced settings page, all data is deleted in log.json and
+exported to log\_backup1.json. In the case you clear data agin from log,
+log\_backup1 is permanently cleared forever!
+
+\hypertarget{sample-log-log_sample.json}{%
+\subsubsection{Sample Log
+(log\_SAMPLE.json)}\label{sample-log-log_sample.json}}
+
+This file holds information pertaining to the updates of the system. It
+contains one record for each update, labeled with the datetime of that
+update. Inside of these records, information on the sensor readings is
+stored, as well as the actions that were taken during that update. All
+values are presented on a scale from 0-5.9. There are different keys:
+sunlight, temperature, humidity, soil\_moisture, water\_action,
+heat\_action, fan\_action and light\_action.
+
+\textbf{This file is a sample file}. It is mean t as a sample for the UI
+for the user to visualize how data would show up and be seen. It is not
+meant for production use.
+
+\hypertarget{manual-actions-manual_actions.json}{%
+\subsubsection{Manual Actions
+(manual\_actions.json)}\label{manual-actions-manual_actions.json}}
+
+This file contains the last-submitted set of manual actions. When the
+system is in ``Manual'' mode (as set in the Settings page of the UI),
+the system will take these actions on each update. These actions are set
+in the user interface file directly and are reflected in the JSON files.
+
+Actions can be low, high and off, and it is for the water, fan, heater
+and light peripherals.
+
+\hypertarget{mode-mode.json}{%
+\subsubsection{Mode (mode.json)}\label{mode-mode.json}}
+
+This file contains the mode that the system is currently in. The mode is
+either manual or machine learning. it is read in in the controller\_main
+to decide what happens in the update cycle; either the UI manual actions
+are taken or the ML actions for that cycle are called and taken. The
+mode is itself written tok by the user in the advanced settings tab of
+the UI.
+
+\hypertarget{plant-profile-plant_profile.json}{%
+\subsubsection{Plant Profile
+(plant\_profile.json)}\label{plant-profile-plant_profile.json}}
+
+This file contains the current plant profile (as set in the Settings
+page of the UI). The profile maps to one of the profiles in
+healthy\_levels\_by\_profile.json. The profile could be custom, or
+someother preloaded one like ``tomatoes'' that the user could not
+change.
+
+\hypertarget{value-buckets-value_buckets.json}{%
+\subsubsection{Value Buckets
+(value\_buckets.json)}\label{value-buckets-value_buckets.json}}
+
+This file maps buckets to nominal values. Buckets are used to interpret
+data throughout the system. For each environment variable (temperature,
+humidity, soil moisture, sunlight) there are 5 buckets. Each bucket is
+associated with a label, and low value, and a high value. The label is
+used in the UI to associate the bucket with relatively familiar concepts
+(cold/warn/hot), the low value is the floor of nominal values that would
+be associated with that bucket, and the high value is the ceiling of
+nominal values that would be associated with that bucket.
+
+\hypertarget{ml-training-actions.json}{%
+\subsubsection{ML Training
+(actions.json)}\label{ml-training-actions.json}}
+
+This file contains all training operations that the ML can tsake over 64
+time steps to check what the ML does and to train it properly. For each
+time step, there is a decision listed for the water, fan and heater, in
+terms of high, and low and off status. There are 64 time steps specified
+in total.
+
+\hypertarget{alert-alert_log.json}{%
+\subsubsection{Alert (alert\_log.json)}\label{alert-alert_log.json}}
+
+This file contains all the alerts that the system alerts by time to the
+water level that is recorded.
+
+\hypertarget{default-home-address-defaul_home_address.json}{%
+\subsubsection{Default Home Address
+(defaul\_home\_address.json)}\label{default-home-address-defaul_home_address.json}}
+
+This file contains the defaul home address in Suitville Maryland for the
+National Weather Service Address reading. This file \textbf{MUST NEVER
+BE CHANGED} because it is a default setting to display should the user
+give a faulty or incorrectly entered home address.
+
+\hypertarget{email-settings-email_settings.json}{%
+\subsubsection{Email Settings
+(email\_settings.json)}\label{email-settings-email_settings.json}}
+
+This file contains the user email settings that is in terms of rate of
+email sending and the detail of the email. This file is changed by the
+advanced settings of the user page in the UI settings. You can set
+minutely, hourly and daily updates of emails and high and low settings
+of detail where high is all information and extreme data while low just
+shows extreme data. The user changes these settings in the advanced
+settings.
+
+\hypertarget{frequency-freq_settings.json}{%
+\subsubsection{Frequency
+(freq\_settings.json)}\label{frequency-freq_settings.json}}
+
+This file contains the user frequency settings for the pwm frequency
+settings for the fan and the plant light. The keys are fan and light and
+the inner keys is frequency. The user changes the frequency individually
+for light and fan on the UI advanced settings page. The frequency can be
+cahanged in units of 10 from 0 to 500 hertz.
+
+\hypertarget{germination-germination.json}{%
+\subsubsection{Germination
+(germination.json)}\label{germination-germination.json}}
+
+This file contains the germination start and end date with day, month
+and year. It holds start and end dates. The start \textbf{can} be equal
+to the end date and but it can \textbf{never} be after the end date.
+Note that the UI disallows the satrt being after the end. Also note that
+the start can be in the future and the end in the future. The start date
+could also be in the past. Both start and end are specified in the UI
+advanced settings where the user manually sets six fields of day, month
+and year for the start and end dates.
+
+\hypertarget{home-address-home_address.json}{%
+\subsubsection{Home Address
+(home\_address.json)}\label{home-address-home_address.json}}
+
+This file holds the home address for the user including street address,
+city, state and zip code. It must be a valid american street address. It
+could be an invalid address becaudse the UI does nto check for
+invalidity. It is iset in the UI settings advanced settings tab and the
+user types in street address and city and zip code and state is chosen
+in a drop down. This influences what weather forecast is received by the
+user in the weather page. The user should set a local address for local
+weather forecasts.
+
+\hypertarget{constants-interface_constants.py}{%
+\subsubsection{Constants
+(interface\_constants.py)}\label{constants-interface_constants.py}}
+
+This contains constants used for the interface files like log path,
+germination path and other paths.
+
+\hypertarget{update-interval-interval_settings.json}{%
+\subsubsection{Update Interval
+(interval\_settings.json)}\label{update-interval-interval_settings.json}}
+
+This file contains the update interval in \textbf{seconds}. It could be
+any value in 60, 180 and 300 seconds. This file can be changed in the
+User interface advanced settings tab. This file interacts with the
+controller and tells the controller how long to await for the next
+update cycle in an await sleep call.
+
+\hypertarget{ml-log-ml_action_log.json}{%
+\subsubsection{ML Log
+(ml\_action\_log.json)}\label{ml-log-ml_action_log.json}}
+
+This file contains the actions of the ML taken in the last cycle
+including keys of water, fan heat, light and expected reward. It is
+logged from controller\_main and it cannot be changed or deleted from
+the UI.
+
+\hypertarget{duty-cycles-pwm_settings.json}{%
+\subsubsection{Duty Cycles
+(pwm\_settings.json)}\label{duty-cycles-pwm_settings.json}}
+
+This file contains the user duty cycle settings for the pwm duty cycle
+settings for the fan and the plant light. The keys are fan and light and
+the inner keys is duty\_cycle. The user changes the duty cycle
+individually for light and fan on the UI advanced settings page. The
+duty cycle can be cahanged in units of 10 from 0 to 100 \% duty cycles.
+
+\hypertarget{sensor-log-sensor_log.json}{%
+\subsubsection{Sensor Log
+(sensor\_log.json)}\label{sensor-log-sensor_log.json}}
+
+This file contains the sensor measurements of the controller taken in
+the all cycles including keys of sunlight, soil\_moisture, temperature
+and humdiity with the primary key of a datetime string. It is logged
+from controller\_main and it cannot be changed or deleted from the UI.
+Sunlight units are unscaled from 0 to 120000 lumens / square meter,
+temperature is between 0 and 100 degrees F, humidity is between 0 and
+100\% RH and soil\_moisture is inverted and then scaled between 0 and
+100 in this log. These are essentially exact readings and not converted
+to value buckets for the ML!
+
+\hypertarget{temperature-settings-temp_format.json}{%
+\subsubsection{Temperature Settings
+(temp\_format.json)}\label{temperature-settings-temp_format.json}}
+
+This file contains the temperature scale in \textbf{Fahrenheit or
+Celsius}. It could be any value in fahreneheit or celsius. This file can
+be changed in the User interface advanced settings tab. Currently, this
+file only changes what the temperature in the weather page in the UI is
+displayed as.
+
+\hypertarget{utilities-utilities.py}{%
+\subsubsection{Utilities (utilities.py)}\label{utilities-utilities.py}}
+
+This contains utilities to translate actions to numbers: e.g.~off is 0,
+low is 2 and high is 4. These functions are called in the
+controlelr\_main to convert for units for the peripheral changes which
+only takes in values from 0 to 4.
+
+\end{document}
