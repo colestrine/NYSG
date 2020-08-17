@@ -269,7 +269,8 @@ td {
 }
 
 .sidebar {
-	height: 75%;
+    overflow-y: auto;
+    height: 75%;
     width: 30px;
     position: absolute;
     right: 0px;
@@ -546,22 +547,25 @@ td {
 .weather-page {
 /*    background-color: rgb(43, 146, 180);*/
     height: 100%;
-    border-radius: 2%;
+    border-radius: 10px;
     padding: 2%;
     margin: 2%;
     background-image: linear-gradient(rgb(79, 171, 202), rgb(32, 137, 172));
 }
 
 .weather-header {
-	height: 47px;
-    background-color: white;
+    height: auto;
+    background-color: rgb(18, 136, 175);
+    margin: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
     z-index: 100;
 }
 
 .weather-header-text {
 /*    background: #555;*/
 /*    color: #f1f1f1;*/
-    /* color: white; */
+    color: white;
     font-weight: 200;
     font-size: 100%;
     display: flex;
@@ -574,7 +578,6 @@ td {
   position: fixed;
   top: 0;
   width: 87.5%;
-  padding: 1%;
 }
 
 .sticky + .content {
@@ -668,7 +671,6 @@ td {
     border-right: 1px solid white;
     border-left:1px solid white;
     height: 20%;
-    border-radius: 4%;
     background-color: rgb(18, 136, 175);
 }
 
@@ -732,7 +734,6 @@ td {
     border-left: 1px solid white;
     border-right: 1px solid white;
     height: 10%;
-    border-radius: 4%;
     background-color:rgb(22, 115, 146);
 }
 
