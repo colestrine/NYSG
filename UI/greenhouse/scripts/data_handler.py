@@ -7,10 +7,10 @@ from datetime import date,timedelta
 
 
 class data_handler:
-    def write_healthy_levels(temperature, humidity, soil_moisture_static, soil_moisture_dry,soil_moisture_wet, run, days, sunlight):
-        levels_dict = {'temperature': temperature, 'humidity': humidity,
-                       'soil_moisture_wet': soil_moisture_wet, 'soil_moisture_dry': soil_moisture_dry,
-                       'soil_moisture_static': soil_moisture_static, 'days' : days, 'run' : run, 'sunlight': sunlight}
+    def write_healthy_levels(temperature, humidity, sunlight, soil_moisture_static, soil_moisture_wet, soil_moisture_dry, days, run):
+        levels_dict = {'temperature': temperature, 'humidity': humidity, 'sunglight' : sunlight,
+                        'soil_moisture_static' : soil_moisture_static, 'soil_moisture_wet': soil_moisture_wet, 'soil_moisture_dry': soil_moisture_dry,
+                        'days' : days, 'run' : run}
         levels_dict = dynamic_soil_control(levels_dict)
         levels_json = json.dumps(levels_dict)
         healthy_levels_file = open(expanduser(
@@ -221,7 +221,7 @@ class data_handler:
 
         return log_dict
 
-    def save_profile(profile_name, temperature, humidity, soil_moisture_static, soil_moisture_dry,soil_moisture_wet, run, days, sunlight):
+    def save_profile(profile_name, temperature, humidity, sunlight, soil_moisture_static, soil_moisture_wet, soil_moisture_dry, days, run):
         healthy_levels_by_profile_file_r = open(expanduser(
             "~")+'/NYSG/Interface Files/healthy_levels_by_profile.json', 'r')
         healthy_levels_by_profile_json = healthy_levels_by_profile_file_r.read()
@@ -229,9 +229,9 @@ class data_handler:
         healthy_levels_by_profile_dict = json.loads(
             healthy_levels_by_profile_json)
 
-        new_profile = {'temperature': temperature, 'humidity': humidity,
-                       'soil_moisture_wet': soil_moisture_wet, 'soil_moisture_dry': soil_moisture_dry,
-                       'soil_moisture_static': soil_moisture_wet, 'days' : days, 'run' : run, 'sunlight': sunlight}
+        new_profile = {'temperature': temperature, 'humidity': humidity, 'sunlight' : sunlight
+                       'soil_moisture_static': soil_moisture_static, 'soil_moisture_wet': soil_moisture_wet,
+                       'soil_moisture_dry': soil_moisture_dry, 'days' : days, 'run' : run}
 
         healthy_levels_by_profile_dict[profile_name] = new_profile
 
