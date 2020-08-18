@@ -305,8 +305,12 @@ Settings
 	function submitSaveProfileForm() {
 		document.getElementById("id_custom_temperature").value = document.getElementById("id_temperature").value
 		document.getElementById("id_custom_humidity").value = document.getElementById("id_humidity").value
-		document.getElementById("id_custom_soil_moisture").value = document.getElementById("id_soil_moisture").value
 		document.getElementById("id_custom_sunlight").value = document.getElementById("id_sunlight").value
+		document.getElementById("id_custom_soil_moisture_static").value = document.getElementById("id_soil_moisture_static").value
+		document.getElementById("id_custom_soil_moisture_wet").value = document.getElementById("id_soil_moisture_wet").value
+		document.getElementById("id_custom_soil_moisture_dry").value = document.getElementById("id_soil_moisture_dry").value
+		document.getElementById("id_custom_days").value = document.getElementById("id_days").value
+		document.getElementById("id_custom_run").value = document.getElementById("id_run").value
 
 		document.getElementById("save_profile_form").submit()
 	}

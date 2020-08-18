@@ -49,6 +49,8 @@ def index(request):
             soil_moisture_dry = healthy_levels_form.cleaned_data['soil_moisture_dry']
             days = healthy_levels_form.cleaned_data['days']
             run = healthy_levels_form.cleaned_data['run']
+            print(1)
+            print(run)
 
         else:
             temperature = ''
@@ -59,6 +61,8 @@ def index(request):
             soil_moisture_wet = ''
             days = ''
             run = ''
+            print(2)
+            print(run)
 
         if plant_profile_form.is_valid():
             plant_profile = plant_profile_form.cleaned_data['plant_profile']
@@ -75,7 +79,10 @@ def index(request):
             soil_moisture_dry = save_profile_form.cleaned_data['custom_soil_moisture_dry']
             days = save_profile_form.cleaned_data['custom_days']
             run = save_profile_form.cleaned_data['custom_run']
+            print(3)
+            print(run)
         else:
+            print(save_profile_form.errors)
             profile_name = ''
             custom_temperature = ''
             custom_humidity = ''
@@ -85,6 +92,8 @@ def index(request):
             custom_soil_moisture_dry = ''
             custom_days = ''
             custom_run = ''
+            print(4)
+            print(custom_run)
 
         if mode_form.is_valid():
             mode = mode_form.cleaned_data['mode']
@@ -198,6 +207,8 @@ def index(request):
                 soil_moisture_dry = healthy_levels['soil_moisture_dry']
                 days = healthy_levels['days']
                 run = healthy_levels['run']
+                print(5)
+                print(run)
 
                 data_handler.write_healthy_levels(
                     temperature, humidity, sunlight, 
