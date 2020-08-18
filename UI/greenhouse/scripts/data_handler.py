@@ -1,4 +1,5 @@
 
+
 import json
 import os
 from os.path import expanduser
@@ -23,7 +24,7 @@ class data_handler:
         levels_json = healthy_levels_file.read()
         healthy_levels_file.close()
         levels_dict = json.loads(levels_json)
-
+        print(levels_dict)
         return levels_dict
 
     def write_plant_profile(plant_profile):

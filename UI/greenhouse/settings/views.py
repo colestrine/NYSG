@@ -298,7 +298,7 @@ def index(request):
     plant_profile = data_handler.read_plant_profile()
     plant_profile_form = PlantProfileForm(initial=plant_profile)
     healthy_levels_form = HealthyLevelsForm(initial=healthy_levels)
-    save_profile_form = SaveProfileForm()
+    save_profile_form = SaveProfileForm(initial=plant_profile)
     mode_form = ModeForm(initial={'mode': mode})
     action_form = ActionForm(initial=current_manual_actions)
     alert_form = AlertForm(initial=current_alert_settings)
