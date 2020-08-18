@@ -64,7 +64,8 @@ class ModeForm(forms.Form):
 
 
 class ActionForm(forms.Form):
-    actions = [('off', '0 sec'), ('low', '30 sec'), ('high', '60 sec')]
+    actions = [('off', '0 sec repeat'), ('low', '30 sec repeat'),
+               ('high', '60 sec repeat')]
     water = forms.ChoiceField(required=True, choices=actions, label="Water", widget=forms.Select(
         attrs={'onchange': 'action_form.submit();'}))
     fan = forms.ChoiceField(required=True, choices=actions, label="Fan", widget=forms.Select(
