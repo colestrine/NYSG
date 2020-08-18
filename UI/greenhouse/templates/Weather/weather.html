@@ -17,9 +17,9 @@ Weather
 </div>
 {% else %}
 <div class="city-weather-row" id="city-weather-row">
-    {% for key, inner_dict in days_dict.items %}
-    <div class="weather-page" id="weather-page">
-        <div class="weather-header" id="weather-header">
+    {% for counter, inner_dict in days_dict.items %}
+    <div class="weather-page" id="weather-page-{{counter}}">
+        <div class="weather-header" id="weather-heading-{{counter}}">
             <h1 class="weather-header-text">
                 {{inner_dict.city}}, {{inner_dict.state}} - {{inner_dict.date_string}} -
                 {{inner_dict.today_temp}}<span>&deg</span>{{inner_dict.degree_symbol}}
@@ -333,8 +333,9 @@ Weather
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+{% for counter, inner_dict in days_dict.items %}
 <script>
-    var is_day = ("{{today_is_day}}" == 'true');
+    var is_day = ("{{inner_dict.today_is_day}}" == 'true');
     // if (!is_day) {
     //     document.getElementById("weather-heading").style.backgroundColor = "darkgray";
     //     document.getElementById("current-weather-values").style.backgroundColor = "darkgray";
@@ -348,59 +349,69 @@ Weather
     // }
 
     if (!is_day) {
-        document.getElementById("weather-page").style.backgroundImage = "linear-gradient(rgb(18, 94, 117), rgb(9, 74, 94))";
+        document.getElementById("weather-page-{{counter}}").style.backgroundImage = "linear-gradient(rgb(18, 94, 117), rgb(9, 74, 94))";
 
     } else {
-        document.getElementById("weather-page").style.backgroundImage = "linear-gradient(rgb(79, 171, 202), rgb(32, 137, 172))";
+        document.getElementById("weather-page-{{counter}}").style.backgroundImage = "linear-gradient(rgb(79, 171, 202), rgb(32, 137, 172))";
     }
-
-    is_rainy = ("{{is_rainy}}" == 'true');
-    is_cloudy = ("{{is_cloudy}}" == 'true');
-    is_snowy = ("{{is_snowy}}" == 'true');
-    is_stormy = ("{{is_stormy}}" == 'true');
-    is_high_temp = ("{{is_high_temp}}" == 'true');
-    is_morning = ("{{is_morning}}" == 'true');
-    is_sundown = ("{{is_sundown}}" == 'true');
-    is_night = ("{{is_night}}" == 'true');
+    var pages = "{{inner_dict.pages}}".parseInt()
+    // var is_rainy = ("{{is_rainy}}" == 'true');
+    // var is_cloudy = ("{{is_cloudy}}" == 'true');
+    // var is_snowy = ("{{is_snowy}}" == 'true');
+    // var is_stormy = ("{{is_stormy}}" == 'true');
+    // var is_high_temp = ("{{is_high_temp}}" == 'true');
+    // var is_morning = ("{{is_morning}}" == 'true');
+    // var is_sundown = ("{{is_sundown}}" == 'true');
+    // var is_night = ("{{is_night}}" == 'true');
+    var is_rainy = ("{{inner_dict.is_rainy}}" == 'true');
+    var is_cloudy = ("{{inner_dict.is_cloudy}}" == 'true');
+    var is_snowy = ("{{inner_dict.is_snowy}}" == 'true');
+    var is_stormy = ("{{inner_dict.is_stormy}}" == 'true');
+    var is_high_temp = ("{{inner_dict.is_high_temp}}" == 'true');
+    var is_morning = ("{{inner_dict.is_morning}}" == 'true');
+    var is_sundown = ("{{inner_dict.is_sundown}}" == 'true');
+    var is_night = ("{{inner_dict.is_night}}" == 'true');
 
 
     if (is_stormy) {
-        document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpapercave.com/wp/wO7581D.jpg')";
+        document.getElementById("weather-heading-{{counter}}").style.backgroundImage = "url('https://wallpapercave.com/wp/wO7581D.jpg')";
     }
 
     else if (is_snowy) {
-        document.getElementById("weather-heading").style.backgroundImage = "url('https://c4.wallpaperflare.com/wallpaper/83/239/610/street-light-snow-snowing-winter-wallpaper-preview.jpg')";
+        document.getElementById("weather-heading-{{counter}}").style.backgroundImage = "url('https://c4.wallpaperflare.com/wallpaper/83/239/610/street-light-snow-snowing-winter-wallpaper-preview.jpg')";
     }
 
     else if (is_cloudy) {
-        document.getElementById("weather-heading").style.backgroundImage = "url('https://c4.wallpaperflare.com/wallpaper/759/428/990/uplifting-rays-of-sunshine-wallpaper-preview.jpg')";
+        document.getElementById("weather-heading-{{counter}}").style.backgroundImage = "url('https://c4.wallpaperflare.com/wallpaper/759/428/990/uplifting-rays-of-sunshine-wallpaper-preview.jpg')";
     }
 
     else if (is_rainy) {
-        document.getElementById("weather-heading").style.backgroundImage = "url('https://www.maketecheasier.com/assets/uploads/2020/06/Featured-Image-Live-Weather-Wallpapers-Android.jpg')";
+        document.getElementById("weather-heading-{{counter}}").style.backgroundImage = "url('https://www.maketecheasier.com/assets/uploads/2020/06/Featured-Image-Live-Weather-Wallpapers-Android.jpg')";
     }
 
     else if (is_high_temp) {
-        document.getElementById("weather-heading").style.backgroundImage = "url('https://c4.wallpaperflare.com/wallpaper/80/311/649/sunny-day-4k-summer-beach-wallpaper-preview.jpg')";
+        document.getElementById("weather-heading-{{counter}}").style.backgroundImage = "url('https://c4.wallpaperflare.com/wallpaper/80/311/649/sunny-day-4k-summer-beach-wallpaper-preview.jpg')";
     }
 
     else if (is_morning) {
-        document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpaperaccess.com/full/428690.jpg')";
+        document.getElementById("weather-heading-{{counter}}").style.backgroundImage = "url('https://wallpaperaccess.com/full/428690.jpg')";
     }
 
     else if (is_sundown) {
-        document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpapercave.com/wp/3Hg2wQy.jpg')";
+        document.getElementById("weather-heading-{{counter}}").style.backgroundImage = "url('https://wallpapercave.com/wp/3Hg2wQy.jpg')";
     }
 
     else if (is_night) {
-        document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpaperaccess.com/full/941788.jpg')";
+        document.getElementById("weather-heading-{{counter}}").style.backgroundImage = "url('https://wallpaperaccess.com/full/941788.jpg')";
     }
 
     else {
         document.getElementById("weather-heading").style.backgroundImage = "url('https://wallpaperaccess.com/full/535628.jpg')";
     }
+</script>
+{% endfor %}
 
-
+<script>
     window.onscroll = function () { myFunction() };
 
     var header = document.getElementById("weather-header");

@@ -151,6 +151,7 @@ def index(request):
     light_freq = current_freq_settings["light_freq"]
 
     days_dict = {}
+    counter = 1
     for inner_dict in lat_lon_json["lat_lon"]:
         LAT, LON = inner_dict["lat"], inner_dict["lon"]
 
@@ -276,7 +277,8 @@ def index(request):
 
             day_dict = {'hourly_data': hourly_data, 'temp_mode': temp_mode, 'degree_symbol': degree_symbol, 'is_night': is_night, 'is_sundown': is_sundown, 'is_morning': is_morning, 'is_high_temp': is_high_temp, 'is_stormy': is_stormy, 'is_snowy': is_snowy, 'is_cloudy': is_cloudy, 'is_rainy': is_rainy, 'today_is_day': today_is_day, 'city': city,
                         'state': state, 'today_low': today_low, 'today_high': today_high, 'remaining_days_data': remaining_days_data, 'date_string': date_string, 'today_precipitation': today_precipitation, 'today_detailed': today_detailed, 'today_short': today_short, 'today_sun': today_sun, 'today_winddirection': today_winddirection, 'today_windspeed': today_windspeed, 'today_temp': today_temp}
-            days_dict[(LAT, LON)] = day_dict
+            days_dict[counter] = day_dict
+            counter += 1
         except:
             print("National Weather Service API not responsive")
             failure_to_load = True
