@@ -69,14 +69,22 @@ def index(request):
             profile_name = save_profile_form.cleaned_data['profile_name']
             temperature = save_profile_form.cleaned_data['custom_temperature']
             humidity = save_profile_form.cleaned_data['custom_humidity']
-            soil_moisture = save_profile_form.cleaned_data['custom_soil_moisture']
             sunlight = save_profile_form.cleaned_data['custom_sunlight']
+            soil_moisture_static = save_profile_form.cleaned_data['custom_soil_moisture_static']
+            soil_moisture_wet = save_profile_form.cleaned_data['custom_soil_moisture_wet']
+            soil_moisture_dry = save_profile_form.cleaned_data['custom_soil_moisture_dry']
+            days = save_profile_form.cleaned_data['custom_days']
+            run = save_profile_form.cleaned_data['custom_run']
         else:
             profile_name = ''
             custom_temperature = ''
             custom_humidity = ''
-            custom_soil_moisture = ''
             custom_sunlight = ''
+            custom_soil_moisture_static = ''
+            custom_soil_moisture_wet = ''
+            custom_soil_moisture_dry = ''
+            custom_days = ''
+            custom_run = ''
 
         if mode_form.is_valid():
             mode = mode_form.cleaned_data['mode']

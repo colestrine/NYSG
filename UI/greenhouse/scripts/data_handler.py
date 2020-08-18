@@ -9,7 +9,7 @@ class data_handler:
     def write_healthy_levels(temperature, humidity, soil_moisture_static, soil_moisture_dry,soil_moisture_wet, run, days, sunlight):
         levels_dict = {'temperature': temperature, 'humidity': humidity,
                        'soil_moisture_wet': soil_moisture_wet, 'soil_moisture_dry': soil_moisture_dry,
-                       'soil_moisture_static': soil_moisture_wet, 'days' : days, 'run' : run, 'sunlight': sunlight}
+                       'soil_moisture_static': soil_moisture_static, 'days' : days, 'run' : run, 'sunlight': sunlight}
         levels_dict = dynamic_soil_control(levels_dict)
         levels_json = json.dumps(levels_dict)
         healthy_levels_file = open(expanduser(
