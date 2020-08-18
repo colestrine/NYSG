@@ -229,7 +229,7 @@ class data_handler:
         healthy_levels_by_profile_dict = json.loads(
             healthy_levels_by_profile_json)
 
-        new_profile = {'temperature': temperature, 'humidity': humidity, 'sunlight' : sunlight
+        new_profile = {'temperature': temperature, 'humidity': humidity, 'sunlight' : sunlight,
                        'soil_moisture_static': soil_moisture_static, 'soil_moisture_wet': soil_moisture_wet,
                        'soil_moisture_dry': soil_moisture_dry, 'days' : days, 'run' : run}
 
