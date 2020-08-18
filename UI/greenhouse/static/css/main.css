@@ -836,3 +836,9 @@ tr#demotable:nth-child(8) {background: lightskyblue;} */
 
 }
 
+.error-germination { 
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+

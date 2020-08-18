@@ -40,10 +40,10 @@ Germination
 </div>
 
 {% if finished_germination %}
-<h2 class="finished-germination">The germination end date has been reached.</h2>
+<h2 class="error-germination" id="finished-germination">The germination end date has been reached.</h2>
 {% endif %}
 {% else %}
-<h2 class="incorrect-date-order">The start date is not before the end date.</h2>
+<h2 class="error-germination" id="incorrect-date-order">The start date is not before the end date.</h2>
 {% endif %}
 
 <div id="sidebar" class="sidebar">
