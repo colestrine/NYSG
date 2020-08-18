@@ -821,3 +821,14 @@ tr#demotable:nth-child(8) {background: lightskyblue;} */
     border: 1%;
     padding: 1%;
 }
+
+
+.markdown-cell{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid grey;
+    border-radius: 2%;
+
+}
+

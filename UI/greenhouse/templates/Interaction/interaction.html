@@ -1,0 +1,277 @@
+{% extends 'Base/base.html' %}
+
+{% block title %}
+Jupyter Notebook
+{% endblock %}
+
+
+{% block content %}
+<h1 class="dashboard-header">Jupyter Notebook</h1>
+
+<div>
+    {% for item in cells_data %}
+    {% if item.0 == 'code' %}
+    <pre data-executable="true" data-language="python">
+{% for line in item.1 %}  
+{{line}}
+{% endfor %}
+</pre>
+    {% elif item.0 == 'markdown' %}
+    <div class="markdown-cell">
+        {{item.1 |safe}}
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-toggle-button-wrapper" id="sidebar-toggle-button-wrapper">
+        <button class="sidebar-toggle-button" id="sidebar-toggle-button" onclick="toggleSidebar()">
+            < </button>
+    </div>
+    <div class="sidebar-content-wrapper" id="sidebar-content-wrapper">
+        <div class="sidebar-section-wrapper">
+            <div class="sidebar-section-header">
+                Current Values
+            </div>
+            <div class="sidebar-section-content">
+                <div class="sidebar-value-label">
+                    Temperature
+                </div>
+                <div>
+                    {{last_temperature}} <span>&#176;</span>F
+                </div>
+                <div class="sidebar-value-label">
+                    Humidity
+                </div>
+                <div>
+                    {{last_humidity}} %
+                </div>
+                <div class="sidebar-value-label">
+                    Soil Moisture
+                </div>
+                <div>
+                    {{last_soil_moisture}} %
+                </div>
+                <div class="sidebar-value-label">
+                    Light
+                </div>
+                <div>
+                    {{last_sunlight}} lm/m<sup>2</sup>
+                </div>
+                <div class="sidebar-value-label">
+                    Fan Duty Cycles
+                </div>
+                <div>
+                    {{fan_dc}} %
+                </div>
+                <div class="sidebar-value-label">
+                    Light Duty Cycles
+                </div>
+                <div>
+                    {{light_dc}} %
+                </div>
+                <div class="sidebar-value-label">
+                    Fan Frequency
+                </div>
+                <div>
+                    {{fan_freq}} hz
+                </div>
+                <div class="sidebar-value-label">
+                    Light Frequency
+                </div>
+                <div>
+                    {{light_freq}} hz
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-section-wrapper">
+            <div class="sidebar-section-header">
+                Legend
+            </div>
+            <div class="sidebar-section-content">
+                <div class="lenged-row-wrapper">
+                    <div class="legend-row-label">
+                        Temperature (<span>&#176;</span>F)
+                    </div>
+                    <button class="legend-row-button" id="expand-legend-button-temperature"
+                        onclick="expandLegend('temperature')">></button>
+                </div>
+                <div class="legend-data-wrapper" id="legend-temperature-data">
+                    {% for record in legend.temperature.items %}
+                    <div class="legend-bucket-label">
+                        {{record.1.label}}
+                    </div>
+                    <div class="legend-bucket-data">
+                        {{record.1.low}}-{{record.1.high}}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="lenged-row-wrapper">
+                    <div class="legend-row-label">
+                        Humidity (%)
+                    </div>
+                    <button class="legend-row-button" id="expand-legend-button-humidity"
+                        onclick="expandLegend('humidity')">></button>
+                </div>
+                <div class="legend-data-wrapper" id="legend-humidity-data">
+                    {% for record in legend.humidity.items %}
+                    <div class="legend-bucket-label">
+                        {{record.1.label}}
+                    </div>
+                    <div class="legend-bucket-data">
+                        {{record.1.low}}-{{record.1.high}}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="lenged-row-wrapper">
+                    <div class="legend-row-label">
+                        Soil Moisture (%)
+                    </div>
+                    <button class="legend-row-button" id="expand-legend-button-soil-moisture"
+                        onclick="expandLegend('soil_moisture')">></button>
+                </div>
+                <div class="legend-data-wrapper" id="legend-soil-moisture-data">
+                    {% for record in legend.soil_moisture.items %}
+                    <div class="legend-bucket-label">
+                        {{record.1.label}}
+                    </div>
+                    <div class="legend-bucket-data">
+                        {{record.1.low}}-{{record.1.high}}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="lenged-row-wrapper">
+                    <div class="legend-row-label">
+                        Sunlight (lm/m<sup>2</sup>)
+                    </div>
+                    <button class="legend-row-button" id="expand-legend-button-sunlight"
+                        onclick="expandLegend('sunlight')">></button>
+                </div>
+                <div class="legend-data-wrapper" id="legend-sunlight-data">
+                    {% for record in legend.sunlight.items %}
+                    <div class="legend-bucket-label">
+                        {{record.1.label}}
+                    </div>
+                    <div class="legend-bucket-data">
+                        {{record.1.low}}-{{record.1.high}}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Configure and load Thebe !-->
+<script type="text/x-thebe-config">
+    {
+      requestKernel: true,
+      binderOptions: {
+        repo: "binder-examples/requirements",
+      },
+    }
+</script>
+<script src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+<script>
+    window.onload = function () { thebelab.bootstrap(); }
+</script>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+    var sidebar_hidden = true;
+
+    function toggleSidebar() {
+        if (sidebar_hidden) {
+            document.getElementById("sidebar").style.width = "350px";
+            document.getElementById("sidebar-toggle-button").style.transform = "rotate(180deg)";
+            document.getElementById("sidebar-content-wrapper").style.display = "grid";
+        }
+        else {
+            document.getElementById("sidebar").style.width = "30px";
+            document.getElementById("sidebar-toggle-button").style.transform = "none";
+            document.getElementById("sidebar-content-wrapper").style.display = "none";
+        }
+
+        sidebar_hidden = !sidebar_hidden
+    }
+
+    var temperature_expanded = false;
+    var humidity_expanded = false;
+    var soil_moisture_expanded = false;
+    var sunlight_expanded = false;
+
+    function expandSection(section_name) {
+        document.getElementById("expand-legend-button-".concat(section_name)).style.transform = "rotate(-90deg) translateY(-1px)";
+        document.getElementById("legend-".concat(section_name).concat("-data")).style.display = "block";
+
+        return true
+    }
+
+    function collapseSection(section_name) {
+        document.getElementById("expand-legend-button-".concat(section_name)).style.transform = "rotate(90deg)";
+        document.getElementById("legend-".concat(section_name).concat("-data")).style.display = "none";
+
+        return false
+    }
+
+    function expandLegend(type) {
+        if (type == "temperature") {
+            if (temperature_expanded) {
+                temperature_expanded = collapseSection("temperature")
+            }
+            else {
+                humidity_expanded = collapseSection("humidity")
+                soil_moisture_expanded = collapseSection("soil-moisture")
+                sunlight_expanded = collapseSection("sunlight")
+                temperature_expanded = expandSection("temperature")
+            }
+        }
+        if (type == "humidity") {
+            if (humidity_expanded) {
+                humidity_expanded = collapseSection("humidity")
+            }
+            else {
+                temperature_expanded = collapseSection("temperature")
+                soil_moisture_expanded = collapseSection("soil-moisture")
+                sunlight_expanded = collapseSection("sunlight")
+                humidity_expanded = expandSection("humidity")
+            }
+        }
+        if (type == "soil_moisture") {
+            if (soil_moisture_expanded) {
+                soil_moisture_expanded = collapseSection("soil-moisture")
+            }
+            else {
+                temperature_expanded = collapseSection("temperature")
+                humidity_expanded = collapseSection("humidity")
+                sunlight_expanded = collapseSection("sunlight")
+                soil_moisture_expanded = expandSection("soil-moisture")
+            }
+        }
+        if (type == "sunlight") {
+            if (sunlight_expanded) {
+                sunlight_expanded = collapseSection("sunlight")
+            }
+            else {
+                temperature_expanded = collapseSection("temperature")
+                humidity_expanded = collapseSection("humidity")
+                soil_moisture_expanded = collapseSection("soil-moisture")
+                sunlight_expanded = expandSection("sunlight")
+            }
+        }
+    }
+</script>
+{% endblock %}
