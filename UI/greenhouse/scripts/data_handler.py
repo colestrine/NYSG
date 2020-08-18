@@ -8,7 +8,7 @@ from datetime import date,timedelta
 
 class data_handler:
     def write_healthy_levels(temperature, humidity, sunlight, soil_moisture_static, soil_moisture_wet, soil_moisture_dry, days, run):
-        levels_dict = {'temperature': temperature, 'humidity': humidity, 'sunglight' : sunlight,
+        levels_dict = {'temperature': temperature, 'humidity': humidity, 'sunlight' : sunlight,
                         'soil_moisture_static' : soil_moisture_static, 'soil_moisture_wet': soil_moisture_wet, 'soil_moisture_dry': soil_moisture_dry,
                         'days' : days, 'run' : run}
         levels_dict = dynamic_soil_control(levels_dict)
@@ -17,6 +17,8 @@ class data_handler:
             "~")+'/NYSG/Interface Files/healthy_levels.json', 'w')
         healthy_levels_file.write(levels_json)
         healthy_levels_file.close()
+        print("write: ")
+        print(levels_dict)
 
     def read_healthy_levels():
         healthy_levels_file = open(expanduser(
@@ -24,6 +26,7 @@ class data_handler:
         levels_json = healthy_levels_file.read()
         healthy_levels_file.close()
         levels_dict = json.loads(levels_json)
+        print("Read:")
         print(levels_dict)
         return levels_dict
 
@@ -519,7 +522,7 @@ class data_handler:
         temp_file.close()
 
 def dynamic_soil_control(healthy_levels_dict):
-    print(healthy_levels_dict)
+    #print(healthy_levels_dict)
     if healthy_levels_dict["run"] == "0":
         healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_static"]
         return healthy_levels_dict
