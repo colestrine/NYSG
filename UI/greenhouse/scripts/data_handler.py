@@ -2,7 +2,7 @@
 import json
 import os
 from os.path import expanduser
-from datetime import date
+from datetime import date,timedelta
 
 
 class data_handler:
@@ -10,8 +10,8 @@ class data_handler:
         levels_dict = {'temperature': temperature, 'humidity': humidity,
                        'soil_moisture_wet': soil_moisture_wet, 'soil_moisture_dry': soil_moisture_dry,
                        'soil_moisture_static': soil_moisture_wet, 'days' : days, 'run' : run, 'sunlight': sunlight}
+        levels_dict = dynamic_soil_control(levels_dict)
         levels_json = json.dumps(levels_dict)
-        levels_json = self.dynamic_soil_control(levels_json)
         healthy_levels_file = open(expanduser(
             "~")+'/NYSG/Interface Files/healthy_levels.json', 'w')
         healthy_levels_file.write(levels_json)
@@ -517,28 +517,32 @@ class data_handler:
         temp_file.write(json.dumps(temp_json))
         temp_file.close()
 
-    def dynamic_soil_control(healthy_levels_dict):
-        if healthy_levels_dict["run"] == "0":
-            healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_static"]
-            return healthy_levels_dict
-
-        last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'r')
-        last_json = last_water_file.read()
-
-        days = int(healthy_levels_dict["days"])
-        today = date.today()
-        t = last_json["last"]
-        t = date.fromisoformat(t)
-        time_since_water = today -  t
-        if time_since_water >= timedelta(days = days) or time_since_water == timedelta(days = 0) :
-            healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_wet"]
-            today = today.isoformat
-            last_json["last"] = today
-
-            last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'w')
-            last_water_file.write(last_json)
-            last_water_file.close()
-
-        else:
-            healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_dry"]
+def dynamic_soil_control(healthy_levels_dict):
+    print(healthy_levels_dict)
+    if healthy_levels_dict["run"] == "0":
+        healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_static"]
         return healthy_levels_dict
+
+    last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'r')
+    last_json = last_water_file.read()
+    last_water_file.close()
+    last_dict = json.loads(last_json)
+
+    print(last_json)
+    days = int(healthy_levels_dict["days"])
+    today = date.today()
+    t = last_dict["last"]
+    t = date.fromisoformat(t)
+    time_since_water = today -  t
+    if time_since_water >= timedelta(days = days) or time_since_water == timedelta(days = 0) :
+        healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_wet"]
+        today = today.isoformat()
+        last_dict["last"] = today
+        last_json = json.dumps(last_dict)
+        last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'w')
+        last_water_file.write(last_json)
+        last_water_file.close()
+
+    else:
+        healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_dry"]
+    return healthy_levels_dict

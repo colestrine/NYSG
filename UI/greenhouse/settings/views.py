@@ -169,7 +169,8 @@ def index(request):
         # If healthy levels data was submitted, update healthy levels interface file, and save plant profile as "custom" in profile interface file
         if (temperature):
             data_handler.write_healthy_levels(
-                temperature, humidity, soil_moisture, sunlight)
+                temperature, humidity, soil_moisture_static, soil_moisture_dry,
+		soil_moisture_wet, run, days, sunlight)
             data_handler.write_plant_profile("custom")
             can_save = True
         # If profile data was submitted, save profile in profile interface file

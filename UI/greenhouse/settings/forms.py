@@ -57,10 +57,10 @@ class SaveProfileForm(forms.Form):
     temperature_choices = data_handler.get_available_temperatures()
     humidity_choices = data_handler.get_available_humidities()
     sunlight_choices = data_handler.get_available_sunlights()
-    soil_moisture_static_choices = data_handler.get_available_soil_moistures()
-    soil_moisture_wet_choices = data_handler.get_available_soil_moistures()
-    soil_moisture_dry_choices = data_handler.get_available_soil_moistures()
-    run_choices = data_handler.get_available_soil_runs()
+    soil_moisture_static_choices = data_handler.get_available_soil_moisture_statics()
+    soil_moisture_wet_choices = data_handler.get_available_soil_moisture_wets()
+    soil_moisture_dry_choices = data_handler.get_available_soil_moisture_drys()
+    run_choices = data_handler.get_available_runs()
     days_choices = data_handler.get_available_days()
 
     custom_temperature = forms.ChoiceField(required=False, choices=temperature_choices, widget=forms.Select(
