@@ -19,11 +19,17 @@ import re
 LAT = round(45.516022, 4)  # portland, OR, lat lon
 LON = round(-122.681427, 4)
 
-ADDRESS_JSON_PATH = "Interface Files/home_address.json"
-DEFAULT_ADDRESS_JSON_PATH = "Interface Files/default_home_address.json"
+LAT_LON_FILE = "Interface Files/lat_lon.json"
+
+# ADDRESS_JSON_PATH = "Interface Files/home_address.json"
+# DEFAULT_ADDRESS_JSON_PATH = "Interface Files/default_home_address.json"
+ADDRESS_JSON_PATH = "Interface Files/home_address_MODIFIED.json"
+DEFAULT_ADDRESS_JSON_PATH = "Interface Files/default_home_address_MODIFIED.json"
 
 PRECIPITATION_RE = "[0-9][0-9]*%"
 HIGH_LOW_RE = "[0-9][0-9]*"
+
+NUM_HOURLY_DATA = 36
 
 
 def request_geographic_location(geo_path, default_geo_path):
@@ -82,11 +88,9 @@ def request_geographic_location(geo_path, default_geo_path):
 
 
 def index(request):
-    LON, LAT = request_geographic_location(
-        ADDRESS_JSON_PATH, DEFAULT_ADDRESS_JSON_PATH)
-    LON = round(float(LON), 4)
-    LAT = round(float(LAT), 4)
-    NWS_PREFIX = f"https://api.weather.gov/points/{LAT},{LON}"
+    lat_lon_file = open(LAT_LON_FILE, "r")
+    lat_lon_json = json.load(lat_lon_file)
+    lat_lon_file.close()
 
     log_data = data_handler.get_log_data()
     labels = ''
@@ -146,112 +150,154 @@ def index(request):
     fan_freq = current_freq_settings["fan_freq"]
     light_freq = current_freq_settings["light_freq"]
 
-    # weather stuff
+    days_dict = {}
+    for inner_dict in lat_lon_json["lat_lon"]:
+        LAT, LON = inner_dict["lat"], inner_dict["lon"]
 
-    try:
-        forecast_json = request_weather_data(NWS_PREFIX)
+        # LON, LAT = request_geographic_location(
+        #     ADDRESS_JSON_PATH, DEFAULT_ADDRESS_JSON_PATH)
+        # LON = round(float(LON), 4)
+        # LAT = round(float(LAT), 4)
+        NWS_PREFIX = f"https://api.weather.gov/points/{LAT},{LON}"
+        print(NWS_PREFIX)
+        # weather stuff
 
-        forecast_data = forecast_json["properties"]["periods"]
+        try:
+            forecast_json, forecast_hourly_response = request_weather_data(
+                NWS_PREFIX)
 
-        # add in precipitation
-        for _dict in forecast_data:
-            _dict["precipitation"] = get_precipitation(
-                _dict["detailedForecast"])
+            forecast_data = forecast_json["properties"]["periods"]
 
-        # ADD IN HIGHS AND LOWS
-        l = len(forecast_data)
-        i = 0
-        while (i < l):
-            highs_dict = forecast_data[i]
-            try:
-                lows_dict = forecast_data[i + 1]
-                high, low = get_high_low(
-                    highs_dict['detailedForecast'], lows_dict["detailedForecast"])
-            except:
-                high, low = "NA", "NA"  # random number!!!
-                lows_dict = {}
-
-            highs_dict["high"] = high
-            highs_dict["low"] = low
-            lows_dict["high"] = high
-            lows_dict["low"] = low
-
-            i += 2
-
-        weather_format_file = open("Interface Files/temp_format.json")
-        weather_format_json = json.load(weather_format_file)
-        weather_format_file.close()
-
-        weather_format = weather_format_json["temp"]
-        degree_symbol = "F"
-        is_fahrenheit = True
-        if weather_format == "Celsius":
-            is_fahrenheit = False
-            degree_symbol = "C"
+            # add in precipitation
             for _dict in forecast_data:
-                _dict["temperature"] = f_to_c(
-                    _dict["temperature"])
-                _dict["high"] = f_to_c(
-                    _dict["high"])
-                _dict["low"] = f_to_c(
-                    _dict["low"])
+                _dict["precipitation"] = get_precipitation(
+                    _dict["detailedForecast"])
 
-        today_data = forecast_data[0]
-        remaining_days_data = forecast_data[1:]  # could be empty I suppose
+            # ADD IN HIGHS AND LOWS
+            l = len(forecast_data)
+            i = 0
+            while (i < l):
+                highs_dict = forecast_data[i]
+                try:
+                    lows_dict = forecast_data[i + 1]
+                    high, low = get_high_low(
+                        highs_dict['detailedForecast'], lows_dict["detailedForecast"])
+                except:
+                    high, low = "NA", "NA"  # random number!!!
+                    lows_dict = {}
 
-        today_temp = today_data["temperature"]
-        today_windspeed = today_data["windSpeed"]
-        today_winddirection = today_data["windDirection"]
-        today_sun = today_data["icon"]
-        today_short = today_data["shortForecast"]
-        today_detailed = today_data["detailedForecast"]
-        today_high = today_data["high"]
-        today_low = today_data["low"]
-        today_precipitation = today_data["precipitation"]
-        today_is_day = today_data["isDaytime"]
-        today_is_day = str(today_is_day).lower()
+                highs_dict["high"] = high
+                highs_dict["low"] = low
+                lows_dict["high"] = high
+                lows_dict["low"] = low
 
-        curr_time = datetime.now()
-        date_string = curr_time.strftime("%-m/%-d/%Y, %-I:%M %p")
-        numeric_weekday = datetime.today().weekday()
-        str_weekday = convert_weekday(numeric_weekday)
-        date_string = str_weekday + ", " + date_string
+                i += 2
 
-        # get city and state
-        fp = open(ADDRESS_JSON_PATH, "r")
-        geo_json = json.load(fp)
-        fp.close()
+            weather_format_file = open("Interface Files/temp_format.json")
+            weather_format_json = json.load(weather_format_file)
+            weather_format_file.close()
 
-        city = geo_json["city"]
-        state = geo_json["state"]
+            weather_format = weather_format_json["temp"]
+            degree_symbol = "F"
+            is_fahrenheit = True
+            if weather_format == "Celsius":
+                is_fahrenheit = False
+                degree_symbol = "C"
+                for _dict in forecast_data:
+                    _dict["temperature"] = f_to_c(
+                        _dict["temperature"])
+                    _dict["high"] = f_to_c(
+                        _dict["high"])
+                    _dict["low"] = f_to_c(
+                        _dict["low"])
 
-        # convert to lowercase bool strings for JS
-        is_rainy = str(is_raining(today_detailed)).lower()
-        is_cloudy = str(is_cloud(today_detailed)).lower()
-        is_snowy = str(is_snow(today_detailed)).lower()
-        is_stormy = str(is_thunder_lightning(today_detailed)).lower()
+            today_data = forecast_data[0]
+            remaining_days_data = forecast_data[1:]  # could be empty I suppose
 
-        is_high_temp = (int(today_high) > (
-            85 if is_fahrenheit else (85 - 32) * 5/9))
+            today_temp = today_data["temperature"]
+            today_windspeed = today_data["windSpeed"]
+            today_winddirection = today_data["windDirection"]
+            today_sun = today_data["icon"]
+            today_short = today_data["shortForecast"]
+            today_detailed = today_data["detailedForecast"]
+            today_high = today_data["high"]
+            today_low = today_data["low"]
+            today_precipitation = today_data["precipitation"]
+            today_is_day = today_data["isDaytime"]
+            today_is_day = str(today_is_day).lower()
 
-        is_morning = (datetime.now().time() > time(
-            5) and datetime.now().time() < time(9))
+            curr_time = datetime.now()
+            date_string = curr_time.strftime("%-m/%-d/%Y, %-I:%M %p")
+            numeric_weekday = datetime.today().weekday()
+            str_weekday = convert_weekday(numeric_weekday)
+            date_string = str_weekday + ", " + date_string
 
-        is_sundown = (datetime.now().time() > time(
-            7 + 12, 30) and datetime.now().time() < time(9 + 12, 30))
+            # get city and state
+            # fp = open(ADDRESS_JSON_PATH, "r")
+            # geo_json = json.load(fp)
+            # fp.close()
 
-        is_night = (datetime.now().time() >= time(9 + 12, 30)
-                    or datetime.now().time() <= time(5))
+            city = inner_dict["city"]
+            state = inner_dict["state"]
 
-        temp_mode = "Temperature in " + \
-            ("Fahrenheit" if is_fahrenheit else "Celsius")
+            # convert to lowercase bool strings for JS
+            is_rainy = str(is_raining(today_detailed)).lower()
+            is_cloudy = str(is_cloud(today_detailed)).lower()
+            is_snowy = str(is_snow(today_detailed)).lower()
+            is_stormy = str(is_thunder_lightning(today_detailed)).lower()
 
-        failure_to_load = False
-        return render(request, 'Weather/weather.html', {'failure_to_load': failure_to_load, 'temp_mode': temp_mode, 'degree_symbol': degree_symbol, 'is_night': is_night, 'is_sundown': is_sundown, 'is_morning': is_morning, 'is_high_temp': is_high_temp, 'is_stormy': is_stormy, 'is_snowy': is_snowy, 'is_cloudy': is_cloudy, 'is_rainy': is_rainy, 'today_is_day': today_is_day, 'city': city, 'state': state, 'today_low': today_low, 'today_high': today_high, 'remaining_days_data': remaining_days_data, 'date_string': date_string, 'today_precipitation': today_precipitation, 'today_detailed': today_detailed, 'today_short': today_short, 'today_sun': today_sun, 'today_winddirection': today_winddirection, 'today_windspeed': today_windspeed, 'today_temp': today_temp, 'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc})
-    except:
-        print("National Weather Service API not responsive")
-        failure_to_load = True
-        return render(request, 'Weather/weather.html', {'failure_to_load': failure_to_load, 'temp_mode': None, 'degree_symbol': None, 'is_night': None, 'is_sundown': None, 'is_morning': None, 'is_high_temp': None, 'is_stormy': None, 'is_snowy': None, 'is_cloudy': None, 'is_rainy': None, 'today_is_day': None, 'city': None, 'state': None, 'today_low': None, 'today_high': None, 'remaining_days_data': None, 'date_string': None, 'today_precipitation': None, 'today_detailed': None, 'today_short': None, 'today_sun': None, 'today_winddirection': None, 'today_windspeed': None, 'today_temp': None, 'water_actions': None, 'fan_actions': None, 'heat_actions': None, 'light_actions': None, 'legend': None, 'last_temperature': None, 'last_humidity': None, 'last_soil_moisture': None, 'last_sunlight': None, 'last_reading_datetime': None, 'labels': None, 'temperatures': None, 'humidities': None, 'soil_moistures': None, 'sunlights': None, 'fan_freq': None, 'light_freq': None, 'fan_dc': None, 'light_dc': None})
+            is_high_temp = (int(today_high) > (
+                85 if is_fahrenheit else (85 - 32) * 5/9))
+
+            is_morning = (datetime.now().time() > time(
+                5) and datetime.now().time() < time(9))
+
+            is_sundown = (datetime.now().time() > time(
+                7 + 12, 30) and datetime.now().time() < time(9 + 12, 30))
+
+            is_night = (datetime.now().time() >= time(9 + 12, 30)
+                        or datetime.now().time() <= time(5))
+
+            temp_mode = "Temperature in " + \
+                ("Fahrenheit" if is_fahrenheit else "Celsius")
+
+            # hourly data
+            hourly_data = forecast_hourly_response["properties"]["periods"]
+            for _dict in hourly_data:
+                _dict["time"] = time_to_hour_string(_dict["startTime"])
+                temp = _dict["temperature"]
+                temp = temp if is_fahrenheit else f_to_c(temp)
+                _dict["temperature"] = temp
+
+            # cut off hourly data for only 36 hours
+            hourly_data = hourly_data[:min(len(hourly_data), NUM_HOURLY_DATA)]
+
+            failure_to_load = False
+
+            day_dict = {'hourly_data': hourly_data, 'temp_mode': temp_mode, 'degree_symbol': degree_symbol, 'is_night': is_night, 'is_sundown': is_sundown, 'is_morning': is_morning, 'is_high_temp': is_high_temp, 'is_stormy': is_stormy, 'is_snowy': is_snowy, 'is_cloudy': is_cloudy, 'is_rainy': is_rainy, 'today_is_day': today_is_day, 'city': city,
+                        'state': state, 'today_low': today_low, 'today_high': today_high, 'remaining_days_data': remaining_days_data, 'date_string': date_string, 'today_precipitation': today_precipitation, 'today_detailed': today_detailed, 'today_short': today_short, 'today_sun': today_sun, 'today_winddirection': today_winddirection, 'today_windspeed': today_windspeed, 'today_temp': today_temp}
+            days_dict[(LAT, LON)] = day_dict
+        except:
+            print("National Weather Service API not responsive")
+            failure_to_load = True
+            return render(request, 'Weather/weather.html', {'hourly_data': None, 'rows': None, 'failure_to_load': failure_to_load, 'temp_mode': None, 'degree_symbol': None, 'is_night': None, 'is_sundown': None, 'is_morning': None, 'is_high_temp': None, 'is_stormy': None, 'is_snowy': None, 'is_cloudy': None, 'is_rainy': None, 'today_is_day': None, 'city': None, 'state': None, 'today_low': None, 'today_high': None, 'remaining_days_data': None, 'date_string': None, 'today_precipitation': None, 'today_detailed': None, 'today_short': None, 'today_sun': None, 'today_winddirection': None, 'today_windspeed': None, 'today_temp': None, 'water_actions': None, 'fan_actions': None, 'heat_actions': None, 'light_actions': None, 'legend': None, 'last_temperature': None, 'last_humidity': None, 'last_soil_moisture': None, 'last_sunlight': None, 'last_reading_datetime': None, 'labels': None, 'temperatures': None, 'humidities': None, 'soil_moistures': None, 'sunlights': None, 'fan_freq': None, 'light_freq': None, 'fan_dc': None, 'light_dc': None})
+    return render(request, 'Weather/weather.html', {'failure_to_load': failure_to_load, 'days_dict': days_dict, 'water_actions': water_actions, 'fan_actions': fan_actions, 'heat_actions': heat_actions, 'light_actions': light_actions, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'labels': labels, 'temperatures': temperatures, 'humidities': humidities, 'soil_moistures': soil_moistures, 'sunlights': sunlights, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc})
+
+
+def time_to_hour_string(time):
+    """
+    time_to_hour_string(time): comverts a time like:
+    "2020-08-18T12:00:00-04:00" to hour string "12"
+    Returns string mod 12 and adds AM or PM as necessary (AM before 12) (PM after 12)
+    """
+    split_time = time.split("T")
+    hours = split_time[1]
+    hour = hours.split(":")[0]
+    int_hour = int(hour)
+    if int_hour > 12:
+        return str((int(hour) % 12) + 1) + " PM"
+    else:
+        return str((int(hour) % 12) + 1) + " AM"
 
 
 def f_to_c(string_temp):
@@ -365,17 +411,21 @@ def get_high_low(detailed_forecast_str1, detailed_forecast_str2):
 
 def request_weather_data(weather_site):
     """
-        request_weather_data(weather_site = NWS_PREFIX) pulls a forecast json from the NWS
-        website and returns the  json
+    request_weather_data(weather_site = NWS_PREFIX) pulls a forecast json from the NWS
+    website and returns the tuple pair forecast json and hourly forcast json
 
-        SPEICIFIC TO NWS API ONLY
-        """
+    SPEICIFIC TO NWS API ONLY
+    """
     response = requests.get(weather_site)
     nws_json = response.json()
     nws_forecast_url = nws_json["properties"]["forecast"]
     forecast_response = requests.get(nws_forecast_url)
     forecast_json = forecast_response.json()
-    return forecast_json
+
+    nws_hourly_forecast_url = nws_json["properties"]["forecastHourly"]
+    forecast_hourly_response = requests.get(nws_hourly_forecast_url)
+    forecast_hourly_json = forecast_hourly_response.json()
+    return forecast_json, forecast_hourly_json
 
 
 def is_raining(weather_text):

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeForm, ActionForm, AlertForm, PwmForm, FreqForm, UpdateIntervalForm, DeleteForm, StartDateForm, AddressForm, DaysForm, TempForm
+from .forms import HealthyLevelsForm, PlantProfileForm, SaveProfileForm, ModeForm, ActionForm, AlertForm, PwmForm, FreqForm, UpdateIntervalForm, DeleteForm, StartDateForm, AddressForm, DaysForm, TempForm, DeleteAddressForm
 from scripts.data_handler import data_handler
 from collections import OrderedDict
 import json
@@ -38,6 +38,7 @@ def index(request):
         address_form = AddressForm(request.POST)
         days_form = DaysForm(request.POST)
         temp_form = TempForm(request.POST)
+        delete_address_form = DeleteAddressForm(request.POST)
 
         # Check each form to see if it is valid. If valid, scrape data. If not, enter empty placeholder.
         if healthy_levels_form.is_valid():
@@ -156,6 +157,13 @@ def index(request):
         else:
             temp = ""
 
+        if delete_address_form.is_valid():
+            del_addr = delete_address_form.cleaned_data["del_addr"]
+            submit_addr = delete_address_form.cleaned_data["submit_addr"]
+        else:
+            del_addr = ""
+            submit_addr = ""
+
         # If data was submitted, write that data to the interface file
         # If healthy levels data was submitted, update healthy levels interface file, and save plant profile as "custom" in profile interface file
         if (temperature):
@@ -215,7 +223,7 @@ def index(request):
                     start_day, start_month, start_year, end_day, end_month, end_year)
 
         if submit_form:
-            data_handler.set_address_profiles(
+            data_handler.set_address_list(
                 street_address, city_address, state_address, zip_code)
 
         if day:
@@ -241,6 +249,14 @@ def index(request):
         if temp:
             data_handler.set_temp_profile(temp)
 
+        if submit_addr:
+            address_list = data_handler.get_address_list()
+            num_addresses = len(address_list)
+            if num_addresses != 1 and 1 <= int(del_addr) <= num_addresses:
+
+                int_addr = int(del_addr) - 1
+                data_handler.del_address(int_addr)
+
     mode = data_handler.get_mode()
     current_manual_actions = data_handler.get_manual_actions()
     current_alert_settings = data_handler.get_alert_settings()
@@ -250,6 +266,10 @@ def index(request):
     current_start_date = data_handler.get_germination_settings()
     current_address = data_handler.get_address_profiles()
     temp_format = data_handler.get_temp_profile()
+    data_handler.set_lat_lon()
+
+    address_list = data_handler.get_address_list()
+    address_list = list(enumerate(address_list, 1))  # start at index 1
 
     start_date = current_start_date["start_date"]
     split_start = start_date.split("-")
@@ -288,6 +308,8 @@ def index(request):
     address_form = AddressForm(initial=current_address)
     days_form = DaysForm(initial={"day": 0})
     temp_form = TempForm(initial=temp_format)
+    delete_address_form = DeleteAddressForm(
+        initial={"del_addr": 0, "submit_addr": "Click to Delete"})
 
     log_data = data_handler.get_log_data()
     log_data = OrderedDict(log_data)
@@ -306,4 +328,4 @@ def index(request):
     last_sunlight = data_handler.bucket_to_nominal(
         "sunlight", last_reading_values['sunlight'])
 
-    return render(request, 'Settings/settings.html', {'temp_form': temp_form, 'days_form': days_form, 'action_form': action_form, 'mode': mode, 'mode_form': mode_form, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile, 'alert_form': alert_form, 'pwm_form': pwm_form, 'freq_form': freq_form, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc, 'update_interval': update_interval, 'delete_form': delete_form, 'start_date_form': start_date_form, 'address_form': address_form})
+    return render(request, 'Settings/settings.html', {'delete_address_form': delete_address_form, 'address_list': address_list, 'temp_form': temp_form, 'days_form': days_form, 'action_form': action_form, 'mode': mode, 'mode_form': mode_form, 'legend': legend, 'last_temperature': last_temperature, 'last_humidity': last_humidity, 'last_soil_moisture': last_soil_moisture, 'last_sunlight': last_sunlight, 'last_reading_datetime': last_reading_datetime, 'save_profile_form': save_profile_form, 'can_save': can_save, 'healthy_levels_form': healthy_levels_form, 'plant_profile_form': plant_profile_form, 'healthy_levels': healthy_levels, 'plant_profile': plant_profile, 'alert_form': alert_form, 'pwm_form': pwm_form, 'freq_form': freq_form, 'fan_freq': fan_freq, 'light_freq': light_freq, 'fan_dc': fan_dc, 'light_dc': light_dc, 'update_interval': update_interval, 'delete_form': delete_form, 'start_date_form': start_date_form, 'address_form': address_form})

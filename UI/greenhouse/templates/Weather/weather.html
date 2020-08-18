@@ -16,83 +16,123 @@ Weather
     <h1 class="dashboard-header">National Weather Service API Failed To Respond. Please Reload Page.</h1>
 </div>
 {% else %}
-<div class="weather-page" id="weather-page">
-    <div class="weather-header" id="weather-header">
-        <h1 class="weather-header-text">
-            {{city}}, {{state}} - {{date_string}} - {{today_temp}}<span>&deg</span>{{degree_symbol}}
-        </h1>
-    </div>
-    <div class='weather-heading' id='weather-heading'>
-        <div class="city-heading" id="city-heading">
-            <p class="city-text" id="city-text">{{city}}, {{state}}</p>
+<div class="city-weather-row" id="city-weather-row">
+    {% for key, inner_dict in days_dict.items %}
+    <div class="weather-page" id="weather-page">
+        <div class="weather-header" id="weather-header">
+            <h1 class="weather-header-text">
+                {{inner_dict.city}}, {{inner_dict.state}} - {{inner_dict.date_string}} -
+                {{inner_dict.today_temp}}<span>&deg</span>{{inner_dict.degree_symbol}}
+            </h1>
         </div>
-        <div class="temperature-heading" id="temperature-heading">
-            <p class="temp-text" id="temp-text">{{today_temp}}<span>&deg</span>{{degree_symbol}}</p>
-        </div>
-        <div class="weather-summary" id="weather-summary">
-            <p class="weather-summary-text" id="weather-summary-text">
-                {{today_short}}
-            </p>
-        </div>
-        <!-- <div class="date-summary" id="date-summary">
+        <div class='weather-heading' id='weather-heading'>
+            <div class="city-heading" id="city-heading">
+                <p class="city-text" id="city-text">{{inner_dict.city}}, {{inner_dict.state}}</p>
+            </div>
+            <div class="temperature-heading" id="temperature-heading">
+                <p class="temp-text" id="temp-text">
+                    {{inner_dict.today_temp}}<span>&deg</span>{{inner_dict.degree_symbol}}</p>
+            </div>
+            <div class="weather-summary" id="weather-summary">
+                <p class="weather-summary-text" id="weather-summary-text">
+                    {{inner_dict.today_short}}
+                </p>
+            </div>
+            <!-- <div class="date-summary" id="date-summary">
             <p class="date-summary-text" id="date-summary-text">
                 {{date_string}} <br> {{temp_mode}}
             </p>
         </div> -->
-        <div class="national-weather-service-summary" id="national-weather-service-summary">
-            <p class="national-weather-service-summary-text" id="national-weather-service-summary-text">
-                {{today_detailed}}
-            </p>
+            <div class="national-weather-service-summary" id="national-weather-service-summary">
+                <p class="national-weather-service-summary-text" id="national-weather-service-summary-text">
+                    {{inner_dict.today_detailed}}
+                </p>
+            </div>
         </div>
-    </div>
 
-    <div class="current-weather-values" id="current-weather-values">
-        <h2 class='current-weather-heading' id="current-weather-heading">Current Weather</h2>
-        <table>
-            <tr>
-                <td>
-                    <h3 class="weather-values" id="temperature">Temperature</h3>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="wind">Wind</h3>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="sun-light">Sun Light</h3>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="precipitation">Precipitation</h3>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="high-low">High & Low</h3>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h3 class="weather-values" id="temperature-value">{{today_temp}}<span>&deg</span>{{degree_symbol}}
-                    </h3>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="wind-value">{{today_windspeed}} / {{today_winddirection}}</h3>
-                </td>
-                <td>
-                    <div class="weather-values-symbol" id="sun-light-value">
-                        <img src="{{today_sun}}"
-                            style="width:42px;height:42px;border: 2px solid white;border-radius: 7px;filter: drop-shadow(2px 2px 3px white);"
-                            alt="Weather Image" />
-                    </div>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="precipitation-value">{{today_precipitation}}</h3>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="high-low-value">{{today_high}}<span>&deg</span>{{degree_symbol}} /
-                        {{today_low}}<span>&deg</span>{{degree_symbol}}</h3>
-                </td>
-            </tr>
-        </table>
-    </div>
+        <div class="current-weather-values" id="current-weather-values">
+            <h2 class='current-weather-heading' id="current-weather-heading">Current Weather</h2>
+            <table>
+                <tr>
+                    <td>
+                        <h3 class="weather-values" id="temperature">Temperature</h3>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="wind">Wind</h3>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="sun-light">Sun Light</h3>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="precipitation">Precipitation</h3>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="high-low">High & Low</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 class="weather-values" id="temperature-value">
+                            {{inner_dict.today_temp}}<span>&deg</span>{{inner_dict.degree_symbol}}
+                        </h3>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="wind-value">{{inner_dict.today_windspeed}} /
+                            {{today_winddirection}}</h3>
+                    </td>
+                    <td>
+                        <div class="weather-values-symbol" id="sun-light-value">
+                            <img src="{{inner_dict.today_sun}}"
+                                style="width:42px;height:42px;border: 2px solid white;border-radius: 7px;filter: drop-shadow(2px 2px 3px white);"
+                                alt="Weather Image" />
+                        </div>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="precipitation-value">{{inner_dict.today_precipitation}}</h3>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="high-low-value">
+                            {{inner_dict.today_high}}<span>&deg</span>{{inner_dict.degree_symbol}}
+                            /
+                            {{inner_dict.today_low}}<span>&deg</span>{{inner_dict.degree_symbol}}</h3>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-    <!-- <div class='national-weather-service' id='national-weather-service'>
+        <div class="current-weather-values" id="current-weather-values">
+            <h2 class='current-weather-heading' id="current-weather-heading">Hourly Forecast</h2>
+            <div class="hourly-weather-row" id="hourly-weather-row">
+                {% for hour_data in inner_dict.hourly_data %}
+                <div class="hourly-weather-card">
+                    <table>
+                        <tr>
+                            <td>
+                                <h3 class="weather-values" id="hour">{{hour_data.time}}</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="weather-values-symbol" id="sun-light-value">
+                                    <img src="{{hour_data.icon}}"
+                                        style="width:42px;height:42px;border: 2px solid white;border-radius: 7px;filter: drop-shadow(2px 2px 3px white);"
+                                        alt="Weather Image" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h3 class="weather-values" id="hourly-temperature">
+                                    {{hour_data.temperature}}<span>&deg;</span>{{degree_symbol}}</h3>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- <div class='national-weather-service' id='national-weather-service'>
         <div class="national-weather-service-summary" id="national-weather-service-summary">
             <h2 class="national-weather-service-summary-heading" id="national-weather-service-summary-heading">
                 Detailed Forecast
@@ -104,42 +144,46 @@ Weather
     </div> -->
 
 
-    <div class="upcoming-weather-values" id="upcoming-weather-values">
-        <div class="upcoming-heading" id="upcoming-heading">
-            <h2 class='upcoming-heading-summary' id="upcoming-heading-summary">7 Day Forecast</h2>
+        <div class="upcoming-weather-values" id="upcoming-weather-values">
+            <div class="upcoming-heading" id="upcoming-heading">
+                <h2 class='upcoming-heading-summary' id="upcoming-heading-summary">7 Day Forecast</h2>
+            </div>
+            <table>
+                {% for day_dict in inner_dict.remaining_days_data %}
+                <tr>
+                    <td>
+                        <div class='upcoming-weather-heading' id="upcoming-weather-heading">{{day_dict.name}}</h2>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="temperature-value">
+                            {{day_dict.temperature}}<span>&deg</span>{{degree_symbol}}</h3>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="wind-value">{{day_dict.windSpeed}} / {{day_dict.windDirection}}
+                        </h3>
+                    </td>
+                    <td>
+                        <div class="weather-values-symbol" id="sun-light-value">
+                            <img src="{{day_dict.icon}}"
+                                style="width:42px;height:42px;border: 2px solid white;border-radius: 7px;filter: drop-shadow(2px 2px 3px white);"
+                                alt="Sunny Image" />
+                        </div>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="precipitation-value">{{day_dict.precipitation}}</h3>
+                    </td>
+                    <td>
+                        <h3 class="weather-values" id="high-low-value">
+                            {{day_dict.high}}<span>&deg</span>{{degree_symbol}} /
+                            {{day_dict.low}}<span>&deg</span>{{degree_symbol}}</h3>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
-        <table>
-            {% for day_dict in remaining_days_data %}
-            <tr>
-                <td>
-                    <div class='upcoming-weather-heading' id="upcoming-weather-heading">{{day_dict.name}}</h2>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="temperature-value">
-                        {{day_dict.temperature}}<span>&deg</span>{{degree_symbol}}</h3>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="wind-value">{{day_dict.windSpeed}} / {{day_dict.windDirection}}</h3>
-                </td>
-                <td>
-                    <div class="weather-values-symbol" id="sun-light-value">
-                        <img src="{{day_dict.icon}}"
-                            style="width:42px;height:42px;border: 2px solid white;border-radius: 7px;filter: drop-shadow(2px 2px 3px white);"
-                            alt="Sunny Image" />
-                    </div>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="precipitation-value">{{day_dict.precipitation}}</h3>
-                </td>
-                <td>
-                    <h3 class="weather-values" id="high-low-value">{{day_dict.high}}<span>&deg</span>{{degree_symbol}} /
-                        {{day_dict.low}}<span>&deg</span>{{degree_symbol}}</h3>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
 
+    </div>
+    {% endfor %}
 </div>
 {% endif %}
 

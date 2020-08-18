@@ -1,6 +1,7 @@
 
 import json
 import os
+import requests
 from os.path import expanduser
 
 
@@ -395,24 +396,27 @@ class data_handler:
         # plant_data = plant_json["data"]
         return plant_data
 
-    def set_address_profiles(street_address, city, state, zip_code):
-        address_file = open(expanduser(
-            "~")+'/NYSG/Interface Files/home_address.json', 'w')
-        address_json = {
-            "street_address": street_address,
-            "city": city,
-            "state": state,
-            "zip": zip_code
-        }
-        address_file.write(json.dumps(address_json))
-        address_file.close()
+    # def set_address_profiles(street_address, city, state, zip_code):
+    #     address_file = open(expanduser(
+    #         "~")+'/NYSG/Interface Files/home_address.json', 'w')
+    #     address_json = {
+    #         "street_address": street_address,
+    #         "city": city,
+    #         "state": state,
+    #         "zip": zip_code
+    #     }
+    #     address_file.write(json.dumps(address_json))
+    #     address_file.close()
 
     def get_address_profiles():
+        # plant_profiles_file = open(expanduser(
+        #     "~")+'/NYSG/Interface Files/home_address.json', 'r')
         plant_profiles_file = open(expanduser(
-            "~")+'/NYSG/Interface Files/home_address.json', 'r')
+            "~")+'/NYSG/Interface Files/home_address_MODIFIED.json', 'r')
         plant_profiles_json = plant_profiles_file.read()
         plant_profiles_file.close()
         plant_data = json.loads(plant_profiles_json)
+        plant_data = plant_data["addresses"][0]
         # plant_data = plant_json["data"]
         new_data = {}
         new_data["street_address"] = plant_data["street_address"]
@@ -438,3 +442,100 @@ class data_handler:
         }
         temp_file.write(json.dumps(temp_json))
         temp_file.close()
+
+    def get_address_list():
+        address_list_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/home_address_MODIFIED.json', 'r')
+        address_profiles_json = address_list_file.read()
+        address_list_file.close()
+        address_data = json.loads(address_profiles_json)
+        return address_data["addresses"]
+
+    def set_address_list(street_address, city, state, zip_code):
+        original_address_list = data_handler.get_address_list()
+        address_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/home_address_MODIFIED.json', 'w')
+        address_json = {
+            "street_address": street_address,
+            "city": city,
+            "state": state,
+            "zip": zip_code
+        }
+        if address_json not in original_address_list:
+            original_address_list.append(address_json)
+        new_address_json = {"addresses": original_address_list}
+        address_file.write(json.dumps(new_address_json))
+        address_file.close()
+
+    def set_lat_lon():
+        address_list = data_handler.get_address_list()
+        latlon_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/lat_lon.json', 'w')
+        lat_lon_json = {"lat_lon": []}
+        for address in address_list:
+            city = address["city"]
+            state = address["state"]
+            lon, lat = request_geographic_location(address)
+            inner_dict = {}
+            inner_dict["lat"] = lat
+            inner_dict["lon"] = lon
+            inner_dict["state"] = state
+            inner_dict["city"] = city
+            lat_lon_json["lat_lon"].append(inner_dict)
+
+        latlon_file.write(json.dumps(lat_lon_json))
+        latlon_file.close()
+
+    def del_address(del_index):
+        original_address_list = data_handler.get_address_list()
+        del original_address_list[del_index]
+        new_address_json = {"addresses": original_address_list}
+        address_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/home_address_MODIFIED.json', 'w')
+        address_file.write(json.dumps(new_address_json))
+        address_file.close()
+
+
+DEFAULT_ADDRESS_JSON_PATH = "Interface Files/default_home_address_MODIFIED.json"
+
+
+def request_geographic_location(geo_json):
+    """
+    request_geographic_location(geo_path, default_geo_path) finds the current geographic location of the user
+    """
+
+    street_address = geo_json["street_address"]
+    city = geo_json["city"]
+    state = geo_json["state"]
+    zip_code = geo_json["zip"]
+    CENSUS_PAGE = f"https://geocoding.geo.census.gov/geocoder/locations/address?street={street_address}&city={city}&state={state}&zip={zip_code}&benchmark=Public_AR_Census2010&format=json"
+
+    response = requests.get(CENSUS_PAGE)
+    location_json = response.json()
+
+    try:
+        coordinates = location_json["result"]["addressMatches"][0]["coordinates"]
+        long = coordinates["x"]
+        lat = coordinates["y"]
+    except:
+        fp = open(DEFAULT_ADDRESS_JSON_PATH, "r")
+        geo_json = json.load(fp)
+        fp.close()
+
+        street_address = geo_json["street_address"]
+        city = geo_json["city"]
+        state = geo_json["state"]
+        zip_code = geo_json["zip"]
+        CENSUS_PAGE = f"https://geocoding.geo.census.gov/geocoder/locations/address?street={street_address}&city={city}&state={state}&zip={zip_code}&benchmark=Public_AR_Census2010&format=json"
+
+        response = requests.get(CENSUS_PAGE)
+        location_json = response.json()
+
+        coordinates = location_json["result"]["addressMatches"][0]["coordinates"]
+        long = coordinates["x"]
+        lat = coordinates["y"]
+
+        long = round(float(long), 4)
+        lat = round(float(lat), 4)
+
+    return (long, lat)

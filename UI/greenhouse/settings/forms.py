@@ -159,6 +159,13 @@ class AddressForm(forms.Form):
         attrs={'onchange': 'address_form.submit();'}))
 
 
+class DeleteAddressForm(forms.Form):
+    del_addr = forms.CharField(required=True, max_length=5, label="Index of Address to Delete", widget=forms.NumberInput(
+    ))
+    submit_addr = forms.ChoiceField(required=True, label="Submit", choices=[('Click to Delete', 'Click to Delete')], widget=forms.Select(
+        attrs={'onclick': 'delete_address_form.submit(); document.reload();'}))
+
+
 class TempForm(forms.Form):
-    temp = forms.ChoiceField(required=True, label="Submit", choices=[('Fahrenheit', 'Fahrenheit'), ('Celsius', 'Celsius')], widget=forms.Select(
+    temp = forms.ChoiceField(required=True, label="Temperature Scale", choices=[('Fahrenheit', 'Fahrenheit'), ('Celsius', 'Celsius')], widget=forms.Select(
         attrs={'onchange': 'temp_form.submit();'}))

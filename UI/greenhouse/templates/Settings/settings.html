@@ -113,6 +113,61 @@ Settings
 		</form>
 	</div>
 
+	<h1 class="form-header">Added Addresses</h1>
+	<div class="form-wrapper">
+		<div class="summary-statistics">
+			<table id="demotable">
+				<tr id="demotable">
+					<td colspan="5">User Defined Addresses</td>
+				</tr>
+				<tr style="overflow-wrap: break-word;" id="demotable">
+					<td>
+						Index of Address
+					</td>
+					<td>
+						Street Address
+					</td>
+					<td>
+						City
+					</td>
+					<td>
+						State
+					</td>
+					<td>
+						Zip Code
+					</td>
+				</tr>
+				{% for index, address in address_list %}
+				<tr style="overflow-wrap: break-word;" id="demotable">
+					<td>
+						{{index}}
+					</td>
+					<td>
+						{{address.street_address}}
+					</td>
+					<td>
+						{{address.city}}
+					</td>
+					<td>
+						{{address.state}}
+					</td>
+					<td>
+						{{address.zip}}
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+
+	<h1 class="form-header">Delete Address</h1>
+	<div class="form-wrapper">
+		<form action="/settings/" method="post" id="delete_address_form" name="delete_address_form">
+			{% csrf_token %}
+			{{ delete_address_form.as_p }}
+		</form>
+	</div>
+
 	<h1 class="form-header">Temperature Settings</h1>
 	<div class="form-wrapper">
 		<form action="/settings/" method="post" id="temp_form" name="temp_form">

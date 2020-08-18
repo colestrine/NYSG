@@ -551,6 +551,15 @@ td {
     padding: 2%;
     margin: 2%;
     background-image: linear-gradient(rgb(79, 171, 202), rgb(32, 137, 172));
+
+    width: 100%;
+    /* padding: .75rem; */
+    /* margin-bottom: 2rem; */
+    /* border: 0; */
+    flex-basis: 100%;
+    flex-grow: 0;
+    flex-shrink: 0;
+    scroll-snap-align: start;
 }
 
 .weather-header {
@@ -841,4 +850,51 @@ tr#demotable:nth-child(8) {background: lightskyblue;} */
     align-items: center;
     justify-content: center;
 }
+
+.city-weather-row{
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+  }
+
+  .hourly-weather-row{
+    height: 20%;
+    border-radius: 10px;
+    margin: 10px 50px;
+    padding: 10px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    border-left:1px solid white;
+    height: 20%;
+    background-color: rgb(22, 115, 146);
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+  }
+
+  .hourly-weather-card{
+    height: 20%;
+    border-radius: 10px;
+    margin: 10px 15px;
+    padding: 10px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    border-left:1px solid white;
+
+    background-color: rgb(18, 136, 175);
+    
+
+    scroll-snap-align: center;
+  }
 
