@@ -28,32 +28,56 @@ class PlantProfileForm(forms.Form):
 class HealthyLevelsForm(forms.Form):
     temperature_choices = data_handler.get_available_temperatures()
     humidity_choices = data_handler.get_available_humidities()
-    soil_moisture_choices = data_handler.get_available_soil_moistures()
     sunlight_choices = data_handler.get_available_sunlights()
+    soil_moisture_static_choices = data_handler.get_available_soil_moisture_statics()
+    soil_moisture_wet_choices = data_handler.get_available_soil_moisture_wets()
+    soil_moisture_dry_choices = data_handler.get_available_soil_moisture_drys()
+    run_choices = data_handler.get_available_runs()
+    days_choices = data_handler.get_available_days()
 
     temperature = forms.ChoiceField(required=False, choices=temperature_choices, widget=forms.Select(
         attrs={'onchange': 'healthy_levels_form.submit();'}))
     humidity = forms.ChoiceField(required=False, choices=humidity_choices, widget=forms.Select(
         attrs={'onchange': 'healthy_levels_form.submit();'}))
-    soil_moisture = forms.ChoiceField(required=False, label="Soil Moisture", choices=soil_moisture_choices, widget=forms.Select(
-        attrs={'onchange': 'healthy_levels_form.submit();'}))
     sunlight = forms.ChoiceField(required=False, choices=sunlight_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    soil_moisture_static = forms.ChoiceField(required=False, label="Soil Moisture Static", choices=soil_moisture_static_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    soil_moisture_wet = forms.ChoiceField(required=False, label="Soil Moisture Wet", choices=soil_moisture_wet_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    soil_moisture_dry = forms.ChoiceField(required=False, label="Soil Moisture Dry", choices=soil_moisture_dry_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    days = forms.ChoiceField(required=False, label="Water Every", choices=days_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    run = forms.ChoiceField(required=False, label="Run Dynamic Soil Goal", choices=run_choices, widget=forms.Select(
         attrs={'onchange': 'healthy_levels_form.submit();'}))
 
 
 class SaveProfileForm(forms.Form):
     temperature_choices = data_handler.get_available_temperatures()
     humidity_choices = data_handler.get_available_humidities()
-    soil_moisture_choices = data_handler.get_available_soil_moistures()
     sunlight_choices = data_handler.get_available_sunlights()
+    soil_moisture_static_choices = data_handler.get_available_soil_moistures()
+    soil_moisture_wet_choices = data_handler.get_available_soil_moistures()
+    soil_moisture_dry_choices = data_handler.get_available_soil_moistures()
+    run_choices = data_handler.get_available_soil_runs()
+    days_choices = data_handler.get_available_days()
 
     custom_temperature = forms.ChoiceField(required=False, choices=temperature_choices, widget=forms.Select(
         attrs={'onchange': 'healthy_levels_form.submit();'}))
     custom_humidity = forms.ChoiceField(required=False, choices=humidity_choices, widget=forms.Select(
         attrs={'onchange': 'healthy_levels_form.submit();'}))
-    custom_soil_moisture = forms.ChoiceField(required=False, label="Soil Moisture", choices=soil_moisture_choices, widget=forms.Select(
-        attrs={'onchange': 'healthy_levels_form.submit();'}))
     custom_sunlight = forms.ChoiceField(required=False, choices=sunlight_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    custom_soil_moisture_static = forms.ChoiceField(required=False, label="Soil Moisture Static", choices=soil_moisture_static_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    custom_soil_moisture_wet = forms.ChoiceField(required=False, label="Soil Moisture Wet", choices=soil_moisture_wet_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    custom_soil_moisture_dry = forms.ChoiceField(required=False, label="Soil Moisture Dry", choices=soil_moisture_dry_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    custom_days = forms.ChoiceField(required=False, label="Water Every", choices=days_choices, widget=forms.Select(
+        attrs={'onchange': 'healthy_levels_form.submit();'}))
+    custom_run = forms.ChoiceField(required=False, label="Run Dynamic Soil Goal", choices=run_choices, widget=forms.Select(
         attrs={'onchange': 'healthy_levels_form.submit();'}))
     profile_name = forms.CharField(max_length=100, label="Profile Name")
 

@@ -43,13 +43,22 @@ def index(request):
         if healthy_levels_form.is_valid():
             temperature = healthy_levels_form.cleaned_data['temperature']
             humidity = healthy_levels_form.cleaned_data['humidity']
-            soil_moisture = healthy_levels_form.cleaned_data['soil_moisture']
             sunlight = healthy_levels_form.cleaned_data['sunlight']
+            soil_moisture_static = healthy_levels_form.cleaned_data['soil_moisture_static']
+            soil_moisture_wet = healthy_levels_form.cleaned_data['soil_moisture_wet']
+            soil_moisture_dry = healthy_levels_form.cleaned_data['soil_moisture_dry']
+            run = healthy_levels_form.cleaned_data['run']
+            days = healthy_levels_form.cleaned_data['days']
+
         else:
             temperature = ''
             humidity = ''
-            soil_moisture = ''
             sunlight = ''
+            soil_moisture_static = ''
+            soil_moisture_dry = ''
+            soil_moisture_wet = ''
+            run = ''
+            days = ''
 
         if plant_profile_form.is_valid():
             plant_profile = plant_profile_form.cleaned_data['plant_profile']
@@ -182,9 +191,9 @@ def index(request):
         # If a profile name was submitted, save data as a new profile, and set that profile to be the current profile
         if (profile_name):
             data_handler.save_profile(
-                profile_name, temperature, humidity, soil_moisture, sunlight)
+                profile_name, temperature, humidity, soil_moisture_static, soil_moisture_dry,soil_moisture_wet, run, days, sunlight)
             data_handler.write_healthy_levels(
-                temperature, humidity, soil_moisture, sunlight)
+                temperature, humidity, soil_moisture_static, soil_moisture_dry,soil_moisture_wet, run, days, sunlight)
             data_handler.write_plant_profile(profile_name)
             can_save = False
         if (mode):

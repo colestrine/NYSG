@@ -2,14 +2,16 @@
 import json
 import os
 from os.path import expanduser
+from datetime import date
 
 
 class data_handler:
-    def write_healthy_levels(temperature, humidity, soil_moisture, sunlight):
+    def write_healthy_levels(temperature, humidity, soil_moisture_static, soil_moisture_dry,soil_moisture_wet, run, days, sunlight):
         levels_dict = {'temperature': temperature, 'humidity': humidity,
-                       'soil_moisture': soil_moisture, 'sunlight': sunlight}
+                       'soil_moisture_wet': soil_moisture_wet, 'soil_moisture_dry': soil_moisture_dry,
+                       'soil_moisture_static': soil_moisture_wet, 'days' : days, 'run' : run, 'sunlight': sunlight}
         levels_json = json.dumps(levels_dict)
-
+        levels_json = self.dynamic_soil_control(levels_json)
         healthy_levels_file = open(expanduser(
             "~")+'/NYSG/Interface Files/healthy_levels.json', 'w')
         healthy_levels_file.write(levels_json)
@@ -95,21 +97,6 @@ class data_handler:
 
         return humidities
 
-    def get_available_soil_moistures():
-        available_buckets_file = open(expanduser(
-            "~")+'/NYSG/Interface Files/value_buckets.json', 'r')
-        available_buckets_json = available_buckets_file.read()
-        available_buckets_file.close()
-        available_buckets_dict = json.loads(available_buckets_json)
-
-        soil_moistures = []
-        for bucket in available_buckets_dict['soil_moisture']:
-            label = available_buckets_dict['soil_moisture'][bucket]['label']
-
-            soil_moistures.append((bucket, label))
-
-        return soil_moistures
-
     def get_available_sunlights():
         available_buckets_file = open(expanduser(
             "~")+'/NYSG/Interface Files/value_buckets.json', 'r')
@@ -124,6 +111,96 @@ class data_handler:
             sunlights.append((bucket, label))
 
         return sunlights
+
+    def get_available_soil_moisture_statics():
+        available_buckets_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/value_buckets.json', 'r')
+        available_buckets_json = available_buckets_file.read()
+        available_buckets_file.close()
+        available_buckets_dict = json.loads(available_buckets_json)
+
+        soil_moistures = []
+        for bucket in available_buckets_dict['soil_moisture_static']:
+            label = available_buckets_dict['soil_moisture_static'][bucket]['label']
+
+            soil_moistures.append((bucket, label))
+
+        return soil_moistures
+
+    def get_available_soil_moisture_wets():
+        available_buckets_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/value_buckets.json', 'r')
+        available_buckets_json = available_buckets_file.read()
+        available_buckets_file.close()
+        available_buckets_dict = json.loads(available_buckets_json)
+
+        soil_moistures = []
+        for bucket in available_buckets_dict['soil_moisture_wet']:
+            label = available_buckets_dict['soil_moisture_wet'][bucket]['label']
+
+            soil_moistures.append((bucket, label))
+
+        return soil_moistures
+
+    def get_available_soil_moisture_drys():
+        available_buckets_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/value_buckets.json', 'r')
+        available_buckets_json = available_buckets_file.read()
+        available_buckets_file.close()
+        available_buckets_dict = json.loads(available_buckets_json)
+
+        soil_moistures = []
+        for bucket in available_buckets_dict['soil_moisture_dry']:
+            label = available_buckets_dict['soil_moisture_dry'][bucket]['label']
+
+            soil_moistures.append((bucket, label))
+
+        return soil_moistures
+
+    def get_available_days():
+        available_buckets_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/value_buckets.json', 'r')
+        available_buckets_json = available_buckets_file.read()
+        available_buckets_file.close()
+        available_buckets_dict = json.loads(available_buckets_json)
+
+        soil_moistures = []
+        for bucket in available_buckets_dict['days']:
+            label = available_buckets_dict['days'][bucket]['label']
+
+            soil_moistures.append((bucket, label))
+
+        return soil_moistures
+
+    def get_available_runs():
+        available_buckets_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/value_buckets.json', 'r')
+        available_buckets_json = available_buckets_file.read()
+        available_buckets_file.close()
+        available_buckets_dict = json.loads(available_buckets_json)
+
+        soil_moistures = []
+        for bucket in available_buckets_dict['run']:
+            label = available_buckets_dict['run'][bucket]['label']
+
+            soil_moistures.append((bucket, label))
+
+        return soil_moistures
+    
+    def get_available_soil_moistures():
+        available_buckets_file = open(expanduser(
+            "~")+'/NYSG/Interface Files/value_buckets.json', 'r')
+        available_buckets_json = available_buckets_file.read()
+        available_buckets_file.close()
+        available_buckets_dict = json.loads(available_buckets_json)
+
+        soil_moistures = []
+        for bucket in available_buckets_dict['soil_moisture']:
+            label = available_buckets_dict['soil_moisture'][bucket]['label']
+
+            soil_moistures.append((bucket, label))
+
+        return soil_moistures
 
     def get_log_data():
         log_file = open(expanduser("~")+'/NYSG/Interface Files/log.json', 'r')
@@ -143,7 +220,7 @@ class data_handler:
 
         return log_dict
 
-    def save_profile(profile_name, temperature, humidity, soil_moisture, sunlight):
+    def save_profile(profile_name, temperature, humidity, soil_moisture_static, soil_moisture_dry,soil_moisture_wet, run, days, sunlight):
         healthy_levels_by_profile_file_r = open(expanduser(
             "~")+'/NYSG/Interface Files/healthy_levels_by_profile.json', 'r')
         healthy_levels_by_profile_json = healthy_levels_by_profile_file_r.read()
@@ -152,7 +229,8 @@ class data_handler:
             healthy_levels_by_profile_json)
 
         new_profile = {'temperature': temperature, 'humidity': humidity,
-                       'soil_moisture': soil_moisture, 'sunlight': sunlight}
+                       'soil_moisture_wet': soil_moisture_wet, 'soil_moisture_dry': soil_moisture_dry,
+                       'soil_moisture_static': soil_moisture_wet, 'days' : days, 'run' : run, 'sunlight': sunlight}
 
         healthy_levels_by_profile_dict[profile_name] = new_profile
 
@@ -438,3 +516,29 @@ class data_handler:
         }
         temp_file.write(json.dumps(temp_json))
         temp_file.close()
+
+    def dynamic_soil_control(healthy_levels_dict):
+        if healthy_levels_dict["run"] == "0":
+            healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_static"]
+            return healthy_levels_dict
+
+        last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'r')
+        last_json = last_water_file.read()
+
+        days = int(healthy_levels_dict["days"])
+        today = date.today()
+        t = last_json["last"]
+        t = date.fromisoformat(t)
+        time_since_water = today -  t
+        if time_since_water >= timedelta(days = days) or time_since_water == timedelta(days = 0) :
+            healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_wet"]
+            today = today.isoformat
+            last_json["last"] = today
+
+            last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'w')
+            last_water_file.write(last_json)
+            last_water_file.close()
+
+        else:
+            healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_dry"]
+        return healthy_levels_dict
