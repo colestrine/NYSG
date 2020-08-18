@@ -192,11 +192,16 @@ def index(request):
 
                 temperature = healthy_levels['temperature']
                 humidity = healthy_levels['humidity']
-                soil_moisture = healthy_levels['soil_moisture']
+                soil_moisture_static = healthy_levels['soil_moisture_static']
+                soil_moisture_wet = healthy_levels['soil_moisture_wet']
+                soil_moisture_dry = healthy_levels['soil_moisture_dry']
+                days = healthy_levels['days']
+                run = healthy_levels['run']
                 sunlight = healthy_levels['sunlight']
 
                 data_handler.write_healthy_levels(
-                    temperature, humidity, soil_moisture, sunlight)
+                    temperature, humidity, soil_moisture_static, 
+                    soil_moisture_dry,soil_moisture_wet, run, days, sunlight)
         # If a profile name was submitted, save data as a new profile, and set that profile to be the current profile
         if (profile_name):
             data_handler.save_profile(

@@ -84,10 +84,10 @@ def light(today_light,lux, plant_type):
             lightcontrol = plant_light(9,5,10)
         elif plant_type == "Part shade":
             lightcontrol = plant_light(9,4,11)
-        elif lightcontrol == "Full shade":
+        elif plant_type == "Full shade":
             lightcontrol = plant_light(9,2,13)
         
-        direct_needed = timedelta(hours = lightcontrol.direct) - today_light["DIRECT"]
+        direct_needed = lightcontrol.direct - today_light["DIRECT"]
         print(direct_needed)
 
         if lux < 45000 and direct_needed>=time_to_sleep:
