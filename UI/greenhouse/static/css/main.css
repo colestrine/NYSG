@@ -826,3 +826,13 @@ tr#demotable:nth-child(8) {background: lightskyblue;} */
 #demotable {
     overflow-wrap: break-word;
 }
+
+.markdown-cell{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid grey;
+    border-radius: 2%;
+
+}
+

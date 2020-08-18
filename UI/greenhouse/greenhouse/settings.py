@@ -27,7 +27,8 @@ SECRET_KEY = 'aa+mg5das*#55#wff#04e2r$w1ope2%%+9q&(-jf_0*5$uqu-_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-current_ip = subprocess.Popen(['hostname', '-I'], stdout = subprocess.PIPE).communicate()[0].decode('utf-8').strip('\n').strip(' ')
+current_ip = subprocess.Popen(
+    ['hostname', '-I'], stdout=subprocess.PIPE).communicate()[0].decode('utf-8').strip('\n').strip(' ')
 
 ALLOWED_HOSTS = [current_ip, '127.0.0.1', 'raspberrypi']
 
@@ -47,7 +48,8 @@ INSTALLED_APPS = [
     'analysis',
     'germination',
     'information',
-    'weather'
+    'weather',
+    'interaction',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +67,8 @@ ROOT_URLCONF = 'greenhouse.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [expanduser("~")+'/NYSG/UI/greenhouse/templates'], #['./templates'],
+        # ['./templates'],
+        'DIRS': [expanduser("~")+'/NYSG/UI/greenhouse/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
