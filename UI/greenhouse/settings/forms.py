@@ -32,8 +32,8 @@ class HealthyLevelsForm(forms.Form):
     soil_moisture_static_choices = data_handler.get_available_soil_moisture_statics()
     soil_moisture_wet_choices = data_handler.get_available_soil_moisture_wets()
     soil_moisture_dry_choices = data_handler.get_available_soil_moisture_drys()
-    run_choices = data_handler.get_available_runs()
     days_choices = data_handler.get_available_days()
+    run_choices = data_handler.get_available_runs()
 
     temperature = forms.ChoiceField(required=False, choices=temperature_choices, widget=forms.Select(
         attrs={'onchange': 'healthy_levels_form.submit();'}))
@@ -54,14 +54,15 @@ class HealthyLevelsForm(forms.Form):
 
 
 class SaveProfileForm(forms.Form):
+    print("Hello")
     temperature_choices = data_handler.get_available_temperatures()
     humidity_choices = data_handler.get_available_humidities()
     sunlight_choices = data_handler.get_available_sunlights()
     soil_moisture_static_choices = data_handler.get_available_soil_moisture_statics()
     soil_moisture_wet_choices = data_handler.get_available_soil_moisture_wets()
     soil_moisture_dry_choices = data_handler.get_available_soil_moisture_drys()
-    run_choices = data_handler.get_available_runs()
     days_choices = data_handler.get_available_days()
+    run_choices = data_handler.get_available_runs()
 
     custom_temperature = forms.ChoiceField(required=False, choices=temperature_choices, widget=forms.Select(
         attrs={'onchange': 'healthy_levels_form.submit();'}))
