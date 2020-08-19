@@ -196,8 +196,8 @@ td {
 }
 
 .save-profile-button {
-	text-align: center;
-	margin-left: auto;
+    text-align: center;
+    margin-left: auto;
     margin-right: auto;
     display: block;
     width: fit-content;
@@ -837,12 +837,13 @@ tr#demotable:nth-child(8) {background: lightskyblue;} */
 }
 
 .markdown-cell{
-    width: 100%;
+    width: calc(100% - 79px);
     align-items: center;
     justify-content: center;
-    border: 1px solid grey;
-    border-radius: 2%;
-
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px 0px; 
 }
 
 .error-germination { 
@@ -898,3 +899,23 @@ tr#demotable:nth-child(8) {background: lightskyblue;} */
     scroll-snap-align: center;
   }
 
+.thebelab-cell {
+    width: calc(100% - 79px);
+    align-items: center;
+    justify-content: center;
+    border: 1px solid lightgray !important;
+    border-radius: 10px !important;
+    padding: 20px;
+    margin: 10px 0px;
+}
+
+.thebelab-button {
+    text-align: center;
+    display: block;
+    width: fit-content;
+    border: solid 1px lightgray;
+    border-radius: 4px;
+    padding: 3px 3px;
+    margin: 5px 0px;
+    color: slategray;
+}
