@@ -18,8 +18,6 @@ class data_handler:
             "~")+'/NYSG/Interface Files/healthy_levels.json', 'w')
         healthy_levels_file.write(levels_json)
         healthy_levels_file.close()
-        print("write: ")
-        print(levels_dict)
 
     def read_healthy_levels():
         healthy_levels_file = open(expanduser(
@@ -27,8 +25,6 @@ class data_handler:
         levels_json = healthy_levels_file.read()
         healthy_levels_file.close()
         levels_dict = json.loads(levels_json)
-        print("Read:")
-        print(levels_dict)
         return levels_dict
 
     def write_plant_profile(plant_profile):
