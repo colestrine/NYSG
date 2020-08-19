@@ -55,8 +55,8 @@ def light(today_light,lux, plant_type):
 
     if today_light["DATE"].date() != DATETODAY.date():
         today_light = {"DATE" : DATETODAY, "DARK" : timedelta() , "DIRECT" : timedelta(), "INDIRECT" : timedelta(), "ACTION" : 0}
-        healthy_levels_dict = read_healthy_levels_dict()
-        write_healthy_levels_dict(healthy_levels_dict)
+        healthy_levels_dict = read_healthy_levels()
+        write_healthy_levels(healthy_levels_dict)
     else:
         today_light["DATE"] = DATETODAY
 

@@ -46,7 +46,7 @@ Germination
                 {% endfor %}
                 <!-- <button class = "{{plant_name}}-button-close information-button" id = "{{plant_name}}-button-close" onclick = 'toggleSummary("{{plant_name}}")' >Close {{plant_name}} Summary</button> -->
             </div>
-            {% elif characteristic != 'Image_Url' %}
+            {% elif characteristic != 'Image_Url' and characteristic != 'Soil Depth'  %}
             <h3><b>{{characteristic}}</b></h3>
             <p>{{paragraph}}</p>
             {% endif %}
