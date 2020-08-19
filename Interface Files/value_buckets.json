@@ -53,6 +53,136 @@
 			"high": "85"
 		}
 	},
+	"soil_moisture_static": {
+		"1": {
+			"label": "Very Dry",
+			"low": "0",
+			"high": "19"
+		},
+		"2": {
+			"label": "Dry",
+			"low": "20",
+			"high": "39"
+		},
+		"3": {
+			"label": "Medium",
+			"low": "40",
+			"high": "59"
+		},
+		"4": {
+			"label": "Wet",
+			"low": "60",
+			"high": "79"
+		},
+		"5": {
+			"label": "Very Wet",
+			"low": "80",
+			"high": "99"
+		}
+	},
+	"soil_moisture_wet": {
+		"1": {
+			"label": "Very Dry",
+			"low": "0",
+			"high": "19"
+		},
+		"2": {
+			"label": "Dry",
+			"low": "20",
+			"high": "39"
+		},
+		"3": {
+			"label": "Medium",
+			"low": "40",
+			"high": "59"
+		},
+		"4": {
+			"label": "Wet",
+			"low": "60",
+			"high": "79"
+		},
+		"5": {
+			"label": "Very Wet",
+			"low": "80",
+			"high": "99"
+		}
+	},
+	"soil_moisture_dry": {
+		"1": {
+			"label": "Very Dry",
+			"low": "0",
+			"high": "19"
+		},
+		"2": {
+			"label": "Dry",
+			"low": "20",
+			"high": "39"
+		},
+		"3": {
+			"label": "Medium",
+			"low": "40",
+			"high": "59"
+		},
+		"4": {
+			"label": "Wet",
+			"low": "60",
+			"high": "79"
+		},
+		"5": {
+			"label": "Very Wet",
+			"low": "80",
+			"high": "99"
+		}
+	},
+	"run": {
+		"0": {
+			"label": "No"
+		},
+		"1": {
+			"label": "Yes"
+		}
+	},
+	"days": {
+		"2": {
+			"label": "2 days"
+		},
+		"3": {
+			"label": "3 days"
+		},
+		"4": {
+			"label": "4 days"
+		},
+		"5": {
+			"label": "5 days"
+		},
+		"6": {
+			"label": "6 days"
+		},
+		"7": {
+			"label": "7 days"
+		},
+		"8": {
+			"label": "8 days"
+		},
+		"9": {
+			"label": "9 days"
+		},
+		"10": {
+			"label": "10 days"
+		},
+		"11": {
+			"label": "11 days"
+		},
+		"12": {
+			"label": "12 days"
+		},
+		"13": {
+			"label": "13 days"
+		},
+		"14": {
+			"label": "14 days"
+		}
+	},
 	"soil_moisture": {
 		"1": {
 			"label": "Very Dry",

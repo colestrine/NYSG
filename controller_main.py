@@ -84,7 +84,8 @@ def convert_bucket_to_assoc(buckets):
 
 
 buckets_dict = pin_constants.load_data(VALUE_BUCKETS_PATH)
-BUCKETS_ASSOC = convert_bucket_to_assoc(buckets_dict)
+buckets_dict_limited = {"temperature" : buckets_dict["temperature"], "humidity" : buckets_dict["humidity"],"sunlight" : buckets_dict["sunlight"], "soil_moisture" : buckets_dict["soil_moisture"] }
+BUCKETS_ASSOC = convert_bucket_to_assoc(buckets_dict_limited)
 
 
 # -------- RUN ENVIRONMENT VARIABLES ---------

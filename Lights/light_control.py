@@ -79,15 +79,16 @@ def light(today_light,lux, plant_type):
     else:
 
         if plant_type == "Full sun":
-            lightcontrol =  plant_light(9,8,7)
+            lightcontrol =  plant_light(9,12,3)
         elif plant_type == "Part sun":
-            lightcontrol = plant_light(9,5,10)
+            lightcontrol = plant_light(9,8,7)
         elif plant_type == "Part shade":
+            lightcontrol = plant_light(9,6,9)
+        elif plant_type == "Full shade":
             lightcontrol = plant_light(9,4,11)
-        elif lightcontrol == "Full shade":
-            lightcontrol = plant_light(9,2,13)
         
         direct_needed = lightcontrol.direct - today_light["DIRECT"]
+        print(direct_needed)
 
         if lux < 45000 and direct_needed>=time_to_sleep:
             today_light["ACTION"] = 4
