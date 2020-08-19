@@ -54,7 +54,6 @@ class HealthyLevelsForm(forms.Form):
 
 
 class SaveProfileForm(forms.Form):
-    print("Hello")
     temperature_choices = data_handler.get_available_temperatures()
     humidity_choices = data_handler.get_available_humidities()
     sunlight_choices = data_handler.get_available_sunlights()
