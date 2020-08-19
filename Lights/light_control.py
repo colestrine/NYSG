@@ -55,6 +55,8 @@ def light(today_light,lux, plant_type):
 
     if today_light["DATE"].date() != DATETODAY.date():
         today_light = {"DATE" : DATETODAY, "DARK" : timedelta() , "DIRECT" : timedelta(), "INDIRECT" : timedelta(), "ACTION" : 0}
+        healthy_levels_dict = read_healthy_levels_dict()
+        write_healthy_levels_dict(healthy_levels_dict)
     else:
         today_light["DATE"] = DATETODAY
 
@@ -94,3 +96,50 @@ def light(today_light,lux, plant_type):
         else:
             today_light["ACTION"] = 0
         return today_light
+    
+    
+def dynamic_soil_control(healthy_levels_dict):
+    #print(healthy_levels_dict)
+    if healthy_levels_dict["run"] == "0":
+        healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_static"]
+        return healthy_levels_dict
+
+    last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'r')
+    last_json = last_water_file.read()
+    last_water_file.close()
+    last_dict = json.loads(last_json)
+
+    print(last_dict)
+    days = int(healthy_levels_dict["days"])
+    today = date.today()
+    t = last_dict["last"]
+    t = date.fromisoformat(t)
+    time_since_water = today -  t
+    if time_since_water >= timedelta(days = days) or time_since_water == timedelta(days = 0) :
+        healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_wet"]
+        today = today.isoformat()
+        last_dict["last"] = today
+        last_json = json.dumps(last_dict)
+        last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'w')
+        last_water_file.write(last_json)
+        last_water_file.close()
+
+    else:
+        healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_dry"]
+    return healthy_levels_dict
+
+def write_healthy_levels(levels_dict):
+    levels_dict = dynamic_soil_control(levels_dict)
+    levels_json = json.dumps(levels_dict)
+    healthy_levels_file = open(expanduser(
+        "~")+'/NYSG/Interface Files/healthy_levels.json', 'w')
+    healthy_levels_file.write(levels_json)
+    healthy_levels_file.close()
+
+def read_healthy_levels():
+    healthy_levels_file = open(expanduser(
+        "~")+'/NYSG/Interface Files/healthy_levels.json', 'r')
+    levels_json = healthy_levels_file.read()
+    healthy_levels_file.close()
+    levels_dict = json.loads(levels_json)
+    return levels_dict
