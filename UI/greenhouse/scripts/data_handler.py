@@ -634,7 +634,7 @@ def dynamic_soil_control(healthy_levels_dict):
     last_water_file.close()
     last_dict = json.loads(last_json)
 
-    print(last_json)
+    print(last_dict)
     days = int(healthy_levels_dict["days"])
     today = date.today()
     t = last_dict["last"]

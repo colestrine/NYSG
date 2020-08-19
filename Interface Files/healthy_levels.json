@@ -1,1 +1,1 @@
-{"temperature": "3", "humidity": "2", "soil_moisture": "3", "sunlight": "4"}
+{"temperature": "4", "humidity": "1", "sunlight": "4", "soil_moisture_static": "3", "soil_moisture_wet": "5", "soil_moisture_dry": "2", "days": "9", "run": "1", "soil_moisture": "5"}
