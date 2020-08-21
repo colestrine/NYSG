@@ -523,8 +523,9 @@ if __name__ == "__main__":
         asyncio.run(main(N_CYCLES))
     except (KeyboardInterrupt, SystemExit):
         print("Interrupt detected")
+        GPIO.cleanup()
         sys.exit(0)
-
-#    except Exception as e:
-#        print(f"Other exception detected: {e}")
-#        sys.exit(0)
+    except Exception as e:
+        print(f"Other exception detected: {e}")
+        GPIO.cleanup()
+        sys.exit(0)
