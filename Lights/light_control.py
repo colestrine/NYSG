@@ -2,6 +2,8 @@
 
 from datetime import datetime,date,time,timedelta
 import json
+import os
+from os.path import expanduser
 from time import sleep
 import random
 
@@ -13,6 +15,9 @@ class plant_light:
 
 def startdict(): # Create log to be used in the later functions at reset point
     d = {"DATE" : datetime.now(), "DARK" : timedelta() , "DIRECT" : timedelta(), "INDIRECT" : timedelta(), "ACTION" : 0, "LUX" : 0}
+    #d["DATE"] = d["DATE"] - timedelta(days = 1)
+    print("ld=")
+    print(d)
     return d
 
 def addtime(time, other):   # Add a time object to other datetime object
@@ -54,10 +59,12 @@ def light(today_light,lux, plant_type):
 
 
     if today_light["DATE"].date() != DATETODAY.date():
+        print("New day")
         today_light = {"DATE" : DATETODAY, "DARK" : timedelta() , "DIRECT" : timedelta(), "INDIRECT" : timedelta(), "ACTION" : 0}
         healthy_levels_dict = read_healthy_levels()
         write_healthy_levels(healthy_levels_dict)
     else:
+        print("Same day")
         today_light["DATE"] = DATETODAY
 
 
@@ -69,6 +76,7 @@ def light(today_light,lux, plant_type):
         today_light["INDIRECT"] += REFRESH
     else:
         today_light["DARK"] +=  REFRESH
+    print(today_light)
 
     #DECISION MAKING ALGORITHM
 
@@ -102,6 +110,7 @@ def dynamic_soil_control(healthy_levels_dict):
     #print(healthy_levels_dict)
     if healthy_levels_dict["run"] == "0":
         healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_static"]
+        print(healthy_levels_dict)
         return healthy_levels_dict
 
     last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'r')
@@ -123,9 +132,9 @@ def dynamic_soil_control(healthy_levels_dict):
         last_water_file = open(expanduser("~")+'/NYSG/Interface Files/dynamic_soil.json', 'w')
         last_water_file.write(last_json)
         last_water_file.close()
-
     else:
         healthy_levels_dict["soil_moisture"] = healthy_levels_dict["soil_moisture_dry"]
+    print(healthy_levels_dict)
     return healthy_levels_dict
 
 def write_healthy_levels(levels_dict):
